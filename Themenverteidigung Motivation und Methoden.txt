@@ -1,0 +1,15 @@
+Methoden:
+Literaturstudium
+Implementieren
+Protokoll-Design
+Syntax-Design
+Evaluieren von Algorithmen
+Programmieren
+(Informatik machen)
+
+
+
+
+
+Motivation:
+Übertragung großer Dateien --> umständlich --> in einem Netzwerk, einfacher?
