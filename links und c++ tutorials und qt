@@ -9,3 +9,4 @@ https://www1.qt.io/download-open-source/?hsCtaTracking=f977210e-de67-475f-a32b-6
 Wenn eine  mit dem GNU-Compiler kompilierte .exe nicht laufen will und er nach irgendwas.dll fragt, die findet ihr in [QT-Verzeichnis]/[Versionsnummer]/mingw-Irgendeine Nummer/bin/name.dll                        
 bei fragen zu irgendwas doc.qt.io                        
 ein tipp: nutzt qtcreator wenn mgl, vereinfacht so ziemlich alles
+https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW
