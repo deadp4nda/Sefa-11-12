@@ -1,0 +1,11 @@
+https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/
+
+https://www.google.de/amp/s/mayaposch.wordpress.com/2011/10/03/design-your-own-protocol-in-five-minutes/amp/
+
+Aufgabe: Programmiere einen verschlüsseltes Netzwerkchat-Programm(bidirektional) und lass die Ausgaben in einer Datenbank(SQL) mit Zeitstempel, User und Nachricht speichern. Keine Emoticons, keine Fett/Kursiv/Unterstrichen etc. nötig (nur reiner Text). Bei Start soll es sich mit einer IP-Addresse verbinden, die der User angibt und ein Chatfenster öffnen.                        
+http://doc.qt.io/qt-5/linux.html                        
+https://www1.qt.io/download-open-source/?hsCtaTracking=f977210e-de67-475f-a32b-65cec207fd03|d62710cd-e1db-46aa-8d4d-2f1c1ffdacea                        
+Wenn eine  mit dem GNU-Compiler kompilierte .exe nicht laufen will und er nach irgendwas.dll fragt, die findet ihr in [QT-Verzeichnis]/[Versionsnummer]/mingw-Irgendeine Nummer/bin/name.dll                        
+bei fragen zu irgendwas doc.qt.io                        
+ein tipp: nutzt qtcreator wenn mgl, vereinfacht so ziemlich alles
+https://wiki.qt.io/Building_a_static_Qt_for_Windows_using_MinGW
