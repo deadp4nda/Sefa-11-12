@@ -1,0 +1,1060 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0112)https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource"></script>
+
+<title>Qt And Custom Networking Protocols, Or: The Holy Grail Of The Internet | Maya's Programming &amp; Electronics Blog</title>
+
+<link rel="stylesheet" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/style.css" type="text/css" media="screen">
+
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/base.js.Download"></script>
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/menu.js.Download"></script>
+
+<link rel="pingback" href="https://mayaposch.wordpress.com/xmlrpc.php">
+<link rel="dns-prefetch" href="https://s2.wp.com/">
+<link rel="dns-prefetch" href="https://s1.wp.com/">
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://s.pubmine.com/">
+<link rel="dns-prefetch" href="https://x.bidswitch.net/">
+<link rel="dns-prefetch" href="https://static.criteo.net/">
+<link rel="dns-prefetch" href="https://ib.adnxs.com/">
+<link rel="dns-prefetch" href="https://aax.amazon-adsystem.com/">
+<link rel="dns-prefetch" href="https://bidder.criteo.com/">
+<link rel="dns-prefetch" href="https://cas.criteo.com/">
+<link rel="dns-prefetch" href="https://gum.criteo.com/">
+<link rel="dns-prefetch" href="https://ads.pubmatic.com/">
+<link rel="dns-prefetch" href="https://gads.pubmatic.com/">
+<link rel="dns-prefetch" href="https://tpc.googlesyndication.com/">
+<link rel="dns-prefetch" href="https://ad.doubleclick.net/">
+<link rel="dns-prefetch" href="https://googleads.g.doubleclick.net/">
+<link rel="dns-prefetch" href="https://www.googletagservices.com/">
+<link rel="dns-prefetch" href="https://cdn.switchadhub.com/">
+<link rel="dns-prefetch" href="https://delivery.g.switchadhub.com/">
+<link rel="dns-prefetch" href="https://delivery.swid.switchadhub.com/">
+<link rel="alternate" type="application/rss+xml" title="Maya&#39;s Programming &amp; Electronics Blog » Feed" href="https://mayaposch.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Maya&#39;s Programming &amp; Electronics Blog » Comments Feed" href="https://mayaposch.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Maya&#39;s Programming &amp; Electronics Blog » Qt And Custom Networking Protocols, Or: The Holy Grail Of The Internet Comments Feed" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/feed/">
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1505864856h&ver=4.8.2"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/wp-emoji-release.min.js.Download" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="all-css-0-1" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource(1)" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource(2)"></script>
+<link rel="stylesheet" id="all-css-0-2" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/style(1).css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://mayaposch.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Setting Up MiniUPnPc With Qt" href="https://mayaposch.wordpress.com/2011/09/18/setting-up-miniupnpc-with-qt/">
+<link rel="next" title="Design Your Own Protocol In Five Minutes" href="https://mayaposch.wordpress.com/2011/10/03/design-your-own-protocol-in-five-minutes/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/">
+<link rel="shortlink" href="http://wp.me/p1L0ca-B">
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F&amp;for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F&amp;for=wpcom-auto-discovery">
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt And Custom Networking Protocols, Or: The Holy Grail Of The Internet">
+<meta property="og:url" content="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/">
+<meta property="og:description" content="In the previous installment I talked about combining UPnP’s IGD features with Qt. This culminated for me in a few days of programming and debugging in order to get a functional program workin…">
+<meta property="article:published_time" content="2011-09-27T18:43:49+00:00">
+<meta property="article:modified_time" content="2012-02-24T15:44:11+00:00">
+<meta property="og:site_name" content="Maya&#39;s Programming &amp; Electronics Blog">
+<meta property="og:image" content="https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:site" content="@MayaPosch">
+<meta name="twitter:text:title" content="Qt And Custom Networking Protocols, Or: The Holy Grail Of The Internet">
+<meta name="twitter:image" content="http://imgs.xkcd.com/comics/file_transfer.png?w=240">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@MayaPosch">
+<meta property="fb:app_id" content="249643311490">
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom">
+<link rel="shortcut icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="https://s0.wp.com/i/webclip.png">
+<link rel="openid.server" href="https://mayaposch.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="https://mayaposch.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="https://mayaposch.wordpress.com/osd.xml" title="Maya&#39;s Programming &amp; Electronics Blog">
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com">
+		<style id="wpcom-hotfix-masterbar-style">
+			@media screen and (min-width: 783px) {
+				#wpadminbar .quicklinks li#wp-admin-bar-my-account.with-avatar > a img {
+					margin-top: 5px;
+				}
+			}
+		</style>
+		<meta name="application-name" content="Maya&#39;s Programming &amp; Electronics Blog"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="An attempt at a proper programming &amp; electronics blog"><meta name="msapplication-task" content="name=Subscribe;action-uri=https://mayaposch.wordpress.com/feed/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="title" content="Qt And Custom Networking Protocols, Or: The Holy Grail Of The Internet | Maya&#39;s Programming &amp; Electronics Blog on WordPress.com">
+<meta name="description" content="In the previous installment I talked about combining UPnP&#39;s IGD features with Qt. This culminated for me in a few days of programming and debugging in order to get a functional program working. Let&#39;s be short about one thing: if you intend to use Qt with custom networking protocols, meaning something other than the standard…">
+		<script type="text/javascript">
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'inove', amp: false };
+		</script>
+		<script type="text/javascript" src="https://s.pubmine.com/head.js"></script>
+		<script type="text/javascript" src="https://static.criteo.net/js/ld/publishertag.js"></script><link rel="amphtml" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/amp/"><link rel="stylesheet" type="text/css" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script><script type="text/javascript" async="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/ga.js.Download"></script>
+<style type="text/css"></style><style type="text/css">:root a[href^="http://ad-apac.doubleclick.net/"], :root .GKJYXHBF2 > .GKJYXHBE2 > .GKJYXHBH5, :root a[href^="http://www.amazon.co.uk/exec/obidos/external-search?"], :root #\5f _mom_ad_2, :root #rhs_block .mod > .luhb-div > div[data-async-type="updateHotelBookingModule"], :root #\5f _admvnlb_modal_container, :root #MAIN.ShowTopic > .ad, :root a[href^="http://pubads.g.doubleclick.net/"], :root .GB3L-QEDGY .GB3L-QEDF- > .GB3L-QEDE-, :root #main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"], :root #center_col > #main > .dfrd > .mnr-c > .c._oc._zs, :root a[href^="http://ul.to/ref/"], :root #\5f _nq__hh[style="display:block!important"], :root a[href^="http://cdn.adstract.com/"], :root #\5f _mom_ad_12, :root a[href^="http://lp.ncdownloader.com/"], :root .inlineNewsletterSubscription + .inlineNewsletterSubscription div[class$="_item"], :root #ads > .dose > .dosesingle, :root a[href^="http://3wr110.net/"], :root a[href^="http://bestorican.com/"], :root div[id^="google_ads_iframe_"], :root a[href^="http://get.slickvpn.com/"], :root div[id^="ad_script_"], :root .gbfwa > div[class$="_item"], :root #assetsListings[style="display: block;"], :root #center_col > #\5f Emc, :root a[href^="http://marketgid.com"], :root #rhs_block > ol > .rhsvw > .kp-blk > .xpdopen > ._OKe > ol > ._DJe > .luhb-div, :root a[href^="http://go.mobisla.com/"], :root #center_col > #res > #topstuff + #search > div > #ires > #rso > #flun, :root a[href^="http://www.webtrackerplus.com/"], :root a[href^="http://www.affbuzzads.com/affiliate/"], :root #center_col > #resultStats + #tads, :root #main-content > [style="padding:10px 0 0 0 !important;"], :root #center_col > #resultStats + #tads + #res + #tads, :root #cnt #center_col > #taw > #tvcap > .c._oc._Lp, :root #center_col > #resultStats + div + #res + #tads, :root a[onmousedown^="this.href='http://staffpicks.outbrain.com/network/redir?"][target="_blank"], :root a[href^="http://www.paddypower.com/?AFF_ID="], :root a[href^="http://centertrust.xyz/"], :root a[href^="http://www.fbooksluts.com/"], :root div[id^="crt-"][style], :root #center_col > #resultStats + div[style="border:1px solid #dedede;margin-bottom:11px;padding:5px 7px 5px 6px"], :root a[href^="http://ads.integral-marketing.com/"], :root a[data-obtrack^="http://paid.outbrain.com/network/redir?"], :root .__y_inner > .__y_item, :root #center_col > #taw > #tvcap > .rscontainer, :root div[id^="ads300_100-widget"], :root #center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"], :root #cnt #center_col > #res > #topstuff > .ts, :root div[id^="MarketGid"], :root #content > #center > .dose > .dosesingle, :root a[href^="http://www.text-link-ads.com/"], :root #content > #right > .dose > .dosesingle, :root #flowplayer > div[style="position: absolute; width: 300px; height: 275px; left: 222.5px; top: 85px; z-index: 999;"], :root a[href^="http://ads.betfair.com/redirect.aspx?"], :root #flowplayer > div[style="z-index: 208; position: absolute; width: 300px; height: 275px; left: 222.5px; top: 85px;"], :root a[href*="emprestimo.eu"], :root #header + #content > #left > #rlblock_left, :root .__zinit .__y_item, :root #mbEnd[cellspacing="0"][cellpadding="0"], :root a[href^="http://banners.victor.com/processing/"], :root #mn #center_col > div > h2.spon:first-child, :root .ch[onclick="ga(this,event)"], :root #mn #center_col > div > h2.spon:first-child + ol:last-child, :root a[href^="http://affiliate.coral.co.uk/processing/"], :root #mn div[style="position:relative"] > #center_col > ._Ak, :root #mn div[style="position:relative"] > #center_col > div > ._dPg, :root .__yinit .__y_item, :root #rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"], :root div[id^="mainads"], :root a[href^="http://finaljuyu.com/"], :root #resultspanel > #topads, :root #rhs_block > #mbEnd, :root #rhs_block .mod > .gws-local-hotels__booking-module, :root #rhs_block .xpdopen > ._OKe > div > .mod > ._yYf, :root a[href^="http://data.ad.yieldmanager.net/"], :root .mw > #rcnt > #center_col > #taw > #tvcap > .c, :root #rhs_block > script + .c._oc._Ve.rhsvw, :root a[href^="http://track.adform.net/"], :root #tads + div + .c, :root #rhswrapper > #rhssection[border="0"][bgcolor="#ffffff"], :root a[href^="http://admingame.info/"], :root #ssmiwdiv[jsdisplay], :root a[href^="http://www.dealcent.com/register.php?affid="], :root #topstuff > #tads, :root .GFYY1SVD2 > .GFYY1SVC2 > .GFYY1SVF5, :root a[href^="http://www.linkbucks.com/referral/"], :root .GHOFUQ5BG2 > .GHOFUQ5BF2 > .GHOFUQ5BG5, :root .GFYY1SVE2 > .GFYY1SVD2 > .GFYY1SVG5, :root .jobs-information-call-to-action + .jobs-information-call-to-action div[class$="_item"], :root a[href^="https://ad.atdmt.com/"], :root .__ywvr .__y_item, :root a[href*=".qertewrt.com/"], :root a[href^="http://www.terraclicks.com/"], :root .GJJKPX2N1 > .GJJKPX2M1 > .GJJKPX2P4, :root .GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB, :root a[href^="http://aff.ironsocket.com/"], :root .Mpopup + #Mad > #MadZone, :root .__y_elastic .__y_item, :root a[href^="http://www.adxpansion.com"], :root .__ywl .__y_item, :root .l-container > #fishtank, :root .icons-rss-feed + .icons-rss-feed div[class$="_item"], :root a[href^="http://dethao.com/"], :root .lads[width="100%"][style="background:#FFF8DD"], :root .mod > ._jH + .rscontainer, :root iframe[src^="http://cdn2.adexprt.com/"], :root a[href^="http://clicks.binarypromos.com/"], :root .mw > #rcnt > #center_col > #taw > .c, :root .nrelate .nr_partner, :root a[href^="http://tezfiles.com/pr/"], :root .ob_container .item-container-obpd, :root a[href^="http://partner.sbaffiliates.com/"], :root a[href^="http://www.firstload.com/affiliate/"], :root a[href^="http://www.myfreepaysite.com/sfw_int.php?aid"], :root .ob_container a[data-redirect^="http://paid.outbrain.com/network/redir?"], :root a[href^="//srv.buysellads.com/"], :root a[href^="http://pwrads.net/"], :root .ob_dual_right > .ob_ads_header ~ .odb_div, :root .plistaList > .itemLinkPET, :root a[href^="http://www.download-provider.org/"], :root .plistaList > .plista_widget_underArticle_item[data-type="pet"], :root aside[id^="div-gpt-ad"], :root .plista_widget_belowArticleRelaunch_item[data-type="pet"], :root a[href^="http://www.pinkvisualgames.com/?revid="], :root .ra[align="left"][width="30%"], :root a[href^="http://ads.affbuzzads.com/"], :root a[href^="http://promos.bwin.com/"], :root .ra[align="right"][width="30%"], :root a[href^="http://bs.serving-sys.com/"], :root .ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"], :root a[href^="https://www.googleadservices.com/pagead/aclk?"], :root a[href^="http://api.content.ad/"], :root a[href^="http://n217adserv.com/"], :root .rc-cta[data-target], :root .rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"], :root .widget-pane-section-result[data-result-ad-type], :root a[href^="http://adserver.adtechus.com/"], :root .rscontainer > .ellip, :root .section-result[data-result-ad-type], :root .trc_rbox .syndicatedItem, :root .trc_rbox_border_elm .syndicatedItem, :root a[href^="http://taboola-"][href*="/redirect.php?app.type="], :root .trc_rbox_div .syndicatedItem, :root .trc_rbox_div .syndicatedItemUB, :root .trc_rbox_div a[target="_blank"][href^="http://tab"], :root a[href^="http://engine.newsmaxfeednetwork.com/"], :root div[id^="div_openx_ad_"], :root a[href^="http://ddownload39.club/"], :root .trc_related_container div[data-item-syndicated="true"], :root ADS-RIGHT, :root a[href^="http://campaign.bharatmatrimony.com/track/"], :root AFS-AD, :root a[href^="https://www.secureupload.eu/suprerefid="], :root AMP-AD, :root a[onmousedown^="this.href='http://paid.outbrain.com/network/redir?"][target="_blank"], :root a[href^="http://www.myvpn.pro/"], :root a[href^="http://sharesuper.info/"], :root [ad-id^="googlead"], :root a[href^="http://games.ucoz.ru/"][target="_blank"], :root a[onmousedown^="this.href='http://staffpicks.outbrain.com/network/redir?"][target="_blank"] + .ob_source, :root [lazy-ad="lefttop_banner"], :root [onclick*="content.ad/"], :root a[href^="http://see-work.info/"], :root a[href^="http://www.graboid.com/affiliates/"], :root a[href^="http://papi.mynativeplatform.com:80/pub2/"], :root [onclick^="window.open('http://adultfriendfinder.com/search/"], :root a[href^="http://www.ducksnetwork.com/"], :root a[data-redirect^="http://click.plista.com/pets"], :root a[href^="http://adclick.g.doubleclick.net/"], :root a[data-redirect^="this.href='http://paid.outbrain.com/network/redir?"], :root a[data-url^="http://paid.outbrain.com/network/redir?"], :root a[data-url^="http://paid.outbrain.com/network/redir?"] + .author, :root a[href^="http://ad.yieldmanager.com/"], :root a[href^="http://www.myfreepaysite.com/sfw.php?aid"], :root a[href^="http://lp.ezdownloadpro.info/"], :root a[data-widget-outbrain-redirect^="http://paid.outbrain.com/network/redir?"], :root a[href$="/vghd.shtml"], :root a[href^="http://amzn.to/"] > img[src^="data"], :root a[href*=".adk2x.com/"], :root a[href*=".adsrv.eacdn.com/"] > img, :root a[href^="//www.mgid.com/"], :root a[href^="http://www.clkads.com/adServe/"], :root a[href^="http://ad.doubleclick.net/"], :root a[href*=".trust.zone"], :root a[href^="http://www.1clickmoviedownloader.info/"], :root a[href*="/adrotate-out.php?"], :root div[id^="dfp-ad-"], :root a[href^="http://xtgem.com/click?"], :root a[href*="/cmd.php?ad="], :root a[href*="=Adtracker"], :root a[href^="http://www.downloadweb.org/"], :root a[href*="ad2upapp.com/"], :root a[href*="googleme.eu"], :root a[href*="letsadvertisetogether.com"], :root a[href*="onclkds."], :root a[href^="http://www.streamtunerhd.com/signup?"], :root a[href^="http://bonusfapturbo.nmvsite.com/"], :root a[href^=" http://ads.ad-center.com/"], :root a[href^=" http://n47adshostnet.com/"], :root a[href^="//adbit.co/?a=Advertise&"], :root a[href^="http://secure.signup-way.com/"], :root a[href^="//ads.ad-center.com/"], :root a[href^="http://websitedhoome.com/"], :root a[href^="http://landingpagegenius.com/"], :root a[href^="//api.ad-goi.com/"], :root a[href^="http://click.plista.com/pets"], :root a[href^="http://www.streamate.com/exports/"], :root a[href^="//t.MtagMonetizationA.com/"], :root a[href^="http://1phads.com/"], :root a[href^="http://www.clickansave.net/"], :root a[href^="http://360ads.go2cloud.org/"], :root a[href^="http://NowDownloadAll.com"], :root a[href^="http://www.mysuperpharm.com/"], :root a[href^="http://www.sex.com/videos/?utm_"], :root a[href^="http://a.adquantix.com/"], :root a[href^="http://abc2.mobile-10.com/"], :root a[href^="http://ad-emea.doubleclick.net/"], :root a[href^="http://ad.au.doubleclick.net/"], :root a[href^="http://adexprt.me/"], :root a[href^="http://adf.ly/?id="], :root a[href^="http://api.ringtonematcher.com/"], :root a[href^="http://adfarm.mediaplex.com/"], :root a[href^="http://www.babylon.com/welcome/index?affID"], :root a[href^="http://adserving.unibet.com/"], :root a[href^="http://adlev.neodatagroup.com/"], :root a[href^="http://adprovider.adlure.net/"], :root a[href^="http://pan.adraccoon.com?"], :root a[href^="http://bcp.crwdcntrl.net/"], :root div[id^="lazyad-"], :root a[href^="http://adrunnr.com/"], :root a[href^="http://www.fpcTraffic2.com/blind/in.cgi?"], :root a[href^="http://ads.activtrades.com/"], :root a[href^="http://mmo123.co/"], :root a[href^="http://ads.ad-center.com/"], :root a[href^="http://ads.expekt.com/affiliates/"], :root a[href^="http://zevera.com/afi.html"], :root a[href^="http://ads.sprintrade.com/"], :root a[href^="http://ads.pheedo.com/"], :root a[href^="http://adserver.adtech.de/"], :root a[href^="http://www.1clickdownloader.com/"], :root a[href^="http://cdn3.adbrau.com/"], :root a[href^="http://adserver.itsfogo.com/"], :root a[href^="http://adserving.liveuniversenetwork.com/"], :root a[href^="http://adsrv.keycaptcha.com"], :root a[href^="http://adtrack123.pl/"], :root a[href^="http://green.trafficinvest.com/"], :root a[href^="http://clickserv.sitescout.com/"], :root a[href^="http://www.adshost2.com/"], :root a[href^="http://adtrackone.eu/"], :root a[href^="http://go.ad2up.com/"], :root a[href^="http://adtransfer.net/"], :root a[href^="http://adultfriendfinder.com/p/register.cgi?pid="], :root a[href^="http://linksnappy.com/?ref="], :root a[href^="http://affiliate.glbtracker.com/"], :root a[href^="http://affiliate.godaddy.com/"], :root a[href^="http://www.accuserveadsystem.com/accuserve-go.php?"], :root a[href^="http://lp.ilivid.com/"], :root a[href^="http://searchtabnew.com/"], :root a[href^="http://affiliates.pinnaclesports.com/processing/"], :root a[href^="http://affiliates.score-affiliates.com/"], :root a[href^="http://www.gamebookers.com/cgi-bin/intro.cgi?"], :root div[id^="block-views-topheader-ad-block-"], :root a[href^="http://aflrm.com/"], :root a[href^="http://at.atwola.com/"], :root a[href^="http://record.sportsbetaffiliates.com.au/"], :root iframe[src^="http://ad.yieldmanager.com/"], :root div[class$="dealnews"] > .dealnews, :root a[href^="http://b.bestcompleteusa.info/"], :root a[href^="http://bc.vc/?r="], :root a[href^="http://bluehost.com/track/"], :root a[href^="http://buysellads.com/"], :root div[id^="advads-"], :root a[href^="http://databass.info/"], :root a[href^="http://c.actiondesk.com/"], :root a[href^="http://c.ketads.com/"], :root a[href^="http://www.bet365.com/"][href*="&affiliate="], :root a[href^="http://callville.xyz/"], :root a[href^="http://media.paddypower.com/redirect.aspx?"], :root a[href^="http://campaign.bharatmatrimony.com/cbstrack/"], :root a[href^="http://casino-x.com/?partner"], :root a[href^="http://cdn.adsrvmedia.net/"], :root a[href^="http://web.adblade.com/"], :root a[href^="http://cdn3.adexprts.com/"], :root a[href^="http://go.oclaserver.com/"], :root a[href^="http://chaturbate.com/affiliates/"], :root script[src^="http://free-shoutbox.net/app/webroot/shoutbox/sb.php?shoutbox="] + #freeshoutbox_content, :root a[href^="http://cinema.friendscout24.de?"], :root div[itemtype="http://schema.org/WPAdBlock"], :root a[href^="http://click.guamwnvgashbkashawhgkhahshmashcas.pw/"], :root a[href^="http://www.down1oads.com/"], :root a[href^="http://clickandjoinyourgirl.com/"], :root a[href^="http://clicks.guamwnvgashbkashawhgkhahshmashcas.pw/"], :root a[href^="http://www.pheedo.com/"], :root a[href^="http://clk.directrev.com/"], :root a[href^="http://galleries.pinballpublishernetwork.com/"], :root a[href^="http://clkmon.com/adServe/"], :root a[href^="http://hdplugin.flashplayer-updates.com/"], :root a[href^="http://track.incognitovpn.com/"], :root a[target="_blank"][href^="http://api.taboola.com/"], :root a[href^="http://codec.codecm.com/"], :root a[href^="http://n.admagnet.net/"], :root a[href^="http://prochina.space/"], :root div[id^="acm-ad-tag-"], :root a[target="_blank"][onmousedown="this.href^='http://paid.outbrain.com/network/redir?"], :root a[href^="http://connectlinking6.com/"], :root a[href^="http://contractallsticker.net/"], :root a[href^="http://wgpartner.com/"], :root a[href^="http://cpaway.afftrack.com/"], :root iframe[id^="google_ads_iframe"], :root a[href^="http://d2.zedo.com/"], :root a[href^="http://data.committeemenencyclopedicrepertory.info/"], :root a[href^="https://affiliates.bet-at-home.com/processing/"], :root a[href^="http://data.linoleictanzaniatitanic.com/"], :root a[href^="http://dftrck.com/"], :root div[itemtype="http://www.schema.org/WPAdBlock"], :root a[href^="http://down1oads.com/"], :root a[href^="http://download-performance.com/"], :root a[href^="http://duckcash.eu/"], :root a[href^="https://bs.serving-sys.com"], :root a[href^="http://server.cpmstar.com/click.aspx?poolid="], :root a[href^="http://dwn.pushtraffic.net/"], :root a[href^="http://easydownload4you.com/"], :root a[href^="http://www.moneyducks.com/"], :root a[href^="http://eclkmpsa.com/"], :root a[href^="http://elite-sex-finder.com/?"], :root a[href^="http://elitefuckbook.com/"], :root a[href^="http://farm.plista.com/pets"], :root a[href^="http://freesoftwarelive.com/"], :root a[href^="http://ryushare.com/affiliate.python"], :root a[href^="http://feedads.g.doubleclick.net/"], :root a[href^="http://fileloadr.com/"], :root a[href^="http://fileupnow.rocks/"], :root a[href^="http://prousa.work/"], :root a[href^="https://secure.eveonline.com/ft/?aid="], :root a[href^="http://mojofun.info/"], :root a[href^="http://findersocket.com/"], :root a[href^="http://fsoft4down.com/"], :root a[href^="http://fusionads.net"], :root a[href^="http://galleries.securewebsiteaccess.com/"], :root a[href^="https://farm.plista.com/pets"], :root a[href^="http://gca.sh/user/register?ref="], :root a[href^="http://www.on2url.com/app/adtrack.asp"], :root a[href^="http://getlinksinaseconds.com/"], :root a[href^="http://go.seomojo.com/tracking202/"], :root a[href^="http://www.getyourguide.com/?partner_id="], :root a[href^="http://goldmoney.com/?gmrefcode="], :root a[href^="http://greensmoke.com/"], :root a[href^="http://guideways.info/"], :root a[href^="http://hd-plugins.com/download/"], :root a[href^="http://tracking.crazylead.com/"], :root a[href^="http://hyperlinksecure.com/go/"], :root a[href^="http://imads.integral-marketing.com/"], :root a[href^="http://www.tirerack.com/affiliates/"], :root a[href^="http://install.securewebsiteaccess.com/"], :root a[href^="http://secure.signup-page.com/"], :root a[href^="http://www.brightwheel.info/"], :root a[href^="http://internalredirect.site/"], :root a[href^="http://istri.it/?"], :root a[href^="http://jobitem.org/"], :root a[href^="http://liversely.com/"], :root a[href^="http://join3.bannedsextapes.com/track/"], :root a[href^="http://k2s.cc/pr/"], :root a[href^="http://keep2share.cc/pr/"], :root a[href^="http://latestdownloads.net/download.php?"], :root a[href^="http://liversely.net/"], :root a[href^="http://t.mdn2015x2.com/"], :root div[id^="ADV-SLOT-"], :root a[href^="https://ad.doubleclick.net/"], :root a[href^="http://mgid.com/"], :root a[href^="http://www.freefilesdownloader.com/"], :root a[href^="http://www.quick-torrent.com/download.html?aff"], :root a[href^="http://mo8mwxi1.com/"], :root a[href^="http://onclickads.net/"], :root a[href^="http://online.ladbrokes.com/promoRedirect?"], :root div[class^="gemini-ad"], :root a[href^="http://paid.outbrain.com/network/redir?"], :root a[href^="http://pokershibes.com/index.php?ref="], :root a[href^="http://www.friendlyadvertisements.com/"], :root a[href^="http://prochina.link/"], :root a[href^="https://www.spyoff.com/"], :root a[href^="https://www.dsct1.com/"], :root a[href^="http://record.betsafe.com/"], :root a[href^="http://record.commissionking.com/"], :root a[href^="http://refer.webhostingbuzz.com/"], :root a[href^="http://rekoverr.com/"], :root a[href^="http://secure.hostgator.com/~affiliat/"], :root a[href^="http://serve.williamhill.com/promoRedirect?"], :root a[href^="http://servicegetbook.net/"], :root a[href^="http://srvpub.com/"], :root a[href^="http://stateresolver.link/"], :root a[href^="http://www.drowle.com/"], :root a[href^="http://t.mdn2015x1.com/"], :root a[href^="https://www.firstload.com/affiliate/"], :root a[href^="http://t.mdn2015x3.com/"], :root a[href^="http://t.wowtrk.com/"], :root a[href^="http://tour.affbuzzads.com/"], :root a[href^="http://tracking.deltamediallc.com/"], :root a[href^="http://tracking.toroadvertising.com/"], :root a[href^="http://uploaded.net/ref/"], :root div[id^="ad-div-"], :root a[href^="http://us.marketgid.com"], :root a[href^="http://webtrackerplus.com/"], :root a[href^="http://www.123-reg.co.uk/affiliate2.cgi"], :root a[href^="http://www.TwinPlan.com/AF_"], :root a[href^="http://www.twinplan.com/AF_"], :root div[id^="cns_ads_"], :root a[href^="http://www.adbrite.com/mb/commerce/purchase_form.php?"], :root a[href^="http://www.adskeeper.co.uk/"], :root a[href^="http://www.affiliates1128.com/processing/"], :root a[href^="http://www.downloadplayer1.com/"], :root a[href^="https://understandsolar.com/signup/?lead_source="][href*="&tracking_code="], :root a[href^="http://www.wantstraffic.com/"], :root a[href^="http://www.badoink.com/go.php?"], :root a[href^="http://www.bet365.com/"][href*="?affiliate="], :root a[href^="http://www.cash-duck.com/"], :root bottomadblock, :root a[href^="http://www.coinducks.com/"], :root a[href^="http://www.dl-provider.com/search/"], :root a[href^="http://www.downloadthesefiles.com/"], :root a[href^="http://www.duckcash.eu/"], :root a[href^="http://www.duckssolutions.com/"], :root a[href^="http://www.easydownloadnow.com/"], :root a[href^="http://www.epicgameads.com/"], :root a[href^="http://www.faceporn.net/free?"], :root a[href^="http://www.fducks.com/"], :root a[href^="http://www.firstclass-download.com/"], :root a[href^="https://torguard.net/aff.php"], :root a[href^="http://www.firstload.de/affiliate/"], :root a[href^="http://www.fonts.com/BannerScript/"], :root a[href^="https://trust.zone/go/r.php?RID="], :root a[href^="http://www.flashx.tv/downloadthis"], :root a[href^="http://www.fleshlight.com/"], :root a[href^="http://www.friendlyquacks.com/"], :root a[href^="http://www.greenmangaming.com/?tap_a="], :root a[href^="http://www.idownloadplay.com/"], :root a[href^="https://pubads.g.doubleclick.net/"], :root a[href^="http://www.incredimail.com/?id="], :root a[href^="https://dediseedbox.com/clients/aff.php?"], :root a[href^="http://www.installads.net/"], :root a[href^="http://www.ireel.com/signup?ref"], :root a[href^="http://www.liutilities.com/"], :root a[href^="http://www.pinkvisualpad.com/?revid="], :root a[href^="http://www.liversely.net/"], :root a[href^="http://www.menaon.com/installs/"], :root a[href^="http://www.mobileandinternetadvertising.com/"], :root a[href^="http://www.my-dirty-hobby.com/?sub="], :root a[href^="http://www.plus500.com/?id="], :root a[href^="http://www.revenuehits.com/"], :root a[href^="http://www.richducks.com/"], :root a[href^="http://www.ringtonematcher.com/"], :root a[href^="http://www.roboform.com/php/land.php"], :root a[href^="http://www.seekbang.com/cs/"], :root a[href^="http://www.sex.com/?utm_"], :root a[href^="http://www.sex.com/pics/?utm_"], :root a[href^="http://www.urmediazone.com/signup"], :root a[href^="http://www.sexgangsters.com/?pid="], :root a[href^="http://www.sfippa.com/"], :root a[href^="http://www.socialsex.com/"], :root a[href^="http://www.torntv-downloader.com/"], :root a[href^="http://www.torntvdl.com/"], :root a[href^="http://www.uniblue.com/cm/"], :root a[href^="http://www.usearchmedia.com/signup?"], :root a[href^="http://www.xmediaserve.com/"], :root a[href^="http://www.yourfuckbook.com/?"], :root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"][target="_blank"], :root a[href^="http://www.zergnet.com/i/"], :root a[href^="http://www1.clickdownloader.com/"], :root a[href^="http://wxdownloadmanager.com/dl/"], :root a[href^="http://xads.zedo.com/"], :root a[href^="http://yads.zedo.com/"], :root a[href^="https://windscribe.com/promo/"], :root a[href^="http://z1.zedo.com/"], :root div[id^="div_ad_stack_"], :root a[href^="https://adhealers.com/"], :root a[href^="https://atomidownload.com/"], :root a[href^="https://www.share-online.biz/affiliate/"], :root a[href^="https://chaturbate.com/affiliates/"], :root a[href^="https://click.plista.com/pets"], :root a[href^="https://dltags.com/"], :root a[href^="https://go.ad2up.com/"], :root a[href^="https://paid.outbrain.com/network/redir?"], :root a[href^="https://trackjs.com/?utm_source"], :root div[id^="ad-server-"], :root a[href^="https://trklvs.com/"], :root a[href^="https://www.adskeeper.co.uk/"], :root a[href^="https://www.oboom.com/ad/"], :root a[href^="https://www.popads.net/users/"], :root a[onmousedown^="this.href='/wp-content/embed-ad-content/"], :root a[onmousedown^="this.href='http://paid.outbrain.com/network/redir?"][target="_blank"] + .ob_source, :root div > [class][onclick*=".updateAnalyticsEvents"], :root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"][target="_blank"] + .ob_source, :root a[style="display:block;width:300px;min-height:250px"][href^="http://li.cnet.com/click?"], :root div[id^="div-gpt-ad"], :root div[class^="BlockAdvert-"], :root div[class^="proadszone-"], :root div[id^="YFBMSN"], :root div[id^="adrotate_widgets-"], :root div[id^="ads120_600-widget"], :root div[id^="ads250_250-widget"], :root div[id^="ads300_250-widget"], :root div[id^="ads300_600-widget"], :root div[id^="dfp-slot-"], :root div[id^="div-adtech-ad-"], :root div[id^="dmRosAdWrapper"], :root div[id^="google_dfp_"], :root div[id^="proadszone-"], :root div[id^="q1-adset-"], :root iframe[id^="google_ads_frame"], :root iframe[src^="http://cdn1.adexprt.com/"], :root iframe[src^="http://static.mozo.com.au/strips/"], :root img[alt^="Fuckbook"], :root input[onclick^="window.open('http://www.friendlyduck.com/"], :root input[onclick^="window.open('http://www.FriendlyDuck.com/"], :root p[id^="div-gpt-ad-"], :root td[valign="top"] > .mainmenu[style="padding:10px 0 0 0 !important;"], :root topadblock { display: none !important; }</style><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/services.css"><script src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/cc414ddfd01f0608e26b22006ab0e5df.json" type="text/javascript"></script></head>
+
+<body class="post-template-default single single-post postid-37 single-format-standard mp6 customizer-styles-applied highlander-enabled highlander-light">
+<!-- wrap START -->
+<div id="wrap">
+
+<!-- container START -->
+<div id="container">
+
+<!-- header START -->
+<div id="header">
+
+	<!-- banner START -->
+		<!-- banner END -->
+
+	<div id="caption">
+		<h1 id="title"><a href="https://mayaposch.wordpress.com/">Maya's Programming &amp; Electronics Blog</a></h1>
+		<div id="tagline">An attempt at a proper programming &amp; electronics blog</div>
+	</div>
+
+	<div class="fixed"></div>
+</div>
+<!-- header END -->
+
+<!-- navigation START -->
+<div id="navigation">
+	<!-- menus START -->
+	<ul id="menus">
+	<li class="page_item"><a class="home" title="Home" href="https://mayaposch.wordpress.com/">Home</a></li>
+	<li class="page_item page-item-2"><a href="https://mayaposch.wordpress.com/about/">About</a></li>
+	<li><a class="lastmenu" href="javascript:void(0);"></a></li>
+</ul>
+
+	<!-- menus END -->
+
+	<!-- searchbox START -->
+	<div id="searchbox">
+		<form action="https://mayaposch.wordpress.com/" method="get">
+			<div class="content">
+				<input type="text" class="textfield searchtip" name="s" size="24" value="">
+				<input type="submit" class="button" value="">
+			</div>
+		</form>
+	</div>
+<script type="text/javascript">
+//<![CDATA[
+	var searchbox = MGJS.$("searchbox");
+	var searchtxt = MGJS.getElementsByClassName("textfield", "input", searchbox)[0];
+	var searchbtn = MGJS.getElementsByClassName("button", "input", searchbox)[0];
+	var tiptext = "Type text to search here...";
+	if(searchtxt.value == "" || searchtxt.value == tiptext) {
+		searchtxt.className += " searchtip";
+		searchtxt.value = tiptext;
+	}
+	searchtxt.onfocus = function(e) {
+		if(searchtxt.value == tiptext) {
+			searchtxt.value = "";
+			searchtxt.className = searchtxt.className.replace(" searchtip", "");
+		}
+	}
+	searchtxt.onblur = function(e) {
+		if(searchtxt.value == "") {
+			searchtxt.className += " searchtip";
+			searchtxt.value = tiptext;
+		}
+	}
+	searchbtn.onclick = function(e) {
+		if(searchtxt.value == "" || searchtxt.value == tiptext) {
+			return false;
+		}
+	}
+//]]>
+</script>
+	<!-- searchbox END -->
+
+	<div class="fixed"></div>
+</div>
+<!-- navigation END -->
+
+<!-- content START -->
+<div id="content">
+
+	<!-- main START -->
+	<div id="main">
+
+
+	<div id="postpath">
+		<a title="Go to homepage" href="https://mayaposch.wordpress.com/">Home</a>
+		 &gt; <a href="https://mayaposch.wordpress.com/category/programming/" rel="category tag">programming</a>, <a href="https://mayaposch.wordpress.com/category/qt/" rel="category tag">Qt</a>, <a href="https://mayaposch.wordpress.com/category/software/" rel="category tag">Software</a>, <a href="https://mayaposch.wordpress.com/category/upnp/" rel="category tag">UPnP</a>		 &gt; Qt And Custom Networking Protocols, Or: The Holy Grail Of The&nbsp;Internet	</div>
+
+	<div id="post-37" class="post-37 post type-post status-publish format-standard hentry category-programming category-qt category-software category-upnp">
+		<h2>Qt And Custom Networking Protocols, Or: The Holy Grail Of The&nbsp;Internet</h2>
+		<div class="info">
+			<span class="date">September 27, 2011</span>
+			<span class="author"><a href="https://mayaposch.wordpress.com/author/mayaposch/" title="Posts by Maya Posch" rel="author">Maya Posch</a></span>										<span class="addcomment"><a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#respond">Leave a comment</a></span>
+				<span class="comments"><a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#comments">Go to comments</a></span>
+						<div class="fixed"></div>
+		</div>
+		<div class="content">
+			<p>In the previous installment I talked about combining UPnP’s IGD features with Qt. This culminated for me in a few days of programming and debugging in order to get a functional program working.</p>
+<p>Let’s be short about one thing: if you intend to use Qt with custom networking protocols, meaning something other than the standard HTTP, FTP and other such generic protocols, be aware that you shouldn’t use anything more of Qt than QTcpSocket and QTcpServer. QNetworkAccessManager doesn’t work unless you want to extend its range of protocols, while it’s easier to implement the protocol outside it. Avoid QByteArrays for received data and go as low-level as possible. Unsigned integers in Qt, such as quint8 are excellent to use with a standard C/C++ array. It makes data conversion so much easier, assuming you’re using a binary protocol, like I was.</p>
+<p>Also brush up on your bitwise operators. You’ll need to know your way with the &amp; AND operator for masking and the &lt;&lt; and &gt;&gt; bitwise shifts, such as when converting an integer to bytes for adding them to an array:</p>
+<div><div id="highlighter_768193" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">QByteArray output;</code></div><div class="line number2 index1 alt1"><code class="cpp keyword bold">for</code> <code class="cpp plain">(quint32 i = </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(ourInt); i &gt; 0; --i) {</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">output.append((ourInt &gt;&gt; ((i - 1) * 8)) &amp; 0xFF);</code></div><div class="line number4 index3 alt1"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Earlier today I finished the first alpha build of the application. It was inspired by a recent XKCD comic:</p>
+<p style="text-align:left;"><a href="http://xkcd.com/949/"><img class="aligncenter" title="File Transfers" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/file_transfer.png" alt="File transfers" width="456" height="614" srcset="https://i0.wp.com/imgs.xkcd.com/comics/file_transfer.png?zoom=2 1.5x" scale="1.5"></a><br class="aligncenter"><br>
+Why not have a basic application which allows one to just transfer files without any accounts, messing with NAT router forwardings, firewalls, setting up servers and other unpleasantness? With all of the raw power available, why can’t we just give someone a link (URI/URL) which allows that person to download a file straight from our own PC? It was the original concept behind the World Wide Web after all.</p>
+<p>May I present to you, as the first stage in making this dream a reality, the Universal Data Share (UDS) application:</p>
+<p><a href="https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png"><img data-attachment-id="38" data-permalink="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/universal_data_share_screenshot/" data-orig-file="https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png?w=595" data-orig-size="576,563" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Universal Data Share screenshot" data-image-description="" data-medium-file="https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png?w=595?w=300" data-large-file="https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png?w=595?w=576" class="aligncenter size-full wp-image-38" title="Universal Data Share screenshot" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/universal_data_share_screenshot.png" alt="UDS" srcset="https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png 576w, https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png?w=150 150w, https://mayaposch.files.wordpress.com/2011/09/universal_data_share_screenshot.png?w=300 300w" sizes="(max-width: 576px) 100vw, 576px"></a></p>
+<p>For those who want to give it a try, it’s available from here, as a Windows .exe: <a href="http://www.mayaposch.com/downloads/Universal_Data_Share.exe">http://www.mayaposch.com/downloads/Universal_Data_Share.exe</a>. It’s statically compiled against the Qt libraries, so no DLLs are required. UPX was used to compress the EXE (10 MB down to 3.25 MB).</p>
+<p>Quick usage tutorial: after starting, go to Shares -&gt; Go Online. This initiates the UPnP IGD discovery and port mapping. Port 11310 is hard-coded in this version. Under File you can add files to the local list. Under Remote you can copy the global (external) IP to the clipboard, which will then allow another person also running UDS to connect to you and obtain a list of your shares. These can then be downloaded via a menu option as well.</p>
+<p>In the future I’d like to add URL-based downloads, maybe even add HTTP support so that it can act like a web server, allowing anyone with a browser to connect to it. Anyway, give it a whirl and let me know how it works for you. Feature requests are also quite welcome.</p>
+<p>For the usual disclaimer, I’ll just say that this Alpha-level software. I have tested it for the past two days on my Windows 7 Enterprise system via the loopback network. The port mapping was not directly tested and may have issues with some NAT routers. I can not take responsibility for any damage which may be caused to routers, computers, files or other hardware or software. Use of this experimental software is completely at your own risk.</p>
+<p>Now go have fun <img draggable="false" class="emoji" alt="🙂" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/1f642.svg" scale="0"></p>
+<p>Maya</p>
+			<style type="text/css">
+			div.wpmrec2x{max-width:610px;}
+			div.wpmrec2x div.u > div{float:left;margin-right:10px;}
+			div.wpmrec2x div.u > div:nth-child(3n){margin-right:0px;}
+			</style>		<div class="wpcnt">
+			<div class="wpa wpmrec wpmrec2x" style="display: none !important;">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+										<script type="text/javascript" id="s26942">
+						(function(g,$){if("undefined"!=typeof g.__ATA){
+							g.__ATA.initAd({collapseEmpty:'after', sectionId:26942, width:300, height:250});
+							g.__ATA.initAd({collapseEmpty:'after', sectionId:114160, width:300, height:250});
+						}})(window,jQuery);
+					</script>
+				</div>
+						<div id="crt-1504053241" style="width: 300px; height: 250px; display: none !important; visibility: hidden !important;"></div>
+		<script type="text/javascript">
+		var o = document.getElementById('crt-1504053241');
+		if ("undefined"!=typeof Criteo) {
+			var p = o.parentNode;
+			p.style.setProperty('display', 'inline-block', 'important');
+			o.style.setProperty('display', 'block', 'important');
+			Criteo.DisplayAcceptableAdIfAdblocked({zoneid:388248,containerid:"crt-1504053241",collapseContainerIfNotAdblocked:true,"callifnotadblocked": function () {var o = document.getElementById('crt-1504053241'); o.style.setProperty('display','none','important');o.style.setProperty('visbility','hidden','important'); } });
+		} else {
+			o.style.setProperty('display', 'none', 'important');
+			o.style.setProperty('visibility', 'hidden', 'important');
+		}
+		</script>		<div id="crt-1792902419" style="width: 300px; height: 250px; display: none !important; visibility: hidden !important;"></div>
+		<script type="text/javascript">
+		var o = document.getElementById('crt-1792902419');
+		if ("undefined"!=typeof Criteo) {
+			var p = o.parentNode;
+			p.style.setProperty('display', 'inline-block', 'important');
+			o.style.setProperty('display', 'block', 'important');
+			Criteo.DisplayAcceptableAdIfAdblocked({zoneid:837497,containerid:"crt-1792902419",collapseContainerIfNotAdblocked:true,"callifnotadblocked": function () {var o = document.getElementById('crt-1792902419'); o.style.setProperty('display','none','important');o.style.setProperty('visbility','hidden','important'); } });
+		} else {
+			o.style.setProperty('display', 'none', 'important');
+			o.style.setProperty('visibility', 'hidden', 'important');
+		}
+		</script>
+			</div>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-37" class="share-twitter sd-button share-icon" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?share=twitter&amp;nb=1" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-37" class="share-facebook sd-button share-icon" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?share=facebook&amp;nb=1" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-37" class="share-google-plus-1 sd-button share-icon" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?share=google-plus-1&amp;nb=1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-reddit"><a rel="nofollow" data-shared="" class="share-reddit sd-button share-icon" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?share=reddit&amp;nb=1" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-37" class="share-linkedin sd-button share-icon" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?share=linkedin&amp;nb=1" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn<span class="share-count">1</span></span></a></li><li class="share-email share-service-visible"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?share=email&amp;nb=1" target="_blank" title="Click to email"><span>Email</span></a></li><li class="share-end"></li></ul></div></div></div><div class="sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-loaded" id="like-post-wrapper-25978506-37-59c234c1e205a" data-src="//widgets.wp.com/likes/#blog_id=25978506&amp;post_id=37&amp;origin=mayaposch.wordpress.com&amp;obj_id=25978506-37-59c234c1e205a" data-name="like-post-frame-25978506-37-59c234c1e205a"><h3 class="sd-title">Like this:</h3><div class="likes-widget-placeholder post-likes-widget-placeholder" style="height: 55px; display: none;"><span class="button"><span>Like</span></span> <span class="loading">Loading...</span></div><iframe class="post-likes-widget jetpack-likes-widget" name="like-post-frame-25978506-37-59c234c1e205a" height="55px" width="100%" frameborder="0" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource.html"></iframe><span class="sd-text-color"></span><a class="sd-link-color"></a></div>
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block;">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal"><p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="47" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://mayaposch.wordpress.com/2011/11/22/sharing-data-even-more-universally-uds-open-sourced/" title="Sharing Data Even More Universally; UDS Open Sourced
+
+A while ago (September 27th this year, to be precise) I announced[1] the Universal Data Share (UDS) project: a small utility using which people can share files with others without the need for a server or complicated software installs. Since that time I have been testing the application with some…" rel="nofollow" data-origin="37" data-position="0">Sharing Data Even More Universally; UDS Open Sourced</a></span><span class="jp-relatedposts-post-context">In "Projects"</span></p><p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="81" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://mayaposch.wordpress.com/2013/07/26/binary-network-protocol-implementation-in-java-using-byte-arrays/" title="Binary Network Protocol Implementation In Java Using Byte Arrays
+
+Java in many ways is a very eccentric programming language. Reading the designer&#39;s responses to questions on its design lead to interesting ideas, such as that unsigned integer types would be confusing and error-prone to the average programmer. There&#39;s also the thought that Java is purely object-oriented, even though it…" rel="nofollow" data-origin="37" data-position="1">Binary Network Protocol Implementation In Java Using Byte Arrays</a></span><span class="jp-relatedposts-post-context">In "Android"</span></p><p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="41" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://mayaposch.wordpress.com/2011/10/03/design-your-own-protocol-in-five-minutes/" title="Design Your Own Protocol In Five Minutes
+
+Among the most scary and official sounding terms in computing we find the word &#39;protocol&#39;. Its meaning really isn&#39;t that scary, however. Just like when used in other contexts, all it means is a collection of agreements about how to go about something. In this case we&#39;re talking about communication…" rel="nofollow" data-origin="37" data-position="2">Design Your Own Protocol In Five Minutes</a></span><span class="jp-relatedposts-post-context">In "programming"</span></p></div></div></div>						<div class="fixed"></div>
+		</div>
+		<div class="under">
+			<span><span class="categories">Categories: </span><a href="https://mayaposch.wordpress.com/category/programming/" rel="category tag">programming</a>, <a href="https://mayaposch.wordpress.com/category/qt/" rel="category tag">Qt</a>, <a href="https://mayaposch.wordpress.com/category/software/" rel="category tag">Software</a>, <a href="https://mayaposch.wordpress.com/category/upnp/" rel="category tag">UPnP</a></span>
+			<span></span>
+		</div>
+		<div class="fixed"></div>
+	</div>
+
+	
+
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/comment.js.Download"></script>
+
+<div id="comments">
+
+	
+		<div id="cmtswitcher">
+										<a id="commenttab" class="curtab" href="javascript:void(0);" onclick="MGJS.switchTab(&#39;thecomments,commentnavi&#39;, &#39;thetrackbacks&#39;, &#39;commenttab&#39;, &#39;curtab&#39;, &#39;trackbacktab&#39;, &#39;tab&#39;);">
+					Comments (4)				</a>
+				<a id="trackbacktab" class="tab" href="javascript:void(0);" onclick="MGJS.switchTab(&#39;thetrackbacks&#39;, &#39;thecomments,commentnavi&#39;, &#39;trackbacktab&#39;, &#39;curtab&#39;, &#39;commenttab&#39;, &#39;tab&#39;);">
+					Trackbacks (1)				</a>
+			
+							<span class="addcomment"><a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#respond">Leave a comment</a></span>
+			
+							<span class="addtrackback"><a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/trackback/">Trackback</a></span>
+					</div><!-- #cmtswitcher -->
+
+		<div id="commentlist">
+
+			<!-- Comments -->
+			<ol id="thecomments">
+								<li id="comment-28" class="comment byuser comment-author-willzzz88 even thread-even depth-1 highlander-comment">
+		<div class="author">
+			<div class="pic">
+				<img alt="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/bc3c2e282a67b6fcb1baf2add7655cf1" class="avatar avatar-32 grav-hashed grav-hijack" height="32" width="32" originals="32" src-orig="https://2.gravatar.com/avatar/bc3c2e282a67b6fcb1baf2add7655cf1?s=32&amp;d=identicon&amp;r=G" scale="1" id="grav-bc3c2e282a67b6fcb1baf2add7655cf1-0">			</div><!-- .pic -->
+			<div class="name">
+				<a href="http://willzzz88.wordpress.com/" rel="external nofollow" class="url">willzzz88</a>			</div><!-- .name -->
+		</div>
+
+		<div class="info">
+			<div class="date">
+				October 24, 2011 at 6:30 AM			</div><!-- .date -->
+			<div class="act">
+				<a class="comment-reply-link" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?replytocom=28#respond" onclick="return addComment.moveForm(&quot;comment-28&quot;, &quot;28&quot;, &quot;respond&quot;, &quot;37&quot;)">Reply</a>							</div><!-- .act -->
+			<div class="content">
+				
+				<div id="commentbody-28">
+					<p>Interesting concept and deployment. UPnP has been here for a LONG TIME but there was a time when there were security loopholes in Windows and enterprise networks like it closed anyways. </p>
+<p>For small stuff transfers P2P I feel always works best so I’ll give it a whirl.</p>
+<p>–Will</p>
+				</div><!-- #commentbody-ID -->
+			</div><!-- .comment -->
+			<div class="fixed"></div>
+		</div><!-- .info -->
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li id="comment-30" class="comment byuser comment-author-mayaposch bypostauthor odd alt thread-odd thread-alt depth-1 highlander-comment">
+		<div class="author">
+			<div class="pic">
+				<img alt="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/cc414ddfd01f0608e26b22006ab0e5df" class="avatar avatar-32 grav-hashed grav-hijack" height="32" width="32" originals="32" src-orig="https://0.gravatar.com/avatar/cc414ddfd01f0608e26b22006ab0e5df?s=32&amp;d=identicon&amp;r=G" scale="1" id="grav-cc414ddfd01f0608e26b22006ab0e5df-0">			</div><!-- .pic -->
+			<div class="name">
+				<a href="http://www.mayaposch.com/" rel="external nofollow" class="url">Maya Posch</a>			</div><!-- .name -->
+		</div>
+
+		<div class="info">
+			<div class="date">
+				October 28, 2011 at 4:42 PM			</div><!-- .date -->
+			<div class="act">
+				<a class="comment-reply-link" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?replytocom=30#respond" onclick="return addComment.moveForm(&quot;comment-30&quot;, &quot;30&quot;, &quot;respond&quot;, &quot;37&quot;)">Reply</a>							</div><!-- .act -->
+			<div class="content">
+				
+				<div id="commentbody-30">
+					<p>Thank you <img draggable="false" class="emoji" alt="🙂" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/1f642.svg" scale="0"> I will be regularly updating the linked binary so if the version you download has issues, let me know and there should be an updated version ready shortly after <img draggable="false" class="emoji" alt="🙂" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/1f642.svg" scale="0"></p>
+				</div><!-- #commentbody-ID -->
+			</div><!-- .comment -->
+			<div class="fixed"></div>
+		</div><!-- .info -->
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li id="comment-415" class="comment even thread-even depth-1 highlander-comment">
+		<div class="author">
+			<div class="pic">
+				<img alt="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/p_JMgCpb_normal.png" class="avatar avatar-32" height="32" width="32" srcset="https://i1.wp.com/pbs.twimg.com/profile_images/540990888717991936/p_JMgCpb_normal.png?resize=32%2C32&amp;zoom=2 1.5x" scale="1.5">			</div><!-- .pic -->
+			<div class="name">
+				<a href="http://twitter.com/Uriel_Fanelli" rel="external nofollow" class="url">Uriel Fanelli (@Uriel_Fanelli)</a>			</div><!-- .name -->
+		</div>
+
+		<div class="info">
+			<div class="date">
+				May 19, 2015 at 4:20 PM			</div><!-- .date -->
+			<div class="act">
+				<a class="comment-reply-link" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?replytocom=415#respond" onclick="return addComment.moveForm(&quot;comment-415&quot;, &quot;415&quot;, &quot;respond&quot;, &quot;37&quot;)">Reply</a>							</div><!-- .act -->
+			<div class="content">
+				
+				<div id="commentbody-415">
+					<p>Why don’t you used NAT UDP: <a href="http://tools.ietf.org/html/rfc4787" rel="nofollow">http://tools.ietf.org/html/rfc4787</a>  instead of using UpNP? I am implementing a UpNP enabled application, and I can’t find two routers which are behaving the same….</p>
+				</div><!-- #commentbody-ID -->
+			</div><!-- .comment -->
+			<div class="fixed"></div>
+		</div><!-- .info -->
+		<div class="fixed"></div>
+<ul class="children">
+	<li id="comment-417" class="comment byuser comment-author-mayaposch bypostauthor odd alt depth-2 highlander-comment">
+		<div class="author">
+			<div class="pic">
+				<img alt="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/cc414ddfd01f0608e26b22006ab0e5df" class="avatar avatar-32 grav-hashed grav-hijack" height="32" width="32" originals="32" src-orig="https://0.gravatar.com/avatar/cc414ddfd01f0608e26b22006ab0e5df?s=32&amp;d=identicon&amp;r=G" scale="1" id="grav-cc414ddfd01f0608e26b22006ab0e5df-1">			</div><!-- .pic -->
+			<div class="name">
+				<a href="http://www.mayaposch.com/" rel="external nofollow" class="url">Maya Posch</a>			</div><!-- .name -->
+		</div>
+
+		<div class="info">
+			<div class="date">
+				May 29, 2015 at 8:14 PM			</div><!-- .date -->
+			<div class="act">
+				<a class="comment-reply-link" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/?replytocom=417#respond" onclick="return addComment.moveForm(&quot;comment-417&quot;, &quot;417&quot;, &quot;respond&quot;, &quot;37&quot;)">Reply</a>							</div><!-- .act -->
+			<div class="content">
+				
+				<div id="commentbody-417">
+					<p>Is that even implemented anywhere? I have not encountered at any point during my research. UPnP IGD is at this point still one of the most popular ways to NAT traversal, together with plain old UDP hole punching.</p>
+				</div><!-- #commentbody-ID -->
+			</div><!-- .comment -->
+			<div class="fixed"></div>
+		</div><!-- .info -->
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+						</ol><!-- #thecomments -->
+
+			
+			<!-- Trackbacks and Pingbacks -->
+			<ol id="thetrackbacks">
+										<li id="comment-33" class="pingback even thread-even depth-1 trackback highlander-comment">
+		<div class="date">
+			November 22, 2011 at 8:28 PM		</div><!-- .date -->
+		<div class="act">
+					</div><!-- .act -->
+		<div class="title">
+			<a href="https://mayaposch.wordpress.com/2011/11/22/sharing-data-even-more-universally-uds-open-sourced/" rel="external nofollow" class="url">Sharing Data Even More Universally; UDS Open Sourced « Maya's Programming Blog</a>		</div><!-- .title -->
+</li><!-- #comment-## -->
+							</ol><!-- #thetrackbacks -->
+
+		</div><!-- #commentlist -->
+	
+
+	<div id="respond" class="comment-respond js">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#respond" style="display:none;">Cancel reply</a></small></h3>		<form action="https://mayaposch.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+														
+
+
+						<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="28b295d7db"><input type="hidden" name="_wp_http_referer" value="/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/">
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest">
+
+<div class="comment-form-field comment-textarea">
+	
+	<div id="comment-form-comment"><textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; transition: none; height: 0px !important; min-height: 0px !important; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none solid rgba(0, 0, 0, 0.7); word-spacing: 0px; text-indent: 0px; line-height: normal; width: 562.612px;" class="autosizejs "></textarea><textarea id="comment" name="comment" title="Enter your comment here..." placeholder="Enter your comment here..." style="height: 35px; overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div>
+</div>
+
+<div id="comment-form-identity" class="comment_registration" style="display: none;">
+
+	<div id="comment-form-nascar">
+		<p>Please log in using one of these methods to post your comment:</p>
+		<ul>
+			<li>
+				<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource(7).html" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected" style="display: none;">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/ad516503a11cd5ca435acc9bb6523536" alt="Gravatar" width="25" class="no-grav" originals="25" src-orig="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" scale="1">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name</label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value=""></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/ad516503a11cd5ca435acc9bb6523536" alt="WordPress.com Logo" width="25" class="no-grav" originals="25" scale="1">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;wordpress&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/ad516503a11cd5ca435acc9bb6523536" alt="Twitter picture" width="25" class="no-grav" originals="25" scale="1">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;twitter&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/ad516503a11cd5ca435acc9bb6523536" alt="Facebook photo" width="25" class="no-grav" originals="25" scale="1">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;facebook&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/ad516503a11cd5ca435acc9bb6523536" alt="Google+ photo" width="25" class="no-grav" originals="25" scale="1">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="">
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;googleplus&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe" style="display: none;">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog" style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+						<p class="form-submit" style="display: none;">
+				<input name="submit" type="submit" id="comment-submit" value="Post Comment">
+				<input type="hidden" name="comment_post_ID" value="37" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+			</p>
+			<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8698df72f0"></p>
+<input type="hidden" name="genseq" value="1505899713">
+<p style="display: none;"></p>		<input type="hidden" id="ak_js" name="ak_js" value="1505899714250"></form>
+	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+	<div id="postnavi">
+		<span class="prev"><a href="https://mayaposch.wordpress.com/2011/10/03/design-your-own-protocol-in-five-minutes/" rel="next">Design Your Own Protocol In Five&nbsp;Minutes</a></span>
+		<span class="next"><a href="https://mayaposch.wordpress.com/2011/09/18/setting-up-miniupnpc-with-qt/" rel="prev">Setting Up MiniUPnPc With&nbsp;Qt</a></span>
+		<div class="fixed"></div>
+	</div>
+
+
+	</div>
+	<!-- main END -->
+
+	
+<!-- sidebar START -->
+<div id="sidebar">
+
+<!-- sidebar north START -->
+<div id="northsidebar" class="sidebar">
+
+	<!-- feeds -->
+	<div class="widget widget_feeds">
+		<div class="content">
+			<div id="subscribe-feeds"><a rel="external nofollow" id="feedrss" title="Subscribe to this blog..." href="https://mayaposch.wordpress.com/feed/"><abbr title="Really Simple Syndication">RSS</abbr> feed</a><ul id="feed_readers" style="visibility: hidden; display: block;"><li id="google_reader"><a rel="external nofollow" class="reader" title="Subscribe with Google" href="http://fusion.google.com/add?feedurl=https://mayaposch.wordpress.com/feed/"><span>Google</span></a></li><li id="youdao_reader"><a rel="external nofollow" class="reader" title="Subscribe with Youdao" href="http://reader.youdao.com/#url=https://mayaposch.wordpress.com/feed/"><span>Youdao</span></a></li><li id="xianguo_reader"><a rel="external nofollow" class="reader" title="Subscribe with Xian Guo" href="http://www.xianguo.com/subscribe.php?url=https://mayaposch.wordpress.com/feed/"><span>Xian Guo</span></a></li><li id="zhuaxia_reader"><a rel="external nofollow" class="reader" title="Subscribe with Zhua Xia" href="http://www.zhuaxia.com/add_channel.php?url=https://mayaposch.wordpress.com/feed/"><span>Zhua Xia</span></a></li><li id="yahoo_reader"><a rel="external nofollow" class="reader" title="Subscribe with My Yahoo!" href="http://add.my.yahoo.com/rss?url=https://mayaposch.wordpress.com/feed/"><span>My Yahoo!</span></a></li><li id="newsgator_reader"><a rel="external nofollow" class="reader" title="Subscribe with newsgator" href="http://www.newsgator.com/ngs/subscriber/subfext.aspx?url=https://mayaposch.wordpress.com/feed/"><span>newsgator</span></a></li><li id="bloglines_reader"><a rel="external nofollow" class="reader" title="Subscribe with Bloglines" href="http://www.bloglines.com/sub/https://mayaposch.wordpress.com/feed/"><span>Bloglines</span></a></li><li id="inezha_reader"><a rel="external nofollow" class="reader last" title="Subscribe with iNezha" href="http://inezha.com/add?url=https://mayaposch.wordpress.com/feed/"><span>iNezha</span></a></li></ul></div>
+
+			<!-- twitter -->
+			
+			<div class="fixed"></div>
+		</div>
+	</div>
+
+	<!-- showcase -->
+	
+<div id="gravatar-4" class="widget widget_gravatar"><h3>Author</h3><p><a href="http://www.mayaposch.com/"><img alt="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/cc414ddfd01f0608e26b22006ab0e5df(1)" class="avatar avatar-96 grav-widget-none grav-hashed" height="96" width="96" originals="96" src-orig="https://0.gravatar.com/avatar/cc414ddfd01f0608e26b22006ab0e5df?s=96&amp;d=identicon&amp;r=G" scale="1" id="grav-cc414ddfd01f0608e26b22006ab0e5df-2"></a></p>
+<p>Maya Posch is a professional software developer. She has experience with various programming languages and platforms, including Android, Windows and Linux/BSDs.</p>
+</div><div id="linkcat-64" class="widget widget_links"><h3>Personal</h3>
+	<ul class="xoxo blogroll">
+<li><a href="http://www.nyanko.ws/" title="Company site">My Company Website</a></li>
+<li><a href="http://www.linkedin.com/profile/view?id=69685984" title="LinkedIn profile">My LinkedIn Profile</a></li>
+<li><a href="http://www.mayaposch.com/" title="Personal website">My Personal Website</a></li>
+
+	</ul>
+</div>
+<div id="search-3" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://mayaposch.wordpress.com/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="Search">
+				</div>
+			</form></div><div id="archives-3" class="widget widget_archive"><h3>Archives</h3>		<ul>
+			<li><a href="https://mayaposch.wordpress.com/2017/04/">April 2017</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2016/11/">November 2016</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2016/05/">May 2016</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2016/01/">January 2016</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2015/12/">December 2015</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2015/10/">October 2015</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2015/09/">September 2015</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2015/01/">January 2015</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2014/12/">December 2014</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2014/08/">August 2014</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2014/01/">January 2014</a>&nbsp;(2)</li>
+	<li><a href="https://mayaposch.wordpress.com/2013/08/">August 2013</a>&nbsp;(2)</li>
+	<li><a href="https://mayaposch.wordpress.com/2013/07/">July 2013</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2013/02/">February 2013</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2012/12/">December 2012</a>&nbsp;(2)</li>
+	<li><a href="https://mayaposch.wordpress.com/2012/02/">February 2012</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2011/11/">November 2011</a>&nbsp;(3)</li>
+	<li><a href="https://mayaposch.wordpress.com/2011/10/">October 2011</a>&nbsp;(1)</li>
+	<li><a href="https://mayaposch.wordpress.com/2011/09/">September 2011</a>&nbsp;(3)</li>
+	<li><a href="https://mayaposch.wordpress.com/2011/08/">August 2011</a>&nbsp;(6)</li>
+		</ul>
+		</div><div id="categories-3" class="widget widget_categories"><h3>Categories</h3>		<ul>
+	<li class="cat-item cat-item-73380"><a href="https://mayaposch.wordpress.com/category/3d-modelling/">3D modelling</a> (1)
+</li>
+	<li class="cat-item cat-item-58282"><a href="https://mayaposch.wordpress.com/category/3d-studio-max/">3D Studio Max</a> (1)
+</li>
+	<li class="cat-item cat-item-3471"><a href="https://mayaposch.wordpress.com/category/accessibility/">Accessibility</a> (1)
+</li>
+	<li class="cat-item cat-item-40380114"><a href="https://mayaposch.wordpress.com/category/andengine/">AndEngine</a> (2)
+</li>
+	<li class="cat-item cat-item-641922"><a href="https://mayaposch.wordpress.com/category/android/">Android</a> (6)
+</li>
+	<li class="cat-item cat-item-156455415"><a href="https://mayaposch.wordpress.com/category/programming/asm-js/">asm.js</a> (1)
+</li>
+	<li class="cat-item cat-item-6354"><a href="https://mayaposch.wordpress.com/category/bugs/">Bugs</a> (2)
+</li>
+	<li class="cat-item cat-item-2426"><a href="https://mayaposch.wordpress.com/category/programming/c/">C++</a> (5)
+</li>
+	<li class="cat-item cat-item-496182104"><a href="https://mayaposch.wordpress.com/category/projects/cerflet/">Cerflet</a> (1)
+</li>
+	<li class="cat-item cat-item-7334"><a href="https://mayaposch.wordpress.com/category/electronics/">Electronics</a> (1)
+</li>
+	<li class="cat-item cat-item-14913"><a href="https://mayaposch.wordpress.com/category/game-design/">Game design</a> (2)
+</li>
+	<li class="cat-item cat-item-10518"><a href="https://mayaposch.wordpress.com/category/programming/http/">HTTP</a> (3)
+</li>
+	<li class="cat-item cat-item-5621"><a href="https://mayaposch.wordpress.com/category/introductions/">Introductions</a> (1)
+</li>
+	<li class="cat-item cat-item-1017"><a href="https://mayaposch.wordpress.com/category/programming/java/">Java</a> (4)
+</li>
+	<li class="cat-item cat-item-62372242"><a href="https://mayaposch.wordpress.com/category/jpct-ae/">jPCT-AE</a> (2)
+</li>
+	<li class="cat-item cat-item-11372350"><a href="https://mayaposch.wordpress.com/category/upnp/miniupnp/">MiniUPnP</a> (1)
+</li>
+	<li class="cat-item cat-item-603962"><a href="https://mayaposch.wordpress.com/category/programming/multi-threading/">Multi-threading</a> (3)
+</li>
+	<li class="cat-item cat-item-7426"><a href="https://mayaposch.wordpress.com/category/networking/">Networking</a> (4)
+</li>
+	<li class="cat-item cat-item-1511234"><a href="https://mayaposch.wordpress.com/category/projects/ngs/">NGS</a> (1)
+</li>
+	<li class="cat-item cat-item-36530"><a href="https://mayaposch.wordpress.com/category/projects/nt/">Nt</a> (1)
+</li>
+	<li class="cat-item cat-item-196"><a href="https://mayaposch.wordpress.com/category/programming/">programming</a> (18)
+</li>
+	<li class="cat-item cat-item-2008"><a href="https://mayaposch.wordpress.com/category/projects/">Projects</a> (3)
+</li>
+	<li class="cat-item cat-item-86425"><a href="https://mayaposch.wordpress.com/category/programming/protocols/">Protocols</a> (3)
+</li>
+	<li class="cat-item cat-item-117148"><a href="https://mayaposch.wordpress.com/category/electronics/psu/">psu</a> (1)
+</li>
+	<li class="cat-item cat-item-46646742"><a href="https://mayaposch.wordpress.com/category/qt/qgraphicsscene/">QGraphicsScene</a> (1)
+</li>
+	<li class="cat-item cat-item-61037"><a href="https://mayaposch.wordpress.com/category/qt/">Qt</a> (8)
+</li>
+	<li class="cat-item cat-item-581"><a href="https://mayaposch.wordpress.com/category/software/">Software</a> (1)
+</li>
+	<li class="cat-item cat-item-1434584"><a href="https://mayaposch.wordpress.com/category/projects/uds/">UDS</a> (1)
+</li>
+	<li class="cat-item cat-item-1"><a href="https://mayaposch.wordpress.com/category/uncategorized/">Uncategorized</a> (4)
+</li>
+	<li class="cat-item cat-item-261685"><a href="https://mayaposch.wordpress.com/category/upnp/">UPnP</a> (2)
+</li>
+	<li class="cat-item cat-item-34743"><a href="https://mayaposch.wordpress.com/category/programming/vhdl/">VHDL</a> (1)
+</li>
+	<li class="cat-item cat-item-366900097"><a href="https://mayaposch.wordpress.com/category/programming/webassembly/">WebAssembly</a> (1)
+</li>
+	<li class="cat-item cat-item-13762983"><a href="https://mayaposch.wordpress.com/category/projects/wildfox/">WildFox</a> (2)
+</li>
+		</ul>
+</div><div id="meta-3" class="widget widget_meta"><h3>Meta</h3>			<ul>
+			<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li>			<li><a href="https://mayaposch.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="https://mayaposch.wordpress.com/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://mayaposch.wordpress.com/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>			</ul>
+			</div><div id="text-4" class="widget widget_text"><h3>Donate</h3>			<div class="textwidget"><p>Send me a few bucks if you like the articles on this site :)<br>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=F5MV4JUY9EPSY"><br>
+<img src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/btn_donate_92x26.png" alt="Donate Button" scale="0"><br>
+</a></p>
+</div>
+		</div>	</div>
+</div>
+<!-- sidebar END -->
+	<div class="fixed"></div>
+</div>
+<!-- content END -->
+
+<!-- footer START -->
+<div id="footer">
+	<a id="gotop" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" onclick="MGJS.goTop();return false;">Top</a>
+	<div id="themeinfo">
+		<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a> 	</div>
+</div>
+<!-- footer END -->
+
+</div>
+<!-- container END -->
+</div>
+<!-- wrap END -->
+
+<!--  -->
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/gprofiles.js.Download"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/wpgroho.js.Download"></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-bc3c2e282a67b6fcb1baf2add7655cf1">
+	</div>
+	<div class="grofile-hash-map-cc414ddfd01f0608e26b22006ab0e5df">
+	</div>
+	<div class="grofile-hash-map-5cbfdd4b5d1a0f76af029813586f1b36">
+	</div>
+	<div class="grofile-hash-map-cc414ddfd01f0608e26b22006ab0e5df">
+	</div>
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/mayaposch.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/mayaposch.wordpress.com\/wp-login.php?action=logout&_wpnonce=fe55915e6e","homeURL":"https:\/\/mayaposch.wordpress.com\/","postID":"37","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"1","userIsLoggedIn":"","isJetpack":"0","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource(3)"></script>
+
+	<div id="carousel-reblog-box">
+		<form action="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post">
+				<input type="hidden" id="carousel-reblog-blog-id" value="25978506">
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://mayaposch.wordpress.com">
+				<input type="hidden" id="carousel-reblog-blog-title" value="Maya&#39;s Programming &amp; Electronics Blog">
+				<input type="hidden" id="carousel-reblog-post-url" value="">
+				<input type="hidden" id="carousel-reblog-post-title" value="">
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="d32e72c9ab"><input type="hidden" name="_wp_http_referer" value="/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/">		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/mayaposch.wordpress.com\/2011\/09\/27\/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet\/":37};
+	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-linkedin' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+		});
+		</script>
+			
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource(4)"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+
+// Infinite scroll support
+jQuery( function( $ ) {
+	$( document.body ).on( 'post-load', function() {
+		SyntaxHighlighter.highlight();
+	} );
+} );
+</script>
+<link rel="stylesheet" id="all-css-0-3" href="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/jetpack-carousel.css" type="text/css" media="all">
+<!--[if lte IE 8]>
+<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='https://s1.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel-ie8fix.css?m=1412618825h&#038;ver=20121024' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = {"siteID":"25978506","siteName":"Maya's Programming & Electronics Blog","siteURL":"http:\/\/mayaposch.wordpress.com","icon":"<img alt='' src='https:\/\/s1.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/inove","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/mayaposch.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F","themeURL":"","xhrURL":"https:\/\/mayaposch.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"ff28e73f89","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"b9413a5af0\" \/>","referer":"https:\/\/mayaposch.wordpress.com\/2011\/09\/27\/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet\/","canFollow":"1","feedID":"588582","statusMessage":"","customizeLink":"https:\/\/mayaposch.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F","postID":"37","shortlink":"http:\/\/wp.me\/p1L0ca-B","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/mayaposch.wordpress.com\/37","statsLink":"https:\/\/wordpress.com\/stats\/post\/37\/mayaposch.wordpress.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: INove","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 3,497 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/mayaposch.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F\">Log in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/mayaposch.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"61d44edced","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","comment_registration":"1","require_name_email":"0","login_url":"https:\/\/mayaposch.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F","blog_id":"25978506","local_comments_commenting_as":"<p id=\"jp-carousel-commenting-as\">You must be <a href=\"#\" class=\"jp-carousel-comment-login\">logged in<\/a> to post a comment.<\/p>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=25978506&v=wpcom&tz=1&user_id=0&subd=mayaposch","is_public":"1","reblog_enabled":""};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/saved_resource(5)"></script><div id="actionbar" class="actnbr-pub-inove actnbr-has-follow"><ul><li class="actnbr-btn actnbr-hidden"> 			    	<a class="actnbr-action actnbr-actn-follow" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/"><svg class="gridicon gridicon__follow" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a> 			    	<div class="actnbr-popover tip tip-top-left actnbr-notice"> 			    		<div class="tip-arrow"></div> 			    		<div class="tip-inner actnbr-follow-bubble"></div> 			    	</div> 			    </li><li class="actnbr-ellipsis actnbr-hidden"> 			  <svg class="gridicon gridicon__ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> 			  <div class="actnbr-popover tip tip-top-left actnbr-more"> 			  	<div class="tip-arrow"></div> 			  	<div class="tip-inner"> 				  <ul> 				    <li class="actnbr-sitename actnbr-hidden"><a href="http://mayaposch.wordpress.com/"><img alt="" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/wpcom-gray-white.png" class="avatar avatar-50" height="50" width="50" scale="0"> Maya's Programming &amp; Electronics Blog</a></li> 				   	<li class="actnbr-folded-customize actnbr-hidden"><a href="https://mayaposch.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F"><svg class="gridicon gridicon__customize" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> 				    <li class="actnbr-folded-follow actnbr-hidden"><a class="actnbr-action actnbr-actn-follow" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/"><svg class="gridicon gridicon__follow" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a></li> 					<li class="actnbr-signup actnbr-hidden"><a href="https://wordpress.com/start/">Sign up</a></li> 				    <li class="actnbr-login actnbr-hidden"><a href="https://mayaposch.wordpress.com/wp-login.php?redirect_to=https%3A%2F%2Fmayaposch.wordpress.com%2F2011%2F09%2F27%2Fqt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet%2F">Log in</a></li> 				     				    <li class="actnbr-shortlink actnbr-hidden"><a href="http://wp.me/p1L0ca-B">Copy shortlink</a></li> 				    <li class="flb-report actnbr-hidden"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> 				     				     				    <li class="actnbr-subs actnbr-hidden"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> 				    <li class="actnbr-fold actnbr-hidden"><a href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/">Collapse this bar</a></li> 			      </ul> 			    </div> 		      </div> 		    </li> 	      </ul></div>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/master.html" scrolling="no" id="likes-master" name="likes-master" style="display:none;"></iframe>
+		<div id="likes-other-gravatars"><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="https://stats.wp.com/w.js?56" type="text/javascript" async="" defer="" style="display: none !important;"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'25978506','blog_tz':'1','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'25978506','v':'wpcom','tz':'1','user_id':'0','post':'37','subd':'mayaposch'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWFnNncxc1tjZG9XVXhRUmpicH5qamxuMVpFZGI9dDl3TFFHQTBuMDQucnlzdi5CeFdNVlNZQSs1OTZrLm13THF2Ji1US1lxU04sZk1NOCtzdU5xPW5fZzhpdlJ3YnJbdkEzLmo1cFN8VjNQR3RMQ21WdG5LS0ZaTjJITDJDPWduR05IdlFfRGR2TytsSnlIPVVpW2pdaml+eUZUQXZlc2FCTGNQUGtGcG9uWTk/bG54UEVUP2xucDBsXT1NbHdbQUtSNDU/emJna3wzN0xdWWt8enNIUVUuTjNrUGE9d0UxRFE4RCVJ'}]);
+_stq.push([ 'clickTrackerInit', '25978506', '37' ]);
+	</script>
+<noscript>&lt;img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+
+
+<!--
+	generated in 0.112 seconds
+	74822 bytes batcached for 300 seconds
+-->
+<div id="sharing_email" style="display: none;">
+		<form action="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="">
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="">
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="">
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off">
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			<div class="recaptcha" id="sharing_recaptcha"></div><input type="hidden" name="recaptcha_public_key" id="recaptcha_public_key" value="6LcYW8MSAAAAADBAuEH9yaPcF7lWh11Iq62ZKtoo">
+			<img style="float: right; display: none" class="loading" src="./Qt And Custom Networking Protocols, Or_ The Holy Grail Of The Internet _ Maya&#39;s Programming &amp; Electronics Blog_files/loading.gif" alt="loading" width="16" height="16" scale="0">
+			<input type="submit" value="Send Email" class="sharing_send">
+			<a rel="nofollow" href="https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div><a href="http://www.mayaposch.com/" style="position: absolute; top: 232px; left: 923.8px; z-index: 15; border: none; text-decoration: none;"></a></body></html>

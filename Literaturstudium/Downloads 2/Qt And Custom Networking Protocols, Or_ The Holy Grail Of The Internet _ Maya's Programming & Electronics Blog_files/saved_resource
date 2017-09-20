@@ -1,0 +1,16 @@
+/**/ WPCOMSharing.update_facebook_count({
+   "https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/": {
+      "share": {
+         "comment_count": 0,
+         "share_count": 0
+      },
+      "og_object": {
+         "id": "155994204567703",
+         "description": "In the previous installment I talked about combining UPnP's IGD features with Qt. This culminated for me in a few days of programming and debugging in order to get a functional program working. Let...",
+         "title": "Qt And Custom Networking Protocols, Or: The Holy Grail Of The Internet",
+         "type": "article",
+         "updated_time": "2013-04-17T14:16:23+0000"
+      },
+      "id": "https://mayaposch.wordpress.com/2011/09/27/qt-and-custom-networking-protocols-or-the-holy-grail-of-the-internet/"
+   }
+});
