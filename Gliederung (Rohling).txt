@@ -1,0 +1,14 @@
+Gliederung:
+1.Info zum Thema + Protokollkapitel
+1.1.Netzwerkkommunikation
+1.2.Protokolldesign (Wofür?)
+1.3.Anforderungen an eigenes Protokoll(oder so)
+1.4.Praxiskapitel Protokoll
+2.Scriptsprachen
+2.1.Scriptsprachen Wofür?
+2.2.Vor- und Nachteile einiger Scriptsprachen + Begründung Sprachenwahl 
+2.3.Was leistet unser Scriptteil?
+3.Syntaxdesign
+3.1.Anforderungen +/ Theoriekapitel (formale Sprachen + Syntaxdesign)
+3.2.Umsetzung/Aufbau
+4.Fehlerbetrachtung/Zusammenfassung/Reflexion
