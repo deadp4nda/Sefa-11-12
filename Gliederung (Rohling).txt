@@ -1,14 +1,24 @@
 Gliederung:
-1.Entwurf und Umsetzung des Back-Ends
-1.1.Theorie der Kommunikation in einem Netzwerk
-1.2.Notwendigkeit eines eigenen Protokolls
-1.3.Anforderungen an eigenes Protokoll
-1.4.Implementierung unseres Protokollstandards
-2.Diskussion zur Relevanz von Scriptsprachen für unser Projekt
-2.1.Zweckmäßigkeit von Scriptsprachen in unserem Projekt
-2.2.Vor- und Nachteile einiger Scriptsprachen und Begründung unserer Scriptsprachenwahl 
-2.3.Funktionalität des Programmhauptteils 
+1.Formulierung unserer Zielstellung
+1.1 Ansprüche an unser Programm
+1.2. Struktur(Aufbau?) der Software
+
+2.Entwurf und Umsetzung des Back-Ends
+2.1.Theorie der Kommunikation in einem Netzwerk
+2.2.Notwendigkeit und Anforderungen eines eigenen Protokoll
+
 3.Gedanken zur Entwicklung einer eigenen Syntax für Benutzereingaben
 3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
-3.2.Entwurf eines Parsers für Benutzereingaben
+3.2.Entwurf eines Parsers für Benutzereingabenf
 
+4. Beschreibung der Verwendung von Lua
+4.1.Diskussion zur Relevanz von Scriptsprachen für unsere Arbeit
+4.2.Einsatz zur Kommunikation mit dem Betriebssystem
+4.3.Einbindung von Datenbanken
+4.4.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
+
+5.Reflexion unseres Arbeitsergebnisses
+5.1.Funktionalität der entwickleten Software
+5.2.Evaluierung der Auftretenden Laufzeit
+5.3.Anwendungsmöglichkeiten in der Realität
+5.4.Möglichkeiten der Erweiterung
