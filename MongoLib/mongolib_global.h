@@ -26,6 +26,8 @@ class MngClient;
 #define MONGO_TYPE_FILE 0x30
 #define MONGO_TYPE_UNSP 0xFF
 #define MONGO_TYPE_EXIT 0x40
+    
+#define MONGO_INSTR_ARG_SYS 0x00
 
 enum TypeOfData{
     Welcome,
@@ -33,6 +35,11 @@ enum TypeOfData{
     File,
     Unspecified,
     Exit
+};
+    
+enum MONGOLISBSHARED_EXPORT InstrType{
+    GetFileList,
+    GetPrgmList//etc
 };
 struct Mongo_Hdr{
     unsigned char mng_type; //type of data(instruction/file/welcome/etc...)
