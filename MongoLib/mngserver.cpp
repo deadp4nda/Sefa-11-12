@@ -1,10 +1,10 @@
 #include "mngserver.h"
 #include "mngclient.h"
-#include "mngmanager.h"
+#include "mngthmanager.h"
 #include <QTcpServer>
 
 namespace Mongo { //Server
-MngServer::MngServer(quint16 port, MngManager *parent):
+MngServer::MngServer(quint16 port, MngThManager *parent):
     QTcpServer(parent),parentMgr(parent){
     listen(QHostAddress::Any,port);
 }

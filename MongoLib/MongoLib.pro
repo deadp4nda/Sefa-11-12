@@ -25,18 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    mngmanager.cpp \
     mngserver.cpp \
-    mngclient.cpp
+    mngclient.cpp \
+    datahansz.cpp \
+    mngthmanager.cpp
 
 HEADERS += \
         mongolib.h \
         mongolib_global.h \ 
-    mngmanager.h \
     mngclient.h \
-    mngserver.h
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+    mngserver.h \
+    datahansz.h \
+    mngthmanager.h

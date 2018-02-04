@@ -17,17 +17,15 @@ class QTcpServer;
 
 namespace Mongo{
 
-class MngManager;
+class MngThManager;
 class MngServer;
 class MngClient;
 
-#define MONGO_TYPE_WELC 0x10
-#define MONGO_TYPE_ISTR 0x20
-#define MONGO_TYPE_FILE 0x30
-#define MONGO_TYPE_UNSP 0xFF
-#define MONGO_TYPE_EXIT 0x40
-    
-#define MONGO_INSTR_ARG_SYS 0x00
+#define MONGO_TYPE_INIT ((unsigned int)0x08)
+#define MONGO_TYPE_INST ((unsigned int)0x10)
+#define MONGO_TYPE_FILE ((unsigned int)0x20)
+#define MONGO_TYPE_UNSP ((unsigned int)0xFF)
+#define MONGO_TYPE_EXIT ((unsigned int)0x40)
 
 enum TypeOfData{
     Welcome,
@@ -36,27 +34,29 @@ enum TypeOfData{
     Unspecified,
     Exit
 };
-    
-enum MONGOLISBSHARED_EXPORT InstrType{
-    GetFileList,
-    GetPrgmList//etc
+enum Instructions{
+    Kill,           //close destination
+    GetFileList,    //get directory of released files
+    GetPrgmList,    //get List of Programs with specifiers
+    RetrieveFile,   //get a certain File
+    Execute,        //Execute Program<spec> with file/argument
+    Chat            //body containing chat msg
 };
+
 struct Mongo_Hdr{
-    unsigned char mng_type; //type of data(instruction/file/welcome/etc...)
+    quint8 mng_type; //type of data(instruction/file/welcome/etc...)
 };
 
-struct MONGOLIBSHARED_EXPORT Instruction{
-    unsigned char instruction;      // execution code
-    unsigned int toProgram;         //program aspect or program that is to be called
-    unsigned char args;             //additional arguments
-    unsigned int strLen;            //length of the file name
-//    wchar_t withFile[FILENAME_MAX]; /// file name is contained by packet data->too heavy
+struct MONGOLIBSHARED_EXPORT Instruction_header{
+    quint8 exCode;           //instruction code (MONGO_INSTR_....)
+    quint32 prgmSpec;         //program to be called
+    quint8 args;             //additional arguments
+    quint32 contLen;           //length of the content
 };
 
-struct MONGOLIBSHARED_EXPORT FileStreamHdr{
-    unsigned int strLen;            //
-    unsigned char filetype;
-//    wchar_t fileName[FILENAME_MAX]; ///same here, will be sent with the first packet of a new stream
+struct MONGOLIBSHARED_EXPORT File_header{
+    quint8 filetype;         //type of file, if registered
+    quint32 strLen;            //File name length
 };
 
 }

@@ -6,13 +6,13 @@ namespace Mongo{
 class MngServer: public QTcpServer{
     Q_OBJECT
 public:
-    MngServer(quint16 port = 0, MngManager *parent = nullptr);
+    MngServer(quint16 port = 0, MngThManager *parent = nullptr);
     MngServer(MngServer&) = delete;
     void incomingConnection(qintptr handle);
 signals:
     void newConnection(MngClient*);
 private:
-    MngManager *parentMgr;
+    MngThManager *parentMgr;
 };
 }
 #endif // MNGSERVER_H
