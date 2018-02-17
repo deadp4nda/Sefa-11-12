@@ -72,8 +72,8 @@ DataHansz::DataHansz(quint8 type, QByteArray *buf):spec(type){
         break;
     }
 }
-FileHansz::FileHansz(QFile file, quint8 type):
-    filetype(type),filename(file.fileName()),DataHansz(MONGO_TYPE_FILE){
+FileHansz::FileHansz(QFile &file, quint8 type):
+    DataHansz(MONGO_TYPE_FILE),filename(file.fileName()),filetype(type){
     QString tmp = file.fileName();
     QString name;
     for(int i = tmp.size(); i > 0;i--){
@@ -84,19 +84,19 @@ FileHansz::FileHansz(QFile file, quint8 type):
     }
     File_header h= {
         type,
-        name.toUtf8().size()
+        (quint32)name.toUtf8().size()
     };
     arr.append((char*)&h,sizeof(h));
     arr.append(name.toUtf8());
     arr.append(file.readAll());
 }
-InstructionHansz::InstructionHansz(quint8 exCode, int prgmCode, quint8 args, QByteArray *buf):
-exCode(exCode),toProgram(prgmCode),args(args),DataHansz(MONGO_TYPE_INST){
+InstructionHansz::InstructionHansz(quint8 exCode, quint32 prgmCode, quint8 args, QByteArray *buf):
+DataHansz(MONGO_TYPE_INST),exCode(exCode),toProgram(prgmCode),args(args){
     Instruction_header h = {
         exCode,
         prgmCode,
         args,
-        buf->length()
+        (quint32)buf->length()
     };
     arr.append((char*)&h);
     arr.append(*buf);

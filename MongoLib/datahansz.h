@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <mongolib_global.h>
-namespace Mongo{
-class DataHansz
+namespace  Mongo{
+class MONGOLIBSHARED_EXPORT DataHansz
 {
 public:
     DataHansz(QByteArray *);
@@ -24,10 +24,10 @@ protected:
     QByteArray arr;
 };
 
-class FileHansz: public DataHansz{
+class MONGOLIBSHARED_EXPORT FileHansz: public DataHansz{
 public:
     FileHansz(QByteArray*);
-    FileHansz(QFile file, quint8 type);
+    FileHansz(QFile &file, quint8 type);
     QString getFilename()const{
         return filename;
     }
@@ -39,10 +39,10 @@ private:
     quint8 filetype;
 };
 
-class InstructionHansz: public DataHansz {
+class MONGOLIBSHARED_EXPORT InstructionHansz: public DataHansz {
 public:
     InstructionHansz(QByteArray *buf);
-    InstructionHansz(quint8 exCode, int prgmCode, quint8 args,QByteArray *buf = nullptr);
+    InstructionHansz(quint8 exCode, quint32 prgmCode, quint8 args,QByteArray *buf = nullptr);
     quint8 getInstruction()const{
         return exCode;
     }
@@ -54,7 +54,7 @@ public:
     }
 private:
     quint8 exCode;
-    int toProgram;
+    quint32 toProgram;
     quint8 args;
 };
 }

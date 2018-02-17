@@ -8,9 +8,9 @@ class MngClient: public QTcpSocket{
 public:
     MngClient(const QHostAddress &toIp,quint16 port = 0, MngThManager *parent = nullptr);
     MngClient(qintptr handle,MngThManager *parent = nullptr);
-    bool sendSomething(DataHansz *);
+    bool sendSomething(DataHansz*);
 signals:
-    void newMessage(QByteArray);
+    void newMessage(DataHansz*);
 private slots:
     void handleReadyRead();
 private:

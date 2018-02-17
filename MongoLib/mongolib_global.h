@@ -21,11 +21,11 @@ class MngThManager;
 class MngServer;
 class MngClient;
 
-#define MONGO_TYPE_INIT ((unsigned int)0x08)
-#define MONGO_TYPE_INST ((unsigned int)0x10)
-#define MONGO_TYPE_FILE ((unsigned int)0x20)
-#define MONGO_TYPE_UNSP ((unsigned int)0xFF)
-#define MONGO_TYPE_EXIT ((unsigned int)0x40)
+#define MONGO_TYPE_INIT (0x08U)
+#define MONGO_TYPE_INST (0x10U)
+#define MONGO_TYPE_FILE (0x20U)
+#define MONGO_TYPE_UNSP (0xFFU)
+#define MONGO_TYPE_EXIT (0x40U)
 
 enum TypeOfData{
     Welcome,
