@@ -20,7 +20,11 @@ namespace Mongo{
 class MngThManager;
 class MngServer;
 class MngClient;
-
+/*
+ * Byteorder not known
+ * problem: large files
+ *
+*/
 #define MONGO_TYPE_INIT (0x08U)
 #define MONGO_TYPE_INST (0x10U)
 #define MONGO_TYPE_FILE (0x20U)

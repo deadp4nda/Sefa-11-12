@@ -59,7 +59,7 @@ bool MngThManager::sendFile(FileHansz *hansz){
         return false;
     return client->sendSomething(hansz);
 }
-bool MngThManager::sendInstruction(quint8 instr, uint toPrgm, quint8 args, QByteArray content){
+bool MngThManager::sendInstruction(quint8 instr, quint32 toPrgm, quint8 args, QByteArray content){
     if(!CLIENT_VALID(client))
         return false;
     return client->sendSomething(new InstructionHansz(instr,toPrgm,args,&content));
