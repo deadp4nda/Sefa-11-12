@@ -21,7 +21,7 @@ class MngThManager;
 class MngServer;
 class MngClient;
 /*
- * Byteorder not known
+ * Byteorder not known -> solution QDataStream
  * problem: large files
  *
 */
@@ -30,6 +30,7 @@ class MngClient;
 #define MONGO_TYPE_FILE (0x20U)
 #define MONGO_TYPE_UNSP (0xFFU)
 #define MONGO_TYPE_EXIT (0x40U)
+#define MONGO_MAX_MEMSIZE 2048
 
 enum TypeOfData{
     Welcome,

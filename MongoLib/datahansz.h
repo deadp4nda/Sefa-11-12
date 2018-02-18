@@ -27,6 +27,7 @@ protected:
 class MONGOLIBSHARED_EXPORT FileHansz: public DataHansz{
 public:
     FileHansz(QByteArray*);
+    FileHansz(QString fileName);
     FileHansz(QFile &file, quint8 type);
     QString getFilename()const{
         return filename;

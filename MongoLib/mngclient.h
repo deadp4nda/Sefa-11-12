@@ -13,6 +13,7 @@ signals:
     void newMessage(DataHansz*);
 private slots:
     void handleReadyRead();
+    void processFile(QDataStream *);
 private:
     MngThManager *parentMgr;
 };

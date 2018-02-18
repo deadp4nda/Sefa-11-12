@@ -86,7 +86,6 @@ FileHansz::FileHansz(QFile &file, quint8 type): DataHansz(MONGO_TYPE_FILE),filen
     };
     arr.append((char*)&h,sizeof(h));
     arr.append(name.toUtf8());
-    arr.append(file.readAll());
 }
 InstructionHansz::InstructionHansz(quint8 exCode, quint32 prgmCode, quint8 args, QByteArray *buf): DataHansz(MONGO_TYPE_INST),exCode(exCode),toProgram(prgmCode),args(args){
     Instruction_header h = {

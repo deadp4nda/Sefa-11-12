@@ -9,7 +9,7 @@ namespace Mongo {
 class MONGOLIBSHARED_EXPORT MngThManager: public QObject{
     Q_OBJECT
 public:
-    MngThManager(quint16 listenPort = 0,QObject *parent = nullptr);
+    MngThManager(const QString &stdDir, quint16 listenPort = 0,QObject *parent = nullptr);
     void createConnection(const QHostAddress &addr, quint16 port = 0);
     void closeConnection();
     bool sendInstruction(quint8 instr, quint32 toPrgm, quint8 args,QByteArray content = QByteArray());
@@ -24,7 +24,7 @@ public: //getter
     quint16 getServerPort()const;
     QHostAddress getServerAddr()const;
     bool isServerActive()const;
-
+    QString getStandardDirectory()const;
 public slots:
     void incomingConnection(MngClient *);
     void handleNewMessage(QByteArray);
@@ -40,6 +40,7 @@ private:
     MngClient *client = nullptr;
     MngServer *server = nullptr;
     bool serverActive = false;
+    QString standardDir;
 private slots:
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
