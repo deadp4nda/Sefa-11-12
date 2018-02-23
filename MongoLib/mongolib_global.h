@@ -30,8 +30,8 @@ class MngClient;
 #define MONGO_TYPE_FILE (0x20U)
 #define MONGO_TYPE_UNSP (0xFFU)
 #define MONGO_TYPE_EXIT (0x40U)
-#define MONGO_MAX_MEMSIZE 2048
-
+#define MONGO_TYPE_INVA (0xB3U)
+#define MONGO_MAX_MEMSIZE 4096
 enum TypeOfData{
     Welcome,
     Instr,
@@ -48,7 +48,7 @@ enum Instructions{
     Chat            //body containing chat msg
 };
 
-struct Mongo_Hdr{
+struct MONGOLIBSHARED_EXPORT Mongo_header{
     quint8 mng_type; //type of data(instruction/file/welcome/etc...)
 };
 
@@ -61,7 +61,8 @@ struct MONGOLIBSHARED_EXPORT Instruction_header{
 
 struct MONGOLIBSHARED_EXPORT File_header{
     quint8 filetype;         //type of file, if registered
-    quint32 strLen;            //File name length
+    quint32 strLen;          //File name length
+    quint64 fileLen;         //File Size
 };
 
 }

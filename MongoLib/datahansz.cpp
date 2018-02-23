@@ -1,100 +1,117 @@
 ﻿#include "datahansz.h"
-#include <QFile>
 
 namespace Mongo{
-
-DataHansz::DataHansz(QByteArray *buf){
-    Mongo_Hdr *hdr = (Mongo_Hdr*)buf->data();
-    quint8 spec = hdr->mng_type;
-    char *content = (char*)buf->data()+sizeof(Mongo_Hdr);
-    unsigned int size = buf->size()-sizeof(Mongo_Hdr);
+DataHansz::DataHansz(QByteArray *arrayPtr){ //right DataOrder
+    if(arrayPtr->size() > MONGO_MAX_MEMSIZE){
+        spec = MONGO_TYPE_INVA;
+        typeString = "IV:S"; //invalid, size overflow
+        delete arrayPtr;
+        return;
+    }
+    if(!arrayPtr){
+        spec = MONGO_TYPE_INVA;
+        typeString = "IV:N"; //invalid nullpointer
+        return;
+    }
+    arr = arrayPtr;
+    Mongo_header *header = (Mongo_header*)arrayPtr->data();
+    spec = header->mng_type;
     switch(spec){
     case MONGO_TYPE_EXIT:
         typeString = "EXIT";
-        arr = QByteArray(content,size);
         break;
     case MONGO_TYPE_FILE:
         typeString = "FILE";
-        arr = QByteArray(content+sizeof(File_header)+((File_header*)content)->strLen,
-                         size   -sizeof(File_header)-((File_header*)content)->strLen);
         break;
     case MONGO_TYPE_INIT:
         typeString = "INIT";
-        arr = QByteArray(content,size);
         break;
     case MONGO_TYPE_INST:
         typeString = "INST";
-        arr = QByteArray(content+sizeof(Instruction_header)+((Instruction_header*)content)->contLen,
-                         size   -sizeof(Instruction_header)-((Instruction_header*)content)->contLen);
         break;
     case MONGO_TYPE_UNSP:
     default:
         typeString = "UNSP";
-        arr = QByteArray(content, size);
         break;
     }
 }
-FileHansz::FileHansz(QByteArray *buf):DataHansz(buf){
-    File_header *file = (File_header*)buf->data();
-    filetype = file->filetype;
-    unsigned int jmp = sizeof(File);
-    char *tail = buf->data()+jmp;
-    filename = QString(QByteArray(tail,file->strLen));
+DataHansz::DataHansz(quint8 type, QByteArray *buf){ //just payload and type
+    if(buf){
+        if(buf->size()>MONGO_MAX_MEMSIZE-sizeof(type)){
+            spec = MONGO_TYPE_INVA;
+            typeString = "IV:S"; //invalid, size overflow
+            delete buf;
+            return;
+        }
+    }
+    spec = type;
+    switch(spec){
+    case MONGO_TYPE_EXIT:
+        typeString = "EXIT";
+        break;
+    case MONGO_TYPE_FILE:
+        typeString = "FILE";
+        break;
+    case MONGO_TYPE_INIT:
+        typeString = "INIT";
+        break;
+    case MONGO_TYPE_INST:
+        typeString = "INST";
+        break;
+    case MONGO_TYPE_UNSP:
+    default:
+        typeString = "UNSP";
+        break;
+    }
+    arr = buf;
+}
+DataHansz::~DataHansz(){
+    if(arr)
+        delete arr;
 }
 InstructionHansz::InstructionHansz(QByteArray *buf):DataHansz(buf){
-    char *origin = buf->data();
-    Instruction_header *in = (Instruction_header*)origin;
-    this->exCode = in->exCode;
-    this->args = in->args;
-    this->toProgram = in->prgmSpec;
-}
-DataHansz::DataHansz(quint8 type, QByteArray *buf):spec(type){
-    if(buf!=nullptr){
-        arr = QByteArray(*buf);
+    if(spec == MONGO_TYPE_INVA){
+        return;
     }
-    switch(spec){
-    case MONGO_TYPE_EXIT:
-        typeString = "EXIT";
-        break;
-    case MONGO_TYPE_FILE:
-        typeString = "FILE";
-        break;
-    case MONGO_TYPE_INIT:
-        typeString = "INIT";
-        break;
-    case MONGO_TYPE_INST:
-        typeString = "INST";
-        break;
-    case MONGO_TYPE_UNSP:
-    default:
-        typeString = "UNSP";
-        break;
+    Instruction_header *header = (Instruction_header*)buf->data();
+    exCode = header->exCode;
+    toProgram = header->prgmSpec;
+    args = header->args;
+}
+InstructionHansz::InstructionHansz(quint8 exCode, quint32 prgmCode, quint8 args, QByteArray *buf):
+    DataHansz(MONGO_TYPE_INST,buf),exCode(exCode),toProgram(prgmCode),args(args){
+    char *buffer;
+    Instruction_header h;
+    h.args =args;
+    h.contLen = buf?buf->size():0;
+    h.exCode = exCode;
+    h.prgmSpec = prgmCode;
+    buffer = (char*)&h;
+    if(arr){
+        QByteArray *temp  = new QByteArray(((char*)&spec),sizeof(Mongo_header));
+        temp->append(buffer,sizeof(Instruction_header));
+        temp->append(*arr);
+        delete arr;
+        arr = temp;
     }
 }
-FileHansz::FileHansz(QFile &file, quint8 type): DataHansz(MONGO_TYPE_FILE),filename(file.fileName()),filetype(type){
-    QString tmp = file.fileName();
-    QString name;
-    for(int i = tmp.size(); i > 0;i--){
-        if(tmp[i-1] == "/" || tmp[i-1] == "\\"){
+FileHansz::FileHansz(QFile &inFile, quint8 type):
+    DataHansz(MONGO_TYPE_FILE,nullptr),file(inFile.fileName()),filetype(type){
+    inFile.close();
+    for(int i = file.fileName().size()-1;i >= 0 ;i--){
+        if(file.fileName()[i]=='\\' || file.fileName()[i]=='/'){
             break;
         }
-        name.prepend(tmp[i]);
+        filename.prepend(file.fileName()[i]);
     }
-    File_header h= {
-        type,
-        (quint32)name.toUtf8().size()
-    };
-    arr.append((char*)&h,sizeof(h));
-    arr.append(name.toUtf8());
 }
-InstructionHansz::InstructionHansz(quint8 exCode, quint32 prgmCode, quint8 args, QByteArray *buf): DataHansz(MONGO_TYPE_INST),exCode(exCode),toProgram(prgmCode),args(args){
-    Instruction_header h = {
-        exCode,
-        prgmCode,
-        args,
-        (quint32)buf->length()
-    };
-    arr.append((char*)&h,sizeof(Instruction_header));
-    arr.append(*buf);
+FileHansz::FileHansz(QString fileName, quint8 type):
+    DataHansz(MONGO_TYPE_FILE,nullptr),file(filename),filetype(type){
+    for(int i = file.fileName().size()-1;i >= 0 ;i--){
+        if(file.fileName()[i]=='\\' || file.fileName()[i]=='/'){
+            break;
+        }
+        filename.prepend(file.fileName()[i]);
+    }
 }
 }
