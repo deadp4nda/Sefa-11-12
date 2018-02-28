@@ -1,0 +1,37 @@
+Befehlssatz:
+  -basic?:
+    -connect(destination)
+    -disconnect()
+
+  -file transfer:
+    -send(file)
+    -recieve(file, [path])
+    
+  -control sequences:
+    -open(file, [file_path], [program], [return])
+    -shutdown([time], [restart])
+    -execute(command, [arguments])
+    -stream([reselution],[frames])
+
+
+Implementierungsansrüche:
+  -send:
+    -create new file
+    -write to file
+  
+  -execute:
+    -system shell access
+    -os-unabhängig!
+   
+  -open:
+    -run execute()
+    
+  -shutdown:
+    -run execute()
+    
+  -stream:
+    -screen capture
+    -buffering
+    
+
+Syntax -> Befehlssatz
