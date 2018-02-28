@@ -5,11 +5,11 @@ Gliederung:
 
 2.Entwurf und Umsetzung des Back-Ends
 2.1.Theorie der Kommunikation in einem Netzwerk
-2.2.Notwendigkeit und Anforderungen eines eigenen Protokoll
+2.2.Notwendigkeit und Anforderungen eines eigenen Netzwerkprotokolls
 
 3.Gedanken zur Entwicklung einer eigenen Syntax für Benutzereingaben
 3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
-3.2.Entwurf eines Parsers für Benutzereingabenf
+3.2.Entwurf eines Parsers für Benutzereingaben
 
 4. Beschreibung der Verwendung von Lua
 4.1.Diskussion zur Relevanz von Scriptsprachen für unsere Arbeit
