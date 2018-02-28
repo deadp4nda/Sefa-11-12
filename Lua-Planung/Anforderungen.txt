@@ -11,28 +11,33 @@ Befehlssatz:
     -open(file, [file_path], [program], [return])
     -shutdown([time], [restart])
     -execute(command, [arguments])
-    -stream([reselution],[frames])
+    -[optional] stream([reselution],[frames])
 
 
 Implementierungsansrüche:
   -send:
     -create new file
-    -write to file
+    -write to file (non text file types?)
+    -return state(success/error)
   
   -execute:
-    -system shell access
-    -os-unabhängig!
+    -system shell access (os-unabhängig!)
+    -return result?
+    -return state(success/error)
    
   -open:
+    -supported programs ([optional] database)
     -run execute()
+    -return state(success/error)
     
   -shutdown:
     -run execute()
+    -return state(success/error)
     
-  -stream:
+  -stream(optional):
     -screen capture
     -buffering
     
 
-Syntax -> Befehlssatz
-
+Syntax -> Befehlssatz:
+  Befehl [Argumente] [help]
