@@ -21,7 +21,7 @@ Implementierungsansrüche:
     -return state(success/error)
   
   -execute:
-    -system shell access (os-unabhängig!)
+    -system shell access (os-unabhängig!) -> os flag -> database -> os befehlssatz
     -return result?
     -return state(success/error)
    
