@@ -194,7 +194,13 @@ debug/moc_mngclient.cpp: D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/QTcpSocke
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		../mngthmanager.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QObject \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
 		../datahansz.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		../mngclient.h \
 		debug/moc_predefs.h \
 		D:/dev/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -275,7 +281,13 @@ debug/moc_mngserver.cpp: ../mongolib.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		../mngthmanager.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QObject \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
 		../datahansz.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		../mngserver.h \
 		debug/moc_predefs.h \
 		D:/dev/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -331,20 +343,25 @@ debug/moc_mngthmanager.cpp: D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QObject \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qvarlengtharray.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qcontainerfwd.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qiodevice.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qshareddata.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qhash.h \
 		../mongolib_global.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/QTcpSocket \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qabstractsocket.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qiodevice.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdebug.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qhash.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qmap.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qtextstream.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qlocale.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qvariant.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qshareddata.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qvector.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qpoint.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qset.h \
@@ -355,6 +372,7 @@ debug/moc_mngthmanager.cpp: D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QObject \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtcpserver.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		../datahansz.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		../mngthmanager.h \
 		debug/moc_predefs.h \
 		D:/dev/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -452,7 +470,13 @@ debug/mngserver.o: ../mngserver.cpp ../mngserver.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		../mngthmanager.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QObject \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
 		../datahansz.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		../mngclient.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mngserver.o ..\mngserver.cpp
 
@@ -532,12 +556,20 @@ debug/mngclient.o: ../mngclient.cpp ../mngclient.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		../mngthmanager.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QObject \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
 		../datahansz.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		../mngserver.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QByteArray \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDataStream \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdatastream.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QCoreApplication \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qcoreapplication.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qeventloop.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mngclient.o ..\mngclient.cpp
 
 debug/datahansz.o: ../datahansz.cpp ../datahansz.h \
@@ -616,7 +648,11 @@ debug/datahansz.o: ../datahansz.cpp ../datahansz.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
+		../mngthmanager.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\datahansz.o ..\datahansz.cpp
 
 debug/mngthmanager.o: ../mngthmanager.cpp ../mngthmanager.h \
@@ -670,20 +706,25 @@ debug/mngthmanager.o: ../mngthmanager.cpp ../mngthmanager.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qvarlengtharray.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qcontainerfwd.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qiodevice.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qshareddata.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qhash.h \
 		../mongolib_global.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/QTcpSocket \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qabstractsocket.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qiodevice.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qdebug.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qhash.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qmap.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qtextstream.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qlocale.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qvariant.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qshareddata.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qvector.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qpoint.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qset.h \
@@ -694,12 +735,10 @@ debug/mngthmanager.o: ../mngthmanager.cpp ../mngthmanager.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qtcpserver.h \
 		D:/dev/Qt/5.10.0/mingw53_32/include/QtNetwork/qhostaddress.h \
 		../datahansz.h \
+		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		../mngserver.h \
 		../mongolib.h \
-		../mngclient.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
-		D:/dev/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h
+		../mngclient.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mngthmanager.o ..\mngthmanager.cpp
 
 debug/moc_mngclient.o: debug/moc_mngclient.cpp 

@@ -2,6 +2,7 @@
 #include "mngthmanager.h"
 #include "mngserver.h"
 #include "datahansz.h"
+#include <exception>
 #include <QByteArray>
 #include <QDataStream>
 #include <QCoreApplication>
@@ -33,7 +34,7 @@ void MngClient::handleReadyRead(){ //files will be sent seperately from their he
                 char buffer[512];
                 readSize = read(buffer,512);
                 overallSize +=readSize;
-                written = lastFile->writeBytes(buffer,size);
+                written = lastFile->writeBytes(buffer,readSize);
                 if(readSize != written){
                     throw std::runtime_error("Data Under-/Overflow: "+std::to_string(readSize)+" Bytes received vs. "+
                                              std::to_string(written)+" Bytes Written @ Total Bytes received: "+std::to_string(overallSize));
@@ -95,7 +96,7 @@ void MngClient::handleReadyRead(){ //files will be sent seperately from their he
             lastFile = new FileHansz(new QByteArray(buffer,sizeof(Mongo_header)+sizeof(File_header)+header->strLen));
             goto FileJumpLabel;
         }else if(typeHeader->mng_type == MONGO_TYPE_UNSP){
-            DataHansz *hansz = new DataHansz(buffer);
+            DataHansz *hansz = new DataHansz(new QByteArray(buffer,available));
             emit newUndefined(hansz);
             return;
         }else if(typeHeader->mng_type == MONGO_TYPE_EXIT){
@@ -104,13 +105,13 @@ void MngClient::handleReadyRead(){ //files will be sent seperately from their he
             parentMgr->closeConnection();
             return;
         }else{
-            throw std::exception("THE FUCK JUST HAPPENED?!?!?!");
+            throw std::runtime_error("THE FUCK JUST HAPPENED?!?!?!");
         }
     }catch(std::exception exc){
         qDebug() << exc.what();
     }
 }
-void MngClient::sendFile(FileHansz *hansz){
+bool MngClient::sendFile(FileHansz *hansz){
     stillSending = true;
     try{
         quint64 written = write(*hansz->getWholeBuffer());
@@ -123,5 +124,34 @@ void MngClient::sendFile(FileHansz *hansz){
         qDebug() << err.what();
     }
     //blobSending(hansz)
+    return false;
+}
+bool MngClient::sendInstruction(InstructionHansz *instruction){
+    try{
+        quint64 written = write(*instruction->getWholeBuffer());
+        if(written != instruction->getWholeBuffer()->size()){
+            throw std::runtime_error("Data Under-/Overflow: "+std::to_string(written)
+                                     +" Bytes written vs. "+std::to_string(instruction->getWholeBuffer()->size())+
+                                     " Bytes to write");
+        }
+        return true;
+    }catch(std::runtime_error err){
+        qDebug() << err.what();
+        return false;
+    }
+}
+bool MngClient::sendUndefined(DataHansz *hansz){
+    try{
+        quint64 written = write(*hansz->getWholeBuffer());
+        if(written != hansz->getWholeBuffer()->size()){
+            throw std::runtime_error("Data Under-/Overflow: "+std::to_string(written)
+                                     +" Bytes written vs. "+std::to_string(hansz->getWholeBuffer()->size())+
+                                     " Bytes to write");
+        }
+        return true;
+    }catch(std::runtime_error err){
+        qDebug() << err.what();
+        return false;
+    }
 }
 }

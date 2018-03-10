@@ -1,6 +1,7 @@
 ﻿#ifndef MNGCLIENT_H
 #define MNGCLIENT_H
 #include <QTcpSocket>
+#include <thread>
 #include "mongolib.h"
 namespace Mongo{
 class MngClient: public QTcpSocket{
@@ -14,9 +15,9 @@ signals:
     void newInstruction(const InstructionHansz*);
     void newUndefined(const DataHansz*);
 public slots:
-    void sendFile(FileHansz*);
-    void sendInstruction(InstructionHansz*);
-    void sendUndefined(DataHansz*);
+    bool sendFile(FileHansz*);
+    bool sendInstruction(InstructionHansz*);
+    bool sendUndefined(DataHansz*);
 private slots:
     void handleReadyRead();
 private:
