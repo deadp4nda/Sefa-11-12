@@ -13,13 +13,20 @@ signals:
     void newFile(const FileHansz*);
     void newInstruction(const InstructionHansz*);
     void newUndefined(const DataHansz*);
-private slots:
-    void handleReadyRead();
+public slots:
     void sendFile(FileHansz*);
     void sendInstruction(InstructionHansz*);
     void sendUndefined(DataHansz*);
+private slots:
+    void handleReadyRead();
 private:
+    quint64 stalledBytes = 0;
+    FileHansz *lastFile;
     MngThManager *parentMgr;
+    std::thread *sendingThread;
+    bool stillSending = false;
+private:
+    void blobSending(FileHansz *hansz);
 };
 }
 #endif // MNGCLIENT_H

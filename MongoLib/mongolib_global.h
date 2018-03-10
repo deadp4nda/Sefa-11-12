@@ -32,6 +32,8 @@ class MngClient;
 #define MONGO_TYPE_EXIT (0x40U)
 #define MONGO_TYPE_INVA (0xB3U)
 #define MONGO_MAX_MEMSIZE 4096
+#define MONGO_FILETYPE_UNKNOWN 0x00
+
 enum TypeOfData{
     Welcome,
     Instr,
@@ -45,9 +47,12 @@ enum Instructions{
     GetPrgmList,    //get List of Programs with specifiers
     RetrieveFile,   //get a certain File
     Execute,        //Execute Program<spec> with file/argument
-    Chat            //body containing chat msg
+    Chat,           //body containing chat msg
+    InvalidInstr    //reserved for invalid transfers
 };
-
+enum Program{
+    InvalidPrgm     //reserved for invalid transfers
+};
 struct MONGOLIBSHARED_EXPORT Mongo_header{
     quint8 mng_type; //type of data(instruction/file/welcome/etc...)
 };

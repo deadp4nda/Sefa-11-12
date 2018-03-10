@@ -10,7 +10,8 @@
 
 namespace Mongo { //Manager
 MngThManager::MngThManager(const QString &stdDir, quint16 listenPort, QObject *parent):
-    QObject(parent),standardDir(stdDir){
+    QObject(parent){
+    standardDir = stdDir;
     server = new MngServer(listenPort,this);
     connect(server,SIGNAL(newConnection(MngClient*)), this, SLOT(incomingConnection(MngClient*)));
     connect(server,SIGNAL(acceptError(QAbstractSocket::SocketError)),this,SLOT(handleServerError(QAbstractSocket::SocketError)));
@@ -141,7 +142,7 @@ void MngThManager::handleServerError(QAbstractSocket::SocketError){
 bool MngThManager::isServerActive()const{
     return serverActive;
 }
-QString MngThManager::getStandardDirectory()const{
-    return standardDir;
+QString MngThManager::getStandardDirectory(){
+    return MngThManager::standardDir;
 }
 }

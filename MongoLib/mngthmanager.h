@@ -24,7 +24,8 @@ public: //getter
     quint16 getServerPort()const;
     QHostAddress getServerAddr()const;
     bool isServerActive()const;
-    QString getStandardDirectory()const;
+    static QString getStandardDirectory();
+    static QString standardDir;
 public slots:
     void incomingConnection(MngClient *);
     void handleNewMessage(QByteArray);
@@ -40,7 +41,6 @@ private:
     MngClient *client = nullptr;
     MngServer *server = nullptr;
     bool serverActive = false;
-    QString standardDir;
 private slots:
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
