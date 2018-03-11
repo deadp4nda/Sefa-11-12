@@ -52,8 +52,7 @@ void MngClient::handleReadyRead(){ //files will be sent seperately from their he
         }
         return;
     }
-
-    //From here on it isn't a file's payload anymore
+    //From here on it shouldn't be a file's payload anymore
     quint64 available = 0;
     char *buffer = nullptr;
     try{
@@ -123,7 +122,7 @@ bool MngClient::sendFile(FileHansz *hansz){
     }catch(std::runtime_error err){
         qDebug() << err.what();
     }
-    //blobSending(hansz)
+    blobSending(hansz);
     return false;
 }
 bool MngClient::sendInstruction(InstructionHansz *instruction){
@@ -148,10 +147,13 @@ bool MngClient::sendUndefined(DataHansz *hansz){
                                      +" Bytes written vs. "+std::to_string(hansz->getWholeBuffer()->size())+
                                      " Bytes to write");
         }
+        delete hansz;
         return true;
     }catch(std::runtime_error err){
         qDebug() << err.what();
+        delete hansz;
         return false;
     }
 }
+void MngClient::blobSending(FileHansz *){}
 }

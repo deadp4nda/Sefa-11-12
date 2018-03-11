@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mongo__MngClient_t {
-    QByteArrayData data[16];
-    char stringdata0[218];
+    QByteArrayData data[13];
+    char stringdata0[160];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,25 +36,21 @@ QT_MOC_LITERAL(1, 17, 10), // "newMessage"
 QT_MOC_LITERAL(2, 28, 0), // ""
 QT_MOC_LITERAL(3, 29, 10), // "DataHansz*"
 QT_MOC_LITERAL(4, 40, 7), // "newFile"
-QT_MOC_LITERAL(5, 48, 16), // "const FileHansz*"
-QT_MOC_LITERAL(6, 65, 14), // "newInstruction"
-QT_MOC_LITERAL(7, 80, 23), // "const InstructionHansz*"
-QT_MOC_LITERAL(8, 104, 12), // "newUndefined"
-QT_MOC_LITERAL(9, 117, 16), // "const DataHansz*"
-QT_MOC_LITERAL(10, 134, 8), // "sendFile"
-QT_MOC_LITERAL(11, 143, 10), // "FileHansz*"
-QT_MOC_LITERAL(12, 154, 15), // "sendInstruction"
-QT_MOC_LITERAL(13, 170, 17), // "InstructionHansz*"
-QT_MOC_LITERAL(14, 188, 13), // "sendUndefined"
-QT_MOC_LITERAL(15, 202, 15) // "handleReadyRead"
+QT_MOC_LITERAL(5, 48, 10), // "FileHansz*"
+QT_MOC_LITERAL(6, 59, 14), // "newInstruction"
+QT_MOC_LITERAL(7, 74, 17), // "InstructionHansz*"
+QT_MOC_LITERAL(8, 92, 12), // "newUndefined"
+QT_MOC_LITERAL(9, 105, 8), // "sendFile"
+QT_MOC_LITERAL(10, 114, 15), // "sendInstruction"
+QT_MOC_LITERAL(11, 130, 13), // "sendUndefined"
+QT_MOC_LITERAL(12, 144, 15) // "handleReadyRead"
 
     },
     "Mongo::MngClient\0newMessage\0\0DataHansz*\0"
-    "newFile\0const FileHansz*\0newInstruction\0"
-    "const InstructionHansz*\0newUndefined\0"
-    "const DataHansz*\0sendFile\0FileHansz*\0"
-    "sendInstruction\0InstructionHansz*\0"
-    "sendUndefined\0handleReadyRead"
+    "newFile\0FileHansz*\0newInstruction\0"
+    "InstructionHansz*\0newUndefined\0sendFile\0"
+    "sendInstruction\0sendUndefined\0"
+    "handleReadyRead"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,20 +74,20 @@ static const uint qt_meta_data_Mongo__MngClient[] = {
        8,    1,   63,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      10,    1,   66,    2, 0x0a /* Public */,
-      12,    1,   69,    2, 0x0a /* Public */,
-      14,    1,   72,    2, 0x0a /* Public */,
-      15,    0,   75,    2, 0x08 /* Private */,
+       9,    1,   66,    2, 0x0a /* Public */,
+      10,    1,   69,    2, 0x0a /* Public */,
+      11,    1,   72,    2, 0x0a /* Public */,
+      12,    0,   75,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void, 0x80000000 | 5,    2,
     QMetaType::Void, 0x80000000 | 7,    2,
-    QMetaType::Void, 0x80000000 | 9,    2,
+    QMetaType::Void, 0x80000000 | 3,    2,
 
  // slots: parameters
-    QMetaType::Bool, 0x80000000 | 11,    2,
-    QMetaType::Bool, 0x80000000 | 13,    2,
+    QMetaType::Bool, 0x80000000 | 5,    2,
+    QMetaType::Bool, 0x80000000 | 7,    2,
     QMetaType::Bool, 0x80000000 | 3,    2,
     QMetaType::Void,
 
@@ -105,9 +101,9 @@ void Mongo::MngClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->newMessage((*reinterpret_cast< DataHansz*(*)>(_a[1]))); break;
-        case 1: _t->newFile((*reinterpret_cast< const FileHansz*(*)>(_a[1]))); break;
-        case 2: _t->newInstruction((*reinterpret_cast< const InstructionHansz*(*)>(_a[1]))); break;
-        case 3: _t->newUndefined((*reinterpret_cast< const DataHansz*(*)>(_a[1]))); break;
+        case 1: _t->newFile((*reinterpret_cast< FileHansz*(*)>(_a[1]))); break;
+        case 2: _t->newInstruction((*reinterpret_cast< InstructionHansz*(*)>(_a[1]))); break;
+        case 3: _t->newUndefined((*reinterpret_cast< DataHansz*(*)>(_a[1]))); break;
         case 4: { bool _r = _t->sendFile((*reinterpret_cast< FileHansz*(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 5: { bool _r = _t->sendInstruction((*reinterpret_cast< InstructionHansz*(*)>(_a[1])));
@@ -127,21 +123,21 @@ void Mongo::MngClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
             }
         }
         {
-            typedef void (MngClient::*_t)(const FileHansz * );
+            typedef void (MngClient::*_t)(FileHansz * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MngClient::newFile)) {
                 *result = 1;
                 return;
             }
         }
         {
-            typedef void (MngClient::*_t)(const InstructionHansz * );
+            typedef void (MngClient::*_t)(InstructionHansz * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MngClient::newInstruction)) {
                 *result = 2;
                 return;
             }
         }
         {
-            typedef void (MngClient::*_t)(const DataHansz * );
+            typedef void (MngClient::*_t)(DataHansz * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MngClient::newUndefined)) {
                 *result = 3;
                 return;
@@ -194,21 +190,21 @@ void Mongo::MngClient::newMessage(DataHansz * _t1)
 }
 
 // SIGNAL 1
-void Mongo::MngClient::newFile(const FileHansz * _t1)
+void Mongo::MngClient::newFile(FileHansz * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
-void Mongo::MngClient::newInstruction(const InstructionHansz * _t1)
+void Mongo::MngClient::newInstruction(InstructionHansz * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
 // SIGNAL 3
-void Mongo::MngClient::newUndefined(const DataHansz * _t1)
+void Mongo::MngClient::newUndefined(DataHansz * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);

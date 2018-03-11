@@ -28,11 +28,11 @@ public: //getter
     static QString getStandardDirectory();
 public slots:
     void incomingConnection(MngClient *);
-    void handleNewMessage(QByteArray);
-
 signals:
-    void message(DataHansz*);   //extern signal
-    void newMessage(DataHansz*);
+    void Message(DataHansz*);
+    void File(FileHansz*);
+    void Instruction(InstructionHansz*);
+    void Unknown(DataHansz*);
 signals: // connection-based intern signals
     void connectionClosed();
     void connectionInitiated();

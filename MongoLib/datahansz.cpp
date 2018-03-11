@@ -65,7 +65,7 @@ DataHansz::DataHansz(quint8 type, QByteArray *buf){ //just payload and type
         break;
     }
     arr = buf;
-    delete buf;
+    if(buf)delete buf;
 }
 DataHansz::~DataHansz(){
     if(arr)

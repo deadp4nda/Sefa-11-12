@@ -11,9 +11,9 @@ public:
     MngClient(qintptr handle,MngThManager *parent = nullptr);
 signals:
     void newMessage(DataHansz*);
-    void newFile(const FileHansz*);
-    void newInstruction(const InstructionHansz*);
-    void newUndefined(const DataHansz*);
+    void newFile(FileHansz*);
+    void newInstruction(InstructionHansz*);
+    void newUndefined(DataHansz*);
 public slots:
     bool sendFile(FileHansz*);
     bool sendInstruction(InstructionHansz*);
@@ -27,7 +27,7 @@ private:
     std::thread *sendingThread;
     bool stillSending = false;
 private:
-    void blobSending(FileHansz *hansz);
+    void blobSending(FileHansz *);
 };
 }
 #endif // MNGCLIENT_H

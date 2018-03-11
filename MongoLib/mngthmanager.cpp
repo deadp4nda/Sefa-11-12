@@ -4,11 +4,19 @@
 #include <iostream>
 #include <QFile>
 
+#define CONNECT_CLIENT(cl,mgr) QObject::connect(cl,SIGNAL(newFile(FileHansz*)),mgr,SIGNAL(File(FileHansz*)));\
+    QObject::connect(cl,SIGNAL(newInstruction(InstructionHansz*)),mgr,SIGNAL(Instruction(InstructionHansz*)));\
+    QObject::connect(cl,SIGNAL(newUndefined(DataHansz*)),mgr,SIGNAL(Unknown(DataHansz*)));\
+    QObject::connect(cl,SIGNAL(newMessage(DataHansz*)),mgr,SIGNAL(Message(DataHansz*)));
+
 #define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable())
-#define CONNECTCLIENT(cl,th) QObject::connect(cl,SIGNAL(newMessage(DataHansz*)),th,SIGNAL(message(DataHansz*)));
-#define DISCONNECTCLIENT(cl,th) QObject::disconnect(cl,SIGNAL(newMessage(DataHansz*)),th,SIGNAL(message(DataHansz*)));
-QString Mongo::MngThManager::standardDir = "";
+#define DISCONNECT_CLIENT(cl,mgr) QObject::disconnect(cl,SIGNAL(newFile(FileHansz*)),mgr,SIGNAL(File(FileHansz*)));\
+    QObject::disconnect(cl,SIGNAL(newInstruction(InstructionHansz*)),mgr,SIGNAL(Instruction(InstructionHansz*)));\
+    QObject::disconnect(cl,SIGNAL(newUndefined(DataHansz*)),mgr,SIGNAL(Unknown(DataHansz*)));\
+    QObject::disconnect(cl,SIGNAL(newMessage(DataHansz*)),mgr,SIGNAL(Message(DataHansz*)));
+
 namespace Mongo { //Manager
+QString MngThManager::standardDir = "";
 MngThManager::MngThManager(const QString &stdDir, quint16 listenPort, QObject *parent):
     QObject(parent){
     MngThManager::standardDir = stdDir;
@@ -27,18 +35,19 @@ void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     if(tmp->state() == MngClient::ConnectedState){
         client = tmp;
         client->sendUndefined(new DataHansz(MONGO_TYPE_INIT));
-        CONNECTCLIENT(client,this);
+        CONNECT_CLIENT(client,this);
         emit connectionInitiated();
     }
 }
 void MngThManager::incomingConnection(MngClient *nClnt){
+    qDebug() << "Establishing Communications";
     if(client){
         closeConnection();
     }
     if(nClnt->state() == MngClient::ConnectedState){
         client = nClnt;
         client->sendUndefined(new DataHansz(MONGO_TYPE_INIT));
-        CONNECTCLIENT(client,this);
+        CONNECT_CLIENT(client,this);
         emit connectionInitiated();
     }
 }
@@ -47,7 +56,7 @@ void MngThManager::closeConnection(){
     client->sendUndefined(new DataHansz(MONGO_TYPE_EXIT));
     delete client;
     client = nullptr;
-    DISCONNECTCLIENT(client,this);
+    DISCONNECT_CLIENT(client,this);
     emit connectionClosed();
 }
 bool MngThManager::sendFile(QFile &file, quint8 filetype){
@@ -69,31 +78,6 @@ bool MngThManager::sendInstruction(InstructionHansz *hansz){
     if(!CLIENT_VALID(client))
         return false;
     return client->sendInstruction(hansz);
-}
-void MngThManager::handleNewMessage(QByteArray buffer){
-    if(buffer.isEmpty())
-        return;
-    char *rawArr = buffer.data();
-    Mongo_header *header = (Mongo_header*)rawArr;
-    switch(header->mng_type){
-    case MONGO_TYPE_EXIT:
-        emit message(new DataHansz(&buffer));//dont forget to delete
-        emit connectionClosed();
-        return;
-    case MONGO_TYPE_INIT:
-        emit message(new DataHansz(&buffer));//dont forget to delete
-        emit connectionInitiated();
-        return;
-    case MONGO_TYPE_FILE:
-        emit message( new FileHansz(&buffer));//dont forget to delete
-        return;
-    case MONGO_TYPE_INST:
-        emit message(new InstructionHansz(&buffer));//dont forget to delete
-        return;
-    case MONGO_TYPE_UNSP:
-    default:
-        emit message(new DataHansz(&buffer));//dont forget to delete
-    }
 }
 quint16 MngThManager::getPeerPort() const{
     if(CLIENT_VALID(client))
