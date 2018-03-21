@@ -6,4 +6,5 @@ File i/o:
   
 sys exec:
   bash! -> (win: linux sub sys, unix: done, macos: done)
-  
+  -run programms (unix? win?)
+  -enable (disable alles außer das benötigte)
