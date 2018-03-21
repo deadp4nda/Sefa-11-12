@@ -1,7 +1,7 @@
 File i/o:
   lua-zip -> file verpacken
-  b-read -> data
-  QtLua -> QFile
+  (zip) b-read -> data
+  (data) QtLua -> QFile
   QFile -> c++/net
   
 sys exec:
