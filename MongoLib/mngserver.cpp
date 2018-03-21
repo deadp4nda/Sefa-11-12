@@ -1,5 +1,5 @@
-#include "mngserver.h"
-#include "mngclient.h"
+﻿#include "mngserver.h"
+#include "mongoconnection.h"
 #include "mngthmanager.h"
 #include <QTcpServer>
 
@@ -9,7 +9,7 @@ MngServer::MngServer(quint16 port, MngThManager *parent):
     listen(QHostAddress::Any,port);
 }
 void MngServer::incomingConnection(qintptr handle){
-    MngClient *clnt = new MngClient(handle,parentMgr);
+    MongoConnection *clnt = new MongoConnection(handle,parentMgr);
     emit newConnection(clnt);
 }
 }

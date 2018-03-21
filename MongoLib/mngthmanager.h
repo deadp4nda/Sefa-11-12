@@ -7,16 +7,17 @@
 #include "datahansz.h"
 
 namespace Mongo {
+class MongoConnection;
 class MONGOLIBSHARED_EXPORT MngThManager: public QObject{
     Q_OBJECT
 public:
     MngThManager(const QString &stdDir = QDir::tempPath(), quint16 listenPort = 0,QObject *parent = nullptr);
     void createConnection(const QHostAddress &addr, quint16 port = 0);
     void closeConnection();
-    bool sendInstruction(quint8 instr, quint32 toPrgm, quint8 args,QByteArray content = QByteArray());
-    bool sendInstruction(InstructionHansz *hansz);
-    bool sendFile(QFile &file,quint8 filetype);
-    bool sendFile(FileHansz *hansz);
+    bool sendInstruction(quint8 instr, quint32 toPrgm, quint16 args,
+                         const QByteArray &content = QByteArray());
+    bool sendFile(QFile &file);
+    bool sendHansz(DataHansz *hansz);
 public: //getter
     quint16 getPeerPort() const;
     QHostAddress getPeerAddr() const;
@@ -27,24 +28,22 @@ public: //getter
     bool isServerActive()const;
     static QString getStandardDirectory();
 public slots:
-    void incomingConnection(MngClient *);
+    void incomingConnection(MongoConnection *);
 signals:
-    void Message(DataHansz*);
-    void File(FileHansz*);
-    void Instruction(InstructionHansz*);
-    void Unknown(DataHansz*);
+    void Message(DataHansz *);
 signals: // connection-based intern signals
     void connectionClosed();
     void connectionInitiated();
-
 private:
     static QString standardDir;
-    MngClient *client = nullptr;
+    MongoConnection *client = nullptr;
     MngServer *server = nullptr;
     bool serverActive = false;
 private slots:
+    void incomingData(const SafeByteArray);
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
+    friend class MongoConnection;
 };
 }
 #endif // MNGMANAGER_H

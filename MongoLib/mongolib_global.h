@@ -10,6 +10,10 @@
 #endif
 #include <QTcpSocket>
 #include <QTcpServer>
+#include <memory>
+#include <QByteArray>
+
+typedef std::shared_ptr<QByteArray> SafeByteArray;
 
 class QFile;
 class QTcpSocket;
@@ -19,7 +23,7 @@ namespace Mongo{
 
 class MngThManager;
 class MngServer;
-class MngClient;
+class MongoConnection;
 /*
  * Byteorder not known -> solution QDataStream
  * problem: large files
@@ -60,7 +64,7 @@ struct MONGOLIBSHARED_EXPORT Mongo_header{
 struct MONGOLIBSHARED_EXPORT Instruction_header{
     quint8 exCode;           //instruction code (MONGO_INSTR_....)
     quint32 prgmSpec;         //program to be called
-    quint8 args;             //additional arguments
+    quint16 args;             //additional arguments
     quint32 contLen;           //length of the content
 };
 

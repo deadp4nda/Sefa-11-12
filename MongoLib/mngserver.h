@@ -1,4 +1,4 @@
-#ifndef MNGSERVER_H
+﻿#ifndef MNGSERVER_H
 #define MNGSERVER_H
 
 #include "mongolib.h"
@@ -10,7 +10,7 @@ public:
     MngServer(MngServer&) = delete;
     void incomingConnection(qintptr handle);
 signals:
-    void newConnection(MngClient*);
+    void newConnection(MongoConnection*);
 private:
     MngThManager *parentMgr;
 };

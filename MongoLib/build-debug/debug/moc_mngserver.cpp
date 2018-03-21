@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mongo__MngServer_t {
     QByteArrayData data[4];
-    char stringdata0[43];
+    char stringdata0[49];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,11 +34,11 @@ static const qt_meta_stringdata_Mongo__MngServer_t qt_meta_stringdata_Mongo__Mng
 QT_MOC_LITERAL(0, 0, 16), // "Mongo::MngServer"
 QT_MOC_LITERAL(1, 17, 13), // "newConnection"
 QT_MOC_LITERAL(2, 31, 0), // ""
-QT_MOC_LITERAL(3, 32, 10) // "MngClient*"
+QT_MOC_LITERAL(3, 32, 16) // "MongoConnection*"
 
     },
     "Mongo::MngServer\0newConnection\0\0"
-    "MngClient*"
+    "MongoConnection*"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,13 +70,13 @@ void Mongo::MngServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         MngServer *_t = static_cast<MngServer *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->newConnection((*reinterpret_cast< MngClient*(*)>(_a[1]))); break;
+        case 0: _t->newConnection((*reinterpret_cast< MongoConnection*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            typedef void (MngServer::*_t)(MngClient * );
+            typedef void (MngServer::*_t)(MongoConnection * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MngServer::newConnection)) {
                 *result = 0;
                 return;
@@ -122,7 +122,7 @@ int Mongo::MngServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Mongo::MngServer::newConnection(MngClient * _t1)
+void Mongo::MngServer::newConnection(MongoConnection * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

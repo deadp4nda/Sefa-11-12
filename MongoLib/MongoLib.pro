@@ -26,14 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     mngserver.cpp \
-    mngclient.cpp \
     datahansz.cpp \
-    mngthmanager.cpp
+    mngthmanager.cpp \
+    mongoconnection.cpp
 
 HEADERS += \
         mongolib.h \
         mongolib_global.h \ 
-    mngclient.h \
     mngserver.h \
     datahansz.h \
-    mngthmanager.h
+    mngthmanager.h \
+    mongoconnection.h
+
+INCLUDEPATH += "F:/Developement/libraries/collection/"
