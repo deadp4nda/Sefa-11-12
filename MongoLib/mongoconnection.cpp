@@ -1,9 +1,8 @@
 ﻿#include "mongoconnection.h"
 #include <QDataStream>
-#include <globalAuxilia.h>
 #include <mngthmanager.h>
-namespace Mongo{
 
+namespace Mongo{
 MongoConnection::MongoConnection(const QHostAddress &toIp, quint16 port, MngThManager *parent):
     QTcpSocket(parent),foreignHost(toIp),atPort(port),parentManager(parent){
     connectToHost(foreignHost,port);
@@ -19,10 +18,18 @@ MongoConnection::MongoConnection(qintptr handle, MngThManager *parent):
 }
 void MongoConnection::handleReadyRead(){
     SafeByteArray array(new QByteArray);
-    stream >> *array;
-    ChryHexdump((uchar*)array->constData(),array->size());
-    emit newInput(array);
+    qint64 available = bytesAvailable();
+    quint8 byte;
+    for(int i = 0; i < available; i++){
+        stream >> byte;
+        array->append(byte);
+    }
+//    ChryHexdump((uchar*)array->constData(),array->size(),stderr);
+    parentManager->incomingData(array);
+
 }
 bool MongoConnection::send(const SafeByteArray array){
+//    ChryHexdump((uchar*)array->constData(),array->size(),stdout)
+    return stream.writeRawData(array->constData(),array->length()) == array->size();
 }
 }

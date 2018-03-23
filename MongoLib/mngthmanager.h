@@ -17,7 +17,7 @@ public:
     bool sendInstruction(quint8 instr, quint32 toPrgm, quint16 args,
                          const QByteArray &content = QByteArray());
     bool sendFile(QFile &file);
-    bool sendHansz(DataHansz *hansz);
+    bool sendHansz(SafeDataHansz hansz);
 public: //getter
     quint16 getPeerPort() const;
     QHostAddress getPeerAddr() const;
@@ -30,7 +30,7 @@ public: //getter
 public slots:
     void incomingConnection(MongoConnection *);
 signals:
-    void Message(DataHansz *);
+    void Message(SafeDataHansz);
 signals: // connection-based intern signals
     void connectionClosed();
     void connectionInitiated();

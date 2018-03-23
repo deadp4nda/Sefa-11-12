@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mongo__MngThManager_t {
     QByteArrayData data[13];
-    char stringdata0[205];
+    char stringdata0[208];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,19 +34,19 @@ static const qt_meta_stringdata_Mongo__MngThManager_t qt_meta_stringdata_Mongo__
 QT_MOC_LITERAL(0, 0, 19), // "Mongo::MngThManager"
 QT_MOC_LITERAL(1, 20, 7), // "Message"
 QT_MOC_LITERAL(2, 28, 0), // ""
-QT_MOC_LITERAL(3, 29, 10), // "DataHansz*"
-QT_MOC_LITERAL(4, 40, 16), // "connectionClosed"
-QT_MOC_LITERAL(5, 57, 19), // "connectionInitiated"
-QT_MOC_LITERAL(6, 77, 18), // "incomingConnection"
-QT_MOC_LITERAL(7, 96, 16), // "MongoConnection*"
-QT_MOC_LITERAL(8, 113, 12), // "incomingData"
-QT_MOC_LITERAL(9, 126, 13), // "SafeByteArray"
-QT_MOC_LITERAL(10, 140, 17), // "handleServerError"
-QT_MOC_LITERAL(11, 158, 28), // "QAbstractSocket::SocketError"
-QT_MOC_LITERAL(12, 187, 17) // "handleClientError"
+QT_MOC_LITERAL(3, 29, 13), // "SafeDataHansz"
+QT_MOC_LITERAL(4, 43, 16), // "connectionClosed"
+QT_MOC_LITERAL(5, 60, 19), // "connectionInitiated"
+QT_MOC_LITERAL(6, 80, 18), // "incomingConnection"
+QT_MOC_LITERAL(7, 99, 16), // "MongoConnection*"
+QT_MOC_LITERAL(8, 116, 12), // "incomingData"
+QT_MOC_LITERAL(9, 129, 13), // "SafeByteArray"
+QT_MOC_LITERAL(10, 143, 17), // "handleServerError"
+QT_MOC_LITERAL(11, 161, 28), // "QAbstractSocket::SocketError"
+QT_MOC_LITERAL(12, 190, 17) // "handleClientError"
 
     },
-    "Mongo::MngThManager\0Message\0\0DataHansz*\0"
+    "Mongo::MngThManager\0Message\0\0SafeDataHansz\0"
     "connectionClosed\0connectionInitiated\0"
     "incomingConnection\0MongoConnection*\0"
     "incomingData\0SafeByteArray\0handleServerError\0"
@@ -99,7 +99,7 @@ void Mongo::MngThManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         MngThManager *_t = static_cast<MngThManager *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->Message((*reinterpret_cast< DataHansz*(*)>(_a[1]))); break;
+        case 0: _t->Message((*reinterpret_cast< SafeDataHansz(*)>(_a[1]))); break;
         case 1: _t->connectionClosed(); break;
         case 2: _t->connectionInitiated(); break;
         case 3: _t->incomingConnection((*reinterpret_cast< MongoConnection*(*)>(_a[1]))); break;
@@ -129,7 +129,7 @@ void Mongo::MngThManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            typedef void (MngThManager::*_t)(DataHansz * );
+            typedef void (MngThManager::*_t)(SafeDataHansz );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MngThManager::Message)) {
                 *result = 0;
                 return;
@@ -189,7 +189,7 @@ int Mongo::MngThManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Mongo::MngThManager::Message(DataHansz * _t1)
+void Mongo::MngThManager::Message(SafeDataHansz _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

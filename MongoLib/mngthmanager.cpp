@@ -1,10 +1,12 @@
 ﻿#include "mngthmanager.h"
 #include "mngserver.h"
 #include "mongoconnection.h"
+#include <globalAuxilia.h>
 #include <iostream>
 #include <QFile>
 
 #define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable())
+//#define CONNECT_CLIENT(client, manager) QObject::connect(client,&MongoConnection::newInput,manager,&MngThManager::incomingData);
 
 namespace Mongo { //Manager
 QString MngThManager::standardDir = "";
@@ -25,8 +27,9 @@ void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     MongoConnection *tmp = new MongoConnection(addr,port,this);
     if(tmp->state() == MongoConnection::ConnectedState){
         client = tmp;
-        if(!sendHansz(new DataHansz(MONGO_TYPE_INIT)))
+        if(!sendHansz(SafeDataHansz(new DataHansz(MONGO_TYPE_INIT))))
             client->abort();
+//        CONNECT_CLIENT(client,this)
         emit connectionInitiated();
     }
 }
@@ -36,23 +39,24 @@ void MngThManager::incomingConnection(MongoConnection *nClnt){
         closeConnection();
     }
     if(nClnt->state() == MongoConnection::ConnectedState){
-        qDebug() << "Communications established";
         client = nClnt;
-        if(!sendHansz(new DataHansz(MONGO_TYPE_INIT)))
+        if(!sendHansz(SafeDataHansz(new DataHansz(MONGO_TYPE_INIT))))
             client->abort();
+//        CONNECT_CLIENT(client,this)
+        qDebug() << "Communications established";
         emit connectionInitiated();
     }
 }
 void MngThManager::closeConnection(){
     if(!client)return;
-    sendHansz(new DataHansz(MONGO_TYPE_EXIT));
+    sendHansz(SafeDataHansz(new DataHansz(MONGO_TYPE_EXIT)));
     client->abort();
     //disconnect client
     delete client;
     client = nullptr;
     emit connectionClosed();
 }
-bool MngThManager::sendHansz(DataHansz* hansz){
+bool MngThManager::sendHansz(SafeDataHansz hansz){
     if(!CLIENT_VALID(client)){
         return false;
     }
@@ -60,9 +64,15 @@ bool MngThManager::sendHansz(DataHansz* hansz){
 }
 bool MngThManager::sendInstruction(quint8 instr, quint32 toPrgm, quint16 args,
                      const QByteArray &content){
-    return sendHansz(new DataHansz(new InstructionHansz(instr,toPrgm,args,content)));
+    return sendHansz(SafeDataHansz(new DataHansz(new InstructionHansz(instr,toPrgm,args,content))));
 }
-void MngThManager::incomingData(const SafeByteArray){}
+
+void MngThManager::incomingData(const SafeByteArray buffer){
+    std::cerr << "Data incoming: " << buffer->size() << " Bytes\n";
+    std::cerr << "Buffer counts: " << buffer.use_count() << " Owners\n";
+    ChryHexdump((uchar*)buffer->constData(),buffer->size(),stderr);
+    SafeDataHansz hansz(new DataHansz(buffer));
+}
 
 //just getter from here on
 quint16 MngThManager::getPeerPort() const{

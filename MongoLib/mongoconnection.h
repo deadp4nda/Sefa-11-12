@@ -20,10 +20,10 @@ signals:
 private slots:
     void handleReadyRead();
 private:
-    MngThManager *parentManager;
     QHostAddress foreignHost;
     quint16 atPort = 0;
     QDataStream stream;
+    MngThManager *parentManager;
 };
 }
 #endif // MONGOCONNECTION_H
