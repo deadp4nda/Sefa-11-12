@@ -30,15 +30,19 @@ DataHansz::DataHansz(StuffHansz *inHansz):
 }
 DataHansz::DataHansz(const quint16 spec):
     specifier(spec){
+    Mongo_Header header;
+    header.mng_type = spec;
+    header.payload = sizeof(Mongo_Header);
     stuff =
             new StuffHansz(
                 std::shared_ptr<QByteArray>(
-                    new QByteArray((char*)&spec,sizeof(spec))
+                    new QByteArray((char*)&header,sizeof(Mongo_Header))
                     )
                 );
 }
 DataHansz::DataHansz(const SafeByteArray headerBuf){
     Mongo_Header *whichone = (Mongo_Header*)headerBuf->constData();
+    specifier = whichone->mng_type;
     switch(whichone->mng_type){
     case MONGO_TYPE_INST:
         inst = new InstructionHansz(headerBuf);
@@ -114,19 +118,18 @@ InstructionHansz::InstructionHansz(quint8 instr, quint32 toPrgm,
     array = SafeByteArray(new QByteArray());
     Mongo_Header mongo;
     mongo.mng_type = MONGO_TYPE_INST;
+    mongo.payload = sizeof(mongo)+sizeof(Instruction_Header)+content.size();
     Instruction_Header instruction;
     instruction.args = args;
     instruction.contLen = content.size();
     instruction.exCode = instr;
     instruction.prgmSpec = toPrgm;
-    array->fromRawData((char*)&mongo,sizeof(mongo));
-    array->fromRawData((char*)&instruction,sizeof(instruction));
-//    ChryHexdump((uchar*)array->constData(),array->size(),stderr);
+    array->append((char*)&mongo,sizeof(mongo));
+    array->append((char*)&instruction,sizeof(instruction));
     array->append(content);
-
 }
 InstructionHansz::InstructionHansz(const SafeByteArray buffer){
-    Instruction_Header *instruction =(Instruction_Header*)(buffer->constData()+sizeof(Mongo_Header));
+    Instruction_Header *instruction = (Instruction_Header*)(buffer->constData()+sizeof(Mongo_Header));
     this->addressedProgram = instruction->prgmSpec;
     this->instruction = instruction->exCode;
     this->arguments = instruction->args;

@@ -72,6 +72,7 @@ void MngThManager::incomingData(const SafeByteArray buffer){
     std::cerr << "Buffer counts: " << buffer.use_count() << " Owners\n";
     ChryHexdump((uchar*)buffer->constData(),buffer->size(),stderr);
     SafeDataHansz hansz(new DataHansz(buffer));
+    emit Message(hansz);
 }
 
 //just getter from here on

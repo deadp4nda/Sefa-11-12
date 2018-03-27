@@ -38,5 +38,5 @@ HEADERS += \
     mngthmanager.h \
     mongoconnection.h
 
-INCLUDEPATH += "F:/Developement/libraries/collection/"
-DEPENDPATH += "F:/Developement/libraries/collection/"
+INCLUDEPATH += "K:/Developement/libraries/collection/"
+DEPENDPATH += "K:/Developement/libraries/collection/"
