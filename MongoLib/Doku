@@ -1,0 +1,75 @@
+Zur Einrichtung mit QtCreator:
+1. kurz auf Strg+B drücken
+2. Dependency für die Mongolib.dll anfügen(Rechtsklick auf Projekt-> Externe Bibliothek -> Wizard folgen(Dynamische Bibliothek) -> MongoLib.a anwählen)
+3. mongolib.h einbinden
+Zur Verwendung:
+namespace für alles ist "Mongo"
+Man braucht eigentlich nur MngThManager, der regelt alles. und die Klassen aus DataHansz, die enthalten die Daten
+
+MngThManager:
+public:
+MngThManager(const QString &stdDir = QDir::tempPath(), quint16 listenPort = 0, QObject *parent = nullptr)
+Konstruktor. In stdDir werden die Dateien gespeichert, 
+auf listenPort wird auf eingehende Verbindungen gewartet, wenn nichts angegeben ist, wird ein beliebiger Port gewählt, kann später abgerufen werden
+und Argument drei ist standard für alle QObjects
+
+~MngThManager()
+Destruktor. Fertig.
+
+void createConnection(const QHostAddress &addr, quint16 port = 0)
+Erstellt eine Verbindung zu genannter Adresse am Port port. wenn nichts übergeben wird, isses ein random port
+
+void closeConnection()
+Schließt eine bestehende Verbindung sauber ab, wird automatisch im Destruktor von MngThManager aufgerufen
+
+bool sendInstruction(quint8 instr, quint32 toPrgm, quint16 args, const QByteArray &content = QByteArray())
+instr ist der Befehlscode der Ausgeführt werden soll. Aufzufinden in der enum Instructions in mongolib_global.h
+toPrgm ist der Code des Zielprogrammes, null ist für unser Programm reserviert
+args ist für argumente zum Befehl
+content ist der eigentliche Inhalt des Befehls, in Form eines QByteArray.
+gibt true bei erfolgreicher und false bei fehlgeschlagener Übertragung zurück
+
+bool sendFile(QFile &file);
+übergträgt die Datei file auf die andere Seite. true=success, false=failure
+
+bool sendHansz(SafeDataHansz hansz);
+überträgt ein beliebiges stück Binärdaten auf die andere Seite, in Form einer DataHansz-Struktur.
+gibt true bei erfolgreicher und false bei fehlgeschlagener Übertragung zurück
+
+public: //getter
+    quint16 getPeerPort() const:
+    siehe QAbstractSocket::peerPort()
+    
+    QHostAddress getPeerAddr() const:
+    siehe QAbstractSocket::peerAddress()
+    
+    quint16 getLocalPort()const:
+    siehe QAbstractSocket::localPort()
+    
+    QHostAddress getLocalAddr()const;
+    siehe QAbstractSocket::localAddress()
+    
+    quint16 getServerPort()const;
+    siehe QTcpServer::serverPort()
+    
+    QHostAddress getServerAddr()const;
+    siehe QTcpServer::serverAddress()
+    
+    bool isServerActive()const;
+    gibt true zurück, wenn der Server bereit ist und an angegebenem Port auf Verbindungen wartet
+    
+    static QString getStandardDirectory();
+    gibt den Pfad zurück in dem Dateien abgelegt werden
+    
+public slots:
+    void incomingConnection(MongoConnection *);
+    wird aufgerufen, wenn eine Neue Verbindung eingeht. ACHTUNG: eine noch bestehende Verbindung wird zugunsten einer neuen aufgegben und abgeschlossen
+signals:
+    void Message(SafeDataHansz);
+    wird ausgesendet, wenn eine neue Nachricht eingeht
+signals: // connection-based intern signals
+    void connectionClosed();
+    wird zu Ende einer Verbindung ausgesendet
+    void connectionInitiated();
+    wird zu Beginn einer Verbindung ausgesendet
+    
