@@ -4,6 +4,7 @@
 #include <globalAuxilia.h>
 #include <iostream>
 #include <QFile>
+#include <QThread>
 
 #define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable())
 //#define CONNECT_CLIENT(client, manager) QObject::connect(client,&MongoConnection::newInput,manager,&MngThManager::incomingData);
@@ -20,6 +21,14 @@ MngThManager::MngThManager(const QString &stdDir, quint16 listenPort, QObject *p
         serverActive = true;
     }
 }
+MngThManager::~MngThManager(){
+    if(client)
+        closeConnection();
+    if(serverActive){
+        server->close();
+        delete server;
+    }
+}
 void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     if(client) {
         closeConnection();
@@ -27,9 +36,6 @@ void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     MongoConnection *tmp = new MongoConnection(addr,port,this);
     if(tmp->state() == MongoConnection::ConnectedState){
         client = tmp;
-        if(!sendHansz(SafeDataHansz(new DataHansz(MONGO_TYPE_INIT))))
-            client->abort();
-//        CONNECT_CLIENT(client,this)
         emit connectionInitiated();
     }
 }
@@ -40,10 +46,6 @@ void MngThManager::incomingConnection(MongoConnection *nClnt){
     }
     if(nClnt->state() == MongoConnection::ConnectedState){
         client = nClnt;
-        if(!sendHansz(SafeDataHansz(new DataHansz(MONGO_TYPE_INIT))))
-            client->abort();
-//        CONNECT_CLIENT(client,this)
-        qDebug() << "Communications established";
         emit connectionInitiated();
     }
 }
@@ -66,15 +68,13 @@ bool MngThManager::sendInstruction(quint8 instr, quint32 toPrgm, quint16 args,
                      const QByteArray &content){
     return sendHansz(SafeDataHansz(new DataHansz(new InstructionHansz(instr,toPrgm,args,content))));
 }
-
 void MngThManager::incomingData(const SafeByteArray buffer){
-    std::cerr << "Data incoming: " << buffer->size() << " Bytes\n";
-    std::cerr << "Buffer counts: " << buffer.use_count() << " Owners\n";
+    qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes\n";
+    qDebug() << "Buffer counts: "+QString::number(buffer.use_count())+" Owners\n";
     ChryHexdump((uchar*)buffer->constData(),buffer->size(),stderr);
     SafeDataHansz hansz(new DataHansz(buffer));
     emit Message(hansz);
 }
-
 //just getter from here on
 quint16 MngThManager::getPeerPort() const{
     if(CLIENT_VALID(client))

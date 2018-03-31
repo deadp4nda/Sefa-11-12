@@ -89,6 +89,22 @@ SafeByteArray DataHansz::getData()const{
     }
     return SafeByteArray(new QByteArray());
 }
+SafeByteArray DataHansz::getContent()const{
+    switch (specifier) {
+    case MONGO_TYPE_INST:
+        return inst->getContent();
+    case MONGO_TYPE_FILE:
+        break;
+    case MONGO_TYPE_EXIT:
+    case MONGO_TYPE_INIT:
+    case MONGO_TYPE_UNSP:
+        return stuff->getContent();
+    case MONGO_TYPE_INVA:
+    default:
+        break;
+    }
+    return SafeByteArray(new QByteArray());
+}
 void DataHansz::addData(const SafeByteArray buffer){
     switch (specifier) {
     case MONGO_TYPE_INST:

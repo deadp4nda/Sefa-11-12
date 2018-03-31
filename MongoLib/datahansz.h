@@ -28,6 +28,12 @@ public:
                      const QByteArray &content = QByteArray());
     SafeByteArray getData()const{return array;}
     void addData(const SafeByteArray inArray){array->append(*inArray);}
+public:
+    quint8 getInstructionCode()const{return instruction;}
+    quint32 getAddressedProgram()const{return addressedProgram;}
+    quint16 getPassedArguments()const{return arguments;}
+    quint32 getContentLength()const{return contentLength;}
+    SafeByteArray getContent()const{return SafeByteArray(new QByteArray(array->constData()+sizeof(Mongo_Header)+sizeof(Instruction_Header),contentLength));}
 private:
     SafeByteArray array;
     quint8 instruction;
@@ -39,11 +45,11 @@ class MONGOLIBSHARED_EXPORT StuffHansz{
 public:
     StuffHansz(SafeByteArray);
     SafeByteArray getData()const{return array;}
+    SafeByteArray getContent()const{return SafeByteArray(new QByteArray(array->constData()+sizeof(Mongo_Header)+sizeof(Instruction_Header),array->size()-sizeof(Mongo_Header)));}
     void addData(const SafeByteArray inArray){array->append(*inArray);}
 private:
     SafeByteArray array;
 };
-
 class MONGOLIBSHARED_EXPORT DataHansz{
 public:
     DataHansz(const SafeByteArray);
@@ -55,7 +61,12 @@ public:
     ~DataHansz();
     void addData(const SafeByteArray);
     SafeByteArray getData() const;
+    SafeByteArray getContent() const;
     bool satisfied()const{return (waitingFor == 0);}
+    quint16 type()const{return specifier;}
+    FileHansz *getFileHansz(){return file;}
+    InstructionHansz *getInstructionHansz(){return inst;}
+    StuffHansz *getStuffHansz(){return stuff;}
 private:
     quint16 specifier = MONGO_TYPE_INVA;
     FileHansz *file = nullptr;

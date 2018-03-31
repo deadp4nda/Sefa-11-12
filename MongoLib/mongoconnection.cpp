@@ -24,12 +24,10 @@ void MongoConnection::handleReadyRead(){
         stream >> byte;
         array->append(byte);
     }
-//    ChryHexdump((uchar*)array->constData(),array->size(),stderr);
     parentManager->incomingData(array);
 
 }
 bool MongoConnection::send(const SafeByteArray array){
-//    ChryHexdump((uchar*)array->constData(),array->size(),stdout)
     return stream.writeRawData(array->constData(),array->length()) == array->size();
 }
 }
