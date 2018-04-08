@@ -15,9 +15,8 @@ public:
     ~MngThManager();
     void createConnection(const QHostAddress &addr, quint16 port = 0);
     void closeConnection();
-    bool sendInstruction(quint8 instr, quint32 toPrgm, quint16 args,
-                         const QByteArray &content = QByteArray());
-    bool sendFile(QFile &file);
+    bool sendInstruction(quint8 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint16 args = 0);
+    bool sendFile(QFile &file, quint8 type);
     bool sendHansz(SafeDataHansz hansz);
 public: //getter
     quint16 getPeerPort() const;
@@ -37,7 +36,10 @@ signals: // connection-based intern signals
     void connectionInitiated();
 private:
     static QString standardDir;
+
     MongoConnection *client = nullptr;
+    SafeDataHansz lastingTransmission = nullptr;
+
     MngServer *server = nullptr;
     bool serverActive = false;
     bool connectionVerified = false;

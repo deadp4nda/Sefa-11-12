@@ -64,16 +64,36 @@ bool MngThManager::sendHansz(SafeDataHansz hansz){
     }
     return client->send(hansz->getData());
 }
-bool MngThManager::sendInstruction(quint8 instr, quint32 toPrgm, quint16 args,
-                     const QByteArray &content){
+bool MngThManager::sendInstruction(quint8 instr, quint32 toPrgm, const QByteArray &content, quint16 args){
     return sendHansz(SafeDataHansz(new DataHansz(new InstructionHansz(instr,toPrgm,args,content))));
+}
+bool MngThManager::sendFile(QFile &file, quint8 type){
+    return sendHansz(SafeDataHansz(new DataHansz(new FileHansz(file, type))));
 }
 void MngThManager::incomingData(const SafeByteArray buffer){
     qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes\n";
     qDebug() << "Buffer counts: "+QString::number(buffer.use_count())+" Owners\n";
-    ChryHexdump((uchar*)buffer->constData(),buffer->size(),stderr);
-    SafeDataHansz hansz(new DataHansz(buffer));
-    emit Message(hansz);
+//    ChryHexdump((uchar*)buffer->constData(),buffer->size(),stderr);
+
+    if(lastingTransmission){//former transmission not ended yet
+        quint64 expected = lastingTransmission->waitingFor;
+        if(expected> buffer->size()){
+            lastingTransmission->addData(buffer);
+        }else if(expected == buffer->size()){
+            lastingTransmission->addData(buffer);
+            lastingTransmission= nullptr;
+        }else{// more than one transmission in packet
+            lastingTransmission->addData(SafeByteArray(new QByteArray(buffer->constData(),expected)));
+            lastingTransmission = SafeDataHansz(new DataHansz(SafeByteArray(new QByteArray(buffer->constData(),expected+1))));
+            emit Message(lastingTransmission);
+        }
+    }else{ //new transmission
+        lastingTransmission = SafeDataHansz(new DataHansz(buffer));
+        emit Message(lastingTransmission);
+        if(lastingTransmission->satisfied()){
+            lastingTransmission = nullptr;
+        }
+    }
 }
 //just getter from here on
 quint16 MngThManager::getPeerPort() const{

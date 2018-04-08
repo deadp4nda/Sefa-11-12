@@ -2,6 +2,8 @@
 #include "mngthmanager.h"
 #include <memory>
 #include <QFile>
+#include <QFileInfo>
+#include <iostream>
 
 namespace Mongo{
 DataHansz::~DataHansz(){
@@ -35,7 +37,7 @@ DataHansz::DataHansz(const quint16 spec):
     header.payload = sizeof(Mongo_Header);
     stuff =
             new StuffHansz(
-                std::shared_ptr<QByteArray>(
+                SafeByteArray(
                     new QByteArray((char*)&header,sizeof(Mongo_Header))
                     )
                 );
@@ -78,6 +80,7 @@ SafeByteArray DataHansz::getData()const{
     case MONGO_TYPE_INST:
         return inst->getData();
     case MONGO_TYPE_FILE:
+        return file->getData();
         break;
     case MONGO_TYPE_EXIT:
     case MONGO_TYPE_INIT:
@@ -90,59 +93,72 @@ SafeByteArray DataHansz::getData()const{
     return SafeByteArray(new QByteArray());
 }
 SafeByteArray DataHansz::getContent()const{
-    switch (specifier) {
-    case MONGO_TYPE_INST:
-        return inst->getContent();
-    case MONGO_TYPE_FILE:
-        break;
-    case MONGO_TYPE_EXIT:
-    case MONGO_TYPE_INIT:
-    case MONGO_TYPE_UNSP:
-        return stuff->getContent();
-    case MONGO_TYPE_INVA:
-    default:
-        break;
+    try{
+        switch (specifier) {
+        case MONGO_TYPE_INST:
+            return inst->getContent();
+        case MONGO_TYPE_FILE:
+            break;
+        case MONGO_TYPE_EXIT:
+        case MONGO_TYPE_INIT:
+        case MONGO_TYPE_UNSP:
+            return stuff->getContent();
+        case MONGO_TYPE_INVA:
+        default:
+            break;
+        }
+        return SafeByteArray(new QByteArray());
+    }catch(std::out_of_range range){
+        std::cerr << range.what();
+        return SafeByteArray(new QByteArray());
     }
-    return SafeByteArray(new QByteArray());
 }
 void DataHansz::addData(const SafeByteArray buffer){
     switch (specifier) {
     case MONGO_TYPE_INST:
         inst->addData(buffer);
-        received = buffer->size();
+        received += buffer->size();
         break;
     case MONGO_TYPE_FILE:
         file->addData(buffer);
-        received = buffer->size();
+        received += buffer->size();
         break;
     case MONGO_TYPE_EXIT:
     case MONGO_TYPE_INIT:
     case MONGO_TYPE_UNSP:
         stuff->addData(buffer);
-        received = buffer->size();
+        received += buffer->size();
         break;
     case MONGO_TYPE_INVA:
     default:
         break;
     }
 }
-StuffHansz::StuffHansz(SafeByteArray arr){
+
+//StuffHansz
+StuffHansz::StuffHansz(const SafeByteArray arr){
     array=arr;
 }
+
+//InstructionHansz
 InstructionHansz::InstructionHansz(quint8 instr, quint32 toPrgm,
-                                   quint16 args, const QByteArray &content){
+                                   quint16 args, const QByteArray &content):
+instruction(instr),addressedProgram(toPrgm),arguments(args),contentLength(content.size()){
     array = SafeByteArray(new QByteArray());
     Mongo_Header mongo;
-    mongo.mng_type = MONGO_TYPE_INST;
-    mongo.payload = sizeof(mongo)+sizeof(Instruction_Header)+content.size();
     Instruction_Header instruction;
-    instruction.args = args;
-    instruction.contLen = content.size();
-    instruction.exCode = instr;
-    instruction.prgmSpec = toPrgm;
+    mongo.mng_type = MONGO_TYPE_INST;
+    instruction.args = arguments;
+    instruction.contLen = contentLength;
+    instruction.exCode = this->instruction;
+    instruction.prgmSpec = addressedProgram;
+    mongo.payload = sizeof(mongo)+sizeof(Instruction_Header)+content.size()<MONGO_INSTRUCTION_MAXIMUM?content.size():MONGO_INSTRUCTION_MAXIMUM;
     array->append((char*)&mongo,sizeof(mongo));
     array->append((char*)&instruction,sizeof(instruction));
-    array->append(content);
+    if(content.size() <= MONGO_INSTRUCTION_MAXIMUM)
+        array->append(content);
+    else
+        array->append(content.constData(),MONGO_INSTRUCTION_MAXIMUM);
 }
 InstructionHansz::InstructionHansz(const SafeByteArray buffer){
     Instruction_Header *instruction = (Instruction_Header*)(buffer->constData()+sizeof(Mongo_Header));
@@ -152,16 +168,39 @@ InstructionHansz::InstructionHansz(const SafeByteArray buffer){
     this->contentLength = instruction->contLen;
     array = buffer;
 }
+
+//FileHansz
 void FileHansz::addData(const SafeByteArray buffer){
     file.write(*buffer);
 }
 SafeByteArray FileHansz::getData(){
-    return SafeByteArray(new QByteArray(file.read(2048)));
+    if(!headerSent){
+        SafeByteArray array(new QByteArray);
+        array->append(*header);
+        array->append(QByteArray(file.read(MONGO_INSTRUCTION_MAXIMUM-array->size())));
+        stalled -= array->size();
+        finished += array->size();
+    }
+    SafeByteArray array(new QByteArray(file.read(MONGO_INSTRUCTION_MAXIMUM)));
+    stalled -= array->size();
+    finished += array->size();
+    return array;
 }
-FileHansz::FileHansz(const SafeByteArray){}
+FileHansz::FileHansz(const SafeByteArray header){
+    Mongo_Header *Mheader = (Mongo_Header*)(header->constData());
+    File_Header *Fheader = (Mongo_Header*)(header->constData()+sizeof(Mongo_Header));
+}
 FileHansz::FileHansz(QFile &file,quint8 type):
     filetype(type){
     file.open(file.handle(),QIODevice::ReadWrite);
+    File_Header fHeader;
+    QFileInfo info(file);
+    fHeader.fileLen = stalled;
+    fHeader.filetype = type;
+    fHeader.strLen = info.fileName();
+    this->header = SafeByteArray(new QByteArray(&fHeader,sizeof(fHeader)));
+    this->header->append(info.fileName());
+    stalled = file.size()+header->size();
 }
 FileHansz::~FileHansz(){
     file.close();

@@ -34,8 +34,8 @@ typedef std::shared_ptr<DataHansz> SafeDataHansz;
 #define MONGO_TYPE_UNSP (0xFFU)
 #define MONGO_TYPE_EXIT (0x40U)
 #define MONGO_TYPE_INVA (0xB3U)
-#define MONGO_MAX_MEMSIZE 4096
-#define MONGO_FILETYPE_UNKNOWN 0x00
+
+#define MONGO_INSTRUCTION_MAXIMUM 0xFFFF
 
 enum TypeOfData{
     Welcome,
@@ -44,8 +44,15 @@ enum TypeOfData{
     Unspecified,
     Exit
 };
+enum Filetype{
+    Undefined,
+    Movie,
+    Picture,
+    Text,
+    Audio
+};
 enum Instructions{
-    Kill,           //close destination
+    Kill,           //close destination program
     GetFileList,    //get directory of released files
     GetPrgmList,    //get List of Programs with specifiers
     RetrieveFile,   //get a certain File
@@ -54,24 +61,25 @@ enum Instructions{
     InvalidInstr    //reserved for invalid transfers
 };
 enum Program{
+    This,
     InvalidPrgm     //reserved for invalid transfers
 };
 struct MONGOLIBSHARED_EXPORT Mongo_Header{
-    quint8 mng_type; //type of data(instruction/file/welcome/etc...)
-    quint64 payload; //size of whole transmission
+    quint8 mng_type;        //type of data(instruction/file/welcome/etc...)
+    quint64 payload;        //size of whole transmission
 };
 
 struct MONGOLIBSHARED_EXPORT Instruction_Header{
-    quint8 exCode;           //instruction code (MONGO_INSTR_....)
-    quint32 prgmSpec;         //program to be called
-    quint16 args;             //additional arguments
-    quint32 contLen;           //length of the content
+    quint8 exCode;          //instruction code (enum Instructions)
+    quint32 prgmSpec;       //program to be called
+    quint16 args;           //additional arguments
+    quint32 contLen;        //length of the content
 };
 
 struct MONGOLIBSHARED_EXPORT File_Header{
-    quint8 filetype;         //type of file, if registered
-    quint32 strLen;          //File name length
-    quint64 fileLen;         //File Size
+    quint8 filetype;        //type of file, if registered
+    quint32 strLen;         //File name length
+    quint64 fileLen;        //File Size
 };
 
 }
