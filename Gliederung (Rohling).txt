@@ -3,7 +3,7 @@ Gliederung:
 1.1 Ansprüche an unser Programm
 1.2. Struktur(Aufbau?) der Software
 
-2.Entwurf und Umsetzung des Back-Ends
+2.Entwurf und Umsetzung des Netzwerk-Backends
 2.1.Theorie der Kommunikation in einem Netzwerk
 2.2.Notwendigkeit und Anforderungen eines eigenen Netzwerkprotokolls
 
