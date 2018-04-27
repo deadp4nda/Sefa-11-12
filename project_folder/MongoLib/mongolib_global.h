@@ -21,7 +21,6 @@ class QTcpServer;
 namespace Mongo{
 
 class MngThManager;
-class MngServer;
 class MongoConnection;
 class InstructionHansz;
 class FileHansz;

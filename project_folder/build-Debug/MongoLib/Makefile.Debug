@@ -11,7 +11,7 @@ MAKEFILE      = Makefile.Debug
 
 CC            = cl
 CXX           = cl
-DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DWIN64 -DMONGOLIB_LIBRARY -DQT_DEPRECATED_WARNINGS -DMONGO_LIB -DQT_QML_DEBUG -DQT_NETWORK_LIB -DQT_CORE_LIB -D_WINDLL
+DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DWIN64 -DMONGOLIB_LIBRARY -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_NETWORK_LIB -DQT_CORE_LIB -D_WINDLL
 CFLAGS        = -nologo -Zc:wchar_t -FS -Zc:strictStrings -Zi -MDd -W3 -w44456 -w44457 -w44458 /Fddebug\MongoLib.vc.pdb $(DEFINES)
 CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zi -MDd -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -EHsc /Fddebug\MongoLib.vc.pdb $(DEFINES)
 INCPATH       = -I..\..\MongoLib -I. -ID:\dev\Qt\5.10.1\msvc2017_64\include -ID:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork -ID:\dev\Qt\5.10.1\msvc2017_64\include\QtCore -Idebug -ID:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32-msvc 
@@ -200,8 +200,7 @@ debug\moc_predefs.h: D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\data\dummy.cp
 compiler_moc_header_make_all: debug\moc_mngserver.cpp debug\moc_mngthmanager.cpp debug\moc_mongoconnection.cpp debug\moc_mongofilesocket.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) debug\moc_mngserver.cpp debug\moc_mngthmanager.cpp debug\moc_mongoconnection.cpp debug\moc_mongofilesocket.cpp
-debug\moc_mngserver.cpp: ..\..\MongoLib\mongolib.h \
-		..\..\MongoLib\mongolib_global.h \
+debug\moc_mngserver.cpp: ..\..\MongoLib\mongolib_global.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qglobal.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qconfig-bootstrapped.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qconfig.h \
@@ -274,21 +273,6 @@ debug\moc_mngserver.cpp: ..\..\MongoLib\mongolib.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qtcpserver.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qhostaddress.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QByteArray \
-		..\..\MongoLib\mngthmanager.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QObject \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDir \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdir.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfileinfo.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfile.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfiledevice.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QThread \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QQueue \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qqueue.h \
-		..\..\MongoLib\filehansz.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFile \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString \
-		..\..\MongoLib\datahansz.h \
 		..\..\MongoLib\mngserver.h \
 		debug\moc_predefs.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\bin\moc.exe
@@ -356,6 +340,9 @@ debug\moc_mngthmanager.cpp: D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QObject 
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QQueue \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qqueue.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QTimer \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qtimer.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qbasictimer.h \
 		..\..\MongoLib\mongolib_global.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\QTcpSocket \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qtcpsocket.h \
@@ -380,6 +367,10 @@ debug\moc_mngthmanager.cpp: D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QObject 
 		..\..\MongoLib\filehansz.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFile \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString \
+		..\..\MongoLib\mongoconnection.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDataStream \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdatastream.h \
+		..\..\MongoLib\mngserver.h \
 		..\..\MongoLib\mngthmanager.h \
 		debug\moc_predefs.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\bin\moc.exe
@@ -565,7 +556,6 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 ####### Compile
 
 debug\mngserver.obj: ..\..\MongoLib\mngserver.cpp ../../MongoLib/mngserver.h \
-		../../MongoLib/mongolib.h \
 		../../MongoLib/mongolib_global.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qglobal.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qconfig-bootstrapped.h \
@@ -639,6 +629,9 @@ debug\mngserver.obj: ..\..\MongoLib\mngserver.cpp ../../MongoLib/mngserver.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qtcpserver.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qhostaddress.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QByteArray \
+		../../MongoLib/mongoconnection.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDataStream \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdatastream.h \
 		../../MongoLib/mngthmanager.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QObject \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDir \
@@ -650,13 +643,12 @@ debug\mngserver.obj: ..\..\MongoLib\mngserver.cpp ../../MongoLib/mngserver.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QQueue \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qqueue.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QTimer \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qtimer.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qbasictimer.h \
 		../../MongoLib/filehansz.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFile \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString \
-		../../MongoLib/datahansz.h \
-		../../MongoLib/mongoconnection.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDataStream \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdatastream.h
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString
 
 debug\datahansz.obj: ..\..\MongoLib\datahansz.cpp ../../MongoLib/datahansz.h \
 		../../MongoLib/mongolib_global.h \
@@ -744,15 +736,21 @@ debug\datahansz.obj: ..\..\MongoLib\datahansz.cpp ../../MongoLib/datahansz.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QQueue \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qqueue.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QTimer \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qtimer.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qbasictimer.h \
 		../../MongoLib/filehansz.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString \
+		../../MongoLib/mongoconnection.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDataStream \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdatastream.h \
+		../../MongoLib/mngserver.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFileInfo
 
-debug\mngthmanager.obj: ..\..\MongoLib\mngthmanager.cpp ../../MongoLib/mngthmanager.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QObject \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qobject.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qobjectdefs.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qnamespace.h \
+debug\mngthmanager.obj: ..\..\MongoLib\mngthmanager.cpp D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFile \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfile.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfiledevice.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qiodevice.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qglobal.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qconfig-bootstrapped.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qconfig.h \
@@ -774,6 +772,9 @@ debug\mngthmanager.obj: ..\..\MongoLib\mngthmanager.cpp ../../MongoLib/mngthmana
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qmutex.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qnumeric.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qversiontagging.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qobject.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qobjectdefs.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qnamespace.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qobjectdefs_impl.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qstring.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qchar.h \
@@ -799,18 +800,20 @@ debug\mngthmanager.obj: ..\..\MongoLib\mngthmanager.cpp ../../MongoLib/mngthmana
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qvarlengtharray.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qcontainerfwd.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qobject_impl.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QThread \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
+		../../MongoLib/mngthmanager.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QObject \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDir \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdir.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfileinfo.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfile.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qfiledevice.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qiodevice.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qshareddata.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qhash.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QThread \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QQueue \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qqueue.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QTimer \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qtimer.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qbasictimer.h \
 		../../MongoLib/mongolib_global.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\QTcpSocket \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qtcpsocket.h \
@@ -833,15 +836,13 @@ debug\mngthmanager.obj: ..\..\MongoLib\mngthmanager.cpp ../../MongoLib/mngthmana
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\qhostaddress.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QByteArray \
 		../../MongoLib/filehansz.h \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFile \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString \
-		../../MongoLib/mngserver.h \
-		../../MongoLib/mongolib.h \
-		../../MongoLib/datahansz.h \
 		../../MongoLib/mongoconnection.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QDataStream \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qdatastream.h \
-		../../MongoLib/instructionhansz.h
+		../../MongoLib/mngserver.h \
+		../../MongoLib/instructionhansz.h \
+		../../MongoLib/mongofilesocket.h
 
 debug\mongoconnection.obj: ..\..\MongoLib\mongoconnection.cpp ../../MongoLib/mongoconnection.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\QTcpSocket \
@@ -930,9 +931,13 @@ debug\mongoconnection.obj: ..\..\MongoLib\mongoconnection.cpp ../../MongoLib/mon
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qthread.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QQueue \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qqueue.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QTimer \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qtimer.h \
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\qbasictimer.h \
 		../../MongoLib/filehansz.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QFile \
-		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString
+		D:\dev\Qt\5.10.1\msvc2017_64\include\QtCore\QString \
+		../../MongoLib/mngserver.h
 
 debug\mongofilesocket.obj: ..\..\MongoLib\mongofilesocket.cpp ../../MongoLib/mongofilesocket.h \
 		D:\dev\Qt\5.10.1\msvc2017_64\include\QtNetwork\QTcpSocket \

@@ -1,7 +1,9 @@
 ﻿#ifndef MNGSERVER_H
 #define MNGSERVER_H
 
-#include "mongolib.h"
+#include "mongolib_global.h"
+#include <QTcpServer>
+
 namespace Mongo{
 class MngServer: public QTcpServer{
     Q_OBJECT

@@ -14,6 +14,7 @@ public:
     MongoFileSocket(qintptr handle,MngThManager *parent = nullptr);
     MongoFileSocket(const MongoFileSocket&) = delete;
     bool send();
+    bool transmitting()const{return (bool)fileH;}
 signals:
     void newFile(const SafeByteArray);
 private slots:
