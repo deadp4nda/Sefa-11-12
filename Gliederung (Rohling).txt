@@ -5,7 +5,7 @@ Gliederung:
 
 2.Entwurf und Umsetzung des Netzwerk-Backends
 2.1.Theorie der Kommunikation in einem Netzwerk
-2.2.Notwendigkeit und Anforderungen eines eigenen Netzwerkprotokolls
+2.2.Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls
 
 3.Gedanken zur Entwicklung einer eigenen Syntax für Benutzereingaben
 3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
