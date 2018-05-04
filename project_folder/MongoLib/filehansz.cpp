@@ -7,7 +7,6 @@ namespace Mongo{
 FileHansz::FileHansz(const QFile &file, quint64 filetype):
     file(file.fileName()),filetype(filetype){
     this->file.open(QIODevice::ReadOnly);
-    headers = SafeByteArray(new QByteArray());
     Mongo_Header mongoH;
     File_Header fileH;
     QFileInfo info(file);
@@ -20,9 +19,9 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
     fileH.strLen = name.toLocal8Bit().size();
     mongoH.payload = sizeof(mongoH)+sizeof(fileH)+fileH.strLen+fileH.fileLen;
 
-    headers->append((char*)&mongoH,sizeof(mongoH));
-    headers->append((char*)&fileH,sizeof(fileH));
-    headers->append(name.toLocal8Bit());
+    headers.append((char*)&mongoH,sizeof(mongoH));
+    headers.append((char*)&fileH,sizeof(fileH));
+    headers.append(name.toLocal8Bit());
 }
 FileHansz::FileHansz(const SafeByteArray array){
     if(array->size() >= sizeof(Mongo_Header)+sizeof(File_Header)){
@@ -40,11 +39,4 @@ FileHansz::FileHansz(const SafeByteArray array){
     }
 }
 void FileHansz::addData(SafeByteArray){}
-SafeByteArray FileHansz::getData(){
-    if(!headerSent){
-        headerSent = true;
-        return headers;
-    }
-    return SafeByteArray(new QByteArray(file.read(FILE_READ_MAXLENGTH)));
-}
 }

@@ -23,10 +23,6 @@ MngThManager::MngThManager(const QString &stdDir, quint16 listenPort, QObject *p
     if(server->isListening()){
         serverActive = true;
     }
-    timer = new QTimer;
-    timer->setInterval(1000);
-    connect(timer,&QTimer::timeout,this,&MngThManager::checkFileTransmissions);
-    fileThread = new QThread(this);
 }
 MngThManager::~MngThManager(){
     if(client)
@@ -57,24 +53,24 @@ void MngThManager::incomingConnection(MongoConnection *nClnt){
 }
 void MngThManager::closeConnection(){
     if(!client)return;
-    sendHansz(SafeInstruction(new InstructionHansz(Instructions::Exit)));
+    sendInstruction(SafeInstruction(new InstructionHansz(Instructions::Exit)));
     client->abort();
     //disconnect client
     delete client;
     client = nullptr;
     emit connectionClosed();
 }
-bool MngThManager::sendHansz(SafeInstruction hansz){
+bool MngThManager::sendInstruction(SafeInstruction hansz){
     if(!CLIENT_VALID(client)){
         return false;
     }
     return client->send(hansz->getAllData());
 }
 bool MngThManager::sendInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content, quint32 args){
-    return sendHansz(SafeInstruction(new InstructionHansz(instr,toPrgm,args,content)));
+    return sendInstruction(SafeInstruction(new InstructionHansz(instr,toPrgm,args,content)));
 }
 bool MngThManager::sendFile(QFile &file, quint64 type){
-    filequeue.enqueue(SafeFileHansz(new FileHansz(file,type)));
+    fileManager->addFile(SafeFileHansz(new FileHansz(file,type)));
     return true;
 }
 void MngThManager::incomingData(const SafeByteArray buffer){
@@ -90,11 +86,6 @@ void MngThManager::handleServerError(QAbstractSocket::SocketError){
     std::wcerr << server->errorString().toStdWString() << std::endl;
     if(!server->isListening())
         serverActive = false;
-}
-void MngThManager::checkFileTransmissions(){
-    if(fileTransmission->transmitting()){
-        return;
-    }
 }
 quint16 MngThManager::getServerPort()const{
     return (server && serverActive)?(server->serverPort()): 0;

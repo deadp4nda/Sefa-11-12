@@ -6,23 +6,23 @@
 #include "filehansz.h"
 
 namespace Mongo{
+class MngFileManager;
 class MongoFileSocket : public QTcpSocket
 {
     Q_OBJECT
 public:
-    MongoFileSocket(const QHostAddress &toIp, SafeFileHansz fileH, quint16 port = 0, MngThManager *parent = nullptr);
-    MongoFileSocket(qintptr handle,MngThManager *parent = nullptr);
+    MongoFileSocket(const QHostAddress &toIp, quint16 port = 0, MngFileManager *parent = nullptr);
+    MongoFileSocket(qintptr handle,MngFileManager *parent = nullptr);
     MongoFileSocket(const MongoFileSocket&) = delete;
-    bool send();
-    bool transmitting()const{return (bool)fileH;}
+    int send(SafeFileHansz);
 signals:
     void newFile(const SafeByteArray);
 private slots:
     void handleReadyRead();
 private:
     quint16 port;
-    MngThManager *parentMgr;
-    SafeFileHansz fileH;
+    QHostAddress address = QHostAddress(QHostAddress::Null);
+    MngFileManager *parentMgr;
 };
 }
 #endif // MONGOFILESOCKET_H

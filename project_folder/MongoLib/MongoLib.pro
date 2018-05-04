@@ -26,20 +26,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     mngserver.cpp \
-    datahansz.cpp \
     mngthmanager.cpp \
     mongoconnection.cpp \
     mongofilesocket.cpp \
     instructionhansz.cpp \
-    filehansz.cpp
+    filehansz.cpp \
+    mngfilemanager.cpp \
+    mngfileserver.cpp
 
 HEADERS += \
         mongolib.h \
         mongolib_global.h \ 
     mngserver.h \
-    datahansz.h \
     mngthmanager.h \
     mongoconnection.h \
     mongofilesocket.h \
     instructionhansz.h \
-    filehansz.h
+    filehansz.h \
+    mngfilemanager.h \
+    mngfileserver.h
+
+DEFINES += MongoLib

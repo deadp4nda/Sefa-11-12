@@ -11,6 +11,7 @@
 #include "filehansz.h"
 #include "mongoconnection.h"
 #include "mngserver.h"
+#include "mngfilemanager.h"
 
 #define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable())
 
@@ -28,7 +29,7 @@ public:
 
     bool sendInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint32 args = 0);
     bool sendFile(QFile &file, quint64 type);
-    bool sendHansz(SafeInstruction hansz);
+    bool sendInstruction(SafeInstruction hansz);
 public slots:
     void incomingConnection(MongoConnection *);
 signals:
@@ -42,10 +43,8 @@ private:
     SafeInstruction lastingTransmission = nullptr;
     MongoConnection *client = nullptr;
     MngServer *server = nullptr;
-    QThread *fileThread = nullptr;
-    QQueue<SafeFileHansz> filequeue;
-    MongoFileSocket *fileTransmission = nullptr;
-    QTimer *timer = nullptr;
+    MngFileManager *fileManager = nullptr;
+    QHostAddress address = QHostAddress(QHostAddress::Null);
 
     bool serverActive = false;
     bool connectionVerified = false;
@@ -53,8 +52,6 @@ private slots:
     void incomingData(const SafeByteArray);
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
-    void checkFileTransmissions();
-    friend class MongoConnection;
 public: //getter
     quint16 getPeerPort() const{return (CLIENT_VALID(client))?client->peerPort():0;}
     QHostAddress getPeerAddr() const{return (CLIENT_VALID(client))?client->peerAddress():QHostAddress(QHostAddress::Null);}
@@ -64,6 +61,8 @@ public: //getter
     QHostAddress getServerAddr()const;
     bool isServerActive()const{return serverActive;}
     static QString getStandardDirectory(){return MngThManager::standardDir;}
+    friend class MongoConnection;
+    friend class MongoFileManager;
 };
 }
 #endif // MNGMANAGER_H

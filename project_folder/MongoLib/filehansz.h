@@ -12,18 +12,18 @@ public:
     FileHansz(const QFile& file,quint64 filetype);
     FileHansz(const SafeByteArray array);
     FileHansz(const FileHansz&) = delete;
-    SafeByteArray getData();
     void addData(SafeByteArray);
 
     const QString getName()const{return name;}
     quint64 getFileType()const{return filetype;}
-    const QFile* getFile()const{return &file;}
+    QFile* getFile(){return &file;}
+    QByteArray getHeaders()const{return headers;}
 private:
     QFile file;
     QString name;
     quint64 filetype;
     bool headerSent = false;
-    SafeByteArray headers;
+    QByteArray headers;
 };
 }
 

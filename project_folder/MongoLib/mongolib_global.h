@@ -37,7 +37,7 @@ typedef std::shared_ptr<FileHansz> SafeFileHansz ;
 #define MONGO_TYPE_INVA (0xB3U)
 
 #define MONGO_INSTRUCTION_MAXIMUM 0xFFFF
-#define FILE_READ_MAXLENGTH 2048
+#define FILE_READ_MAXLENGTH 2048ll
 
 enum Filetype{
     Undefined,

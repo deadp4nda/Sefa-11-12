@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mongo__MngThManager_t {
-    QByteArrayData data[14];
-    char stringdata0[233];
+    QByteArrayData data[13];
+    char stringdata0[210];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,8 +43,7 @@ QT_MOC_LITERAL(8, 118, 12), // "incomingData"
 QT_MOC_LITERAL(9, 131, 13), // "SafeByteArray"
 QT_MOC_LITERAL(10, 145, 17), // "handleServerError"
 QT_MOC_LITERAL(11, 163, 28), // "QAbstractSocket::SocketError"
-QT_MOC_LITERAL(12, 192, 17), // "handleClientError"
-QT_MOC_LITERAL(13, 210, 22) // "checkFileTransmissions"
+QT_MOC_LITERAL(12, 192, 17) // "handleClientError"
 
     },
     "Mongo::MngThManager\0Message\0\0"
@@ -53,7 +52,7 @@ QT_MOC_LITERAL(13, 210, 22) // "checkFileTransmissions"
     "MongoConnection*\0incomingData\0"
     "SafeByteArray\0handleServerError\0"
     "QAbstractSocket::SocketError\0"
-    "handleClientError\0checkFileTransmissions"
+    "handleClientError"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +62,7 @@ static const uint qt_meta_data_Mongo__MngThManager[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,16 +70,15 @@ static const uint qt_meta_data_Mongo__MngThManager[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x06 /* Public */,
-       4,    0,   57,    2, 0x06 /* Public */,
-       5,    0,   58,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       4,    0,   52,    2, 0x06 /* Public */,
+       5,    0,   53,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    1,   59,    2, 0x0a /* Public */,
-       8,    1,   62,    2, 0x08 /* Private */,
-      10,    1,   65,    2, 0x08 /* Private */,
-      12,    1,   68,    2, 0x08 /* Private */,
-      13,    0,   71,    2, 0x08 /* Private */,
+       6,    1,   54,    2, 0x0a /* Public */,
+       8,    1,   57,    2, 0x08 /* Private */,
+      10,    1,   60,    2, 0x08 /* Private */,
+      12,    1,   63,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
@@ -92,7 +90,6 @@ static const uint qt_meta_data_Mongo__MngThManager[] = {
     QMetaType::Void, 0x80000000 | 9,    2,
     QMetaType::Void, 0x80000000 | 11,    2,
     QMetaType::Void, 0x80000000 | 11,    2,
-    QMetaType::Void,
 
        0        // eod
 };
@@ -110,7 +107,6 @@ void Mongo::MngThManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         case 4: _t->incomingData((*reinterpret_cast< const SafeByteArray(*)>(_a[1]))); break;
         case 5: _t->handleServerError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
         case 6: _t->handleClientError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
-        case 7: _t->checkFileTransmissions(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -189,13 +185,13 @@ int Mongo::MngThManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 7;
     }
     return _id;
 }
