@@ -21,8 +21,11 @@ private slots:
     void handleReadyRead();
 private:
     quint16 port;
+    bool finishedReceiving = false;
     QHostAddress address = QHostAddress(QHostAddress::Null);
     MngFileManager *parentMgr;
+    SafeFileHansz incoming = SafeFileHansz(nullptr);
+    friend class MngFileManager;
 };
 }
 #endif // MONGOFILESOCKET_H

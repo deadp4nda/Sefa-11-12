@@ -39,6 +39,9 @@ typedef std::shared_ptr<FileHansz> SafeFileHansz ;
 #define MONGO_INSTRUCTION_MAXIMUM 0xFFFF
 #define FILE_READ_MAXLENGTH 2048ll
 
+#define MONGO_FILE_INPORT 5235
+#define MONGO_FILE_OUTPORT 5236
+
 enum Filetype{
     Undefined,
     Movie,

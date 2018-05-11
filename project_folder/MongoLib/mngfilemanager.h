@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QThread>
 #include <QQueue>
 #include "mongolib_global.h"
 
@@ -11,26 +12,27 @@ class MongoFileSocket;
 class MngThManager;
 class MngFileServer;
 
-class MngFileManager : public QObject
+class MngFileManager : public QThread
 {
     Q_OBJECT
 public:
     explicit MngFileManager(MngThManager *parent = nullptr);
-    int executing();
+    void run();
     void checkMate();
     void addFile(SafeFileHansz);
 signals:
     void execNewFile(SafeFileHansz);
+    void sendingFinished(SafeFileHansz);
+    void newFileReceived(SafeFileHansz);
 public slots:
-    void setupServer(quint16 listeningPort);
     void receiveNewConnection(MongoFileSocket*);
 private:
     SafeFileHansz executed = SafeFileHansz(nullptr);
     QQueue<SafeFileHansz> transmissions;
-    MongoFileSocket *socket = nullptr;
+    QQueue<MongoFileSocket*> pending;
+    MongoFileSocket *inSocket = nullptr;
+    MongoFileSocket *outSocket = nullptr;
     QTimer *timer = nullptr;
-    QThread *transmissionThread = nullptr;
-    MngFileServer *server = nullptr;
     MngThManager *parentMgr = nullptr;
 };
 }

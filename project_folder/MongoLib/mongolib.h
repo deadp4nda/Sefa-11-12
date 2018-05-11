@@ -3,6 +3,5 @@
 
 #include "mongolib_global.h"
 #include "mngthmanager.h"
-#include "datahansz.h"
 
 #endif // MONGOLIB_H

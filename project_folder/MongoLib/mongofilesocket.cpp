@@ -8,6 +8,7 @@ port(port),parentMgr(parent),address(toIp){
     connectToHost(toIp,port);
     waitForConnected();
     connect(this,&MongoFileSocket::readyRead,this,&MongoFileSocket::handleReadyRead);
+    finishedReceiving = true;
 }
 MongoFileSocket::MongoFileSocket(qintptr handle, MngFileManager *parent):
     parentMgr(parent){
@@ -24,5 +25,13 @@ int MongoFileSocket::send(SafeFileHansz hansz){
     }
     return 0;
 }
-void MongoFileSocket::handleReadyRead(){}
+void MongoFileSocket::handleReadyRead(){
+    SafeByteArray array = SafeByteArray(new QByteArray);
+    *array = read(bytesAvailable());
+    if(!incoming){
+        incoming = SafeFileHansz(new FileHansz(array));
+    }else{
+        incoming->addData(array);
+    }
+}
 }

@@ -12,31 +12,34 @@ MngFileManager::MngFileManager(MngThManager *parent):
 }
 void MngFileManager::checkMate(){
     if(!executed && !(transmissions.isEmpty())){
-        executing();
+        run();
+    }
+    for(MongoFileSocket*s:pending){
+        if(!s->isWritable()){
+            emit newFileReceived(s->incoming);
+            pending.removeAll(s);
+        }
     }
 }
 void MngFileManager::addFile(SafeFileHansz hansi){
     transmissions.enqueue(hansi);
 }
-int MngFileManager::executing(){
-    socket = new MongoFileSocket(parentMgr->getPeerAddr(),0,this);
-    transmissionThread = new QThread(this);
+void MngFileManager::run(){
+    outSocket = new MongoFileSocket(parentMgr->getPeerAddr(),MONGO_FILE_OUTPORT,this);
     executed = transmissions.dequeue();
-    socket->moveToThread(transmissionThread);
 
     emit execNewFile(executed);
-    int exitCode = socket->send(executed);
+    outSocket->send(executed);
+    outSocket->disconnectFromHost();
+    outSocket->waitForDisconnected();
+    outSocket->close();
+    emit sendingFinished(executed);
 
     executed = SafeFileHansz(nullptr);
-    delete socket;
-    delete transmissionThread;
-    return exitCode;
+    delete outSocket;
+    outSocket = nullptr;
 }
-void MngFileManager::setupServer(quint16 listeningPort){
-    server = new MngFileServer(listeningPort,this);
-    connect(server,&MngFileServer::newConnection,this,&MngFileManager::receiveNewConnection);
-}
-void MngFileManager::receiveNewConnection(MongoFileSocket *){
-
+void MngFileManager::receiveNewConnection(MongoFileSocket *socket){
+    pending.enqueue(socket);
 }
 }
