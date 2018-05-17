@@ -4,13 +4,14 @@
 #include <iostream>
 #include <QFile>
 #include <QString>
+#include <QDir>
 #include "mongolib_global.h"
 
 namespace Mongo {
 class MONGOLIBSHARED_EXPORT FileHansz{
 public:
     FileHansz(const QFile& file,quint64 filetype);
-    FileHansz(const SafeByteArray array);
+    FileHansz(const SafeByteArray array, QDir &stdDir);
     FileHansz(const FileHansz&) = delete;
     void addData(SafeByteArray);
 

@@ -14,16 +14,18 @@ public:
     MongoFileSocket(const QHostAddress &toIp, quint16 port = 0, MngFileManager *parent = nullptr);
     MongoFileSocket(qintptr handle,MngFileManager *parent = nullptr);
     MongoFileSocket(const MongoFileSocket&) = delete;
-    int send(SafeFileHansz);
+    void send(SafeFileHansz);
+    void setStdDir(QDir &dir){this->dir = dir;}
 signals:
     void newFile(const SafeByteArray);
 private slots:
     void handleReadyRead();
 private:
+    QDir dir;
     quint16 port;
     bool finishedReceiving = false;
     QHostAddress address = QHostAddress(QHostAddress::Null);
-    MngFileManager *parentMgr;
+    MngFileManager *parentMgr = nullptr;
     SafeFileHansz incoming = SafeFileHansz(nullptr);
     friend class MngFileManager;
 };

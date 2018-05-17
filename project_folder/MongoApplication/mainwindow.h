@@ -17,6 +17,7 @@ public:
     ~MainWindow();
 public slots:
     void hanszIn(Mongo::SafeInstruction);
+    void fileIn(Mongo::SafeFileHansz);
 private:
     QVBoxLayout *layout;
     Mongo::MngThManager *manager;

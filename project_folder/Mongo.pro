@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS = MongoApplication\
-		  MongoLib
+SUBDIRS = MongoLib\
+            MongoApplication
 
 MongoApplication.depends = MongoLib

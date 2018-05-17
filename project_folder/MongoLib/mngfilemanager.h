@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QQueue>
+#include <QDir>
 #include "mongolib_global.h"
 
 namespace Mongo{
@@ -16,14 +17,16 @@ class MngFileManager : public QThread
 {
     Q_OBJECT
 public:
-    explicit MngFileManager(MngThManager *parent = nullptr);
+    explicit MngFileManager(QDir stdDir,MngThManager *parent = nullptr);
+    ~MngFileManager();
     void run();
     void checkMate();
     void addFile(SafeFileHansz);
 signals:
-    void execNewFile(SafeFileHansz);
+    void processNewFile(SafeFileHansz);
     void sendingFinished(SafeFileHansz);
     void newFileReceived(SafeFileHansz);
+    void transmissionCancelled(SafeFileHansz);
 public slots:
     void receiveNewConnection(MongoFileSocket*);
 private:
@@ -34,6 +37,8 @@ private:
     MongoFileSocket *outSocket = nullptr;
     QTimer *timer = nullptr;
     MngThManager *parentMgr = nullptr;
+    MngFileServer *server = nullptr;
+    QDir &dir;
 };
 }
 #endif // MNGFILEMANAGER_H

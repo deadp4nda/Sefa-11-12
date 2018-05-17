@@ -5,12 +5,16 @@
 #include "mngthmanager.h"
 
 namespace Mongo {
-MngFileManager::MngFileManager(MngThManager *parent):
-    parentMgr(parent){
+MngFileManager::MngFileManager(QDir stdDir,MngThManager *parent):
+    parentMgr(parent), dir(stdDir){
     timer = new QTimer(this);
     timer->start(2000);
+    server = new MngFileServer(MONGO_FILE_INPORT,this);
+    connect(server,&MngFileServer::newConnection,this,&MngFileManager::receiveNewConnection);
+    connect(timer,&QTimer::timeout,this,&MngFileManager::checkMate);
 }
 void MngFileManager::checkMate(){
+    qDebug() << "CheckMate";
     if(!executed && !(transmissions.isEmpty())){
         run();
     }
@@ -28,7 +32,7 @@ void MngFileManager::run(){
     outSocket = new MongoFileSocket(parentMgr->getPeerAddr(),MONGO_FILE_OUTPORT,this);
     executed = transmissions.dequeue();
 
-    emit execNewFile(executed);
+    emit processNewFile(executed);
     outSocket->send(executed);
     outSocket->disconnectFromHost();
     outSocket->waitForDisconnected();
@@ -40,6 +44,20 @@ void MngFileManager::run(){
     outSocket = nullptr;
 }
 void MngFileManager::receiveNewConnection(MongoFileSocket *socket){
+    socket->setStdDir(dir);
     pending.enqueue(socket);
+}
+MngFileManager::~MngFileManager(){
+    for(SafeFileHansz h:transmissions){
+        emit transmissionCancelled(h);
+    }
+    transmissions.clear();
+    if(inSocket)delete inSocket;
+    if(outSocket)delete outSocket;
+    if(timer)delete timer;
+    if(server)delete server;
+    for(MongoFileSocket*s:pending){
+        delete s;
+    }
 }
 }

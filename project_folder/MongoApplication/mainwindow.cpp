@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <iostream>
 #include "instructionhansz.h"
+#include "filehansz.h"
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -36,6 +37,7 @@ MainWindow::MainWindow(Mongo::MngThManager *m,QWidget *parent)
 {
     layout = new QVBoxLayout(this);
     QObject::connect(manager,&Mongo::MngThManager::Message,this,&MainWindow::hanszIn);
+    QObject::connect(manager,&Mongo::MngThManager::FileProcessed,this,&MainWindow::fileIn);
 }
 
 MainWindow::~MainWindow()
@@ -43,15 +45,19 @@ MainWindow::~MainWindow()
     delete layout;
 }
 void MainWindow::hanszIn(Mongo::SafeInstruction hansz){
-    qDebug() <<"Hansz use_count: " << hansz.use_count();
-    qDebug() << "Call: " << ++byte;
-    qDebug() << "Instruction Use_count: " << hansz.use_count();
-    qDebug() << "Code: " << hansz->getInstructionCode();
-    qDebug() << "Prgm: " << hansz->getAddressedProgram();
-    qDebug() << "Args: " << hansz->getPassedArguments();
+//    qDebug() <<"Hansz use_count: " << hansz.use_count();
+//    qDebug() << "Call: " << ++byte;
+//    qDebug() << "Instruction Use_count: " << hansz.use_count();
+//    qDebug() << "Code: " << hansz->getInstructionCode();
+//    qDebug() << "Prgm: " << hansz->getAddressedProgram();
+//    qDebug() << "Args: " << hansz->getPassedArguments();
 //    ChryHexdump((char*)hansz->getAllData()->constData(),hansz->getAllData()->size(),stderr);
-    qDebug() << "Length: " << hansz->getPayload()->size();
+//    qDebug() << "Length: " << hansz->getPayload()->size();
     QLabel *label = new QLabel(QString(*hansz->getPayload()),this);
     layout->addWidget(label);
     label->show();
+}
+
+void MainWindow::fileIn(Mongo::SafeFileHansz hansz){
+    qDebug() << "File Arrived: " << hansz->getName() << " with Type: " << hansz->getFileType();
 }

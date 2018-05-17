@@ -182,10 +182,6 @@ Makefile: ..\..\MongoLib\MongoLib.pro D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri \
-		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script.pri \
-		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script_private.pri \
-		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools.pri \
-		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools_private.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri \
@@ -366,10 +362,6 @@ D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri:
-D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script.pri:
-D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script_private.pri:
-D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools.pri:
-D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools_private.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri:

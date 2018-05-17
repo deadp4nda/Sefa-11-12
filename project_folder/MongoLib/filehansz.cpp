@@ -23,7 +23,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
     headers.append((char*)&fileH,sizeof(fileH));
     headers.append(name.toLocal8Bit());
 }
-FileHansz::FileHansz(const SafeByteArray array){
+FileHansz::FileHansz(const SafeByteArray array,QDir &stdDir){
     if(array->size() >= sizeof(Mongo_Header)+sizeof(File_Header)){
         Mongo_Header *mongoH = (Mongo_Header*)array->constData();
         File_Header *fileH = (File_Header*)(array->constData()+sizeof(Mongo_Header));
@@ -33,10 +33,14 @@ FileHansz::FileHansz(const SafeByteArray array){
                 temp.append(array->at(i));
             }
             name = QString::fromLocal8Bit(temp);
+            file.setFileName(stdDir.absolutePath()+"/"+name);
+            file.open(QIODevice::WriteOnly);
         }else{
 
         }
     }
 }
-void FileHansz::addData(SafeByteArray){}
+void FileHansz::addData(SafeByteArray buffer){
+    file.write(*buffer);
+}
 }

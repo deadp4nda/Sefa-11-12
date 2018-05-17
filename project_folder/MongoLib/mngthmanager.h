@@ -34,6 +34,10 @@ public slots:
     void incomingConnection(MongoConnection *);
 signals:
     void Message(SafeInstruction);
+    void FileProcessed(SafeFileHansz);
+    void FileSendingFinished(SafeFileHansz);
+    void FileReceived(SafeFileHansz);
+    void FileCancelled(SafeFileHansz);
 signals: // connection-based intern signals
     void connectionClosed();
     void connectionInitiated();
@@ -63,6 +67,7 @@ public: //getter
     static QString getStandardDirectory(){return MngThManager::standardDir;}
     friend class MongoConnection;
     friend class MongoFileManager;
+
 };
 }
 #endif // MNGMANAGER_H
