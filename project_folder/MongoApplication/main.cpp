@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     static const quint16 port = (rand()%65500)+35;
     QString schtring = QString::number(port);
     managerOne.sendInstruction(Instructions::Chat,0,QByteArray(schtring.toLocal8Bit()));
-    QFile file("C:/Users/Benedikt/Documents/GitHub/Sefa-11-12/project_folder/testfile.txt");
+    QFile file("C:/Users/Chrystalkey/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg");
     file.open(QIODevice::ReadOnly);
     managerOne.sendFile(file,Filetype::Text);
     return a.exec();

@@ -18,7 +18,9 @@ void MongoFileSocket::send(SafeFileHansz hansz){
     write(hansz->getHeaders());
     QFile *device = hansz->getFile();
     while(!device->atEnd()){
-        if(!write(device->read(FILE_READ_MAXLENGTH))){
+        quint64 written = write(device->read(FILE_READ_MAXLENGTH));
+        qDebug() << "write " << (quint64)written << " Bytes";
+        if(!written){
             qDebug() << "ERROR while writing to output stream: Stream corrupted";
         }
     }

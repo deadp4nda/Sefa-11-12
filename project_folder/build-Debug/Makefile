@@ -32,118 +32,118 @@ SUBTARGETS    =  \
 
 sub-MongoLib-qmake_all:  FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
-	cd MongoLib\ && $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd MongoLib\ && $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd MongoLib\ && $(MAKE) -f Makefile qmake_all
 sub-MongoLib: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-MongoLib-make_first-ordered: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-MongoLib-make_first: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-MongoLib-all-ordered: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-MongoLib-all: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-MongoLib-clean-ordered: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-MongoLib-clean: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-MongoLib-distclean-ordered: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-MongoLib-distclean: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-MongoLib-install_subtargets-ordered: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-MongoLib-install_subtargets: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-MongoLib-uninstall_subtargets-ordered: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-MongoLib-uninstall_subtargets: FORCE
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-MongoApplication-qmake_all: sub-MongoLib-qmake_all FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
-	cd MongoApplication\ && $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd MongoApplication\ && $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd MongoApplication\ && $(MAKE) -f Makefile qmake_all
 sub-MongoApplication: sub-MongoLib FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-MongoApplication-make_first-ordered: sub-MongoLib-make_first-ordered  FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-MongoApplication-make_first: sub-MongoLib-make_first FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-MongoApplication-all-ordered: sub-MongoLib-all-ordered  FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-MongoApplication-all: sub-MongoLib-all FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-MongoApplication-clean-ordered: sub-MongoLib-clean-ordered  FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-MongoApplication-clean: sub-MongoLib-clean FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-MongoApplication-distclean-ordered: sub-MongoLib-distclean-ordered  FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-MongoApplication-distclean: sub-MongoLib-distclean FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-MongoApplication-install_subtargets-ordered: sub-MongoLib-install_subtargets-ordered  FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-MongoApplication-install_subtargets: sub-MongoLib-install_subtargets FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-MongoApplication-uninstall_subtargets-ordered: sub-MongoLib-uninstall_subtargets-ordered  FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-MongoApplication-uninstall_subtargets: sub-MongoLib-uninstall_subtargets FORCE
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 
 Makefile: ..\Mongo.pro D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\spec_pre.prf \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\common\angle.conf \
@@ -252,6 +252,10 @@ Makefile: ..\Mongo.pro D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32-msvc\qmake.con
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri \
+		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script.pri \
+		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script_private.pri \
+		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools.pri \
+		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools_private.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri \
@@ -299,7 +303,6 @@ Makefile: ..\Mongo.pro D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32-msvc\qmake.con
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\qt_config.prf \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\spec_post.prf \
-		.qmake.stash \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\exclusive_builds.prf \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\common\msvc-version.conf \
 		D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\toolchain.prf \
@@ -427,6 +430,10 @@ D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_remoteobjects_private.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_repparser_private.pri:
+D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script.pri:
+D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_script_private.pri:
+D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools.pri:
+D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scripttools_private.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_scxml_private.pri:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\modules\qt_lib_sensors.pri:
@@ -474,7 +481,6 @@ D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\qt_functions.prf:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\qt_config.prf:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\spec_post.prf:
-.qmake.stash:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\exclusive_builds.prf:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\common\msvc-version.conf:
 D:\dev\Qt\5.10.1\msvc2017_64\mkspecs\features\toolchain.prf:
@@ -511,41 +517,41 @@ uninstall_subtargets: sub-MongoLib-uninstall_subtargets-ordered sub-MongoApplica
 sub-MongoLib-debug_ordered:
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-MongoApplication-debug_ordered: sub-MongoLib-debug_ordered 
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 debug: sub-MongoLib-debug_ordered sub-MongoApplication-debug_ordered
 
 sub-MongoLib-release_ordered:
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-MongoApplication-release_ordered: sub-MongoLib-release_ordered 
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 release: sub-MongoLib-release_ordered sub-MongoApplication-release_ordered
 
 sub-MongoLib-check_ordered:
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-MongoApplication-check_ordered: sub-MongoLib-check_ordered 
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 check: sub-MongoLib-check_ordered sub-MongoApplication-check_ordered
 
 sub-MongoLib-benchmark_ordered:
 	@if not exist MongoLib\ mkdir MongoLib\ & if not exist MongoLib\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd MongoLib\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoLib\MongoLib.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-MongoApplication-benchmark_ordered: sub-MongoLib-benchmark_ordered 
 	@if not exist MongoApplication\ mkdir MongoApplication\ & if not exist MongoApplication\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Benedikt\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd MongoApplication\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\Chrystalkey\Documents\GitHub\Sefa-11-12\project_folder\MongoApplication\MongoApplication.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 benchmark: sub-MongoLib-benchmark_ordered sub-MongoApplication-benchmark_ordered
 install:install_subtargets  FORCE
 
