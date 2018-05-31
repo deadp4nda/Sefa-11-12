@@ -14,7 +14,6 @@ MngFileManager::MngFileManager(QDir stdDir,MngThManager *parent):
     connect(timer,&QTimer::timeout,this,&MngFileManager::checkMate);
 }
 void MngFileManager::checkMate(){
-    qDebug() << "CheckMate";
     if(!executed && !(transmissions.isEmpty())){
         run();
     }
@@ -29,7 +28,7 @@ void MngFileManager::addFile(SafeFileHansz hansi){
     transmissions.enqueue(hansi);
 }
 void MngFileManager::run(){
-    outSocket = new MongoFileSocket(parentMgr->getPeerAddr(),MONGO_FILE_OUTPORT,this);
+    outSocket = new MongoFileSocket(parentMgr->address,MONGO_FILE_INPORT,this);
     executed = transmissions.dequeue();
 
     emit processNewFile(executed);
@@ -44,7 +43,7 @@ void MngFileManager::run(){
     outSocket = nullptr;
 }
 void MngFileManager::receiveNewConnection(MongoFileSocket *socket){
-    socket->setStdDir(dir);
+//    socket->setStdDir(dir);
     pending.enqueue(socket);
 }
 MngFileManager::~MngFileManager(){

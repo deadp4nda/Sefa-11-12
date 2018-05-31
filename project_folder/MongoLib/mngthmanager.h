@@ -66,7 +66,7 @@ public: //getter
     bool isServerActive()const{return serverActive;}
     static QString getStandardDirectory(){return MngThManager::standardDir;}
     friend class MongoConnection;
-    friend class MongoFileManager;
+    friend class MngFileManager;
 
 };
 }

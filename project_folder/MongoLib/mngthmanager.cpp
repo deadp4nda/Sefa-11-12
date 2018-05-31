@@ -51,6 +51,7 @@ void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     MongoConnection *tmp = new MongoConnection(addr,port,this);
     if(tmp->state() == MongoConnection::ConnectedState){
         client = tmp;
+        address = addr;
         emit connectionInitiated();
     }
 }

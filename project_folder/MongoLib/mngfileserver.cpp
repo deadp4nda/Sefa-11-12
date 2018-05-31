@@ -8,6 +8,7 @@ MngFileServer::MngFileServer(quint16 listenPort, MngFileManager *parent):QTcpSer
 }
 void MngFileServer::incomingConnection(qintptr handle){
     MongoFileSocket *fs = new MongoFileSocket(handle);
+    std::cout << "Server: Connection Received\n";
     emit newConnection(fs);
 }
 }

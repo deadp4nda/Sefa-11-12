@@ -2,6 +2,7 @@
 #define MONGOFILESOCKET_H
 
 #include <QTcpSocket>
+#include <QThread>
 #include "mongolib_global.h"
 #include "filehansz.h"
 
@@ -15,13 +16,13 @@ public:
     MongoFileSocket(qintptr handle,MngFileManager *parent = nullptr);
     MongoFileSocket(const MongoFileSocket&) = delete;
     void send(SafeFileHansz);
-    void setStdDir(QDir &dir){this->dir = dir;}
+    void setStdDir(QDir nDir){dir = nDir;}
 signals:
     void newFile(const SafeByteArray);
-private slots:
-    void handleReadyRead();
+protected slots:
+    void run();
 private:
-    QDir dir;
+    QDir dir = QDir::temp();
     quint16 port;
     bool finishedReceiving = false;
     QHostAddress address = QHostAddress(QHostAddress::Null);

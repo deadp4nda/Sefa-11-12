@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mongo__MongoFileSocket_t {
     QByteArrayData data[5];
-    char stringdata0[62];
+    char stringdata0[50];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,11 +35,11 @@ QT_MOC_LITERAL(0, 0, 22), // "Mongo::MongoFileSocket"
 QT_MOC_LITERAL(1, 23, 7), // "newFile"
 QT_MOC_LITERAL(2, 31, 0), // ""
 QT_MOC_LITERAL(3, 32, 13), // "SafeByteArray"
-QT_MOC_LITERAL(4, 46, 15) // "handleReadyRead"
+QT_MOC_LITERAL(4, 46, 3) // "run"
 
     },
     "Mongo::MongoFileSocket\0newFile\0\0"
-    "SafeByteArray\0handleReadyRead"
+    "SafeByteArray\0run"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +60,7 @@ static const uint qt_meta_data_Mongo__MongoFileSocket[] = {
        1,    1,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   27,    2, 0x08 /* Private */,
+       4,    0,   27,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
@@ -78,7 +78,7 @@ void Mongo::MongoFileSocket::qt_static_metacall(QObject *_o, QMetaObject::Call _
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->newFile((*reinterpret_cast< const SafeByteArray(*)>(_a[1]))); break;
-        case 1: _t->handleReadyRead(); break;
+        case 1: _t->run(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
