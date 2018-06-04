@@ -6,15 +6,12 @@
 #include "mngserver.h"
 #include "mongoconnection.h"
 #include "instructionhansz.h"
-#include "mongofilesocket.h"
 
 //#define CONNECT_CLIENT(client, manager) QObject::connect(client,&MongoConnection::newInput,manager,&MngThManager::incomingData);
 
 namespace Mongo { //Manager
-QString MngThManager::standardDir = "";
-MngThManager::MngThManager(const QString &stdDir, quint16 listenPort, QObject *parent):
+MngThManager::MngThManager(quint16 listenPort, QObject *parent):
     QObject(parent){
-    MngThManager::standardDir = stdDir;
     server = new MngServer(listenPort,this);
     connect(server,SIGNAL(newConnection(MongoConnection*)),
             this, SLOT(incomingConnection(MongoConnection*)));
@@ -23,16 +20,6 @@ MngThManager::MngThManager(const QString &stdDir, quint16 listenPort, QObject *p
     if(server->isListening()){
         serverActive = true;
     }
-
-    fileManager = new MngFileManager(QDir(standardDir),this);
-    connect(fileManager,&MngFileManager::processNewFile,
-            this,&MngThManager::FileProcessed);
-    connect(fileManager,&MngFileManager::newFileReceived,
-            this,&MngThManager::FileReceived);
-    connect(fileManager,&MngFileManager::sendingFinished,
-            this,&MngThManager::FileSendingFinished);
-    connect(fileManager,&MngFileManager::transmissionCancelled,
-            this,&MngThManager::FileCancelled);
 }
 MngThManager::~MngThManager(){
     if(client)
@@ -41,8 +28,6 @@ MngThManager::~MngThManager(){
         server->close();
         delete server;
     }
-    if(fileManager)
-        delete fileManager;
 }
 void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     if(client) {
@@ -81,11 +66,6 @@ bool MngThManager::sendInstruction(SafeInstruction hansz){
 }
 bool MngThManager::sendInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content, quint32 args){
     return sendInstruction(SafeInstruction(new InstructionHansz(instr,toPrgm,args,content)));
-}
-bool MngThManager::sendFile(QFile &file, quint64 type){
-    qDebug() << "sendFile";
-    fileManager->addFile(SafeFileHansz(new FileHansz(file,type)));
-    return true;
 }
 void MngThManager::incomingData(const SafeByteArray buffer){
 //    qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes";

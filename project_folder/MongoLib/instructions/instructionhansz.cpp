@@ -1,4 +1,4 @@
-﻿#include <instructionhansz.h>
+﻿#include "instructionhansz.h"
 #include <iostream>
 
 #define HEADERSIZE (sizeof(Mongo_Header)+sizeof(Instruction_Header))
@@ -53,7 +53,7 @@ InstructionHansz::InstructionHansz(quint32 instr, quint32 toPrgm, quint32 args, 
     allData->append((char*)&instructionH,sizeof(Instruction_Header));
     allData->append(payload);
 
-    printf("Overall Instruction Size: %i\n",allData->size());
+//    printf("Overall Instruction Size: %i\n",allData->size());
 //    printf("OUT:");
 //    ChryHexdump((char*)&mongo,sizeof(Mongo_Header));
 //    printf("OUT:");
@@ -72,7 +72,7 @@ void InstructionHansz::processInput(){
 //        printf("INCOMING: \n");
 //        ChryHexdump((char*)mongo,sizeof(Mongo_Header));
         Instruction_Header *inst = (Instruction_Header*)(allData->constData()+sizeof(Mongo_Header));
-        printf("INCOMING: \n");
+//        printf("INCOMING: \n");
 //        ChryHexdump(allData->constData(),allData->size(),stdout);
 //        ChryHexdump((char*)inst,sizeof(Instruction_Header));
         instruction = inst->exCode;

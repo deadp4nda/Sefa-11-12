@@ -2,6 +2,6 @@
 #define MONGOLIB_H
 
 #include "mongolib_global.h"
-#include "mngthmanager.h"
+#include "instructions/mngthmanager.h"
 
 #endif // MONGOLIB_H

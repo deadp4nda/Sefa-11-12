@@ -11,7 +11,7 @@ namespace Mongo {
 class MONGOLIBSHARED_EXPORT FileHansz{
 public:
     FileHansz(const QFile& file,quint64 filetype);
-    FileHansz(const SafeByteArray array, QDir &stdDir);
+    FileHansz(const QDir &stdDir);
     FileHansz(const FileHansz&) = delete;
     void addData(SafeByteArray);
 
@@ -23,8 +23,10 @@ private:
     QFile file;
     QString name;
     quint64 filetype;
-    bool headerSent = false;
     QByteArray headers;
+    QDir stdDir;
+private:
+    void refactorHeaders();
 };
 }
 

@@ -224,25 +224,11 @@ debug/moc_mainwindow.cpp: D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/QMainWin
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qtcpserver.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qhostaddress.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QByteArray \
-		../../MongoLib/mngthmanager.h \
+		../../MongoLib/instructions/mngthmanager.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QObject \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDir \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qdir.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfileinfo.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QThread \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qthread.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QQueue \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qqueue.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QTimer \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qtimer.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qbasictimer.h \
-		../../MongoLib/filehansz.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QFile \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QString \
-		../../MongoLib/mongoconnection.h \
+		../../MongoLib/instructions/mongoconnection.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDataStream \
-		../../MongoLib/mngserver.h \
-		../../MongoLib/mngfilemanager.h \
+		../../MongoLib/instructions/mngserver.h \
 		../../MongoApplication/mainwindow.h \
 		debug/moc_predefs.h \
 		D:/dev/Qt/5.10.1/mingw53_32/bin/moc.exe
@@ -389,25 +375,11 @@ debug/main.o: ../../MongoApplication/main.cpp ../../MongoApplication/mainwindow.
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qtcpserver.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qhostaddress.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QByteArray \
-		../../MongoLib/mngthmanager.h \
+		../../MongoLib/instructions/mngthmanager.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QObject \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDir \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qdir.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfileinfo.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QThread \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qthread.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QQueue \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qqueue.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QTimer \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qtimer.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qbasictimer.h \
-		../../MongoLib/filehansz.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QFile \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QString \
-		../../MongoLib/mongoconnection.h \
+		../../MongoLib/instructions/mongoconnection.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDataStream \
-		../../MongoLib/mngserver.h \
-		../../MongoLib/mngfilemanager.h \
+		../../MongoLib/instructions/mngserver.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/QApplication \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/qapplication.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -540,29 +512,14 @@ debug/mainwindow.o: ../../MongoApplication/mainwindow.cpp ../../MongoApplication
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qtcpserver.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qhostaddress.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QByteArray \
-		../../MongoLib/mngthmanager.h \
+		../../MongoLib/instructions/mngthmanager.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QObject \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDir \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qdir.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfileinfo.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QThread \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qthread.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QQueue \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qqueue.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QTimer \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qtimer.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qbasictimer.h \
-		../../MongoLib/filehansz.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QFile \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QString \
-		../../MongoLib/mongoconnection.h \
+		../../MongoLib/instructions/mongoconnection.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDataStream \
-		../../MongoLib/mngserver.h \
-		../../MongoLib/mngfilemanager.h \
+		../../MongoLib/instructions/mngserver.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/QLabel \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/qlabel.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/qframe.h \
-		../../MongoLib/instructionhansz.h
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtWidgets/qframe.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\..\MongoApplication\mainwindow.cpp
 
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 

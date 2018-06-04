@@ -1,6 +1,6 @@
 ﻿#include "mongoconnection.h"
 #include <QDataStream>
-#include <mngthmanager.h>
+#include "../instructions/mngthmanager.h"
 #include <iostream>
 
 namespace Mongo{
@@ -20,7 +20,7 @@ MongoConnection::MongoConnection(qintptr handle, MngThManager *parent):
 void MongoConnection::handleReadyRead(){
     SafeByteArray array(new QByteArray);
     qint64 available = bytesAvailable();
-    std::cerr << available << "\n";
+//    std::cerr << available << "\n";
     quint8 byte;
     for(int i = 0; i < available; i++){
         stream >> byte;

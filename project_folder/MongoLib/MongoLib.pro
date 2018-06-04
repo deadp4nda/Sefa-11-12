@@ -25,25 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    mngserver.cpp \
-    mngthmanager.cpp \
-    mongoconnection.cpp \
-    mongofilesocket.cpp \
-    instructionhansz.cpp \
-    filehansz.cpp \
-    mngfilemanager.cpp \
-    mngfileserver.cpp
+    files/filehansz.cpp \
+    instructions/instructionhansz.cpp \
+    instructions/mngserver.cpp \
+    instructions/mngthmanager.cpp \
+    instructions/mongoconnection.cpp
 
 HEADERS += \
         mongolib.h \
-        mongolib_global.h \ 
-    mngserver.h \
-    mngthmanager.h \
-    mongoconnection.h \
-    mongofilesocket.h \
-    instructionhansz.h \
-    filehansz.h \
-    mngfilemanager.h \
-    mngfileserver.h
+        mongolib_global.h \
+    files/filehansz.h \
+    instructions/instructionhansz.h \
+    instructions/mngserver.h \
+    instructions/mngthmanager.h \
+    instructions/mongoconnection.h \
+    mongolib.h \
+    mongolib_global.h
 
 DEFINES += MongoLib

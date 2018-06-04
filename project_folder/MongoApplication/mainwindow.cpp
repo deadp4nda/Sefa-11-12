@@ -1,8 +1,8 @@
 ﻿#include "mainwindow.h"
 #include <QLabel>
 #include <iostream>
-#include "instructionhansz.h"
-#include "filehansz.h"
+#include "instructions/instructionhansz.h"
+#include "files/filehansz.h"
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -37,7 +37,6 @@ MainWindow::MainWindow(Mongo::MngThManager *m,QWidget *parent)
 {
     layout = new QVBoxLayout(this);
     QObject::connect(manager,&Mongo::MngThManager::Message,this,&MainWindow::hanszIn);
-    QObject::connect(manager,&Mongo::MngThManager::FileProcessed,this,&MainWindow::fileIn);
 }
 
 MainWindow::~MainWindow()
