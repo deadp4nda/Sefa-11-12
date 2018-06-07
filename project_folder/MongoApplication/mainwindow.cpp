@@ -35,6 +35,7 @@ void ChryHexdump(const char *data_buffer, const unsigned int length, FILE *outpu
 MainWindow::MainWindow(Mongo::MngThManager *m,QWidget *parent)
     : QMainWindow(parent),manager(m)
 {
+    label = new QLabel(this);
     layout = new QVBoxLayout(this);
     QObject::connect(manager,&Mongo::MngThManager::Message,this,&MainWindow::hanszIn);
 }
@@ -52,9 +53,7 @@ void MainWindow::hanszIn(Mongo::SafeInstruction hansz){
 //    qDebug() << "Args: " << hansz->getPassedArguments();
 //    ChryHexdump((char*)hansz->getAllData()->constData(),hansz->getAllData()->size(),stderr);
 //    qDebug() << "Length: " << hansz->getPayload()->size();
-    QLabel *label = new QLabel(QString(*hansz->getPayload()),this);
-    layout->addWidget(label);
-    label->show();
+    label->setText(QString(*hansz->getPayload()));
 }
 
 void MainWindow::fileIn(Mongo::SafeFileHansz hansz){

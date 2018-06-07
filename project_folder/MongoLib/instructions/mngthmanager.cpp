@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <QFile>
 #include <QThread>
+#include <QTimer>
+#include <QQueue>
 
 #include "mngthmanager.h"
 #include "mngserver.h"
@@ -20,6 +22,9 @@ MngThManager::MngThManager(quint16 listenPort, QObject *parent):
     if(server->isListening()){
         serverActive = true;
     }
+    timer  = new QTimer(this);
+    timer->start(500);
+    QObject::connect(timer,&QTimer::timeout,this,&MngThManager::updateManager);
 }
 MngThManager::~MngThManager(){
     if(client)
@@ -28,6 +33,7 @@ MngThManager::~MngThManager(){
         server->close();
         delete server;
     }
+    delete timer;
 }
 void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     if(client) {
@@ -58,20 +64,28 @@ void MngThManager::closeConnection(){
     client = nullptr;
     emit connectionClosed();
 }
-bool MngThManager::sendInstruction(SafeInstruction hansz){
+void MngThManager::sendInstruction(SafeInstruction hansz){
     if(!CLIENT_VALID(client)){
-        return false;
+        return;
     }
-    return client->send(hansz->getAllData());
+    client->send(hansz->getAllData());
 }
-bool MngThManager::sendInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content, quint32 args){
-    return sendInstruction(SafeInstruction(new InstructionHansz(instr,toPrgm,args,content)));
+void MngThManager::enqueueInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content, quint32 args){
+    instructions.enqueue(SafeInstruction(new InstructionHansz(instr,toPrgm,args,content)));
+}
+void MngThManager::enqueueInstruction(SafeInstruction inst){
+    instructions.enqueue(inst);
 }
 void MngThManager::incomingData(const SafeByteArray buffer){
-//    qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes";
-//    qDebug() << "Buffer counts: "+QString::number(buffer.use_count())+" Owners";
+    qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes";
+    qDebug() << "Buffer counts: "+QString::number(buffer.use_count())+" Owners";
     lastingTransmission = SafeInstruction(new InstructionHansz(buffer));
     emit Message(lastingTransmission);
+}
+void MngThManager::updateManager(){
+    if(!instructions.isEmpty()){
+        this->sendInstruction(instructions.dequeue());
+    }
 }
 void MngThManager::handleClientError(QAbstractSocket::SocketError){
     std::wcerr << client->errorString().toStdWString() << std::endl;

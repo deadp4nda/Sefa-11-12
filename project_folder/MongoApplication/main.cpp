@@ -32,8 +32,7 @@ int main(int argc, char *argv[])
     for(int i = 0; i < 10; i++){
         quint16 port = (rand()%65500)+35;
         QString schtring = QString::number(port); // TODO: add blocking while instruction is sent
-        managerOne.sendInstruction(Instructions::Chat,0,QByteArray(schtring.toLocal8Bit()));
-        Sleep(50);
+        managerOne.enqueueInstruction(Instructions::Chat,0,QByteArray(schtring.toLocal8Bit()));
     }
     QFile file("C:/Users/Benedikt/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg");
 //    std::cout << "Main:: " << file.exists() << "\n";

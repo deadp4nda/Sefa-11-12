@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <QLabel>
 #include "mongolib.h"
 
 using Mongo::MngThManager;
@@ -22,6 +23,7 @@ private:
     QVBoxLayout *layout;
     Mongo::MngThManager *manager;
     quint8 byte = 0;
+    QLabel *label = nullptr;
 };
 
 #endif // MAINWINDOW_H

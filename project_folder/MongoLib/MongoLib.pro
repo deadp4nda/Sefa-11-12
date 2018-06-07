@@ -29,7 +29,9 @@ SOURCES += \
     instructions/instructionhansz.cpp \
     instructions/mngserver.cpp \
     instructions/mngthmanager.cpp \
-    instructions/mongoconnection.cpp
+    instructions/mongoconnection.cpp \
+    files/mngfilemanager.cpp \
+    files/mngfilesocket.cpp
 
 HEADERS += \
         mongolib.h \
@@ -40,6 +42,8 @@ HEADERS += \
     instructions/mngthmanager.h \
     instructions/mongoconnection.h \
     mongolib.h \
-    mongolib_global.h
+    mongolib_global.h \
+    files/mngfilemanager.h \
+    files/mngfilesocket.h
 
 DEFINES += MongoLib

@@ -2,13 +2,14 @@
 #define MNGMANAGER_H
 
 #include <QObject>
+#include <QQueue>
 
 #include "mongolib_global.h"
 #include "mongoconnection.h"
 #include "mngserver.h"
 
 #define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable())
-
+class QTimer;
 namespace Mongo {
 class MongoConnection;
 
@@ -20,8 +21,8 @@ public:
     void createConnection(const QHostAddress &addr, quint16 port = 0);
     void closeConnection();
 
-    bool sendInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint32 args = 0);
-    bool sendInstruction(SafeInstruction hansz);
+    void enqueueInstruction(SafeInstruction instr);
+    void enqueueInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint32 args = 0);
 public slots:
     void incomingConnection(MongoConnection *);
 signals:
@@ -30,7 +31,8 @@ signals: // connection-based intern signals
     void connectionClosed();
     void connectionInitiated();
 private:
-
+    QQueue<SafeInstruction> instructions;
+    QTimer *timer = nullptr;
     SafeInstruction lastingTransmission = nullptr;
     MongoConnection *client = nullptr;
     MngServer *server = nullptr;
@@ -39,7 +41,10 @@ private:
     bool isSending = false;
     bool serverActive = false;
     bool connectionVerified = false;
+
+    void sendInstruction(SafeInstruction hansz);
 private slots:
+    void updateManager();
     void incomingData(const SafeByteArray);
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
