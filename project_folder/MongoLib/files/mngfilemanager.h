@@ -21,11 +21,21 @@ public:
                             QObject *parent = nullptr);
     void enqueueFile(SafeFileHansz);
     void enqueueFile(QFile *file,quint64);
+    void createConnection(const QHostAddress & addr, quint16 port);
+    void closeConnection();
+signals:
+    void FileIncoming(SafeFileHansz);
+    void FileReceived(SafeFileHansz);
+    void connectionClosed();
+    void connectionInitiated();
+    void connectionReceived();
 private:
     QQueue<SafeFileHansz> files;
     QTimer *timer = nullptr;
+    QThread *thread = nullptr;
     MngFileServer *server = nullptr;
     MngFileSocket *socket = nullptr;
+    QHostAddress address = QHostAddress(QHostAddress::Null);
     QDir saveDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/";
     quint16 port = 0;
     bool busy = false;
@@ -34,6 +44,10 @@ private slots:
     void sendFile(SafeFileHansz);
     void transmissionStarted(){busy=true;}
     void transmissionEnded(){busy=false;}
+    void incomingConnection(MngFileSocket*);
+    void handleServerError(QAbstractSocket::SocketError);
+    void handleClientError(QAbstractSocket::SocketError);
+    friend class MngFileSocket;
 };
 }
 #endif // MNGFILEMANAGER_H

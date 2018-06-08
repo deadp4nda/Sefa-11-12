@@ -5,8 +5,11 @@ INPUT(
 ./debug\mngthmanager.o
 ./debug\mongoconnection.o
 ./debug\mngfilemanager.o
+./debug\mngfilesocket.o
+./debug\mngfileserver.o
 ./debug\moc_mngserver.o
 ./debug\moc_mngthmanager.o
 ./debug\moc_mongoconnection.o
 ./debug\moc_mngfilemanager.o
+./debug\moc_mngfileserver.o
 );

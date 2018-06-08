@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../MongoLib/mngfileserver.h"
+#include "../../../MongoLib/files/mngfileserver.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mongo__MngFileServer_t {
     QByteArrayData data[4];
-    char stringdata0[53];
+    char stringdata0[51];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,11 +34,11 @@ static const qt_meta_stringdata_Mongo__MngFileServer_t qt_meta_stringdata_Mongo_
 QT_MOC_LITERAL(0, 0, 20), // "Mongo::MngFileServer"
 QT_MOC_LITERAL(1, 21, 13), // "newConnection"
 QT_MOC_LITERAL(2, 35, 0), // ""
-QT_MOC_LITERAL(3, 36, 16) // "MongoFileSocket*"
+QT_MOC_LITERAL(3, 36, 14) // "MngFileSocket*"
 
     },
     "Mongo::MngFileServer\0newConnection\0\0"
-    "MongoFileSocket*"
+    "MngFileSocket*"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,13 +70,13 @@ void Mongo::MngFileServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         MngFileServer *_t = static_cast<MngFileServer *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->newConnection((*reinterpret_cast< MongoFileSocket*(*)>(_a[1]))); break;
+        case 0: _t->newConnection((*reinterpret_cast< MngFileSocket*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            typedef void (MngFileServer::*_t)(MongoFileSocket * );
+            typedef void (MngFileServer::*_t)(MngFileSocket * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MngFileServer::newConnection)) {
                 *result = 0;
                 return;
@@ -122,7 +122,7 @@ int Mongo::MngFileServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Mongo::MngFileServer::newConnection(MongoFileSocket * _t1)
+void Mongo::MngFileServer::newConnection(MngFileSocket * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

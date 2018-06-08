@@ -8,6 +8,7 @@
 namespace Mongo{
 class MngFileSocket : public QTcpSocket
 {
+    Q_OBJECT
 public:
     MngFileSocket(const QHostAddress &address,
                   quint16 port,

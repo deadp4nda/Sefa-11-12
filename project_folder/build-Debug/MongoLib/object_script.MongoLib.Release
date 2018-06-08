@@ -5,8 +5,11 @@ INPUT(
 ./release\mngthmanager.o
 ./release\mongoconnection.o
 ./release\mngfilemanager.o
+./release\mngfilesocket.o
+./release\mngfileserver.o
 ./release\moc_mngserver.o
 ./release\moc_mngthmanager.o
 ./release\moc_mongoconnection.o
 ./release\moc_mngfilemanager.o
+./release\moc_mngfileserver.o
 );
