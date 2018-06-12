@@ -11,7 +11,7 @@ Befehlssatz:
     -open(file, [file_path], [program], [return])
     -shutdown([time], [restart])
     -execute(command, [arguments])
-    -[optional] stream([reselution],[frames])
+    -[optional] stream([resolution],[frames])
 
 
 Implementierungsansrüche:
