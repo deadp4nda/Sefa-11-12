@@ -29,9 +29,9 @@ void MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
         socket->moveToThread(thread);
         connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
         connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
+        connect(socket,&MngFileSocket::transmissionCancelled,this, &MngFileManager::FileCancelled);
         emit connectionInitiated();
     }else{
-
         emit connectionFailed();
     }
 }
@@ -59,6 +59,7 @@ void MngFileManager::incomingConnection(MngFileSocket *sckt){
     socket->moveToThread(thread);
     connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
     connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
+    connect(socket,&MngFileSocket::transmissionCancelled,this, &MngFileManager::FileCancelled);
     emit connectionReceived();
 }
 void MngFileManager::handleClientError(QAbstractSocket::SocketError eCode){

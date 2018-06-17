@@ -13,8 +13,19 @@ MngFileSocket::MngFileSocket(const QHostAddress &address, quint16 port, QObject 
     connect(this,&MngFileSocket::readyRead,this,&MngFileSocket::handleReadyRead);
 }
 void MngFileSocket::handleReadyRead(){}
-void MngFileSocket::send(SafeFileHansz){
+void MngFileSocket::send(SafeFileHansz hansz){
     emit startedTransmission();
+    current = hansz;
+
+    current = nullptr;
     emit endedTransmission();
+}
+MngFileSocket::~MngFileSocket(){
+    if(current){
+        emit transmissionCancelled(current);
+    }
+    disconnectFromHost();
+    waitForDisconnected();
+    close();
 }
 }

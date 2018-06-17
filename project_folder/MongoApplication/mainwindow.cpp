@@ -3,6 +3,7 @@
 #include <iostream>
 #include "instructions/instructionhansz.h"
 #include "files/filehansz.h"
+
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -32,12 +33,14 @@ void ChryHexdump(const char *data_buffer, const unsigned int length, FILE *outpu
 }
 }
 
-MainWindow::MainWindow(Mongo::MngThManager *m,QWidget *parent)
-    : QMainWindow(parent),manager(m)
+MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget *parent)
+    : QMainWindow(parent),manager(m),fManager(fm)
 {
     label = new QLabel(this);
     layout = new QVBoxLayout(this);
     QObject::connect(manager,&Mongo::MngThManager::Message,this,&MainWindow::hanszIn);
+    QObject::connect(fManager,&Mongo::MngFileManager::FileIncoming,this,&MainWindow::fileIn);
+    QObject::connect(fManager,&Mongo::MngFileManager::FileReceived,this,&MainWindow::fileIn);
 }
 
 MainWindow::~MainWindow()

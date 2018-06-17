@@ -3,7 +3,6 @@
 #include <QApplication>
 #include <iostream>
 #include <QFile>
-#include <windows.h>
 
 #define PORTONE 2222
 #define PORTTWO (PORTONE+1)
@@ -26,7 +25,7 @@ int main(int argc, char *argv[])
     Mongo::MngThManager managerTwo(PORTTWO);
     Mongo::MngFileManager fManagerOne(PORTTWO+1);
     Mongo::MngFileManager fManagerTwo(PORTTWO+2);
-    MainWindow w(&managerTwo);
+    MainWindow w(&managerTwo,&fManagerTwo);
     w.show();
     managerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO);
     //works theoretically, for messages with less payload than 0xFFFF
@@ -37,6 +36,9 @@ int main(int argc, char *argv[])
         managerOne.enqueueInstruction(Instructions::Chat,0,QByteArray(schtring.toLocal8Bit()));
     }
     QFile file("C:/Users/Benedikt/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg");
+    if(file.exists()){
+        fManagerOne.enqueueFile(&file,Mongo::Filetype::Picture);
+    }
 //    std::cout << "Main:: " << file.exists() << "\n";
     return a.exec();
 }

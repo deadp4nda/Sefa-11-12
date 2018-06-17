@@ -26,6 +26,7 @@ public:
 signals:
     void FileIncoming(SafeFileHansz);
     void FileReceived(SafeFileHansz);
+    void FileCancelled(SafeFileHansz);
     void connectionClosed();
     void connectionInitiated();
     void connectionFailed();

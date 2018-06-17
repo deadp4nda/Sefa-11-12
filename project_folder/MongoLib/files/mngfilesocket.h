@@ -14,13 +14,16 @@ public:
                   quint16 port,
                   QObject *parent = nullptr);
     MngFileSocket(qintptr descr,QObject *parent = nullptr);
+    ~MngFileSocket();
     void send(SafeFileHansz);
 signals:
     void startedTransmission();
     void endedTransmission();
+    void transmissionCancelled(SafeFileHansz);
 public slots:
     void handleReadyRead();
 private:
+    SafeFileHansz current;
     quint16 port;
     QHostAddress addr;
 };

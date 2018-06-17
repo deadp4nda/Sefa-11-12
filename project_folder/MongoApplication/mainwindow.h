@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Mongo::MngThManager *,QWidget *parent = 0);
+    MainWindow(Mongo::MngThManager *,Mongo::MngFileManager*,QWidget *parent = 0);
     ~MainWindow();
 public slots:
     void hanszIn(Mongo::SafeInstruction);
@@ -22,6 +22,7 @@ public slots:
 private:
     QVBoxLayout *layout;
     Mongo::MngThManager *manager;
+    Mongo::MngFileManager *fManager;
     quint8 byte = 0;
     QLabel *label = nullptr;
 };
