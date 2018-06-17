@@ -16,8 +16,8 @@ class MngFileManager: public QObject
 {
     Q_OBJECT
 public:
-    explicit MngFileManager(const QDir& stdDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/",
-                            quint16 port = 0,
+    explicit MngFileManager(quint16 port = 0,
+                            const QDir& stdDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/",
                             QObject *parent = nullptr);
     void enqueueFile(SafeFileHansz);
     void enqueueFile(QFile *file,quint64);
@@ -28,6 +28,7 @@ signals:
     void FileReceived(SafeFileHansz);
     void connectionClosed();
     void connectionInitiated();
+    void connectionFailed();
     void connectionReceived();
 private:
     QQueue<SafeFileHansz> files;

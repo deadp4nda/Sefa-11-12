@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     Mongo::MngThManager managerOne(PORTONE);
     Mongo::MngThManager managerTwo(PORTTWO);
+    Mongo::MngFileManager fManagerOne(PORTTWO+1);
+    Mongo::MngFileManager fManagerTwo(PORTTWO+2);
     MainWindow w(&managerTwo);
     w.show();
     managerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO);

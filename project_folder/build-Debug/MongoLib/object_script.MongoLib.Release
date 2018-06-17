@@ -11,5 +11,6 @@ INPUT(
 ./release\moc_mngthmanager.o
 ./release\moc_mongoconnection.o
 ./release\moc_mngfilemanager.o
+./release\moc_mngfilesocket.o
 ./release\moc_mngfileserver.o
 );

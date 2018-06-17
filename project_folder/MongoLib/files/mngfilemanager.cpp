@@ -7,7 +7,7 @@
 
 
 namespace Mongo{
-MngFileManager::MngFileManager(const QDir &stdDir, quint16 port, QObject *parent):
+MngFileManager::MngFileManager(quint16 port,const QDir &stdDir,  QObject *parent):
     QObject(parent),timer(new QTimer(this)),thread(new QThread(this)),
     saveDir(stdDir),port(port){
     connect(timer,&QTimer::timeout,this,&MngFileManager::updateManager);
@@ -25,11 +25,15 @@ void MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
     address = addr;
     this->port = port;
     socket = new MngFileSocket(addr, port,this);
-    socket->moveToThread(thread);
-    connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
-    connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
-    if(socket->isValid())
+    if(socket->isValid()){
+        socket->moveToThread(thread);
+        connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
+        connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
         emit connectionInitiated();
+    }else{
+
+        emit connectionFailed();
+    }
 }
 void MngFileManager::closeConnection(){
     if(!socket){
@@ -50,9 +54,12 @@ void MngFileManager::sendFile(SafeFileHansz hansz){
 void MngFileManager::incomingConnection(MngFileSocket *sckt){
     if(socket && sckt->isValid()){
         closeConnection();
-        socket = sckt;
-        emit connectionReceived();
     }
+    socket = sckt;
+    socket->moveToThread(thread);
+    connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
+    connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
+    emit connectionReceived();
 }
 void MngFileManager::handleClientError(QAbstractSocket::SocketError eCode){
     std::wcerr << "[CLIENT ERROR] (Code = " << eCode <<") : "<< socket->errorString().toStdWString() << std::endl;
