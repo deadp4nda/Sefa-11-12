@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QQueue>
 #include <QTimer>
+#include <QThread>
 #include <QFile>
 #include <QDir>
 
@@ -12,13 +13,15 @@
 namespace Mongo{
 class MngFileServer;
 class MngFileSocket;
-class MngFileManager: public QObject
+
+class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
 {
     Q_OBJECT
 public:
-    explicit MngFileManager(quint16 port = 0,
-                            const QDir& stdDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/",
+    MngFileManager(quint16 port = 0,
+                            QDir stdDir = QDir(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/"),
                             QObject *parent = nullptr);
+    ~MngFileManager();
     void enqueueFile(SafeFileHansz);
     void enqueueFile(QFile *file,quint64);
     void createConnection(const QHostAddress & addr, quint16 port);

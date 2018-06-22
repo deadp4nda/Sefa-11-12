@@ -7,7 +7,7 @@
 #include "mongolib.h"
 
 using Mongo::MngThManager;
-using Mongo::InstructionHansz;
+using Mongo::MngFileManager;
 
 class MainWindow : public QMainWindow
 {
@@ -19,7 +19,11 @@ public:
 public slots:
     void hanszIn(Mongo::SafeInstruction);
     void fileIn(Mongo::SafeFileHansz);
+    void connectionInit();
+    void connectionClsd();
+    void toggleText();
 private:
+    QTimer *timer = nullptr;
     QVBoxLayout *layout;
     Mongo::MngThManager *manager;
     Mongo::MngFileManager *fManager;

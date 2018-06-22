@@ -24,8 +24,8 @@ public slots:
     void handleReadyRead();
 private:
     SafeFileHansz current;
-    quint16 port;
     QHostAddress addr;
+    quint16 port;
 };
 }
 #endif // MNGFILESOCKET_H

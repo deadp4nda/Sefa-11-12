@@ -3,6 +3,7 @@
 #include <iostream>
 #include "instructions/instructionhansz.h"
 #include "files/filehansz.h"
+#include "files/mngfilemanager.h"
 
 using std::cout;
 using std::cerr;
@@ -38,11 +39,31 @@ MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget 
 {
     label = new QLabel(this);
     layout = new QVBoxLayout(this);
-    QObject::connect(manager,&Mongo::MngThManager::Message,this,&MainWindow::hanszIn);
-    QObject::connect(fManager,&Mongo::MngFileManager::FileIncoming,this,&MainWindow::fileIn);
-    QObject::connect(fManager,&Mongo::MngFileManager::FileReceived,this,&MainWindow::fileIn);
+    timer = new QTimer(this);
+    timer->setInterval(750);
+    timer->start();
+    label->setText("Hannelore");
+    QObject::connect(manager,&Mongo::MngThManager::Message,
+                     this,&MainWindow::hanszIn);
+    QObject::connect(fManager,&Mongo::MngFileManager::FileIncoming,
+                     this,&MainWindow::fileIn);
+    QObject::connect(fManager,&Mongo::MngFileManager::FileReceived,
+                     this,&MainWindow::fileIn);
+    QObject::connect(fManager,&Mongo::MngFileManager::connectionInitiated,
+                     this,&MainWindow::connectionInit);
+    QObject::connect(fManager,&Mongo::MngFileManager::connectionClosed,
+                     this, &MainWindow::connectionClsd);
+    QObject::connect(timer,&QTimer::timeout,this,&MainWindow::toggleText);
 }
-
+void MainWindow::toggleText(){
+    label->setText((QChar)(qrand()%256));
+}
+void MainWindow::connectionClsd(){
+    label->setText("Conn. Closed");
+}
+void MainWindow::connectionInit(){
+    label->setText("Conn. Initd.");
+}
 MainWindow::~MainWindow()
 {
     delete layout;

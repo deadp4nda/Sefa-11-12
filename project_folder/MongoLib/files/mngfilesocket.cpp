@@ -1,4 +1,5 @@
 ﻿#include "mngfilesocket.h"
+#include <iostream>
 
 namespace Mongo{
 MngFileSocket::MngFileSocket(qintptr descr, QObject *parent):
@@ -16,7 +17,9 @@ void MngFileSocket::handleReadyRead(){}
 void MngFileSocket::send(SafeFileHansz hansz){
     emit startedTransmission();
     current = hansz;
-
+    for(int i = 0; i < 20; i++){
+        std::cout << "Sending...\n";
+    }
     current = nullptr;
     emit endedTransmission();
 }
