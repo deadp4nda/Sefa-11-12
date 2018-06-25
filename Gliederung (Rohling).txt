@@ -22,3 +22,4 @@ Gliederung:
 //5.2.Evaluierung der Auftretenden Laufzeit
 5.3.Anwendungsmöglichkeiten in der Realität
 //5.4.Möglichkeiten der Erweiterung --> erwähnen in Verteidigung, nicht in Arbeit
+--> (5.5.) Vorteile gegenüber anderen "Produkten" (?)
