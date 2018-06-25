@@ -17,9 +17,14 @@ Gliederung:
 4.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
 4.4.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
 
+--> (X.) Was ist besonders an unserer Arbeit/Eigenanteil?
+--> (X.1.) eigenes Protokoll
+--> (X.2.) eigene Syntax
+--> (X.3.) eigene Scriptsprachenanwendung ?
+
 5.Reflexion unseres Arbeitsergebnisses
 5.1.Funktionalität der entwickleten Software
 //5.2.Evaluierung der Auftretenden Laufzeit
 5.3.Anwendungsmöglichkeiten in der Realität
 //5.4.Möglichkeiten der Erweiterung --> erwähnen in Verteidigung, nicht in Arbeit
---> (5.5.) Vorteile gegenüber anderen "Produkten" (?)
+--> (5.5.) Vorteile gegenüber anderen "Produkten" (?) (Was ist besonders an unserem Programm?)
