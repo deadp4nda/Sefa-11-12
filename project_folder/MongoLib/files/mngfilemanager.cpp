@@ -13,10 +13,12 @@ MngFileManager::MngFileManager(quint16 port,QDir stdDir,  QObject *parent):
     thread = new QThread(this);
     timer = new QTimer(this);
     server = new MngFileServer(port,parent);
-    connect(timer,&QTimer::timeout,this,&MngFileManager::updateManager);
     connect(server,&MngFileServer::acceptError, this,&MngFileManager::handleServerError);
-    timer->setInterval(500);
-    timer->start();
+    if(server->isListening()){
+        serverActive = true;
+    }
+    timer->start(500);
+    connect(timer,&QTimer::timeout,this,&MngFileManager::updateManager);
 }
 MngFileManager::~MngFileManager(){
     thread->quit();
@@ -35,27 +37,29 @@ void MngFileManager::enqueueFile(SafeFileHansz hansz){
 }
 
 void MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
-    if(socket)
+    if(socket){
         closeConnection();
-    address = addr;
-    this->port = port;
-    socket = new MngFileSocket(addr, port);
-    if(socket->isValid()){
+    }
+    MngFileSocket *tmp = new MngFileSocket(addr, port);
+    tmp->waitForConnected();
+    if(tmp->state() == MngFileSocket::ConnectedState){
+        address = addr;
+        this->port = port;
+        socket = tmp;
         socket->moveToThread(thread);
         connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
         connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
         connect(socket,&MngFileSocket::transmissionCancelled,this, &MngFileManager::FileCancelled);
-        thread->start();
         emit connectionInitiated();
-    }else{
-        emit connectionFailed();
+        thread->start();
     }
 }
 void MngFileManager::closeConnection(){
     if(!socket){
         return;
     }
-    thread->exit();
+    thread->terminate();
+    thread->wait();
     delete socket;
     socket = nullptr;
     emit connectionClosed();
@@ -69,21 +73,27 @@ void MngFileManager::sendFile(SafeFileHansz hansz){
     socket->send(hansz);
 }
 void MngFileManager::incomingConnection(MngFileSocket *sckt){
-    if(socket && sckt->isValid()){
+    if(socket){
         closeConnection();
     }
-    socket = sckt;
-    socket->moveToThread(thread);
-    connect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
-    connect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
-    connect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),this, SLOT(handleClientError(QAbstractSocket::SocketError)));
-    emit connectionReceived();
+    if(sckt->state() == MngFileSocket::ConnectedState){
+        socket = sckt;
+        socket->moveToThread(thread);
+        connect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
+        connect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
+        connect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
+        connect(socket,SIGNAL(error(QAbstractSocket::SocketError)),
+                this,  SLOT(handleClientError(QAbstractSocket::SocketError)));
+        emit connectionReceived();
+        thread->start();
+    }
 }
 void MngFileManager::handleClientError(QAbstractSocket::SocketError eCode){
     std::wcerr << "[CLIENT ERROR] (Code = " << eCode <<") : "<< socket->errorString().toStdWString() << std::endl;
 }
 void MngFileManager::handleServerError(QAbstractSocket::SocketError eCode){
     std::wcerr << "[SERVER ERROR] (Code = " << eCode <<") : "<< server->errorString().toStdWString() << std::endl;
+}
+void MngFileManager::whatNow(){
 }
 }

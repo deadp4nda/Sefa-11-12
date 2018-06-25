@@ -44,6 +44,7 @@ private:
     QDir saveDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/";
     quint16 port = 0;
     bool busy = false;
+    bool serverActive = false;
 private slots:
     void updateManager();
     void sendFile(SafeFileHansz);
@@ -52,6 +53,7 @@ private slots:
     void incomingConnection(MngFileSocket*);
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
+    void whatNow();
     friend class MngFileSocket;
 };
 }

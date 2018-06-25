@@ -1115,6 +1115,14 @@ release/mngfilemanager.o: ../../MongoLib/files/mngfilemanager.cpp D:/dev/Qt/5.10
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qvarlengtharray.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qcontainerfwd.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDir \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qdir.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfileinfo.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfile.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qiodevice.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qshareddata.h \
+		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qhash.h \
 		../../MongoLib/files/mngfilemanager.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QObject \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QQueue \
@@ -1123,14 +1131,6 @@ release/mngfilemanager.o: ../../MongoLib/files/mngfilemanager.cpp D:/dev/Qt/5.10
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qtimer.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qbasictimer.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QFile \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfile.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qiodevice.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/QDir \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qdir.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qfileinfo.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qshareddata.h \
-		D:/dev/Qt/5.10.1/mingw53_32/include/QtCore/qhash.h \
 		../../MongoLib/mongolib_global.h \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/QTcpSocket \
 		D:/dev/Qt/5.10.1/mingw53_32/include/QtNetwork/qtcpsocket.h \

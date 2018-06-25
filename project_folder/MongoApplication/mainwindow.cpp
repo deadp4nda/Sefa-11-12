@@ -56,7 +56,7 @@ MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget 
     QObject::connect(timer,&QTimer::timeout,this,&MainWindow::toggleText);
 }
 void MainWindow::toggleText(){
-    label->setText((QChar)(qrand()%256));
+//    label->setText((QChar)(qrand()%256));
 }
 void MainWindow::connectionClsd(){
     label->setText("Conn. Closed");
