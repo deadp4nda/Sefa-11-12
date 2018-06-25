@@ -1,6 +1,17 @@
+Legende:
+--> : vorschlag
+(L) : Anmerkung von Leo
+(B) : Anmerkung von Bernhardt
+(J) : Anmerkung von Jan
+
+
+
+//(L) Wollen wir vllt als Roter Faden für die Arbeit unsere gestellten Ansprüche nehemn, dass wir die näher erläutern und erklären wie man diese erfüllt? (wird dann allerdings ne ziemliche metaarbeit darüber wie man sinnvoll software schreibt.... warum machen wir eig so nen rotzthema zu dem man nichts schreiben kann? xD)//
+
 Gliederung:
 1.Formulierung unserer Zielstellung
-1.1 Ansprüche an unser Programm
+(L)--> 1.0. Mögliche Anwendungszenarien unserer Arbeit
+1.1. Ansprüche an unser Programm
 1.2. Struktur(Aufbau?) der Software
 
 2.Entwurf und Umsetzung des Netzwerk-Backends
@@ -12,15 +23,17 @@ Gliederung:
 ?//3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
 ?//3.2.Entwurf eines Parsers für Benutzereingaben
 
+
+//(L) mal schauen was ich hierzu schreiben kann ohne zu genau auf die Implementierung einzugehen, hab zb keine Datenbanken geplant da lua execute befehle implementiert hat...//
 4. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
 4.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
 4.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
 4.4.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
 
 --> (X.) Was ist besonders an unserer Arbeit/Eigenanteil?
---> (X.1.) eigenes Protokoll
---> (X.2.) eigene Syntax
---> (X.3.) eigene Scriptsprachenanwendung ?
+--> (X.1.) eigenes Protokoll (L: !)
+--> (X.2.) eigene Syntax  (L: send und execute? wow xD)
+--> (X.3.) eigene Scriptsprachenanwendung ? (L: als erfüllung unserer arbeitsansprüche vllt...)
 
 5.Reflexion unseres Arbeitsergebnisses
 5.1.Funktionalität der entwickleten Software
@@ -28,3 +41,6 @@ Gliederung:
 5.3.Anwendungsmöglichkeiten in der Realität
 //5.4.Möglichkeiten der Erweiterung --> erwähnen in Verteidigung, nicht in Arbeit
 --> (5.5.) Vorteile gegenüber anderen "Produkten" (?) (Was ist besonders an unserem Programm?)
+
+
+
