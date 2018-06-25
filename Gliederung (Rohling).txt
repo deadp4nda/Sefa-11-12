@@ -32,7 +32,7 @@ Gliederung:
 
 --> (X.) Was ist besonders an unserer Arbeit/Eigenanteil?
 --> (X.1.) eigenes Protokoll (L: !)
---> (X.2.) eigene Syntax  (L: send und execute? wow xD)
+--> (X.2.) eigene Syntax  (L: send und execute? wow xD) (J: wir hatten dazu zwei Kapitel, dachts mir auch schon..)
 --> (X.3.) eigene Scriptsprachenanwendung ? (L: als erfüllung unserer arbeitsansprüche vllt...)
 
 5.Reflexion unseres Arbeitsergebnisses
