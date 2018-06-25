@@ -8,9 +8,9 @@ Gliederung:
 2.2.Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls
 --> (2.3.) Funktionsumfang unserer gesondert zusammengestellten Qt-Bibliothek (Netzwerkbibliothek?)
 
-3.Gedanken zur Entwicklung einer eigenen Syntax für Benutzereingaben
-3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
-3.2.Entwurf eines Parsers für Benutzereingaben
+?//3.Gedanken zur Entwicklung einer eigenen Syntax für Benutzereingaben
+?//3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
+?//3.2.Entwurf eines Parsers für Benutzereingaben
 
 4. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
 4.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
