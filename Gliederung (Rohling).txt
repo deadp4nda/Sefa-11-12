@@ -12,10 +12,9 @@ Gliederung:
 3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
 3.2.Entwurf eines Parsers für Benutzereingaben
 
-4. Beschreibung der Verwendung von Lua
-4.1.Diskussion zur Relevanz von Scriptsprachen für unsere Arbeit
-4.2.Einsatz zur Kommunikation mit dem Betriebssystem
-4.3.Einbindung von Datenbanken
+4. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
+4.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
+4.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
 4.4.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
 
 5.Reflexion unseres Arbeitsergebnisses
