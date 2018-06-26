@@ -10,37 +10,70 @@ Legende:
 
 Gliederung:
 1.Formulierung unserer Zielstellung
-(L)--> 1.0. Mögliche Anwendungszenarien unserer Arbeit
+1.0. Mögliche Anwendungszenarien unserer Arbeit
 1.1. Ansprüche an unser Programm
 1.2. Struktur(Aufbau?) der Software
 
 2.Entwurf und Umsetzung des Netzwerk-Backends
 2.1.Theorie der Kommunikation in einem Netzwerk
 2.2.Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls
---> (2.3.) Funktionsumfang unserer gesondert zusammengestellten Qt-Bibliothek (Netzwerkbibliothek?)
+2.3. Funktionsumfang unserer gesondert zusammengestellten Qt-Bibliothek 
 
+//(L) mal schauen was ich hierzu schreiben kann ohne zu genau auf die Implementierung einzugehen, hab zb keine Datenbanken geplant da lua execute befehle implementiert hat...//
+3. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
+3.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
+3.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
+3.3.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
+
+4. Spezifische selbstentwickelte Anteile unserer Anwendung
+4.1. Implementierung eines eigenen Netzwerkprotokolls in C++
+4.2. Selbstständige Entwicklung einer Scriptsprachenanwendung 
+
+5. Reflexion unseres Arbeitsergebnisses
+5.1. Funktionalität der entwickleten Software
+5.2. Anwendungsmöglichkeiten in der Realität
+5.3. Vorteile gegenüber anderen "Produkten" 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(L)--> 
+--> () (Netzwerkbibliothek?)
 ?//3.Gedanken zur Entwicklung einer eigenen Syntax für Benutzereingaben
 ?//3.1.Anspruch sowie allgemeine Theoreme zu formalen Sprachen und Syntaxdesign
 ?//3.2.Entwurf eines Parsers für Benutzereingaben
-
-
-//(L) mal schauen was ich hierzu schreiben kann ohne zu genau auf die Implementierung einzugehen, hab zb keine Datenbanken geplant da lua execute befehle implementiert hat...//
-4. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
-4.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
-4.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
-4.4.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
-
---> (X.) Was ist besonders an unserer Arbeit/Eigenanteil?
---> (X.1.) eigenes Protokoll (L: !)
---> (X.2.) eigene Syntax  (L: send und execute? wow xD) (J: wir hatten dazu zwei Kapitel, dachts mir auch schon..)
---> (X.3.) eigene Scriptsprachenanwendung ? (L: als erfüllung unserer arbeitsansprüche vllt...)
-
-5.Reflexion unseres Arbeitsergebnisses
-5.1.Funktionalität der entwickleten Software
+--> ()
+--> ()
+--> ()
+--> ()
 //5.2.Evaluierung der Auftretenden Laufzeit
-5.3.Anwendungsmöglichkeiten in der Realität
 //5.4.Möglichkeiten der Erweiterung --> erwähnen in Verteidigung, nicht in Arbeit
---> (5.5.) Vorteile gegenüber anderen "Produkten" (?) (Was ist besonders an unserem Programm?)
-
-
-
+--> ()
+(?) (Was ist besonders an unserem Programm?)
+//4.2. eigene Syntax  (L: send und execute? wow xD) (J: wir hatten dazu zwei Kapitel, dachts mir auch schon..)
+(L:!)
+? (L: als erfüllung unserer arbeitsansprüche vllt...)
