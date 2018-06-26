@@ -15,9 +15,9 @@ Gliederung:
 1.2. Struktur(Aufbau?) der Software
 
 2.Entwurf und Umsetzung des Netzwerk-Backends
-2.1.Theorie der Kommunikation in einem Netzwerk
-2.2.Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls
-2.3. Funktionsumfang unserer gesondert zusammengestellten Qt-Bibliothek 
+2.1. Grundlegende Theorie zur Kommunikation in einem Netzwerk
+//2.2. Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls (B)--> wird zu 4.1
+2.3. Funktionsumfang der selbsgeschriebenen Klassenbibliothek zur Netzwerkkommunikation
 
 3. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
 3.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
@@ -25,7 +25,7 @@ Gliederung:
 3.3.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
 
 4. Spezifische selbstentwickelte Anteile unserer Anwendung
-4.1. Implementierung eines eigenen Netzwerkprotokolls in C++
+4.1. (B)--> Notwendigkeit, Spezifikation und Implementierung eines eigenen Netzwerkprotokolls in C++
 4.2. Selbstständige Entwicklung einer Scriptsprachenanwendung 
 
 5. Reflexion unseres Arbeitsergebnisses
