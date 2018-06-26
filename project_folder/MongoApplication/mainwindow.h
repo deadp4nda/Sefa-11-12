@@ -19,7 +19,7 @@ public:
 public slots:
     void hanszIn(Mongo::SafeInstruction);
     void fileIn(Mongo::SafeFileHansz);
-    void connectionInit();
+    void connectionRecv();
     void connectionClsd();
     void toggleText();
 private:

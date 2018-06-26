@@ -37,13 +37,13 @@ QT_MOC_LITERAL(2, 19, 0), // ""
 QT_MOC_LITERAL(3, 20, 22), // "Mongo::SafeInstruction"
 QT_MOC_LITERAL(4, 43, 6), // "fileIn"
 QT_MOC_LITERAL(5, 50, 20), // "Mongo::SafeFileHansz"
-QT_MOC_LITERAL(6, 71, 14), // "connectionInit"
+QT_MOC_LITERAL(6, 71, 14), // "connectionRecv"
 QT_MOC_LITERAL(7, 86, 14), // "connectionClsd"
 QT_MOC_LITERAL(8, 101, 10) // "toggleText"
 
     },
     "MainWindow\0hanszIn\0\0Mongo::SafeInstruction\0"
-    "fileIn\0Mongo::SafeFileHansz\0connectionInit\0"
+    "fileIn\0Mongo::SafeFileHansz\0connectionRecv\0"
     "connectionClsd\0toggleText"
 };
 #undef QT_MOC_LITERAL
@@ -86,7 +86,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->hanszIn((*reinterpret_cast< Mongo::SafeInstruction(*)>(_a[1]))); break;
         case 1: _t->fileIn((*reinterpret_cast< Mongo::SafeFileHansz(*)>(_a[1]))); break;
-        case 2: _t->connectionInit(); break;
+        case 2: _t->connectionRecv(); break;
         case 3: _t->connectionClsd(); break;
         case 4: _t->toggleText(); break;
         default: ;

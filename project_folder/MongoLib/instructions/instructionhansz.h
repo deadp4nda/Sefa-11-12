@@ -1,7 +1,7 @@
 ﻿#ifndef INSTRUCTIONHANSZ_H
 #define INSTRUCTIONHANSZ_H
 
-#include <mongolib_global.h>
+#include "mongolib_global.h"
 #include <iostream>
 
 #define HEADERSIZE (sizeof(Mongo_Header)+sizeof(Instruction_Header))

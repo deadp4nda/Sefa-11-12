@@ -13,7 +13,7 @@ public:
     FileHansz(const QFile& file,quint64 filetype);
     FileHansz(const QDir &stdDir);
     FileHansz(const FileHansz&) = delete;
-    void addData(SafeByteArray);
+    int addData(const QByteArray&);
 
     const QString getName()const{return name;}
     quint64 getFileType()const{return filetype;}
@@ -23,6 +23,7 @@ private:
     QFile file;
     QString name;
     quint64 filetype;
+    quint64 fileSize;
     QByteArray headers;
     QDir stdDir;
 private:

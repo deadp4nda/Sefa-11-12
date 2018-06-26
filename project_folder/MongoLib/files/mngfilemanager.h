@@ -30,6 +30,7 @@ signals:
     void FileIncoming(SafeFileHansz);
     void FileReceived(SafeFileHansz);
     void FileCancelled(SafeFileHansz);
+    void FileReceivingStart(SafeFileHansz);
     void connectionClosed();
     void connectionInitiated();
     void connectionFailed();
@@ -37,7 +38,6 @@ signals:
 private:
     QQueue<SafeFileHansz> files;
     QTimer *timer = nullptr;
-    QThread *thread = nullptr;
     MngFileServer *server = nullptr;
     MngFileSocket *socket = nullptr;
     QHostAddress address = QHostAddress(QHostAddress::Null);
@@ -54,6 +54,7 @@ private slots:
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
     void whatNow();
+    void initializeSocket(MngFileSocket *newSocket);
     friend class MngFileSocket;
 };
 }

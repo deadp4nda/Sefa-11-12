@@ -10,21 +10,19 @@
 namespace Mongo{
 MngFileManager::MngFileManager(quint16 port,QDir stdDir,  QObject *parent):
     QObject(parent), saveDir(stdDir),port(port){
-    thread = new QThread(this);
     timer = new QTimer(this);
     server = new MngFileServer(port,parent);
     connect(server,&MngFileServer::acceptError, this,&MngFileManager::handleServerError);
+    connect(server, &MngFileServer::newConnection,this, &MngFileManager::incomingConnection);
     if(server->isListening()){
+        qDebug() << "Server listening?";
         serverActive = true;
     }
     timer->start(500);
     connect(timer,&QTimer::timeout,this,&MngFileManager::updateManager);
 }
 MngFileManager::~MngFileManager(){
-    thread->quit();
-    thread->wait();
     if(timer)delete timer;
-    if(thread)delete thread;
     if(server)delete server;
     if(socket)delete socket;
 }
@@ -41,25 +39,22 @@ void MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
         closeConnection();
     }
     MngFileSocket *tmp = new MngFileSocket(addr, port);
-    tmp->waitForConnected();
     if(tmp->state() == MngFileSocket::ConnectedState){
         address = addr;
         this->port = port;
-        socket = tmp;
-        socket->moveToThread(thread);
-        connect(socket,&MngFileSocket::endedTransmission,this,&MngFileManager::transmissionEnded);
-        connect(socket,&MngFileSocket::startedTransmission,this,&MngFileManager::transmissionStarted);
-        connect(socket,&MngFileSocket::transmissionCancelled,this, &MngFileManager::FileCancelled);
+        initializeSocket(tmp);
         emit connectionInitiated();
-        thread->start();
     }
 }
 void MngFileManager::closeConnection(){
     if(!socket){
         return;
     }
-    thread->terminate();
-    thread->wait();
+    disconnect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
+    disconnect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
+    disconnect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
+    disconnect(socket,SIGNAL(error(QAbstractSocket::SocketError)),
+            this,  SLOT(handleClientError(QAbstractSocket::SocketError)));
     delete socket;
     socket = nullptr;
     emit connectionClosed();
@@ -77,15 +72,8 @@ void MngFileManager::incomingConnection(MngFileSocket *sckt){
         closeConnection();
     }
     if(sckt->state() == MngFileSocket::ConnectedState){
-        socket = sckt;
-        socket->moveToThread(thread);
-        connect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
-        connect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
-        connect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
-        connect(socket,SIGNAL(error(QAbstractSocket::SocketError)),
-                this,  SLOT(handleClientError(QAbstractSocket::SocketError)));
+        initializeSocket(sckt);
         emit connectionReceived();
-        thread->start();
     }
 }
 void MngFileManager::handleClientError(QAbstractSocket::SocketError eCode){
@@ -94,6 +82,15 @@ void MngFileManager::handleClientError(QAbstractSocket::SocketError eCode){
 void MngFileManager::handleServerError(QAbstractSocket::SocketError eCode){
     std::wcerr << "[SERVER ERROR] (Code = " << eCode <<") : "<< server->errorString().toStdWString() << std::endl;
 }
-void MngFileManager::whatNow(){
+void MngFileManager::whatNow(){}
+void MngFileManager::initializeSocket(MngFileSocket* newSocket){
+    socket = newSocket;
+    connect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
+    connect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
+    connect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
+    connect(socket,&MngFileSocket::startedReceiving,this, &MngFileManager::FileReceivingStart);
+    connect(socket, &MngFileSocket::finishedReceiving,this, &MngFileManager::FileReceived);
+    connect(socket,SIGNAL(error(QAbstractSocket::SocketError)),
+            this,  SLOT(handleClientError(QAbstractSocket::SocketError)));
 }
 }

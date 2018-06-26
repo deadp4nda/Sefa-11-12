@@ -7,7 +7,8 @@ MngFileServer::MngFileServer(quint16 port, QObject *parent):
     listen(QHostAddress::Any,port);
 }
 void MngFileServer::incomingConnection(qintptr handle){
-    MngFileSocket *sckt = new MngFileSocket(handle,parent());
-    emit newConnection(sckt);
+    MngFileSocket *sckt = new MngFileSocket(handle);
+    if(sckt->state()==MngFileSocket::ConnectedState)
+        emit newConnection(sckt);
 }
 }

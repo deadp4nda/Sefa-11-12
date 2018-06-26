@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 //    for(int i = 0; i < 10; i++){
 //        quint16 port = (rand()%65500)+35;
 //        QString schtring = QString::number(port); // TODO: add blocking while instruction is sent
-//        managerOne.enqueueInstruction(Mongo::Instructions::Chat,0,QByteArray(schtring.toLocal8Bit()));
+//        managerOne.enqueueInstruction(Mongo::Instructions::Chat,0,QByteArray(schtring.toUtf8()));
 //    }
     QFile file(TESTFILE);
     if(file.exists()){
