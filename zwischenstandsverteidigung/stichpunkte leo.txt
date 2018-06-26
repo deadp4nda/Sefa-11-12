@@ -1,0 +1,28 @@
+Anwendungsszenarien:
+	-Person A und Person B arbeiten gemeinsam an einer Projekt, Person A sendet Person B die Projektdatei
+	-Person C hat vergessen seinen HeimPC auszuschalten und sendet den Befehl zum herunterfahren von seinem Arbeitslaptop
+
+	=> Thema ist Entwicklung einer Software zum versenden von Dateien und Anweisungen über das Internet
+
+Gliederung des Programms in 3 Teile:
+
+	-Protokoll: hauptteil
+		-regelt über das Netzwerk ablaufende Kommunikation (Verbindungsaufbau, Übertragung)
+		
+		-> Theoriekapitel: grundlagen zu Kommunikation in Netzwerken
+		-> Kapitel: Notwendigkeit und Beschreibung des eigenen Netzwerkprotokolls
+
+	-Syntax: 
+		-übermittlung von Nutzereingaben in Aktionen des Programms -> entwerfen einer simplen Befehlssprache
+
+		-> theoriekapitel: über grundlagen formaler Sprachen
+		-> Kapitel: entwicklung der eigenen Anweisungssprache
+
+	-System:
+		-Ausführen der Befehle
+		-Fehlermanagement, abfangen der Netzwerkfehler
+
+allgemeine Ansprüche an die Software:
+	-wartbarkeit: unkompliierte fehlerbeherbung, erweiterung und modifizierung
+	-unabhängigkeit vom betriebssystem, fokus auf Desktopsystemen (MacOS, Windows, Linux)
+	-funktionalität über komfort
