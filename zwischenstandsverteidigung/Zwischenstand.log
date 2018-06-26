@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.6.6)  26 JUN 2018 17:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.6.6)  26 JUN 2018 18:59
 entering extended mode
 **./Zwischenstand.tex
 (Zwischenstand.tex
@@ -921,73 +921,67 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 ] (Zwischenstand.toc)
 [2
 
-] [3
+] <brief_international.jpg, id=57, 284.5029pt x 143.3355pt>
+File: brief_international.jpg Graphic file (type jpg)
 
-] <s1.jpg, id=70, 542.025pt x 311.1625pt>
-File: s1.jpg Graphic file (type jpg)
- <use s1.jpg>
-Package pdftex.def Info: s1.jpg used on input line 59.
-(pdftex.def)             Requested size: 290.74263pt x 166.91423pt.
+<use brief_international.jpg>
+Package pdftex.def Info: brief_international.jpg used on input line 51.
+(pdftex.def)             Requested size: 284.5022pt x 143.33513pt.
+ [3
+
+ <./brief_international.jpg>]
+<anw.jpg, id=67, 562.1pt x 281.05pt>
+File: anw.jpg Graphic file (type jpg)
+ <use anw.jpg>
+Package pdftex.def Info: anw.jpg used on input line 59.
+(pdftex.def)             Requested size: 290.74263pt x 145.37062pt.
  [4
 
- <./s1.jpg>]
-<s2-c.jpg, id=80, 552.0625pt x 471.7625pt>
-File: s2-c.jpg Graphic file (type jpg)
- <use s2-c.jpg>
-Package pdftex.def Info: s2-c.jpg used on input line 65.
-(pdftex.def)             Requested size: 241.84842pt x 206.66911pt.
+ <./anw.jpg>]
+<int.jpg, id=77, 652.4375pt x 210.7875pt>
+File: int.jpg Graphic file (type jpg)
+ <use int.jpg>
+Package pdftex.def Info: int.jpg used on input line 65.
+(pdftex.def)             Requested size: 270.30118pt x 87.33044pt.
+ [5
 
-Overfull \vbox (0.9546pt too high) detected at line 65
- []
+ <./int.jpg>]
+<syn.jpg, id=88, 652.4375pt x 210.7875pt>
+File: syn.jpg Graphic file (type jpg)
+ <use syn.jpg>
+Package pdftex.def Info: syn.jpg used on input line 71.
+(pdftex.def)             Requested size: 270.30118pt x 87.33044pt.
+ [6
 
-[5
+ <./syn.jpg>]
+<pro.jpg, id=99, 652.4375pt x 210.7875pt>
+File: pro.jpg Graphic file (type jpg)
+ <use pro.jpg>
+Package pdftex.def Info: pro.jpg used on input line 77.
+(pdftex.def)             Requested size: 270.30118pt x 87.33044pt.
+ [7
 
- <./s2-c.jpg>] <s3.jpg, id=91, 552.0625pt x 471.7625pt>
-File: s3.jpg Graphic file (type jpg)
- <use s3.jpg>
-Package pdftex.def Info: s3.jpg used on input line 71.
-(pdftex.def)             Requested size: 241.84842pt x 206.66911pt.
+ <./pro.jpg>]
+<sys.jpg, id=111, 652.4375pt x 210.7875pt>
+File: sys.jpg Graphic file (type jpg)
+ <use sys.jpg>
+Package pdftex.def Info: sys.jpg used on input line 83.
+(pdftex.def)             Requested size: 270.30118pt x 87.33044pt.
+ [8
 
-Overfull \vbox (0.9546pt too high) detected at line 71
- []
-
-[6
-
- <./s3.jpg>] <s4.jpg, id=102, 552.0625pt x 471.7625pt>
-File: s4.jpg Graphic file (type jpg)
- <use s4.jpg>
-Package pdftex.def Info: s4.jpg used on input line 77.
-(pdftex.def)             Requested size: 241.84842pt x 206.66911pt.
-
-Overfull \vbox (0.9546pt too high) detected at line 77
- []
-
-[7
-
- <./s4.jpg>] <s5.jpg, id=114, 552.0625pt x 471.7625pt>
-File: s5.jpg Graphic file (type jpg)
- <use s5.jpg>
-Package pdftex.def Info: s5.jpg used on input line 83.
-(pdftex.def)             Requested size: 241.84842pt x 206.66911pt.
-
-Overfull \vbox (0.9546pt too high) detected at line 83
- []
-
-[8
-
- <./s5.jpg>] [9
-
-]
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 107
+ <./sys.jpg>]
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 100
 .
-LaTeX Font Info:    No file OMScmss.fd. on input line 107.
+LaTeX Font Info:    No file OMScmss.fd. on input line 100.
 
 
 LaTeX Font Warning: Font shape `OMS/cmss/bx/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 107.
+(Font)              for symbol `textbullet' on input line 100.
 
-[10
+[9
+
+] [10
 
 ] [11
 
@@ -1009,13 +1003,13 @@ LaTeX Font Warning: Font shape `OMS/cmss/bx/n' undefined
 \tf@snm=\write8
 \openout8 = `Zwischenstand.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 110.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 110.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 106.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 106.
  (Zwischenstand.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 110.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 110.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 106.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 106.
 Package rerunfilecheck Info: File `Zwischenstand.out' has not changed.
-(rerunfilecheck)             Checksum: CE449F0E77537EC238C3A5E9C557A18D;306.
+(rerunfilecheck)             Checksum: 70F5732F5F2BBA05891DC240B2F56914;216.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1026,10 +1020,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 18219 strings out of 493333
- 341013 string characters out of 3139186
+ 18221 strings out of 493333
+ 341137 string characters out of 3139186
  430630 words of memory out of 3000000
- 21288 multiletter control sequences out of 15000+200000
+ 21291 multiletter control sequences out of 15000+200000
  6922 words of font info for 25 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,16n,55p,800b,607s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1037,9 +1031,9 @@ Here is how much of TeX's memory you used:
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Files/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Zwischenstand.pdf (15 pages, 182106 bytes).
+Output written on Zwischenstand.pdf (15 pages, 438451 bytes).
 PDF statistics:
- 217 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
- 100 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 214 PDF objects out of 1000 (max. 8388607)
+ 34 named destinations out of 1000 (max. 500000)
+ 97 words of extra memory for PDF output out of 10000 (max. 10000000)
 
