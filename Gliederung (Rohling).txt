@@ -19,7 +19,6 @@ Gliederung:
 2.2.Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls
 2.3. Funktionsumfang unserer gesondert zusammengestellten Qt-Bibliothek 
 
-//(L) mal schauen was ich hierzu schreiben kann ohne zu genau auf die Implementierung einzugehen, hab zb keine Datenbanken geplant da lua execute befehle implementiert hat...//
 3. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
 3.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
 3.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
@@ -77,3 +76,4 @@ Gliederung:
 //4.2. eigene Syntax  (L: send und execute? wow xD) (J: wir hatten dazu zwei Kapitel, dachts mir auch schon..)
 (L:!)
 ? (L: als erfüllung unserer arbeitsansprüche vllt...)
+//(L) mal schauen was ich hierzu schreiben kann ohne zu genau auf die Implementierung einzugehen, hab zb keine Datenbanken geplant da lua execute befehle implementiert hat...//
