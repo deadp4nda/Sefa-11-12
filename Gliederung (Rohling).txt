@@ -8,33 +8,33 @@ Legende:
 
 //(L) Wollen wir vllt als Roter Faden für die Arbeit unsere gestellten Ansprüche nehemn, dass wir die näher erläutern und erklären wie man diese erfüllt? (wird dann allerdings ne ziemliche metaarbeit darüber wie man sinnvoll software schreibt.... warum machen wir eig so nen rotzthema zu dem man nichts schreiben kann? xD)//
 
+Titel(?): Entwurf und Implementierung eines Netzwerkprotokolls und eines skriptgestützten textuellen User-Interfaces zur einfachen Datei- und Anweisungsübertragung
+
 Gliederung:
 1.Formulierung unserer Zielstellung
-1.0. Mögliche Anwendungszenarien unserer Arbeit
-1.1. Ansprüche an unser Programm
-1.2. Struktur(Aufbau?) der Software
+1.1. Mögliche Anwendungszenarien unserer Arbeit
+1.2. Ansprüche an unser Programm
+1.3. Grobe Struktur der Software
 
 2.Entwurf und Umsetzung des Netzwerk-Backends
 2.1. Grundlegende Theorie zur Kommunikation in einem Netzwerk
-//2.2. Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls (B)--> wird zu 4.1
+2.2. Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls
 2.3. Funktionsumfang der selbsgeschriebenen Klassenbibliothek zur Netzwerkkommunikation
+2.4. Implementierung und Funktionsweise der Klassenbibliothek
 
-3. Benutzung von Lua zur Implementierung der Hauptfunktionalität des Programmes
-3.1.Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
-3.2.Verwaltung von Betriebssystemkommunikation und Datenbanken
-3.3.Vermittlung zwischen dem Benutzer und der Netzwerkanbindung
+3. Zielstellung und Funktion des mit Lua erstellten Programmteils
+3.1. Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
+3.2. Verwaltung von Betriebssystemkommunikation zur Funktionserweiterung und Datensätzen zur Rechteverwaltung
+3.3. Verarbeitung und Spezifikation der Syntax zur Kommunikation mit dem User
+3.4. Selbstständige Entwicklung einer Scriptsprachenanwendung mit den gestellten Ansprüchen
 
-4. Spezifische selbstentwickelte Anteile unserer Anwendung
-4.1. (B)--> Notwendigkeit, Spezifikation und Implementierung eines eigenen Netzwerkprotokolls in C++
-4.2. Selbstständige Entwicklung einer Scriptsprachenanwendung 
+//4. Spezifische selbstentwickelte Anteile unserer Anwendung
+// 4.1. (B)--> Notwendigkeit, Spezifikation und Implementierung eines eigenen Netzwerkprotokolls in C++
+// 4.2. Selbstständige Entwicklung einer Scriptsprachenanwendung 
 
-5. Reflexion unseres Arbeitsergebnisses
-5.1. Funktionalität der entwickleten Software
-5.2. Anwendungsmöglichkeiten in der Realität
-5.3. Vorteile gegenüber anderen "Produkten" 
-
-
-
+5. Reflexion unseres Arbeitsergebnisses // (B)-> müssen Julian oder so fragen, ob doc moor das als eigenes Kapitel will
+5.1. Funktionsumfang der Anwendung
+5.2. Vorteile gegenüber anderer Software
 
 
 
