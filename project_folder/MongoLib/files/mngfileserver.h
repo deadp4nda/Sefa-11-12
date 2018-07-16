@@ -9,12 +9,13 @@ class MngFileServer : public QTcpServer
 {
     Q_OBJECT
 public:
-    MngFileServer(quint16 port, QObject *parent);
+    MngFileServer(quint16 port, const QString &stdDir, QObject *parent);
 protected:
     void incomingConnection(qintptr handle);
 signals:
     void newConnection(MngFileSocket *);
 private:
+    QString stdDirectory;
     quint16 port = 0;
 };
 }

@@ -32,7 +32,8 @@ SOURCES += \
     instructions/mongoconnection.cpp \
     files/mngfilemanager.cpp \
     files/mngfilesocket.cpp \
-    files/mngfileserver.cpp
+    files/mngfileserver.cpp \
+    mongolib_global.cpp
 
 HEADERS += \
         mongolib.h \

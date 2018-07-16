@@ -13,6 +13,9 @@
 #include <memory>
 #include <QByteArray>
 
+extern "C"{
+void ChryHexdump(const char *data_buffer, const unsigned int length,const char *functionName, FILE *output = stdout);
+}
 
 class QFile;
 class QTcpSocket;
@@ -37,7 +40,7 @@ typedef std::shared_ptr<FileHansz> SafeFileHansz ;
 #define MONGO_TYPE_INVA (0xB3U)
 
 #define MONGO_INSTRUCTION_MAXIMUM 0xFFFF
-#define FILE_READ_MAXLENGTH 0xFFFFll
+#define FILE_READ_MAXLENGTH 0xFFFFFF
 
 #define MONGO_FILE_INPORT 5235
 #define MONGO_FILE_OUTPORT 5236
@@ -47,7 +50,8 @@ enum Filetype{
     Movie,
     Picture,
     Text,
-    Audio
+    Audio,
+    Broken
 };
 enum Instructions{
     Exit,           //exit command

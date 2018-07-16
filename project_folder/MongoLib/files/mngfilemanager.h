@@ -10,6 +10,8 @@
 
 #include "mongolib_global.h"
 
+#define STD_TEMP_DIR "/pinkkarriertesclownsfischbatallion/"
+
 namespace Mongo{
 class MngFileServer;
 class MngFileSocket;
@@ -19,7 +21,7 @@ class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
     Q_OBJECT
 public:
     MngFileManager(quint16 port = 0,
-                            QDir stdDir = QDir(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/"),
+                            QDir stdDir = QDir(QDir::tempPath()+STD_TEMP_DIR),
                             QObject *parent = nullptr);
     ~MngFileManager();
     void enqueueFile(SafeFileHansz);
@@ -27,10 +29,10 @@ public:
     void createConnection(const QHostAddress & addr, quint16 port);
     void closeConnection();
 signals:
-    void FileIncoming(SafeFileHansz);
-    void FileReceived(SafeFileHansz);
-    void FileCancelled(SafeFileHansz);
-    void FileReceivingStart(SafeFileHansz);
+    void fileReceived(SafeFileHansz);
+    void fileCancelled(SafeFileHansz);
+    void fileReceivingStarted(SafeFileHansz);
+
     void connectionClosed();
     void connectionInitiated();
     void connectionFailed();
@@ -41,10 +43,11 @@ private:
     MngFileServer *server = nullptr;
     MngFileSocket *socket = nullptr;
     QHostAddress address = QHostAddress(QHostAddress::Null);
-    QDir saveDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/";
-    quint16 port = 0;
+    QDir saveDir = QDir::tempPath()+STD_TEMP_DIR;
+    quint16 serverPort = 0;
     bool busy = false;
     bool serverActive = false;
+
 private slots:
     void updateManager();
     void sendFile(SafeFileHansz);
@@ -53,7 +56,6 @@ private slots:
     void incomingConnection(MngFileSocket*);
     void handleServerError(QAbstractSocket::SocketError);
     void handleClientError(QAbstractSocket::SocketError);
-    void whatNow();
     void initializeSocket(MngFileSocket *newSocket);
     friend class MngFileSocket;
 };

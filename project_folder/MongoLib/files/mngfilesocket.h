@@ -13,10 +13,10 @@ class MngFileSocket : public QTcpSocket
 public:
     MngFileSocket(const QHostAddress &address,
                   quint16 port,
-                  QString stdDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/",
+                  QString stdDir,
                   QObject *parent = nullptr);
     MngFileSocket(qintptr descr,
-                  QString stdDir = QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/",
+                  QString stdDir,
                   QObject *parent = nullptr);
     ~MngFileSocket();
     void send(SafeFileHansz);
@@ -29,11 +29,13 @@ signals:
 public slots:
     void handleReadyRead();
 private:
-    SafeFileHansz current;
-    SafeFileHansz receiving;
+    SafeFileHansz current = nullptr;
+    SafeFileHansz receiving = nullptr;
     QHostAddress addr;
     quint16 port;
     QDir stdDirectory;
+private slots:
+    void fileComplete();
 };
 }
 #endif // MNGFILESOCKET_H

@@ -6,9 +6,14 @@
 #include "mongolib.h"
 
 #define TESTFILE "C:/Users/Benedikt/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg"
+#undef TESTFILE
+#define TESTFILE "C:/Users/Chrystalkey/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg"
 
 #define PORTONE 2222
-#define PORTTWO (PORTONE+1)
+#define PORTTWO 2223
+
+#define PORTTHREE 2224
+#define PORTFOUR 2225
 
 using Mongo::MngThManager;
 using Mongo::MngFileManager;
@@ -18,8 +23,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MngThManager managerOne(PORTONE);
     MngThManager managerTwo(PORTTWO);
-    MngFileManager fManagerOne(PORTTWO+1);
-    MngFileManager fManagerTwo(PORTTWO+2);
+    MngFileManager fManagerOne(PORTTHREE);
+    MngFileManager fManagerTwo(PORTFOUR);
     MainWindow w(&managerTwo,&fManagerTwo);
     w.show();
     managerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO);
