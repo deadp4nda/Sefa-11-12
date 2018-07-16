@@ -39,17 +39,12 @@ MngFileSocket::MngFileSocket(const QHostAddress &address, quint16 port,
 }
 void MngFileSocket::handleReadyRead(){
     if(!receiving) {
-        receiving = SafeFileHansz(new FileHansz(stdDirectory));
-        connect(&(*receiving),&FileHansz::fileTransmissionComplete,
-                this,&MngFileSocket::fileComplete);
+        receiving = SafeFileHansz(new FileHansz(stdDirectory,this));
         emit startedReceiving(receiving);
     }
-    qDebug() << "Receiving";
     receiving->addData( read(bytesAvailable()) );
 }
 void MngFileSocket::fileComplete(){
-    disconnect(&(*receiving),&FileHansz::fileTransmissionComplete,
-            this,&MngFileSocket::fileComplete);
     emit finishedReceiving(receiving);
     receiving = nullptr;
 }
@@ -63,19 +58,16 @@ QString operator*(const QString & str,qint32 times){
 void MngFileSocket::send(SafeFileHansz hansz){
     emit startedTransmission();
     current = hansz;
-//    write(QByteArray(200,'c'));
-//    waitForBytesWritten();
 
     QByteArray test = hansz->getHeaders();
     ChryHexdump(test,test.size(),"MngFileSocket::send",stderr);
-//    ChryHexdump(QByteArray(200,'c').data(),200);
+
     write(test);
     waitForBytesWritten(INT_MAX);
 
     QFile* file = hansz->getFile();
-    file->seek(0);
     while(!file->atEnd()){
-        qDebug() << "writing: " << write(file->read(FILE_READ_MAXLENGTH)) << " Bytes";
+//        qDebug() << "writing: " << write(file->read(FILE_READ_MAXLENGTH)) << " Bytes";
 //        waitForBytesWritten();
     }
 
@@ -83,9 +75,10 @@ void MngFileSocket::send(SafeFileHansz hansz){
     emit endedTransmission();
 }
 MngFileSocket::~MngFileSocket(){
-    if(current){
+    if(current)
         emit transmissionCancelled(current);
-    }
+    if(receiving)
+        emit transmissionCancelled(receiving);
     disconnectFromHost();
     waitForDisconnected();
     close();

@@ -1,7 +1,10 @@
 ﻿#include "filehansz.h"
 #include "mongolib_global.h"
+#include "mngfilesocket.h"
+#include <QDataStream>
 #include <QFile>
 #include <QFileInfo>
+
 
 namespace Mongo{
 FileHansz::FileHansz(const QFile &file, quint64 filetype):
@@ -14,6 +17,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
         Mongo_Header mongoH;
         File_Header fileH;
         QFileInfo info(file);
+
         name = info.fileName();
         memset(&mongoH,0,sizeof(Mongo_Header));
         memset(&fileH,0,sizeof(File_Header));
@@ -34,35 +38,24 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
         broken = true;
     }
     mode = true;
-    QObject::connect(&timer,&QTimer::timeout,this,&FileHansz::update);
-    timer.start(5);
 }
-void FileHansz::update(){
-    if(!mode && !buffer.isEmpty() && file.isOpen() && file.isWritable()){
-        int size = buffer.size();
-        file.write(buffer.data(),size);
-        buffer = buffer.right(buffer.size()-size);
-    }
-    if(!mode && file.size() == fileSize){
-        emit fileTransmissionComplete();
-        file.close();
-    }
-}
-FileHansz::FileHansz(const QDir &stdDir):
-    stdDir(stdDir){
+FileHansz::FileHansz(const QDir &stdDir,MngFileSocket*par):
+    stdDir(stdDir),socketParent(par){
     mode = false;
-    QObject::connect(&timer,&QTimer::timeout,this,&FileHansz::update);
-    timer.start(5);
 }
 
 int FileHansz::addData(const QByteArray &buffer){
-    qDebug() <<"@addData with " << buffer.size() << " Bytes";
     if(headers.isEmpty()){
         headers = buffer;
         refactorHeaders();
         return 0;
     }else{
-        this->buffer.append(buffer);
+        file.write(buffer);
+        file.waitForBytesWritten(INT_MAX);
+        if(file.size() == fileSize){
+            file.close();
+            socketParent->fileComplete();
+        }
         return 2;
     }
 }
@@ -73,6 +66,6 @@ void FileHansz::refactorHeaders(){
     stringSize = header->strLen;
     name = QString(QByteArray((char*)header+sizeof(File_Header),header->strLen));
     file.setFileName(stdDir.absoluteFilePath(name));
-    file.open(QIODevice::WriteOnly);
+    bool op = file.open(QIODevice::WriteOnly);
 }
 }

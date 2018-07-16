@@ -6,14 +6,17 @@
 #include <QString>
 #include <QDir>
 #include <QTimer>
+#include <QDataStream>
 #include "mongolib_global.h"
 
+
 namespace Mongo {
+class MngFileSocket;
 class MONGOLIBSHARED_EXPORT FileHansz: public QObject{
     Q_OBJECT
 public:
     FileHansz(const QFile& file,quint64 filetype);
-    FileHansz(const QDir &stdDir);
+    FileHansz(const QDir &stdDir, MngFileSocket *par);
     FileHansz(const FileHansz&) = delete;
     int addData(const QByteArray&);
     bool isBroken()const{return broken;}
@@ -27,6 +30,7 @@ public: //Getter
     quint64 getStringSize()const{return stringSize;}
 private:
     QFile file;
+    QDataStream writingStream;
     QString name;
     quint64 filetype;
     QByteArray headers;
@@ -37,10 +41,9 @@ private:
     quint64 fileSize = 0;
     quint64 stringSize = 0;
     bool mode = false; //true == sending, false == receiving
+    MngFileSocket *socketParent = nullptr;
 private:
     void refactorHeaders();
-private slots:
-    void update();
 signals:
     void fileTransmissionComplete();
 };

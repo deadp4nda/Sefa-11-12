@@ -9,6 +9,8 @@
 namespace Mongo{
 MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
     QObject(parent), saveDir(stdDir),serverPort(port){
+    if(!saveDir.exists())
+        saveDir.mkpath(saveDir.absolutePath());
     timer = new QTimer(this);
     server = new MngFileServer(serverPort,saveDir.absolutePath(),parent);
     connect(server,&MngFileServer::acceptError, this,&MngFileManager::handleServerError);
@@ -29,7 +31,7 @@ void MngFileManager::enqueueFile(QFile *file, quint64 type){
     enqueueFile(SafeFileHansz(new FileHansz(*file,type)));
 }
 void MngFileManager::enqueueFile(SafeFileHansz hansz){
-    std::cout << "File Enqueued\n";
+//    std::cout << "File Enqueued\n";
     files.enqueue(hansz);
 }
 void MngFileManager::createConnection(const QHostAddress &addr, quint16 port){

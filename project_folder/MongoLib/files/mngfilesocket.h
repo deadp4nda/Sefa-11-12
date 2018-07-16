@@ -36,6 +36,7 @@ private:
     QDir stdDirectory;
 private slots:
     void fileComplete();
+    friend class FileHansz;
 };
 }
 #endif // MNGFILESOCKET_H
