@@ -21,7 +21,7 @@ MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget 
                      this,&MainWindow::fileIn);*/
     QObject::connect(fManager,&Mongo::MngFileManager::fileReceived,
                      this,&MainWindow::fileIn);
-    QObject::connect(fManager,&Mongo::MngFileManager::connectionReceived,
+    QObject::connect(fManager,&Mongo::MngFileManager::remoteConnectionReceived,
                      this,&MainWindow::connectionRecv);
     QObject::connect(fManager,&Mongo::MngFileManager::connectionClosed,
                      this, &MainWindow::connectionClsd);
@@ -36,7 +36,7 @@ void MainWindow::connectionClsd(){
     label->setText("Conn. Closed");
 }
 void MainWindow::connectionRecv(){
-    label->setText("Conn. Initd.");
+    label->setText("Conn. Recv.");
 }
 MainWindow::~MainWindow()
 {

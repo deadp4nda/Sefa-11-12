@@ -20,9 +20,12 @@ public:
                   QObject *parent = nullptr);
     ~MngFileSocket();
     void send(SafeFileHansz);
+    void finish();
+    SafeFileHansz getReceiving(){return receiving;}
+    SafeFileHansz getSending(){return current;}
 signals:
-    void startedTransmission();
-    void endedTransmission();
+    void startedTransmission(SafeFileHansz);
+    void endedTransmission(SafeFileHansz);
     void transmissionCancelled(SafeFileHansz);
     void startedReceiving(SafeFileHansz);
     void finishedReceiving(SafeFileHansz);
@@ -35,7 +38,6 @@ private:
     quint16 port;
     QDir stdDirectory;
 private slots:
-    void fileComplete();
     friend class FileHansz;
 };
 }

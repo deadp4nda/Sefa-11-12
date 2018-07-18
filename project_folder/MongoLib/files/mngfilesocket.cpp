@@ -23,31 +23,6 @@
 //    }
 //}
 //}
-
-namespace Mongo{
-MngFileSocket::MngFileSocket(qintptr descr, QString stdDir, QObject *parent):
-    QTcpSocket(parent),stdDirectory(stdDir){
-    setSocketDescriptor(descr);
-    connect(this,&MngFileSocket::readyRead,this,&MngFileSocket::handleReadyRead);
-}
-MngFileSocket::MngFileSocket(const QHostAddress &address, quint16 port,
-                             QString stdDir, QObject *parent):
-    QTcpSocket(parent),addr(address),port(port),stdDirectory(stdDir){
-    connectToHost(address,port);
-    waitForConnected();
-    connect(this,&MngFileSocket::readyRead,this,&MngFileSocket::handleReadyRead);
-}
-void MngFileSocket::handleReadyRead(){
-    if(!receiving) {
-        receiving = SafeFileHansz(new FileHansz(stdDirectory,this));
-        emit startedReceiving(receiving);
-    }
-    receiving->addData( read(bytesAvailable()) );
-}
-void MngFileSocket::fileComplete(){
-    emit finishedReceiving(receiving);
-    receiving = nullptr;
-}
 QString operator*(const QString & str,qint32 times){
     QString retVal;
     for(int i = 0;i < times; i++){
@@ -55,25 +30,59 @@ QString operator*(const QString & str,qint32 times){
     }
     return retVal;
 }
+
+namespace Mongo{
+MngFileSocket::MngFileSocket(qintptr descr, QString stdDir, QObject *parent):
+    QTcpSocket(parent),stdDirectory(stdDir){
+    setSocketDescriptor(descr);
+    connect(this,&MngFileSocket::readyRead,
+            this,&MngFileSocket::handleReadyRead);
+}
+
+MngFileSocket::MngFileSocket(const QHostAddress &address, quint16 port,
+                             QString stdDir, QObject *parent):
+    QTcpSocket(parent),addr(address),port(port),stdDirectory(stdDir){
+    connectToHost(address,port);
+    waitForConnected();
+    connect(this,&MngFileSocket::readyRead,
+            this,&MngFileSocket::handleReadyRead);
+}
+
+void MngFileSocket::handleReadyRead(){
+    if(!receiving) {
+        receiving = SafeFileHansz(new FileHansz(stdDirectory,this));
+        emit startedReceiving(receiving);
+    }
+    receiving->addData( read(bytesAvailable()) );
+}
+
 void MngFileSocket::send(SafeFileHansz hansz){
-    emit startedTransmission();
+    emit startedTransmission(hansz);
     current = hansz;
 
-    QByteArray test = hansz->getHeaders();
+    QByteArray test = current->getHeaders();
     ChryHexdump(test,test.size(),"MngFileSocket::send",stderr);
 
     write(test);
     waitForBytesWritten(INT_MAX);
 
-    QFile* file = hansz->getFile();
+    QFile* file = current->getFile();
     while(!file->atEnd()){
-//        qDebug() << "writing: " << write(file->read(FILE_READ_MAXLENGTH)) << " Bytes";
-//        waitForBytesWritten();
+        qDebug() << "writing: " << write(file->read(FILE_READ_MAXLENGTH)) << " Bytes";
+        waitForBytesWritten();
     }
-
     current = nullptr;
-    emit endedTransmission();
+    emit endedTransmission(hansz);
 }
+
+void MngFileSocket::finish(){
+    if(receiving){
+        receiving->finishFile();
+        emit finishedReceiving(receiving);
+        receiving = nullptr;
+    }
+}
+
 MngFileSocket::~MngFileSocket(){
     if(current)
         emit transmissionCancelled(current);

@@ -37,13 +37,14 @@ int main(int argc, char *argv[])
 //    }
     QFile file(TESTFILE);
     if(file.exists()){
-        std::cout << "FILE EXISTS\n";
-        fManagerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO+2);
+//        std::cout << "FILE EXISTS\n";
+        fManagerOne.setConnectionProperties(QHostAddress(QHostAddress::LocalHost),PORTFOUR);
         fManagerOne.enqueueFile(&file,Mongo::Filetype::Picture);
-        std::cout << "Hallelujah\n";
+//        std::cout << "Hallelujah\n";
     }
-    std::cout << "Main:: " << file.exists() << "\n";
+//    std::cout << "Main:: " << file.exists() << "\n";
     file.close();
+    /*
     QDir directory("D:/container/");
     QStringList list = directory.entryList();
     for(QString &str:list){
@@ -54,5 +55,6 @@ int main(int argc, char *argv[])
         }
         file.close();
     }
+    */
     return a.exec();
 }

@@ -52,12 +52,12 @@ int FileHansz::addData(const QByteArray &buffer){
     }else{
         file.write(buffer);
         file.waitForBytesWritten(INT_MAX);
-        if(file.size() == fileSize){
-            file.close();
-            socketParent->fileComplete();
-        }
         return 2;
     }
+}
+void FileHansz::finishFile(){
+    if(file.isOpen())
+        file.close();
 }
 void FileHansz::refactorHeaders(){
     File_Header *header = (File_Header*)(headers.data()+sizeof(Mongo_Header));

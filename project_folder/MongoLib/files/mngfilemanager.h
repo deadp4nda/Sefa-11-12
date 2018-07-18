@@ -9,6 +9,7 @@
 #include <QDir>
 
 #include "mongolib_global.h"
+#include "filehansz.h"
 
 #define STD_TEMP_DIR "/pinkkarriertesclownsfischbatallion/"
 
@@ -19,45 +20,68 @@ class MngFileSocket;
 class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
 {
     Q_OBJECT
+    enum MongolibError{
+        StillFilesToSend,
+        NoConnectionToClose,
+        StillConnected,
+        ConnectionFailed,
+        NoRemoteConnectionToClose,
+        NoConnectionReceivable
+    };
 public:
     MngFileManager(quint16 port = 0,
                             QDir stdDir = QDir(QDir::tempPath()+STD_TEMP_DIR),
                             QObject *parent = nullptr);
     ~MngFileManager();
-    void enqueueFile(SafeFileHansz);
-    void enqueueFile(QFile *file,quint64);
-    void createConnection(const QHostAddress & addr, quint16 port);
+
+    void setConnectionProperties(QHostAddress foreignHost, quint16 port);
+    void forceNewConnection(QHostAddress foreignHost, quint16 port);
+
+public slots:
+    void enqueueFile(SafeFileHansz hansz){files.enqueue(hansz);}
+    void enqueueFile(QFile *file,quint64 type){enqueueFile(SafeFileHansz(new FileHansz(*file,type)));}
     void closeConnection();
+
 signals:
     void fileReceived(SafeFileHansz);
     void fileCancelled(SafeFileHansz);
     void fileReceivingStarted(SafeFileHansz);
+    void sendingStarted(SafeFileHansz);
 
     void connectionClosed();
     void connectionInitiated();
-    void connectionFailed();
-    void connectionReceived();
+    void remoteConnectionReceived();
+    void remoteConnectionClosed();
+
+    void error(MongolibError);
+
 private:
     QQueue<SafeFileHansz> files;
+
     QTimer *timer = nullptr;
     MngFileServer *server = nullptr;
-    MngFileSocket *socket = nullptr;
-    QHostAddress address = QHostAddress(QHostAddress::Null);
+    MngFileSocket *sendingSocket = nullptr;
+    QThread *sendingThread = nullptr;
+    MngFileSocket *receivingSocket = nullptr;
+    QThread *receivingThread = nullptr;
+
     QDir saveDir = QDir::tempPath()+STD_TEMP_DIR;
-    quint16 serverPort = 0;
-    bool busy = false;
     bool serverActive = false;
+    QHostAddress foreignHost = QHostAddress(QHostAddress::Null);
+    quint16 foreignPort = 0;
+    quint16 serverPort = 0;
+
+    int createConnection(const QHostAddress & addr, quint16 port);
 
 private slots:
+    void closeRemoteConnection();
     void updateManager();
-    void sendFile(SafeFileHansz);
-    void transmissionStarted(){busy=true;}
-    void transmissionEnded(){busy=false;}
     void incomingConnection(MngFileSocket*);
-    void handleServerError(QAbstractSocket::SocketError);
-    void handleClientError(QAbstractSocket::SocketError);
-    void initializeSocket(MngFileSocket *newSocket);
-    friend class MngFileSocket;
+    void handleServerError(QAbstractSocket::SocketError errorCode);
+    void handleSendingClientError(QAbstractSocket::SocketError errorCode);
+    void handleReceivingClientError(QAbstractSocket::SocketError errorCode);
+    void initializeSendingSocket(MngFileSocket *newSocket);
+    void initializeReceivingSocket(MngFileSocket *newSocket);
 };
 }
 #endif // MNGFILEMANAGER_H

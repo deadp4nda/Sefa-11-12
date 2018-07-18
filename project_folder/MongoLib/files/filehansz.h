@@ -20,7 +20,7 @@ public:
     FileHansz(const FileHansz&) = delete;
     int addData(const QByteArray&);
     bool isBroken()const{return broken;}
-
+    void finishFile();
 public: //Getter
     const QByteArray getHeaders()const{return headers;}
     const QString getName()const{return name;}
@@ -46,6 +46,7 @@ private:
     void refactorHeaders();
 signals:
     void fileTransmissionComplete();
+    friend class MngFileSocket;
 };
 }
 
