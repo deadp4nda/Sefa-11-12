@@ -16,6 +16,7 @@
 extern "C"{
 void ChryHexdump(const char *data_buffer, const unsigned int length,const char *functionName, FILE *output = stdout);
 }
+QString operator*(const QString & str,qint32 times);
 
 class QFile;
 class QTcpSocket;

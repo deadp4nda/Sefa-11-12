@@ -80,8 +80,11 @@ private slots:
     void handleServerError(QAbstractSocket::SocketError errorCode);
     void handleSendingClientError(QAbstractSocket::SocketError errorCode);
     void handleReceivingClientError(QAbstractSocket::SocketError errorCode);
+
     void initializeSendingSocket(MngFileSocket *newSocket);
     void initializeReceivingSocket(MngFileSocket *newSocket);
+    void cleanupSendingSocket(MngFileSocket* oldSocket);
+    void cleanupReceivingSocket(MngFileSocket *oldSocket);
 };
 }
 #endif // MNGFILEMANAGER_H

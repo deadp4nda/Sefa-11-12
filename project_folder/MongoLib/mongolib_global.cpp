@@ -8,13 +8,13 @@ void ChryHexdump(const char *data_buffer, const unsigned int length, const char 
         byte = data_buffer[i];
         fprintf(output,"%02x ",byte);
         if((i%16)==15||(i==length-1)){
-            for(j=0;j<15-(i%16);j++)
-                fprintf(output,"    ");
+            for(j=0; j< 15-(i%16); j++)
+                fprintf(output,"   ");
             fprintf(output,"| ");
             for(j=(i-(i%16));j<=i;j++){
                 byte = data_buffer[j];
                 if((byte>31)&& (byte <127))
-                fprintf(output,"%c",byte);
+                    fprintf(output,"%c",byte);
                 else
                     fprintf(output,".");
             }
@@ -22,4 +22,11 @@ void ChryHexdump(const char *data_buffer, const unsigned int length, const char 
         }
     }
 }
+}
+QString operator*(const QString & str,qint32 times){
+    QString retVal;
+    for(int i = 0;i < times; i++){
+        retVal+=str;
+    }
+    return retVal;
 }
