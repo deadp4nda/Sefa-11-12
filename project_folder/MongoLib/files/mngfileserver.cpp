@@ -1,14 +1,14 @@
 ﻿#include "mngfileserver.h"
-#include "mngfilesocket.h"
+#include "mngrecvfilesocket.h"
 
 namespace Mongo{
-MngFileServer::MngFileServer(quint16 port, QObject *parent):
-    QTcpServer(parent),port(port){
+MngFileServer::MngFileServer(quint16 port,const QString &stdDir, QObject *parent):
+    QTcpServer(parent), stdDirectory(stdDir), port(port){
     listen(QHostAddress::Any,port);
 }
 void MngFileServer::incomingConnection(qintptr handle){
-    MngFileSocket *sckt = new MngFileSocket(handle);
-    if(sckt->state()==MngFileSocket::ConnectedState)
+    MngRecvFileSocket *sckt = new MngRecvFileSocket(handle,stdDirectory);
+    if(sckt->state()==MngRecvFileSocket::ConnectedState)
         emit newConnection(sckt);
 }
 }

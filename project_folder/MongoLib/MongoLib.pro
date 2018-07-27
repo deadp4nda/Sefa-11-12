@@ -31,8 +31,10 @@ SOURCES += \
     instructions/mngthmanager.cpp \
     instructions/mongoconnection.cpp \
     files/mngfilemanager.cpp \
-    files/mngfilesocket.cpp \
-    files/mngfileserver.cpp
+    files/mngfileserver.cpp \
+    mongolib_global.cpp \
+    files/mngrecvfilesocket.cpp \
+    files/mngsendfilesocket.cpp
 
 HEADERS += \
         mongolib.h \
@@ -45,7 +47,8 @@ HEADERS += \
     mongolib.h \
     mongolib_global.h \
     files/mngfilemanager.h \
-    files/mngfilesocket.h \
-    files/mngfileserver.h
+    files/mngfileserver.h \
+    files/mngrecvfilesocket.h \
+    files/mngsendfilesocket.h
 
 DEFINES += MongoLib

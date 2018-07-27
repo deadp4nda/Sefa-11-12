@@ -6,9 +6,14 @@
 #include "mongolib.h"
 
 #define TESTFILE "C:/Users/Benedikt/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg"
+#undef TESTFILE
+#define TESTFILE "C:/Users/Chrystalkey/Documents/GitHub/Sefa-11-12/project_folder/testfile.jpg"
 
 #define PORTONE 2222
-#define PORTTWO (PORTONE+1)
+#define PORTTWO 2223
+
+#define PORTTHREE 2224
+#define PORTFOUR 2225
 
 using Mongo::MngThManager;
 using Mongo::MngFileManager;
@@ -18,8 +23,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MngThManager managerOne(PORTONE);
     MngThManager managerTwo(PORTTWO);
-    MngFileManager fManagerOne(PORTTWO+1);
-    MngFileManager fManagerTwo(PORTTWO+2);
+    MngFileManager fManagerOne(PORTTHREE);
+    fManagerOne.lockServer();
+    fManagerOne.setObjectName("fManagerOne");
+    MngFileManager fManagerTwo(PORTFOUR);
+    fManagerTwo.setObjectName("fManagerTwo");
     MainWindow w(&managerTwo,&fManagerTwo);
     w.show();
     managerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO);
@@ -32,11 +40,22 @@ int main(int argc, char *argv[])
 //    }
     QFile file(TESTFILE);
     if(file.exists()){
-        std::cout << "FILE EXISTS\n";
-        fManagerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO+2);
+//        std::cout << "FILE EXISTS\n";
+        fManagerOne.setConnectionProperties(QHostAddress(QHostAddress::LocalHost),PORTFOUR);
         fManagerOne.enqueueFile(&file,Mongo::Filetype::Picture);
-        std::cout << "Hallelujah\n";
+//        std::cout << "Hallelujah\n";
     }
-    std::cout << "Main:: " << file.exists() << "\n";
+//    std::cout << "Main:: " << file.exists() << "\n";
+    file.close();
+    QDir directory("D:/container/");
+    QStringList list = directory.entryList();
+    for(QString &str:list){
+        file.setFileName(directory.absoluteFilePath(str));
+        Q_ASSERT(file.exists() == true);
+        if(file.open(QIODevice::ReadOnly)){
+            fManagerOne.enqueueFile(&file,Mongo::Filetype::Undefined);
+            file.close();
+        }
+    }
     return a.exec();
 }

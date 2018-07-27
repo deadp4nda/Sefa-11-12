@@ -1,96 +1,202 @@
-﻿#include <QThread>
-#include <QDir>
-
-#include "mngfilemanager.h"
-#include "filehansz.h"
-#include "mngfilesocket.h"
+﻿#include "mngfilemanager.h"
+#include "mngsendfilesocket.h"
+#include "mngrecvfilesocket.h"
 #include "mngfileserver.h"
 
-
 namespace Mongo{
-MngFileManager::MngFileManager(quint16 port,QDir stdDir,  QObject *parent):
-    QObject(parent), saveDir(stdDir),port(port){
-    timer = new QTimer(this);
-    server = new MngFileServer(port,parent);
-    connect(server,&MngFileServer::acceptError, this,&MngFileManager::handleServerError);
-    connect(server, &MngFileServer::newConnection,this, &MngFileManager::incomingConnection);
-    if(server->isListening()){
-        qDebug() << "Server listening?";
-        serverActive = true;
+MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
+    QObject(parent),saveDir(stdDir), serverPort(port){
+    if(!saveDir.exists()){
+        saveDir.mkpath(saveDir.absolutePath());
     }
-    timer->start(500);
-    connect(timer,&QTimer::timeout,this,&MngFileManager::updateManager);
+    timer = new QTimer(this);
+    timer->setInterval(10);
+    server = new MngFileServer(serverPort,stdDir.absolutePath(),this);
+    serverActive = server->isListening();
+    if(serverActive)qDebug() << "Server active";
+
+    QObject::connect(timer,&QTimer::timeout,
+                     this,&MngFileManager::updateManager);
+    QObject::connect(server,&MngFileServer::acceptError,
+                     this, &MngFileManager::handleServerError);
+    QObject::connect(server,&MngFileServer::newConnection,
+                     this, &MngFileManager::incomingConnection);
+
+    timer->start();
+    qDebug() << "SIZEOF RECV: " << sizeof(MngRecvFileSocket);
+    qDebug() << "SIZEOF SEND: " << sizeof(MngSendFileSocket);
 }
 MngFileManager::~MngFileManager(){
-    if(timer)delete timer;
-    if(server)delete server;
-    if(socket)delete socket;
+    delete timer;
+    delete server;
+    closeOutgoingConnection();
+    closeIncomingConnection();
 }
-void MngFileManager::enqueueFile(QFile *file, quint64 type){
-    enqueueFile(SafeFileHansz(new FileHansz(*file,type)));
+void MngFileManager::lockServer(){
+    server->close();
 }
-void MngFileManager::enqueueFile(SafeFileHansz hansz){
-    std::cout << "File Enqueued\n";
-    files.enqueue(hansz);
-}
-
-void MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
-    if(socket){
-        closeConnection();
-    }
-    MngFileSocket *tmp = new MngFileSocket(addr, port);
-    if(tmp->state() == MngFileSocket::ConnectedState){
-        address = addr;
-        this->port = port;
-        initializeSocket(tmp);
-        emit connectionInitiated();
-    }
-}
-void MngFileManager::closeConnection(){
-    if(!socket){
+void MngFileManager::setConnectionProperties(QHostAddress foreignHost, quint16 port){
+    if(!files.isEmpty()){
+        emit error(StillFilesToSend);
         return;
     }
-    disconnect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
-    disconnect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
-    disconnect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
-    disconnect(socket,SIGNAL(error(QAbstractSocket::SocketError)),
-            this,  SLOT(handleClientError(QAbstractSocket::SocketError)));
-    delete socket;
-    socket = nullptr;
+    this->foreignHost = foreignHost;
+    foreignPort = port;
+}
+void MngFileManager::forceNewConnection(QHostAddress foreignHost, quint16 port){
+    closeOutgoingConnection();
+    files.clear();
+    this->foreignHost = foreignHost;
+    foreignPort = port;
+}
+void MngFileManager::closeOutgoingConnection(){
+    if(!sendingSocket){
+        emit error(NoConnectionToClose);
+        return;
+    }
+    cleanupSendingSocket();
+    sendingSocket->deleteLater();
+    sendingSocket = nullptr;
     emit connectionClosed();
 }
+void MngFileManager::closeIncomingConnection(){
+    if(!receivingSocket){
+        emit error(NoConnectionToClose);
+        return;
+    }
+    cleanupReceivingSocket();
+//    delete receivingSocket;
+    receivingSocket->deleteLater();
+    receivingSocket = nullptr;
+    server->resumeAccepting();
+    emit connectionClosed();
+}
+int MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
+    if(sendingSocket){
+        emit error(StillConnected);
+        return 1;
+    }
+    MngSendFileSocket *tmp = new MngSendFileSocket(addr,port,saveDir.absolutePath(), this);
+    if(tmp->state() == MngSendFileSocket::ConnectedState){
+        sendingSocket = tmp;
+        initializeSendingSocket();
+        emit connectionInitiated();
+        return 0;
+    }else{
+        emit error(ConnectionFailed);
+        delete tmp;
+        return 2;
+    }
+}
 void MngFileManager::updateManager(){
-    if(!busy && !files.isEmpty() && socket){
-        sendFile(files.dequeue());
+    if(!files.isEmpty() && foreignHost != QHostAddress::Null && !sendingSocket){
+        if(!files.head()->getFile()->exists()){ //next file is invalid
+            emit error(FileInvalid);
+            files.dequeue();
+            return;
+        }
+        if(createConnection(foreignHost,foreignPort) == 0){
+            sendingSocket->send(files.dequeue());
+        }
     }
 }
-void MngFileManager::sendFile(SafeFileHansz hansz){
-    socket->send(hansz);
+void MngFileManager::incomingConnection(MngRecvFileSocket *remoteConnection){
+    receivingSocket = remoteConnection;
+    initializeReceivingSocket();
+    emit remoteConnectionReceived();
+    server->pauseAccepting();
 }
-void MngFileManager::incomingConnection(MngFileSocket *sckt){
-    if(socket){
-        closeConnection();
-    }
-    if(sckt->state() == MngFileSocket::ConnectedState){
-        initializeSocket(sckt);
-        emit connectionReceived();
-    }
+void MngFileManager::handleServerError(QAbstractSocket::SocketError errorCode){
+    std::wcerr << "\nFrom " << objectName().toStdWString();
+    std::wcerr << "\n[SERVER ERROR] Code = " << errorCode << ": " << server->errorString().remove("\n").toStdWString();
 }
-void MngFileManager::handleClientError(QAbstractSocket::SocketError eCode){
-    std::wcerr << "[CLIENT ERROR] (Code = " << eCode <<") : "<< socket->errorString().toStdWString() << std::endl;
+void MngFileManager::handleReceivingClientError(QAbstractSocket::SocketError errorCode){
+    std::wcerr << "\nFrom " << objectName().toStdWString();
+    std::wcerr << "\n[RECV. CLIENT ERROR] Code = " << errorCode << ": " << receivingSocket->errorString().remove("\n").toStdWString();
 }
-void MngFileManager::handleServerError(QAbstractSocket::SocketError eCode){
-    std::wcerr << "[SERVER ERROR] (Code = " << eCode <<") : "<< server->errorString().toStdWString() << std::endl;
+void MngFileManager::handleSendingClientError(QAbstractSocket::SocketError errorCode){
+    std::wcerr << "\nFrom " << objectName().toStdWString();
+    std::wcerr << "\n[SNDNG. CLIENT ERROR] Code = " << errorCode << ": " << sendingSocket->errorString().remove("\n").toStdWString();
 }
-void MngFileManager::whatNow(){}
-void MngFileManager::initializeSocket(MngFileSocket* newSocket){
-    socket = newSocket;
-    connect(socket,&MngFileSocket::startedTransmission, this,&MngFileManager::transmissionStarted);
-    connect(socket,&MngFileSocket::endedTransmission, this,&MngFileManager::transmissionEnded);
-    connect(socket,&MngFileSocket::transmissionCancelled, this, &MngFileManager::FileCancelled);
-    connect(socket,&MngFileSocket::startedReceiving,this, &MngFileManager::FileReceivingStart);
-    connect(socket, &MngFileSocket::finishedReceiving,this, &MngFileManager::FileReceived);
-    connect(socket,SIGNAL(error(QAbstractSocket::SocketError)),
-            this,  SLOT(handleClientError(QAbstractSocket::SocketError)));
+void MngFileManager::initializeSendingSocket(){
+    MngSendFileSocket *socket = sendingSocket;
+    Q_ASSERT(socket != nullptr);
+    QObject::connect(socket,&MngSendFileSocket::transmissionComplete,
+                     this, &MngFileManager::closeOutgoingConnection);
+    QObject::connect(socket,&MngSendFileSocket::transmissionStarted,
+                     this,&MngFileManager::fileTransmissionStarted);
+    QObject::connect(socket,&MngSendFileSocket::transmissionCancelled,
+                     this, &MngFileManager::fileCancelled);
+    QObject::connect(socket,&MngSendFileSocket::transmissionComplete,
+                     this, &MngFileManager::fileTransmissionEnded);
+
+    QObject::connect(socket,&MngSendFileSocket::transmissionComplete,
+                     this, &MngFileManager::closeOutgoingConnection);
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+                     this, SLOT(handleSendingClientError(QAbstractSocket::SocketError)));
+
+    QObject::connect(socket,&MngSendFileSocket::justWritten,
+                     this, &MngFileManager::justSent);
+}
+
+void MngFileManager::initializeReceivingSocket(){
+    MngRecvFileSocket *socket = receivingSocket;
+    Q_ASSERT(socket != nullptr);
+    QObject::connect(socket,&MngRecvFileSocket::receivingCancelled,
+                     this, &MngFileManager::fileCancelled);
+    QObject::connect(socket,&MngRecvFileSocket::receivingStarted,
+                     this, &MngFileManager::fileReceivingStarted);
+    QObject::connect(socket, &MngRecvFileSocket::receivingFinished,
+                     this, &MngFileManager::fileSuccessfulReceived);
+
+
+    QObject::connect(socket,&MngRecvFileSocket::disconnected,
+                     this,&MngFileManager::closeIncomingConnection);
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+                     this, SLOT(handleReceivingClientError(QAbstractSocket::SocketError)));
+
+
+    QObject::connect(socket,&MngRecvFileSocket::justReceived,
+                     this, &MngFileManager::justReceived);
+}
+void MngFileManager::cleanupSendingSocket(){
+    MngSendFileSocket *socket = sendingSocket;
+    Q_ASSERT(socket != nullptr);
+    QObject::disconnect(socket,&MngSendFileSocket::transmissionComplete,
+                     this, &MngFileManager::closeOutgoingConnection);
+    QObject::disconnect(socket,&MngSendFileSocket::transmissionStarted,
+                     this,&MngFileManager::fileTransmissionStarted);
+    QObject::disconnect(socket,&MngSendFileSocket::transmissionCancelled,
+                     this, &MngFileManager::fileCancelled);
+    QObject::disconnect(socket,&MngSendFileSocket::transmissionComplete,
+                     this, &MngFileManager::fileTransmissionEnded);
+    QObject::disconnect(socket,&MngSendFileSocket::transmissionComplete,
+                     this, &MngFileManager::closeOutgoingConnection);
+
+    QObject::disconnect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+                     this, SLOT(handleSendingClientError(QAbstractSocket::SocketError)));
+
+
+    QObject::disconnect(socket,&MngSendFileSocket::justWritten,
+                     this, &MngFileManager::justSent);
+}
+void MngFileManager::cleanupReceivingSocket(){
+    MngRecvFileSocket *socket = receivingSocket;
+    Q_ASSERT(socket != nullptr);
+    QObject::disconnect(socket,&MngRecvFileSocket::receivingCancelled,
+                     this, &MngFileManager::fileCancelled);
+    QObject::disconnect(socket,&MngRecvFileSocket::receivingStarted,
+                     this, &MngFileManager::fileReceivingStarted);
+    QObject::disconnect(socket, &MngRecvFileSocket::receivingFinished,
+                     this, &MngFileManager::fileSuccessfulReceived);
+
+    QObject::disconnect(socket,&MngRecvFileSocket::disconnected,
+                     this,&MngFileManager::closeIncomingConnection);
+    QObject::disconnect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+                     this, SLOT(handleReceivingClientError(QAbstractSocket::SocketError)));
+
+
+    QObject::disconnect(socket,&MngRecvFileSocket::justReceived,
+                     this, &MngFileManager::justReceived);
 }
 }
