@@ -12,12 +12,14 @@
 #include <QTcpServer>
 #include <memory>
 #include <QByteArray>
+#include <QCryptographicHash>
 
 extern "C"{
 void ChryHexdump(const char *data_buffer, const unsigned int length,const char *functionName, FILE *output = stdout);
 }
 QByteArray endingOrder();
 QString operator*(const QString & str,qint32 times);
+QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg);
 
 class QFile;
 class QTcpSocket;

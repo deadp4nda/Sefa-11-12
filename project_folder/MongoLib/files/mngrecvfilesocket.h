@@ -20,6 +20,8 @@ signals:
     void receivingStarted(SafeFileHansz);
     void receivingFinished();
     void receivingCancelled();
+
+    void justReceived(qint64);
 public slots:
     void handleReadyRead();
 private:

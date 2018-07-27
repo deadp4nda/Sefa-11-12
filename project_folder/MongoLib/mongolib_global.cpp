@@ -1,4 +1,7 @@
 #include "mongolib_global.h"
+
+#include <QFile>
+
 extern "C"{
 void ChryHexdump(const char *data_buffer, const unsigned int length, const char *functionName, FILE *output){
     fprintf(output,"\nNew dump from %s:\n", functionName);
@@ -40,4 +43,14 @@ QByteArray endingOrder(){
 //    }
 //    arr[511] = '.';
     return arr;
+}
+QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg){
+    QFile file(fileName);
+    if(file.open(QFile::ReadOnly)){
+        QCryptographicHash hash(hashAlg);
+        if(hash.addData(&file)){
+            return hash.result();
+        }
+    }
+    return QByteArray();
 }

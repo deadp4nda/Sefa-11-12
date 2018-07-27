@@ -25,6 +25,7 @@ signals:
     void transmissionCancelled();
 
     void transmitFile();
+    void justWritten(qint64);
 public slots:
     void handleFinishReadyRead();
 private:

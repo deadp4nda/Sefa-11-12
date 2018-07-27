@@ -13,6 +13,7 @@ SafeFileHansz MngRecvFileSocket::getCurrent(){
 }
 void MngRecvFileSocket::handleReadyRead(){
     QByteArray bufferOfReceived = read(bytesAvailable());
+    emit justReceived(bufferOfReceived.size());
 //    qDebug() << "Received " << bufferOfReceived.length() << " Bytes";
     if(!current){
         current = SafeFileHansz(new FileHansz(saveDir, this));

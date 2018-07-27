@@ -42,6 +42,7 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
     QByteArray test = current->getHeaders();
     ChryHexdump(test,(uint)test.size(),"MngSendFileSocket::send",stderr);
     qint64 written = write(test);
+    justWritten(written);
 //    qDebug() << "writing: " << written << " Bytes";
     flush();
     waitForBytesWritten(INT_MAX);
@@ -49,10 +50,15 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
 void MngSendFileSocket::sendFile(){
     QByteArray test;
     QFile* file = current->getFile();
+//    Q_ASSERT(file->exists());
+    if(!file->isOpen()){
+        file->open(QIODevice::ReadOnly);
+    }
     file->seek(0);
     while(!file->atEnd()){
         test = file->read(FILE_READ_MAXLENGTH);
         qint64 written = write(test);
+        justWritten(written);
     //    qDebug() << "writing: " << written << " Bytes";
     }
 }

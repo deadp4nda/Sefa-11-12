@@ -47,17 +47,15 @@ int main(int argc, char *argv[])
     }
 //    std::cout << "Main:: " << file.exists() << "\n";
     file.close();
-    /*
     QDir directory("D:/container/");
     QStringList list = directory.entryList();
     for(QString &str:list){
         file.setFileName(directory.absoluteFilePath(str));
-        file.open(QIODevice::ReadOnly);
-        if(file.exists()){
+        Q_ASSERT(file.exists() == true);
+        if(file.open(QIODevice::ReadOnly)){
             fManagerOne.enqueueFile(&file,Mongo::Filetype::Undefined);
+            file.close();
         }
-        file.close();
     }
-    */
     return a.exec();
 }

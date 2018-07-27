@@ -27,7 +27,8 @@ class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
         StillConnected,
         ConnectionFailed,
         NoRemoteConnectionToClose,
-        NoConnectionReceivable
+        NoConnectionReceivable,
+        FileInvalid
     };
 public:
     MngFileManager(quint16 port = 0,
@@ -57,7 +58,8 @@ signals:
     void remoteConnectionClosed();
 
     void error(MongolibError);
-
+    void justSent(qint64);
+    void justReceived(qint64);
 private:
     QQueue<SafeFileHansz> files;
 
