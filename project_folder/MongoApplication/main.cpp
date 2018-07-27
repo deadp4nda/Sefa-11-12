@@ -24,7 +24,10 @@ int main(int argc, char *argv[])
     MngThManager managerOne(PORTONE);
     MngThManager managerTwo(PORTTWO);
     MngFileManager fManagerOne(PORTTHREE);
+    fManagerOne.lockServer();
+    fManagerOne.setObjectName("fManagerOne");
     MngFileManager fManagerTwo(PORTFOUR);
+    fManagerTwo.setObjectName("fManagerTwo");
     MainWindow w(&managerTwo,&fManagerTwo);
     w.show();
     managerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO);

@@ -1,6 +1,5 @@
 ﻿#include "filehansz.h"
 #include "mongolib_global.h"
-#include "mngfilesocket.h"
 #include <QDataStream>
 #include <QFile>
 #include <QFileInfo>
@@ -39,12 +38,14 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
     }
     mode = true;
 }
-FileHansz::FileHansz(const QDir &stdDir,MngFileSocket*par):
+FileHansz::FileHansz(const QDir &stdDir,MngRecvFileSocket*par):
     stdDir(stdDir),socketParent(par){
     mode = false;
 }
 
-int FileHansz::addData(const QByteArray &buffer){
+int FileHansz::addData(const QByteArray &buffer, bool isLastPackage){
+    if(buffer.isEmpty())
+        return 3;
     if(headers.isEmpty()){
         headers = buffer;
         refactorHeaders();
@@ -54,10 +55,12 @@ int FileHansz::addData(const QByteArray &buffer){
         file.waitForBytesWritten(INT_MAX);
         return 2;
     }
-}
-void FileHansz::finishFile(){
-    if(file.isOpen())
+    if(isLastPackage){
         file.close();
+    }
+}
+FileHansz::~FileHansz(){
+    if(file.isOpen())file.close();
 }
 void FileHansz::refactorHeaders(){
     File_Header *header = (File_Header*)(headers.data()+sizeof(Mongo_Header));
@@ -66,6 +69,6 @@ void FileHansz::refactorHeaders(){
     stringSize = header->strLen;
     name = QString(QByteArray((char*)header+sizeof(File_Header),header->strLen));
     file.setFileName(stdDir.absoluteFilePath(name));
-    bool op = file.open(QIODevice::WriteOnly);
+    file.open(QIODevice::WriteOnly);
 }
 }

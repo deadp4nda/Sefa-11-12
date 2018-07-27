@@ -17,14 +17,10 @@ MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget 
     timer = new QTimer(this);
     QObject::connect(manager,&Mongo::MngThManager::Message,
                      this,&MainWindow::hanszIn);
-    /*QObject::connect(fManager,&Mongo::MngFileManager::fileReceivingStarted,
-                     this,&MainWindow::fileIn);*/
-    QObject::connect(fManager,&Mongo::MngFileManager::fileReceived,
+    QObject::connect(fManager,&Mongo::MngFileManager::fileReceivingStarted,
                      this,&MainWindow::fileIn);
     QObject::connect(fManager,&Mongo::MngFileManager::remoteConnectionReceived,
                      this,&MainWindow::connectionRecv);
-    QObject::connect(fManager,&Mongo::MngFileManager::connectionClosed,
-                     this, &MainWindow::connectionClsd);
     QObject::connect(timer,&QTimer::timeout,this,&MainWindow::toggleText);
     timer->setInterval(750);
     timer->start();

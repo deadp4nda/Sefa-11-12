@@ -30,3 +30,14 @@ QString operator*(const QString & str,qint32 times){
     }
     return retVal;
 }
+QByteArray endingOrder(){
+    QByteArray arr(4096,0);
+//    arr[10] = '\n';
+//    arr[40] = '\n';
+//    arr[80] = '\n';
+//    for(int i = 0; i < 100; i++){
+//        arr[81+i] = '^';
+//    }
+//    arr[511] = '.';
+    return arr;
+}

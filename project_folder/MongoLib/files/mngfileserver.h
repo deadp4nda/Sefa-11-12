@@ -4,7 +4,7 @@
 #include <QTcpServer>
 
 namespace Mongo{
-class MngFileSocket;
+class MngRecvFileSocket;
 class MngFileServer : public QTcpServer
 {
     Q_OBJECT
@@ -13,7 +13,7 @@ public:
 protected:
     void incomingConnection(qintptr handle);
 signals:
-    void newConnection(MngFileSocket *);
+    void newConnection(MngRecvFileSocket *);
 private:
     QString stdDirectory;
     quint16 port = 0;

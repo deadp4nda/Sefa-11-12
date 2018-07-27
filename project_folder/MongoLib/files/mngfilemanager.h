@@ -15,7 +15,8 @@
 
 namespace Mongo{
 class MngFileServer;
-class MngFileSocket;
+class MngSendFileSocket;
+class MngRecvFileSocket;
 
 class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
 {
@@ -33,20 +34,22 @@ public:
                             QDir stdDir = QDir(QDir::tempPath()+STD_TEMP_DIR),
                             QObject *parent = nullptr);
     ~MngFileManager();
-
+    void lockServer();
     void setConnectionProperties(QHostAddress foreignHost, quint16 port);
     void forceNewConnection(QHostAddress foreignHost, quint16 port);
 
 public slots:
     void enqueueFile(SafeFileHansz hansz){files.enqueue(hansz);}
     void enqueueFile(QFile *file,quint64 type){enqueueFile(SafeFileHansz(new FileHansz(*file,type)));}
-    void closeConnection();
-
+    void closeOutgoingConnection();
+    void closeIncomingConnection();
 signals:
-    void fileReceived(SafeFileHansz);
-    void fileCancelled(SafeFileHansz);
     void fileReceivingStarted(SafeFileHansz);
-    void sendingStarted(SafeFileHansz);
+    void fileSuccessfulReceived();
+    void fileTransmissionStarted(SafeFileHansz);
+    void fileTransmissionEnded();
+
+    void fileCancelled();
 
     void connectionClosed();
     void connectionInitiated();
@@ -60,31 +63,30 @@ private:
 
     QTimer *timer = nullptr;
     MngFileServer *server = nullptr;
-    MngFileSocket *sendingSocket = nullptr;
-    QThread *sendingThread = nullptr;
-    MngFileSocket *receivingSocket = nullptr;
-    QThread *receivingThread = nullptr;
+    MngSendFileSocket *sendingSocket = nullptr;
+//    QThread *sendingThread = nullptr;
+    MngRecvFileSocket *receivingSocket = nullptr;
+//    QThread *receivingThread = nullptr;
 
     QDir saveDir = QDir::tempPath()+STD_TEMP_DIR;
     bool serverActive = false;
-    QHostAddress foreignHost = QHostAddress(QHostAddress::Null);
+    QHostAddress foreignHost = QHostAddress::Null;
     quint16 foreignPort = 0;
     quint16 serverPort = 0;
 
     int createConnection(const QHostAddress & addr, quint16 port);
 
 private slots:
-    void closeRemoteConnection();
     void updateManager();
-    void incomingConnection(MngFileSocket*);
+    void incomingConnection(MngRecvFileSocket*);
     void handleServerError(QAbstractSocket::SocketError errorCode);
     void handleSendingClientError(QAbstractSocket::SocketError errorCode);
     void handleReceivingClientError(QAbstractSocket::SocketError errorCode);
 
-    void initializeSendingSocket(MngFileSocket *newSocket);
-    void initializeReceivingSocket(MngFileSocket *newSocket);
-    void cleanupSendingSocket(MngFileSocket* oldSocket);
-    void cleanupReceivingSocket(MngFileSocket *oldSocket);
+    void initializeSendingSocket();
+    void initializeReceivingSocket();
+    void cleanupSendingSocket();
+    void cleanupReceivingSocket();
 };
 }
 #endif // MNGFILEMANAGER_H
