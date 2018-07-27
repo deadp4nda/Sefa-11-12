@@ -23,7 +23,7 @@ public:
 
     void enqueueInstruction(SafeInstruction instr);
     void enqueueInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint32 args = 0);
-public slots:
+private slots:
     void incomingConnection(MongoConnection *);
 signals:
     void Message(SafeInstruction);

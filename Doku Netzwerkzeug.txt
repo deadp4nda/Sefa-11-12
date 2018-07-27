@@ -1,0 +1,105 @@
+Das ganze basiert auf zwei Managern, einen für Dateien, einen für Anweisungen.
+
+anweisungen MngThManager - Frag nicht
+Dateien MngFileManager - selbsterklärend
+
+man erstellt ein Objekt von einem manager und übergibt ihm(eventuell) den Port,
+den der Server Verbindungen annehmen soll. übergibt man die nicht wird ein random Port gewählt,
+was zur Zeit aber kacke ist. am besten nimmt man einen festen Standardport für alle Implementierungen
+auf der anderen seite natürlich genauso, das arbeitet bidirektional.
+
+Anweisungen und Dateien werden mit den entsprechenden zusätzlichen Informationen als InstructionHansz bzw. FileHansz
+übergeben. das sind einfache Datensammlungen um die eigentliche Datei/Anweisung herum, die alle Operationen darauf zusammenfassen.
+
+Wichtige Methoden  & Klassen:
+Anweisungen:
+	InstructionHansz:
+		InstructionHansz::InstructionHansz(quint32 instr, quint32 toPrgm = Program::This, quint32 args = 0,const QByteArray &payload = QByteArray());
+			erstellt ein neues Objekt vom Typ InstructionHansz mit allen Daten
+
+		SafeByteArray getAllData()const;
+			gibt quasi die Rohdaten zurück, aus denen das verschickte Paket besteht als std::shared_ptr<QByteArray>
+
+		SafeByteArray getPayload()const;
+			gibt den Payload als std::shared_ptr<QByteArray> zurück
+
+		bool transactionFinished();
+			braucht eigentlich kein Mensch mehr, gibt zurück ob alle Daten übertragen oder empfangen wurden. funktioniert nicht.
+
+		quint32 getInstructionCode()const;
+		quint32 getAddressedProgram()const;
+		quint32 getPassedArguments()const;
+		quint32 getContentLength()const;
+		genau, was sie sagen.
+
+	MngThManager:
+		void createConnection(const QHostAddress &addr, quint16 port = 0);
+			baut eine Verbindung zu Host <addr> an Port <port> auf.
+			muss vor allen anderen Netzwerkoperationen aufgerufen werden
+
+		void enqueueInstruction(SafeInstruction);
+			reiht eine Anweisung zum verschicken ein, als std::shared_ptr<InstructionHansz>
+		void enqueueInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(),quint32 args = 0);
+			reiht eine Anweisung zum verschicken ein und baut sie selbst aus den Informationen zusammen
+		Getter für:
+			peerPort,PeerAddress,LocalPort,LocalAddress,ServerPort,ServerAddress, ein bool für einen aktiven Server
+
+		signale:
+			void Message(SafeInstruction);
+				das ALLERWICHTIGSTE Signal. wird jedes Mal gesendet, wenn eine Anweisung angekommen ist.
+			void connectionClosed();
+				wird gesendet, wenn eine Verbindung geschlossen wurde
+			void connectionInitiated();
+				wird gesendet, wenn eine Verbindung erschaffen wurde
+Dateien:
+	FileHansz:
+		FileHansz::FileHansz(const QFile &file, quint64 filetype);
+			erstellt ein neues Objekt vom Typ FileHansz, mit den angegebenen Parametern
+		bool isBroken()const;
+			ist true, wenn die Übertragung ungültig ist
+		Getter für Header als QByteArray, Dateiname als QString, Dateiobjekt als QFile*, Dateityp,Größe und Dateinamengröße als quint64
+	
+	MngFileManager:
+		MngFileManager::MngFileManager(quint16 port = 0, QDir stdDir = %temp%/pinkkarriertesclownsfischbattalion/);
+			erstellt ein Neues Objekt. port ist der Port vom Server, stdDir ist das Verzeichnis, in das alles eingespeichert wird.
+		void setConnectionProperties(QHostAddress foreignHost, quint16 port);
+			zu dem Host werden dann an diesem port die Dateien verschickt
+			wird eventuell abgewiesen, weil noch Dateien an einen anderen Host zu schicken sind.
+		void forceNewConnection(QHostAddress foreignHost, quint16 port);
+			im Prinzip dasselbe wie setConnectionProperties, nur das hier noch zu sendende Dateien verworfen werden und die Verbindung abgebrochen
+		void lockServer();
+			verhindert, dass der server verbindungen annehmen kann.
+		void enqueueFile(SafeFileHansz);
+			reiht die Datei als std::shared_ptr<FileHansz> zum versenden ein
+		void enqueueFile(QFile* file, quint64 type);
+			dasselbe wie eins drüber, nur wird hier der std::shared_ptr<FileHansz> noch gebaut
+		void closeOutgoingConnection();
+			schließt die ausgehende verbindung
+		void closeIncomingConnection();
+			schließt die eingehende verbindung
+		signale:
+			void fileReceivingStarted(SafeFileHansz);
+				tja, selbsterklärend. der SafeFileHansz ist dann die noch unvollständige Datei
+			void fileSuccessfulReceived();
+				wird nach einem fileReceivingStarted aufgerufen, der dort gesendete SafeFileHansz ist dann vollständig
+			void fileTransmissionStarted(SafeFileHansz);
+				wird gesendet, wenn begonnen wird eine Datei zu versenden. der SafeFileHansz ist dann die Datei
+			void fileTransmissionEnded();
+				wird nach fileTransmissionStarted gesendet, Dateiübertragung erfolgreich.
+			void fileCancelled();
+				wird aufgerufen, wenn eine Datei verworfen wird oder eine Übertragung abgebrochen.
+			void connectionClosed();
+				Verbindung geschlossen
+			void connectionInitiated();
+				Verbindung hergestellt
+			void remoteConnectionReceived();
+				Verbindung empfangen
+			void remoteConnectionClosed();
+				empfangene Verbindung geschlossen
+
+			void error(MongolibError);
+				ein Fehler ist aufgetreten. Fehlercodes stehen unten in einer Tabelle.
+			void justSent(qint64);
+				eine Fortschrittsanzeige für die Dateiübertragung. interessanter bei großen Dateien, auf der "senden-Seite"
+			void justReceived(qint64);
+				eine Fortschrittsanzeige für die Dateiübertragung. interessanter bei großen Dateien, auf der "empfangen-Seite"
