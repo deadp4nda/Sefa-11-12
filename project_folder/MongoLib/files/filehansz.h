@@ -17,40 +17,42 @@ class MONGOLIBSHARED_EXPORT FileHansz: public QObject{
     Q_OBJECT
 public:
     FileHansz(const QFile& file,quint64 filetype);
-    FileHansz(const QDir &stdDir, MngRecvFileSocket *par);
+    FileHansz(const QDir &stdDir);
     FileHansz(const FileHansz&) = delete;
     ~FileHansz();
     int addData(const QByteArray&, bool isLastPackage = false);
     bool isBroken()const{return broken;}
     void endingOne(){firstEndingSent=true;}
     bool getFirstEndingSent()const{return firstEndingSent;}
-public: //Getter
+public: //Getters
     const QByteArray getHeaders()const{return headers;}
     const QString getName()const{return name;}
+    const QByteArray getChecksum()const{return hash;}
+    const QString getChecksumString()const{return hash.toHex();}
     QFile* getFile(){return &file;}
     quint64 getFileType()const{return filetype;}
     quint64 getFileSize()const{return fileSize;}
     quint64 getStringSize()const{return stringSize;}
 private:
-    bool fileIsToBeClosed = false;
-    bool firstEndingSent = false;
-    QFile file;
-    QDataStream writingStream;
-    QString name;
-    quint64 filetype;
-    QByteArray headers;
-    QDir stdDir;
-    bool broken = false;
-    QByteArray buffer;
     QTimer timer;
+    QFile file;
+    QDir stdDir;
+    QByteArray headers = QByteArray();
+    QByteArray hash = QByteArray();
+
+    QString name;
     quint64 fileSize = 0;
+    quint64 filetype;
     quint64 stringSize = 0;
+
+    bool firstEndingSent = false;
+    bool broken = false;
     bool mode = false; //true == sending, false == receiving
-    MngRecvFileSocket *socketParent = nullptr;
 private:
     void refactorHeaders();
 signals:
     void fileTransmissionComplete();
+    void fileTransmissionCorrupted();
     friend class MngFileSocket;
 };
 }

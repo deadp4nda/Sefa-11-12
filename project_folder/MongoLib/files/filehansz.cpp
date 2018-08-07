@@ -17,6 +17,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
         File_Header fileH;
         QFileInfo info(file);
 
+        hash = byteArrayToBase32(fileChecksum(file.fileName())).toLatin1();
         name = info.fileName();
         memset(&mongoH,0,sizeof(Mongo_Header));
         memset(&fileH,0,sizeof(File_Header));
@@ -29,6 +30,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
         headers.append((char*)&mongoH,sizeof(mongoH));
         headers.append((char*)&fileH,sizeof(fileH));
         headers.append(name.toUtf8());
+        headers.append(hash);
         broken = false;
     }else{
         filetype = Broken;
@@ -38,8 +40,8 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
     }
     mode = true;
 }
-FileHansz::FileHansz(const QDir &stdDir,MngRecvFileSocket*par):
-    stdDir(stdDir),socketParent(par){
+FileHansz::FileHansz(const QDir &stdDir):
+    stdDir(stdDir){
     mode = false;
 }
 
@@ -57,6 +59,9 @@ int FileHansz::addData(const QByteArray &buffer, bool isLastPackage){
     }
     if(isLastPackage){
         file.close();
+        if(hash != fileChecksum(file.fileName())){
+            emit fileTransmissionCorrupted();
+        }
     }
 }
 FileHansz::~FileHansz(){
@@ -68,7 +73,8 @@ void FileHansz::refactorHeaders(){
     fileSize = header->fileLen;
     stringSize = header->strLen;
     name = QString(QByteArray((char*)header+sizeof(File_Header),header->strLen));
-    file.setFileName(stdDir.absoluteFilePath(name));
+    hash = QByteArray((char*)header+sizeof(File_Header)+header->strLen,16);
+    file.setFileName(stdDir.absoluteFilePath(QString(hash)));
     file.open(QIODevice::WriteOnly);
 }
 }

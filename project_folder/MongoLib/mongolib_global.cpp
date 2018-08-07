@@ -54,3 +54,17 @@ QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm h
     }
     return QByteArray();
 }
+
+QString byteArrayToBase32(const QByteArray &array){
+    QString returnValue;
+    quint64 *temporary  = (quint64*)array.data();
+    returnValue += QString::number(*temporary,32);
+    temporary = temporary+64;
+    returnValue += QString::number(*temporary,32);
+    temporary = temporary+64;
+    returnValue += QString::number(*temporary,32);
+    temporary = temporary+64;
+    returnValue += QString::number(*temporary,32);
+    return returnValue;
+
+}

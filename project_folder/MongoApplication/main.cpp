@@ -33,25 +33,22 @@ int main(int argc, char *argv[])
     managerOne.createConnection(QHostAddress(QHostAddress::LocalHost),PORTTWO);
     //works theoretically, for messages with less payload than 0xFFFF
     srand(time(NULL));
-//    for(int i = 0; i < 10; i++){
-//        quint16 port = (rand()%65500)+35;
-//        QString schtring = QString::number(port); // TODO: add blocking while instruction is sent
-//        managerOne.enqueueInstruction(Mongo::Instructions::Chat,0,QByteArray(schtring.toUtf8()));
-//    }
+    for(int i = 0; i < 10; i++){
+        quint16 port = (rand()%65500)+35;
+        QString schtring = QString::number(port); // TODO: add blocking while instruction is sent
+        managerOne.enqueueInstruction(Mongo::Instructions::Chat,0,QByteArray(schtring.toUtf8()));
+    }
     QFile file(TESTFILE);
     if(file.exists()){
-//        std::cout << "FILE EXISTS\n";
         fManagerOne.setConnectionProperties(QHostAddress(QHostAddress::LocalHost),PORTFOUR);
         fManagerOne.enqueueFile(&file,Mongo::Filetype::Picture);
-//        std::cout << "Hallelujah\n";
     }
-//    std::cout << "Main:: " << file.exists() << "\n";
     file.close();
     QDir directory("D:/container/");
     QStringList list = directory.entryList();
     for(QString &str:list){
         file.setFileName(directory.absoluteFilePath(str));
-        Q_ASSERT(file.exists() == true);
+//        Q_ASSERT(file.exists() == true);
         if(file.open(QIODevice::ReadOnly)){
             fManagerOne.enqueueFile(&file,Mongo::Filetype::Undefined);
             file.close();

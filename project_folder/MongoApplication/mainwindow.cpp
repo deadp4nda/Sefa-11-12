@@ -13,8 +13,16 @@ MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget 
     : QMainWindow(parent),manager(m),fManager(fm)
 {
     label = new QLabel(this);
+    instLabel = new QLabel(this);
+    fileLabel = new QLabel(this);
+
     layout = new QVBoxLayout(this);
+    layout->addWidget(label);
+    layout->addWidget(instLabel);
+    layout->addWidget(fileLabel);
+    setLayout(layout);
     timer = new QTimer(this);
+
     QObject::connect(manager,&Mongo::MngThManager::Message,
                      this,&MainWindow::hanszIn);
     QObject::connect(fManager,&Mongo::MngFileManager::fileReceivingStarted,
@@ -22,6 +30,7 @@ MainWindow::MainWindow(Mongo::MngThManager *m,Mongo::MngFileManager *fm,QWidget 
     QObject::connect(fManager,&Mongo::MngFileManager::remoteConnectionReceived,
                      this,&MainWindow::connectionRecv);
     QObject::connect(timer,&QTimer::timeout,this,&MainWindow::toggleText);
+
     timer->setInterval(750);
     timer->start();
 }
@@ -29,14 +38,17 @@ void MainWindow::toggleText(){
     label->setText((QChar)(qrand()%256));
 }
 void MainWindow::connectionClsd(){
-    label->setText("Conn. Closed");
+    fileLabel->setText("Conn. Closed");
 }
 void MainWindow::connectionRecv(){
-    label->setText("Conn. Recv.");
+    fileLabel->setText("Conn. Recv.");
 }
 MainWindow::~MainWindow()
 {
     delete layout;
+    delete label;
+    delete fileLabel;
+    delete instLabel;
 }
 void MainWindow::hanszIn(Mongo::SafeInstruction hansz){
 //    qDebug() <<"Hansz use_count: " << hansz.use_count();
@@ -47,9 +59,11 @@ void MainWindow::hanszIn(Mongo::SafeInstruction hansz){
 //    qDebug() << "Args: " << hansz->getPassedArguments();
 //    ChryHexdump((char*)hansz->getAllData()->constData(),hansz->getAllData()->size(),stderr);
 //    qDebug() << "Length: " << hansz->getPayload()->size();
-    label->setText(QString(*hansz->getPayload()));
+    instLabel->setText(QString(*hansz->getPayload()));
 }
 
 void MainWindow::fileIn(Mongo::SafeFileHansz hansz){
-    qDebug() << "File Arrived: " << hansz->getName() << " with Type: " << hansz->getFileType();
+    fileLabel->setText("File Arrived: " + hansz->getName() +
+                       " with Type: " + QString::number(hansz->getFileType()) +
+                       " and Name " + hansz->getName());
 }

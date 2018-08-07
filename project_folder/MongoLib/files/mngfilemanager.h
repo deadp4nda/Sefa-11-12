@@ -60,6 +60,7 @@ signals:
     void error(MongolibError);
     void justSent(qint64);
     void justReceived(qint64);
+    void noFilesToSend();
 private:
     QQueue<SafeFileHansz> files;
 

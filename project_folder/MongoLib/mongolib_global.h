@@ -19,7 +19,8 @@ void ChryHexdump(const char *data_buffer, const unsigned int length,const char *
 }
 QByteArray endingOrder();
 QString operator*(const QString & str,qint32 times);
-QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg);
+QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg = QCryptographicHash::Sha3_256);
+QString byteArrayToBase32(const QByteArray &array);
 
 class QFile;
 class QTcpSocket;

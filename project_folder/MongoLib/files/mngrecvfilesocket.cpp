@@ -16,7 +16,7 @@ void MngRecvFileSocket::handleReadyRead(){
     emit justReceived(bufferOfReceived.size());
 //    qDebug() << "Received " << bufferOfReceived.length() << " Bytes";
     if(!current){
-        current = SafeFileHansz(new FileHansz(saveDir, this));
+        current = SafeFileHansz(new FileHansz(saveDir));
         current->addData(bufferOfReceived);
         write(bufferOfReceived);
         flush();

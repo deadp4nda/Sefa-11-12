@@ -29,6 +29,8 @@ private:
     Mongo::MngFileManager *fManager;
     quint8 byte = 0;
     QLabel *label = nullptr;
+    QLabel *instLabel = nullptr;
+    QLabel *fileLabel = nullptr;
 };
 
 #endif // MAINWINDOW_H

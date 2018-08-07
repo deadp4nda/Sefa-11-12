@@ -89,6 +89,9 @@ int MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
     }
 }
 void MngFileManager::updateManager(){
+    if(files.isEmpty()){
+        emit noFilesToSend();
+    }
     if(!files.isEmpty() && foreignHost != QHostAddress::Null && !sendingSocket){
         if(!files.head()->getFile()->exists()){ //next file is invalid
             emit error(FileInvalid);
