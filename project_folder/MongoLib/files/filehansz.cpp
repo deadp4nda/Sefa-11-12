@@ -17,6 +17,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
         File_Header fileH;
         QFileInfo info(file);
 
+        hash = byteArrayToBase32(fileChecksum(file.fileName())).toLatin1();
         name = info.fileName();
         memset(&mongoH,0,sizeof(Mongo_Header));
         memset(&fileH,0,sizeof(File_Header));
@@ -28,6 +29,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
 
         headers.append((char*)&mongoH,sizeof(mongoH));
         headers.append((char*)&fileH,sizeof(fileH));
+        headers.append(hash);
         headers.append(name.toUtf8());
         broken = false;
     }else{
@@ -38,8 +40,8 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
     }
     mode = true;
 }
-FileHansz::FileHansz(const QDir &stdDir,MngRecvFileSocket*par):
-    stdDir(stdDir),socketParent(par){
+FileHansz::FileHansz(const QDir &stdDir):
+    stdDir(stdDir){
     mode = false;
 }
 
@@ -57,18 +59,25 @@ int FileHansz::addData(const QByteArray &buffer, bool isLastPackage){
     }
     if(isLastPackage){
         file.close();
+        if(hash != fileChecksum(file.fileName())){
+            emit fileTransmissionCorrupted();
+        }
     }
 }
 FileHansz::~FileHansz(){
     if(file.isOpen())file.close();
 }
 void FileHansz::refactorHeaders(){
+    //ChryHexdump(headers.data(),headers.size(),"FileHansz::refactorHeaders",stdout);
     File_Header *header = (File_Header*)(headers.data()+sizeof(Mongo_Header));
+    char *rawData = (char*)header;
     filetype = header->filetype;
     fileSize = header->fileLen;
     stringSize = header->strLen;
-    name = QString(QByteArray((char*)header+sizeof(File_Header),header->strLen));
-    file.setFileName(stdDir.absoluteFilePath(name));
+    hashString = QString::fromLocal8Bit(rawData+sizeof(File_Header), FILE_CHECKSUM_LENGTH);
+    //qDebug() << "arrived HashString: " << hashString;
+    name = QString(QByteArray((char*)header+sizeof(File_Header)+FILE_CHECKSUM_LENGTH,header->strLen));
+    file.setFileName(stdDir.absoluteFilePath(hashString));
     file.open(QIODevice::WriteOnly);
 }
 }

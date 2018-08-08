@@ -19,7 +19,8 @@ void ChryHexdump(const char *data_buffer, const unsigned int length,const char *
 }
 QByteArray endingOrder();
 QString operator*(const QString & str,qint32 times);
-QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg);
+QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg = QCryptographicHash::Sha3_256);
+QString MONGOLIBSHARED_EXPORT byteArrayToBase32(const QByteArray &array);
 
 class QFile;
 class QTcpSocket;
@@ -34,7 +35,7 @@ class FileHansz;
 
 typedef std::shared_ptr<QByteArray> SafeByteArray;
 typedef std::shared_ptr<InstructionHansz> SafeInstruction;
-typedef std::shared_ptr<FileHansz> SafeFileHansz ;
+typedef std::shared_ptr<FileHansz> SafeFileHansz;
 
 #define MONGO_TYPE_INIT (0x08U)
 #define MONGO_TYPE_INST (0x10U)
@@ -48,6 +49,8 @@ typedef std::shared_ptr<FileHansz> SafeFileHansz ;
 
 #define MONGO_FILE_INPORT 5235
 #define MONGO_FILE_OUTPORT 5236
+
+#define FILE_CHECKSUM_LENGTH 64
 
 enum Filetype{
     Undefined,

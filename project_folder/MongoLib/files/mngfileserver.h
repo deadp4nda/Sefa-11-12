@@ -4,7 +4,9 @@
 #include <QTcpServer>
 
 namespace Mongo{
+
 class MngRecvFileSocket;
+
 class MngFileServer : public QTcpServer
 {
     Q_OBJECT

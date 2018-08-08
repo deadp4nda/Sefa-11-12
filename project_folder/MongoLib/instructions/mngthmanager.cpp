@@ -23,10 +23,11 @@ MngThManager::MngThManager(quint16 listenPort, QObject *parent):
         serverActive = true;
     }
     timer  = new QTimer(this);
-    timer->start(500);
+    timer->start(10);
     QObject::connect(timer,&QTimer::timeout,this,&MngThManager::updateManager);
 }
 MngThManager::~MngThManager(){
+    timer->stop();
     if(client)
         closeConnection();
     if(serverActive){
@@ -77,8 +78,8 @@ void MngThManager::enqueueInstruction(SafeInstruction inst){
     instructions.enqueue(inst);
 }
 void MngThManager::incomingData(const SafeByteArray buffer){
-    qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes";
-    qDebug() << "Buffer counts: "+QString::number(buffer.use_count())+" Owners";
+    //qDebug() << "Data incoming: "+QString::number(buffer->size())+" Bytes";
+    //qDebug() << "Buffer counts: "+QString::number(buffer.use_count())+" Owners";
     lastingTransmission = SafeInstruction(new InstructionHansz(buffer));
     emit Message(lastingTransmission);
 }

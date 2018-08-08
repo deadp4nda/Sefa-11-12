@@ -9,7 +9,6 @@
 #include <QDir>
 
 #include "mongolib_global.h"
-#include "filehansz.h"
 
 #define STD_TEMP_DIR "/pinkkarriertesclownsfischbatallion/"
 
@@ -17,6 +16,7 @@ namespace Mongo{
 class MngFileServer;
 class MngSendFileSocket;
 class MngRecvFileSocket;
+class FileHansz;
 
 class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
 {
@@ -38,10 +38,10 @@ public:
     void lockServer();
     void setConnectionProperties(QHostAddress foreignHost, quint16 port);
     void forceNewConnection(QHostAddress foreignHost, quint16 port);
-
 public slots:
-    void enqueueFile(SafeFileHansz hansz){files.enqueue(hansz);}
-    void enqueueFile(QFile *file,quint64 type){enqueueFile(SafeFileHansz(new FileHansz(*file,type)));}
+    void activate();
+    void enqueueFile(SafeFileHansz hansz);
+    void enqueueFile(QFile *file,quint64 type);
     void closeOutgoingConnection();
     void closeIncomingConnection();
 signals:
@@ -60,6 +60,7 @@ signals:
     void error(MongolibError);
     void justSent(qint64);
     void justReceived(qint64);
+    void noFilesToSend();
 private:
     QQueue<SafeFileHansz> files;
 
