@@ -19,6 +19,7 @@ void MngRecvFileSocket::handleReadyRead(){
         current = SafeFileHansz(new FileHansz(saveDir));
         current->addData(bufferOfReceived);
         write(bufferOfReceived);
+        //ChryHexdump(bufferOfReceived.data(),bufferOfReceived.length(),"MngRecvSocket::handleReadyRead",stdout);
         flush();
         emit receivingStarted(current);
         return;

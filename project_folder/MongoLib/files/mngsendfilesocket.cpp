@@ -6,16 +6,26 @@ MngSendFileSocket::MngSendFileSocket(const QHostAddress &address, quint16 port,
     QTcpSocket(parent),addr(address),sendingPort(port),saveDir(stdDir){
     connectToHost(address,port);
     waitForConnected();
+    timer = new QTimer(this);
+    timer->setInterval(10);
     connect(this, &MngSendFileSocket::readyRead,
             this, &MngSendFileSocket::handleFinishReadyRead);
     connect(this, &MngSendFileSocket::transmitFile,
             this, &MngSendFileSocket::sendFile);
+    connect(timer, &QTimer::timeout,
+            this, &MngSendFileSocket::sendNextPortion);
+    connect(this, &MngSendFileSocket::startNextShot,
+            this, &MngSendFileSocket::prepareNextShot);
 }
 MngSendFileSocket::~MngSendFileSocket(){
     disconnect(this, &MngSendFileSocket::readyRead,
             this, &MngSendFileSocket::handleFinishReadyRead);
     disconnect(this, &MngSendFileSocket::transmitFile,
             this, &MngSendFileSocket::sendFile);
+    disconnect(timer, &QTimer::timeout,
+            this, &MngSendFileSocket::sendNextPortion);
+    disconnect(this, &MngSendFileSocket::startNextShot,
+            this, &MngSendFileSocket::prepareNextShot);
     if(!transmissionSuccess){
         emit transmissionCancelled();
     }
@@ -30,7 +40,11 @@ SafeFileHansz MngSendFileSocket::getCurrent(){
 void MngSendFileSocket::handleFinishReadyRead(){
     QByteArray bArr = read(bytesAvailable());
     if(bArr == current->getHeaders()){
-        emit transmitFile();
+//        emit transmitFile();
+        file = current->getFile();
+        if(!file->isOpen())
+            file->open(QIODevice::ReadOnly);
+        startNextShot();
     }else if(bArr == endingOrder()){
         transmissionSuccess = true;
         emit transmissionComplete();
@@ -40,7 +54,7 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
     current = hansz;
     emit transmissionStarted(current);
     QByteArray test = current->getHeaders();
-    ChryHexdump(test,(uint)test.size(),"MngSendFileSocket::send",stderr);
+    //ChryHexdump(test,(uint)test.size(),"MngSendFileSocket::send",stderr);
     qint64 written = write(test);
     justWritten(written);
 //    qDebug() << "writing: " << written << " Bytes";
@@ -49,7 +63,7 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
 }
 void MngSendFileSocket::sendFile(){
     QByteArray test;
-    QFile* file = current->getFile();
+    file = current->getFile();
 //    Q_ASSERT(file->exists());
     if(!file->isOpen()){
         file->open(QIODevice::ReadOnly);
@@ -61,5 +75,19 @@ void MngSendFileSocket::sendFile(){
         justWritten(written);
     //    qDebug() << "writing: " << written << " Bytes";
     }
+}
+void MngSendFileSocket::sendNextPortion(){
+    timer->stop();
+    if(file->atEnd()){
+        return;
+    }
+    QByteArray test = file->read(FILE_READ_MAXLENGTH);
+    qint64 written(write(test));
+    justWritten(written);
+    emit startNextShot();
+}
+void MngSendFileSocket::prepareNextShot(){
+    timer->setSingleShot(true);
+    timer->start();
 }
 }

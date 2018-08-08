@@ -2,6 +2,9 @@
 #include "mngsendfilesocket.h"
 #include "mngrecvfilesocket.h"
 #include "mngfileserver.h"
+#include "filehansz.h"
+#include "mongolib_global.h"
+
 
 namespace Mongo{
 MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
@@ -10,7 +13,7 @@ MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
         saveDir.mkpath(saveDir.absolutePath());
     }
     timer = new QTimer(this);
-    timer->setInterval(10);
+    timer->setInterval(500);
     server = new MngFileServer(serverPort,stdDir.absolutePath(),this);
     serverActive = server->isListening();
     if(serverActive)qDebug() << "Server active";
@@ -22,15 +25,18 @@ MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
     QObject::connect(server,&MngFileServer::newConnection,
                      this, &MngFileManager::incomingConnection);
 
-    timer->start();
-    qDebug() << "SIZEOF RECV: " << sizeof(MngRecvFileSocket);
-    qDebug() << "SIZEOF SEND: " << sizeof(MngSendFileSocket);
+    //qDebug() << "SIZEOF RECV: " << sizeof(MngRecvFileSocket);
+    //qDebug() << "SIZEOF SEND: " << sizeof(MngSendFileSocket);
 }
 MngFileManager::~MngFileManager(){
+    timer->stop();
     delete timer;
     delete server;
     closeOutgoingConnection();
     closeIncomingConnection();
+}
+void MngFileManager::activate(){
+    timer->start();
 }
 void MngFileManager::lockServer(){
     server->close();
@@ -48,6 +54,12 @@ void MngFileManager::forceNewConnection(QHostAddress foreignHost, quint16 port){
     files.clear();
     this->foreignHost = foreignHost;
     foreignPort = port;
+}
+void MngFileManager::enqueueFile(QFile *file,quint64 type){
+    enqueueFile(SafeFileHansz(new FileHansz(*file,type)));
+}
+void MngFileManager::enqueueFile(SafeFileHansz hansz){
+    files.enqueue(hansz);
 }
 void MngFileManager::closeOutgoingConnection(){
     if(!sendingSocket){
@@ -99,6 +111,7 @@ void MngFileManager::updateManager(){
             return;
         }
         if(createConnection(foreignHost,foreignPort) == 0){
+            qDebug() << "\nsending next file: " << files.head()->getName() << "\nRemaining: " << files.size() << " Files";
             sendingSocket->send(files.dequeue());
         }
     }

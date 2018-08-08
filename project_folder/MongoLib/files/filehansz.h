@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QTimer>
 #include <QDataStream>
+
 #include "mongolib_global.h"
 
 
@@ -39,6 +40,7 @@ private:
     QDir stdDir;
     QByteArray headers = QByteArray();
     QByteArray hash = QByteArray();
+    QString hashString = QString();
 
     QString name;
     quint64 fileSize = 0;

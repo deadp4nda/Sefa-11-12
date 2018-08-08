@@ -29,8 +29,8 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
 
         headers.append((char*)&mongoH,sizeof(mongoH));
         headers.append((char*)&fileH,sizeof(fileH));
-        headers.append(name.toUtf8());
         headers.append(hash);
+        headers.append(name.toUtf8());
         broken = false;
     }else{
         filetype = Broken;
@@ -68,13 +68,16 @@ FileHansz::~FileHansz(){
     if(file.isOpen())file.close();
 }
 void FileHansz::refactorHeaders(){
+    //ChryHexdump(headers.data(),headers.size(),"FileHansz::refactorHeaders",stdout);
     File_Header *header = (File_Header*)(headers.data()+sizeof(Mongo_Header));
+    char *rawData = (char*)header;
     filetype = header->filetype;
     fileSize = header->fileLen;
     stringSize = header->strLen;
-    name = QString(QByteArray((char*)header+sizeof(File_Header),header->strLen));
-    hash = QByteArray((char*)header+sizeof(File_Header)+header->strLen,16);
-    file.setFileName(stdDir.absoluteFilePath(QString(hash)));
+    hashString = QString::fromLocal8Bit(rawData+sizeof(File_Header), FILE_CHECKSUM_LENGTH);
+    //qDebug() << "arrived HashString: " << hashString;
+    name = QString(QByteArray((char*)header+sizeof(File_Header)+FILE_CHECKSUM_LENGTH,header->strLen));
+    file.setFileName(stdDir.absoluteFilePath(hashString));
     file.open(QIODevice::WriteOnly);
 }
 }
