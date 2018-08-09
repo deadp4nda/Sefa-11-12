@@ -14,7 +14,7 @@
 namespace Mongo {
 class MngFileSocket;
 class MngRecvFileSocket;
-class MONGOLIBSHARED_EXPORT FileHansz: public QObject{
+class /*MONGOLIBSHARED_EXPORT*/ FileHansz: public QObject{
     Q_OBJECT
 public:
     FileHansz(const QFile& file,quint64 filetype);

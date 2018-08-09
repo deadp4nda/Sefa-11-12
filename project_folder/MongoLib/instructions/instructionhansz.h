@@ -7,7 +7,7 @@
 #define HEADERSIZE (sizeof(Mongo_Header)+sizeof(Instruction_Header))
 
 namespace Mongo {
-class MONGOLIBSHARED_EXPORT InstructionHansz{
+class /*MONGOLIBSHARED_EXPORT*/ InstructionHansz{
 public:
     InstructionHansz(const SafeByteArray input);
     InstructionHansz(quint32 instr,quint32 toPrgm = Program::This,quint32 args = 0,

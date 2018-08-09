@@ -11,6 +11,8 @@ QT       -= gui
 TARGET = MongoLib
 TEMPLATE = lib
 
+CONFIG += staticlib
+
 DEFINES += MONGOLIB_LIBRARY
 
 # The following define makes your compiler emit warnings if you use

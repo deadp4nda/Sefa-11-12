@@ -18,7 +18,7 @@ class MngSendFileSocket;
 class MngRecvFileSocket;
 class FileHansz;
 
-class MONGOLIBSHARED_EXPORT MngFileManager: public QObject
+class /*MONGOLIBSHARED_EXPORT*/ MngFileManager: public QObject
 {
     Q_OBJECT
     enum MongolibError{

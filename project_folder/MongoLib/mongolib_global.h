@@ -3,11 +3,11 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(MONGOLIB_LIBRARY)
-#  define MONGOLIBSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define MONGOLIBSHARED_EXPORT Q_DECL_IMPORT
-#endif
+//#if defined(MONGOLIB_LIBRARY)
+//#  define MONGOLIBSHARED_EXPORT Q_DECL_EXPORT
+//#else
+//#  define MONGOLIBSHARED_EXPORT Q_DECL_IMPORT
+//#endif
 #include <QTcpSocket>
 #include <QTcpServer>
 #include <memory>
@@ -20,7 +20,7 @@ void ChryHexdump(const char *data_buffer, const unsigned int length,const char *
 QByteArray endingOrder();
 QString operator*(const QString & str,qint32 times);
 QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlg = QCryptographicHash::Sha3_256);
-QString MONGOLIBSHARED_EXPORT byteArrayToBase32(const QByteArray &array);
+QString /*MONGOLIBSHARED_EXPORT*/ byteArrayToBase32(const QByteArray &array);
 
 class QFile;
 class QTcpSocket;
@@ -75,13 +75,13 @@ enum Program{
     This,
     InvalidPrgm     //reserved for invalid transfers
 };
-struct MONGOLIBSHARED_EXPORT Mongo_Header{
+struct /*MONGOLIBSHARED_EXPORT*/ Mongo_Header{
 #define MONGOHEADER_SIZE (9)
     quint64 mng_type;        //type of data(instruction/file/welcome/etc...)
     quint64 payload;        //size of whole transmission
 };
 
-struct MONGOLIBSHARED_EXPORT Instruction_Header{
+struct /*MONGOLIBSHARED_EXPORT*/ Instruction_Header{
 #define INSTRUCTIONHEADER_SIZE (11)
     quint32 exCode;          //instruction code (enum Instructions)
     quint32 args;           //additional arguments
@@ -89,7 +89,7 @@ struct MONGOLIBSHARED_EXPORT Instruction_Header{
     quint32 contLen;        //length of the content
 };
 
-struct MONGOLIBSHARED_EXPORT File_Header{
+struct /*MONGOLIBSHARED_EXPORT*/ File_Header{
 #define FILEHEADER_SIZE (13)
     quint64 filetype;        //type of file, if registered
     quint64 strLen;         //File name length

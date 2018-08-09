@@ -13,7 +13,7 @@ class QTimer;
 namespace Mongo {
 class MongoConnection;
 
-class MONGOLIBSHARED_EXPORT MngThManager: public QObject{
+class /*MONGOLIBSHARED_EXPORT*/ MngThManager: public QObject{
     Q_OBJECT
 public:
     MngThManager(quint16 listenPort = 0,QObject *parent = nullptr);
