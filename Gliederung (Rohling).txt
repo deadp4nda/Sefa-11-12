@@ -14,7 +14,7 @@ Gliederung:
 1.Formulierung unserer Zielstellung
 1.1. Mögliche Anwendungszenarien unserer Arbeit
 1.2. Ansprüche an unser Programm
-1.3. Grobe Struktur der Software
+1.3. Grundlegende Struktur der Software
 
 2.Entwurf und Umsetzung des Netzwerk-Backends
 2.1. Grundlegende Theorie zur Kommunikation in einem Netzwerk
