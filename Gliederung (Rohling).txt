@@ -24,7 +24,7 @@ Gliederung:
 
 3. Zielstellung und Funktion des mit Lua erstellten Programmteils
 3.1. Diskussion zur Relevanz von einer Scriptsprache für unsere Arbeit
-3.2. Verwaltung von Betriebssystemkommunikation zur Funktionserweiterung und Datensätzen zur Rechteverwaltung
+// 3.2. Verwaltung von Betriebssystemkommunikation zur Funktionserweiterung und Datensätzen zur Rechteverwaltung
 3.3. Verarbeitung und Spezifikation der Syntax zur Kommunikation mit dem User
 3.4. Selbstständige Entwicklung einer Scriptsprachenanwendung mit den gestellten Ansprüchen
 
