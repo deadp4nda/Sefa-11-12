@@ -23,7 +23,8 @@ set(LIB_SRC mongolib.h
 			instructions/mngthmanager.h
 			instructions/mngthmanager.cpp
 			instructions/mongoconnection.h
-			instructions/mongoconnection.cpp)
+                        instructions/mongoconnection.cpp
+                        Mongolib)
 			
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Network CONFIG REQUIRED)
