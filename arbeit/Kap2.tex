@@ -1,0 +1,32 @@
+\documentclass[12pt, a4paper]{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+\section{Entwurf und Umsetzung der Netzwerk-Kommunikations-Schnittstelle}
+\subsection{Grundlegende Theorie zur Kommunikation in einem Netzwerk}
+Unter dem Begriff Netzwerk im Zusammenhang mit dieser Arbeit wird, sofern es nicht ausdrücklich anders definiert ist, die Ansammlung mehrerer, untereinander verbundener Computer verstanden.
+Diese haben die Möglichkeit nach Internet-Standards miteinander zu kommunizieren.
+Das umfasst das ISO/OSI Modell der Netzwerkkommunikation, auf dem auch die Arbeitsweise unseres Programmes aufbaut.
+Kommunikation in so einem Netzwerk basiert auf dem verschicken von kleinen Informationseinheiten, genannt \textit{Paket}, welche mit verschiedenen Steuerungsinformationen versehen werden, welche vor das Paket gehängt werden, in einem Segment, das \textit{Header} heißt, um an ihr Ziel zu gelangen.
+Zu diesem Zweck besitzt jeder Computer bestimmte Adressen, die in den Header des zu verschickenden Pakets am Ausgangspunkt geschrieben werden, um am Ziel anzukommen.
+Dabei kann man diesen Prozess und die verwendeten Informationen in Schichten einteilen, welche nach der Abstraktion von Nullen und Einsen in einem Kabel bis hin zu z.B. verschiedensten Verschlüsselungsprotokollen oder Websites eingeteilt werden; was in unteren Schichten abgesichert ist, muss in denen darüber nicht implementiert werden, was wiederum zu relativ einfachen einzelnen Algorithmen zur Kommunikation führt, obwohl das gesamte System überaus komplex ist.
+\subsection{Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls}
+Unser Programm soll am Ende einen Kommunikationskanal zwischen einem Start- und einem Zielrechner aufbauen. 
+Zwischen den Rechnern sollen bestimmte Anweisungen, z. B. zum Speichern oder Abrufen von Dateien oder dem Ausführen bestimmter Programme hin und her gesendet werden können; außerdem soll dasselbe mit beliebigen Dateien direkt möglich sein.
+Um dieses Ziel zu erreichen muss:
+\begin{itemize}
+\item ein gesicherter Transport von beliebigen Daten möglich sein,
+\item eine verschlüsselte Kommunikation vorliegen
+\item der Datenverkehr für Anweisungen so klein wie möglich sein
+\item der Kommunikationskanal in beide Richtungen gleich flexibel sein und
+\item die Übertragung auch von größeren Dateien mit zusätzlichen Informationen fehlerfrei ablaufen
+\end{itemize}
+Diese Bedingungen implizieren bereits, dass eine bestimmte Regelung und einen Ablauf für die Kommunikation zwischen den beiden Computern geben muss: ein Protokoll.\par
+Alle oben genannten Anforderungen müssen durch dieses Protokoll erfüllt und geregelt sein; daher umfasst es sowohl einen bestimmten Datensatz, der in den Header eines Paketes geschrieben wird als auch einen bestimmten Ablauf, der sicherstellt, dass alle Daten korrekt angekommen sind und verarbeitet wurden.\par 
+Um nicht ebenfalls für die sichere Ankunft der Daten sorgen zu müssen, baut das Protokoll auf TCP/IP auf, also der Transportschicht des ISO/OSI-Modells, auf der bereits genau das implementiert und standardisiert ist - praktisch ist dieses Protokoll also auf der Anwendungsschicht des Modells.
+
+\subsection{Funktionsumfang der selbstgeschriebenen Klassenbibliothek}
+\subsection{Implementierung und Funktionsweise der Klassenbibliothek}
+
+\end{document}
