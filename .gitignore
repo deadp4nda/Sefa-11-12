@@ -45,3 +45,4 @@ build-*/
 *.log
 *.synctex.gz
 *.aux
+*.toc
