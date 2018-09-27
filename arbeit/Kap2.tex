@@ -115,7 +115,13 @@ Am Zielcomputer wird die Datei schließlich in einem temporären Standardverzeic
 Ist die Übertragung beendet, wird ein Signal ausgesendet und die Verbindung getrennt.
 \subsection{Funktionsumfang der selbstgeschriebenen Klassenbibliothek}
 Die Implementierung des zuvor beschriebenen Protokollstandards stellt auf der obersten Ebene zwei Hauptklassen bereit; eine für Anwendungen und die andere für Dateien.
-Beide arbeiten so, dass zunächst eine Verbindung spezifiziert werden muss mit IP und (optional) einem TCP-Port.
+Außerdem existieren zwei Klassen um Dateien und Anweisungen zu speichern und verwalten: FileHansz für Dateien und InstructionHansz für Anweisungen.
+Beide arbeiten so, dass zunächst eine Verbindung spezifiziert werden muss mit einer IP beliebiger Version und (optional) einem TCP-Port.
+Nach der Initialisierung durch die IP bzw. die Ports wird eine Verbindung zu einem entsprechenden Gegenstück aufgebaut und bei Erfolg bzw. Misserfolg ein Signal ausgesendet, das von dem Anwendungsprogrammierer behandelt werden kann.
+Steht die Verbindung kann man relativ unkompliziert entweder eine der Speicherklassen oder die Informationen einer Anweisungen bzw. ein Dateiobjekt übergeben, das an das entsprechende Ziel gesendet werden soll, was dann auch ausgeführt wird, ohne weitere Interaktion oder Einstellungen von außen zu erhalten.
+Bei bestimmten Ereignissen(Verbindung aufgebaut, Verbindung getrennt, Dateiübertragung begonnen, Dateiübertragung beendet etc.) werden wieder Signale ausgesendet, die im Falle einer erfolgreich abgeschlossenen Übertragung auch einen Zeiger auf das entsprechende Speicherobjekt hat, welches dann weiter im Programm verwendet werden kann.
+Außerdem wird, im Falle einer Datei, in regelmäßigen Abständen die hereingekommenen bzw. ausgesendeten Daten in Bytes ausgesendet um einen Fortschritt bestimmen zu können.
+Damit bietet die Bibliothek eine gute Modularität und eine einfache Anbindung an weiter Programme, was das Projekt an sich vereinfacht.
 \subsection{Implementierung und Funktionsweise der Klassenbibliothek}
 
 %\end{document}
