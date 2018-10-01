@@ -1,4 +1,0 @@
-\select@language {german}
-\beamer@sectionintoc {1}{Technische Grundlagen des Projektes}{3}{0}{1}
-\beamer@sectionintoc {2}{Beschreibung und Zielstellung unserer Arbeit}{4}{0}{2}
-\beamer@sectionintoc {3}{Zielstellung f\IeC {\"u}r Klasse 12}{9}{0}{3}
