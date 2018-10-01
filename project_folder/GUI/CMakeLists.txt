@@ -9,6 +9,8 @@ set(GUI_SRC main.cpp
             achim.h
             achim.cpp)
 
+set(GUI_UI achim.ui)
+
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Gui CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
@@ -19,8 +21,7 @@ get_target_property(QtWidgets_location Qt5::Widgets LOCATION)
 
 include_directories(${CMAKE_SOURCE_DIR}/MongoLibrary)
 
-
-add_executable(GenUnIn ${GUI_SRC})
+add_executable(GenUnIn ${GUI_SRC} ${GUI_UI})
 
 set(CMAKE_EXE_LINKER_FLAGS " -static")
 target_link_libraries(GenUnIn Qt5::Core)
@@ -28,5 +29,3 @@ target_link_libraries(GenUnIn Qt5::Gui)
 target_link_libraries(GenUnIn Qt5::Widgets)
 target_link_libraries(GenUnIn MongoLibrary)
 target_link_libraries(GenUnIn -static-libgcc -static-libstdc++)
-
-install(TARGETS GenUnIn RUNTIME DESTINATION bin)

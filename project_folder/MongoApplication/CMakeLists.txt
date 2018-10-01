@@ -25,5 +25,3 @@ target_link_libraries(MongoApplication Qt5::Gui)
 target_link_libraries(MongoApplication Qt5::Widgets)
 target_link_libraries(MongoApplication MongoLibrary)
 target_link_libraries(MongoApplication -static-libgcc -static-libstdc++)
-
-install(TARGETS MongoApplication RUNTIME DESTINATION bin)
