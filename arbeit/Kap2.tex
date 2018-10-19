@@ -113,6 +113,7 @@ Ist die Verbindung verifiziert, wird mit der eigentlichen Übertragung der Datei
 Das funktioniert, da unser Standard auf TCP/IP aufbaut, welche bereits für die korrekte Ankunft innerhalb einer Verbindung sorgen.
 Am Zielcomputer wird die Datei schließlich in einem temporären Standardverzeichnis abgespeichert und zusammengesetzt.
 Ist die Übertragung beendet, wird ein Signal ausgesendet und die Verbindung getrennt.
+
 \subsection{Funktionsumfang der selbstgeschriebenen Klassenbibliothek}
 Die Implementierung des zuvor beschriebenen Protokollstandards stellt auf der obersten Ebene zwei Hauptklassen bereit; eine für Anwendungen und die andere für Dateien.
 Außerdem existieren zwei Klassen um Dateien und Anweisungen zu speichern und verwalten: FileHansz für Dateien und InstructionHansz für Anweisungen.
@@ -122,6 +123,10 @@ Steht die Verbindung kann man relativ unkompliziert entweder eine der Speicherkl
 Bei bestimmten Ereignissen(Verbindung aufgebaut, Verbindung getrennt, Dateiübertragung begonnen, Dateiübertragung beendet etc.) werden wieder Signale ausgesendet, die im Falle einer erfolgreich abgeschlossenen Übertragung auch einen Zeiger auf das entsprechende Speicherobjekt hat, welches dann weiter im Programm verwendet werden kann.
 Außerdem wird, im Falle einer Datei, in regelmäßigen Abständen die hereingekommenen bzw. ausgesendeten Daten in Bytes ausgesendet um einen Fortschritt bestimmen zu können.
 Damit bietet die Bibliothek eine gute Modularität und eine einfache Anbindung an weiter Programme, was das Projekt an sich vereinfacht.
+
 \subsection{Implementierung und Funktionsweise der Klassenbibliothek}
+In der Bibliothek sind neben den beiden oben beschriebenen Manager-Klassen mehrere andere Klassen definiert, welche von den jeweiligen Manager-Klassen aus aufgerufen und benutzt werden.
+Außerdem gibt es eine von allen Klassen benutzte Datei, in denen die Datenstrukturen und Datentypen, die in den Header der Pakete geschrieben werden, definiert und einige Funktionen, die häufig gebraucht werden (z.B. String-Vervielfältigung, eine Hexadezimale Ausgabe und eine Funktion zum errechnen einer Dateiprüfsumme) deklariert; die Definition erfolgt in einer zugehörigen Datei.\par
+Der Aufbau der beiden Datentypen, die verschickt werden ähnelt sich bis zu einem gewissen Punkt - so haben beide eine eigene Klasse, in der intern ein Objekt gespeichert und verwaltet wird (\textit{Filehansz} bzw. \textit{InstructionHansz}), sowie andere Klassen zum Verbindungsaufbau und dem Versand: Eine Klasse, die für das Annehmen von hereinkommenden Verbindungen zuständig ist und zwei Socket-Klassen, die sich um Senden bzw. Empfangen von Daten kümmern.
 
 %\end{document}
