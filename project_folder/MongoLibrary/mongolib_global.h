@@ -8,7 +8,7 @@
 //#else
 //#  define MONGOLIBSHARED_EXPORT Q_DECL_IMPORT
 //#endif
-#include <QTcpSocket>
+#include <QSslSocket>
 #include <QTcpServer>
 #include <memory>
 #include <QByteArray>
@@ -23,7 +23,7 @@ QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm h
 QString /*MONGOLIBSHARED_EXPORT*/ byteArrayToBase32(const QByteArray &array);
 
 class QFile;
-class QTcpSocket;
+class QSslSocket;
 class QTcpServer;
 
 namespace Mongo{

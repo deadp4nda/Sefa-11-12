@@ -4,13 +4,13 @@
 #include "mongolib_global.h"
 
 
-#include <QTcpSocket>
+#include <QSslSocket>
 #include <QDir>
 
 class QTimer;
 
 namespace Mongo{
-class MngSendFileSocket : public QTcpSocket
+class MngSendFileSocket : public QSslSocket
 {
     Q_OBJECT
 public:

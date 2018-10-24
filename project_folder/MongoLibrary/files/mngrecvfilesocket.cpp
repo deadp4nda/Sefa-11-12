@@ -3,7 +3,7 @@
 namespace Mongo {
 MngRecvFileSocket::MngRecvFileSocket(qintptr descr,
                                      QString stdDir,
-                                     QObject *parent):QTcpSocket (parent),saveDir(stdDir){
+                                     QObject *parent):QSslSocket (parent),saveDir(stdDir){
     setSocketDescriptor(descr);
     connect(this, &MngRecvFileSocket::readyRead,
             this, &MngRecvFileSocket::handleReadyRead);
@@ -37,7 +37,7 @@ void MngRecvFileSocket::handleReadyRead(){
     }
 }
 MngRecvFileSocket::~MngRecvFileSocket(){
-    if(state() == QTcpSocket::ConnectedState){
+    if(state() == QSslSocket::ConnectedState){
         disconnectFromHost();
         waitForDisconnected(INT_MAX);
     }

@@ -3,9 +3,9 @@
 namespace Mongo {
 MngSendFileSocket::MngSendFileSocket(const QHostAddress &address, quint16 port,
                              QString stdDir, QObject *parent):
-    QTcpSocket(parent),addr(address),sendingPort(port),saveDir(stdDir){
-    connectToHost(address,port);
-    waitForConnected();
+    QSslSocket(parent),addr(address),sendingPort(port),saveDir(stdDir){
+    connectToHostEncrypted(address.toString(),port,QIODevice::ReadWrite,address.protocol());
+    waitForEncrypted();
     timer = new QTimer(this);
     timer->setInterval(10);
     connect(this, &MngSendFileSocket::readyRead,
@@ -29,7 +29,7 @@ MngSendFileSocket::~MngSendFileSocket(){
     if(!transmissionSuccess){
         emit transmissionCancelled();
     }
-    if(state() == QTcpSocket::ConnectedState){
+    if(state() == QSslSocket::ConnectedState){
         disconnectFromHost();
         waitForDisconnected();
     }

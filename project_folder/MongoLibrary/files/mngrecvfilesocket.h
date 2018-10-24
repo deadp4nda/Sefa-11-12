@@ -3,11 +3,11 @@
 
 #include "mongolib_global.h"
 
-#include <QTcpSocket>
+#include <QSslSocket>
 #include <QDir>
 
 namespace Mongo{
-class MngRecvFileSocket : public QTcpSocket
+class MngRecvFileSocket : public QSslSocket
 {
     Q_OBJECT
 public:
