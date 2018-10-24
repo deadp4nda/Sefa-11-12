@@ -90,7 +90,7 @@ Weiterhin ist der Dateiname wichtig, ebenso wie eine Datei-Prüfsumme, mit der b
 Das Headersegment ist daher so aufgebaut, dass zunächst die drei Ganzzahlwerte für Typ, Länge des Dateinamen in Byte und Länge der Prüfsumme in Byte in den Header geschrieben werden. Dann werden Dateinamenslänge und Prüfsumme angehangen und dieses Paket wird an den Zielcomputer übermittelt.\par
 Die Spezifikation sieht also so aus(Abb.\ref{Allgem_Header} und \ref{Datei_Header})\\
 
-\begin{figure}[h] 
+\begin{figure}[h]
 \begin{lstlisting}
 	0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -121,12 +121,25 @@ Beide arbeiten so, dass zunächst eine Verbindung spezifiziert werden muss mit e
 Nach der Initialisierung durch die IP bzw. die Ports wird eine Verbindung zu einem entsprechenden Gegenstück aufgebaut und bei Erfolg bzw. Misserfolg ein Signal ausgesendet, das von dem Anwendungsprogrammierer behandelt werden kann.
 Steht die Verbindung kann man relativ unkompliziert entweder eine der Speicherklassen oder die Informationen einer Anweisungen bzw. ein Dateiobjekt übergeben, das an das entsprechende Ziel gesendet werden soll, was dann auch ausgeführt wird, ohne weitere Interaktion oder Einstellungen von außen zu erhalten.
 Bei bestimmten Ereignissen(Verbindung aufgebaut, Verbindung getrennt, Dateiübertragung begonnen, Dateiübertragung beendet etc.) werden wieder Signale ausgesendet, die im Falle einer erfolgreich abgeschlossenen Übertragung auch einen Zeiger auf das entsprechende Speicherobjekt hat, welches dann weiter im Programm verwendet werden kann.
-Außerdem wird, im Falle einer Datei, in regelmäßigen Abständen die hereingekommenen bzw. ausgesendeten Daten in Bytes ausgesendet um einen Fortschritt bestimmen zu können.
+Außerdem wird, im Falle einer Datei, in regelmäßigen Abständen die hereingekommenen bzw. ausgesendeten Daten in Bytes an die anderen Programmteile weitergegeben um einen Fortschritt bestimmen zu können.
 Damit bietet die Bibliothek eine gute Modularität und eine einfache Anbindung an weiter Programme, was das Projekt an sich vereinfacht.
 
 \subsection{Implementierung und Funktionsweise der Klassenbibliothek}
 In der Bibliothek sind neben den beiden oben beschriebenen Manager-Klassen mehrere andere Klassen definiert, welche von den jeweiligen Manager-Klassen aus aufgerufen und benutzt werden.
-Außerdem gibt es eine von allen Klassen benutzte Datei, in denen die Datenstrukturen und Datentypen, die in den Header der Pakete geschrieben werden, definiert und einige Funktionen, die häufig gebraucht werden (z.B. String-Vervielfältigung, eine Hexadezimale Ausgabe und eine Funktion zum errechnen einer Dateiprüfsumme) deklariert; die Definition erfolgt in einer zugehörigen Datei.\par
-Der Aufbau der beiden Datentypen, die verschickt werden ähnelt sich bis zu einem gewissen Punkt - so haben beide eine eigene Klasse, in der intern ein Objekt gespeichert und verwaltet wird (\textit{Filehansz} bzw. \textit{InstructionHansz}), sowie andere Klassen zum Verbindungsaufbau und dem Versand: Eine Klasse, die für das Annehmen von hereinkommenden Verbindungen zuständig ist und zwei Socket-Klassen, die sich um Senden bzw. Empfangen von Daten kümmern.
-
+Außerdem gibt es eine von allen Klassen benutzte Datei, in denen die Datenstrukturen und Datentypen, die in den Header der Pakete geschrieben werden, definiert sind und einige Funktionen, die häufig gebraucht werden (z.B. String-Vervielfältigung, eine Hexadezimale Ausgabe und eine Funktion zum errechnen einer Dateiprüfsumme) deklariert; die Definition erfolgt in einer zugehörigen Datei.\par
+Der Aufbau der Übertragung beider Datentypen, die verschickt werden, ähnelt sich bis zu einem gewissen Punkt - so haben beide eine eigene Klasse, in der intern die Objekte gespeichert sind und verwaltet werden: (\textit{FileHansz} bzw. \textit{InstructionHansz}), sowie andere Klassen zum Verbindungsaufbau und dem Versand: Eine Klasse, die für das Annehmen von hereinkommenden Verbindungen zuständig ist und eine(bei Dateien zwei) Socket-Klassen, die sich um das Senden bzw. Empfangen von Daten kümmern.\\\\
+%Klassendiagramm einfügen
+Die beiden Speicherklassen werden dabei sowohl für den Empfang als auch das Senden eines Objektes genutzt - im ersten Fall werden sie mit den Teildaten(also Anweisungscode und zusätzlichen Argumenten oder Dateiname und Dateityp) initialisiert und erstellen daraus einen Pufferspeicher, der bereits den korrekten Header und das Datenpaket enthält, dessen Inhalt dann nur noch ausgelesen und verschickt werden muss.\par
+Das tatsächliche Versenden, sowie der Verbindungsaufbau wird von einer "`Server"'-Klasse und Socket-Klassen übernommen.
+Dabei horcht die Serverklasse, sowohl für Dateien als auch für Anweisungen auf der Empfangenden Seite auf einem bestimmten Port auf Verbindungen.
+Auf der sendenden Seite wird eine neue Klasse erstellt, welche einen Web-Socket initialisiert und zu der gegebenen Adresse verbindet.
+Ist die Verbindungsanfrage eingegangen, wird eine normale TLS-gesicherte Verbindung aufgebaut, sofern das möglich ist; danach weichen die Abläufe von Dateiversand und Anweisungsübertragung ab: Anweisungen werden jetzt, je nachdem wie sie eingehen, von der Managerklasse an das Socket getaktet weitergeleitet, wo sie dann, inklusive Header und Datenpaket verschickt werden - bei Dateien ist der Ablauf etwas komplexer.\par 
+Dabei muss zunächst erwähnt werden, dass für Dateien, im Gegensatz zu Anweisungen jedes Mal eine neue Verbindung aufgebaut wird.
+In der Verbindung für eine Datei wird, sobald sie aufgebaut ist, zuerst der Header für die Dateiübertragung an den Zielcomputer gesendet(1), welcher genau dasselbe Paket dann zurückschickt(2) um sicherzustellen, dass alle Steuerinformationen korrekt angekommen sind.
+Jetzt wird die eigentliche Übertragung der Datei gestartet, welche mit dem Auslesen eines Datenblockes fester Größe beginnt(3).
+Dieser wird in einen Pufferspeicher geschrieben, der, wenn er voll ist vom Socket ausgelesen und übertragen wird(4); diese Anweisungsfolge(3 und 4) wird jetzt so lange wiederholt, bis das Ende der Datei erreicht ist.
+Der letzte Datenblock enthält meistens weniger als die Maximalgröße, was aber in der Praxis kein Problem ist - das letzte Datenpaket auf der Seite des verschickenden Rechners ist nur etwas kleiner als der Rest.
+Auf der empfangenden Seite werden die ankommenden Datenpakete über ihre Repräsentation als FileHansz-Objekt in eine nach der Datei-Prüfsumme benannten Datei im Dateisystem gespeichert - das verhindert die konkurrierende Benennung von Dateien und vereinfacht das Überprüfen auf korrekte Übertragung; die ursprünglichen Namen werden zu Beginn der Übertragung an das weitere Programm geschickt, welches diese dann weitergehend speichert.
+Sind alle Pakete versandt worden und angekommen, wofür die TCP-basierte Verbindung sorgt, wird vom Empfangenden Rechner eine Bytesequenz übertragen, welche die Erfolgreiche Übertragung kennzeichnet.\par
+Danach wird die Verbindung abgeschlossen und die beiden Sockets gelöscht.\\\\
 %\end{document}
