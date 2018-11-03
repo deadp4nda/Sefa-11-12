@@ -25,12 +25,11 @@ Um dieses Ziel zu erreichen muss:
 \end{itemize}
 Diese Bedingungen implizieren bereits, dass eine bestimmte Regelung und einen Ablauf für die Kommunikation zwischen den beiden Computern geben muss: ein Protokoll.\par
 Alle oben genannten Anforderungen müssen durch dieses Protokoll erfüllt und geregelt sein; daher umfasst es sowohl einen bestimmten Datensatz, der in den Header eines Paketes geschrieben wird als auch einen festgelegten Ablauf der Kommunikation, der sicherstellt, dass alle Daten korrekt angekommen sind und verarbeitet wurden.\par 
-Um nicht ebenfalls für die sichere Ankunft der Daten sorgen zu müssen, baut das Protokoll auf TCP/IP auf (genauer auf dem Protokoll TLS, welches auch eine verschlüsselte Verbindung aufbaut),also der Transportschicht des ISO/OSI-Modells, auf der bereits genau das implementiert und standardisiert ist - praktisch ist dieses Protokoll also auf der Anwendungsschicht des Modells.
-Da das Protokoll sowohl den Versand von Anweisungen als auch den Versand von Dateien kontrollieren muss und dabei so klein wie möglich sein soll, gibt es im Grunde zwei verschiedene Protokolle.
-Trotzdem existieren einige gemeinsame Informationen, namentlich Übertragungstyp und Gesamtgröße, die übertragen werden müssen; so ergibt sich ein dreiteiliger Aufbau der Kommunikation:\par
+Um nicht ebenfalls für die sichere Ankunft der Daten sorgen zu müssen, baut das Protokoll auf TCP/IP auf (genauer auf dem Protokoll TLS, welches auch eine verschlüsselte Verbindung aufbaut), also der Transportschicht des ISO/OSI-Modells, auf der bereits genau das implementiert und standardisiert ist - praktisch ist dieses Protokoll also auf der Anwendungsschicht des Modells.
+Da das Protokoll sowohl den Versand von Anweisungen als auch den Versand von Dateien kontrollieren muss und dabei so klein wie möglich sein soll, gibt es zwei verschiedene Teilprotokolle, welcher in folgendem Aufbau der Kommunikationsstruktur resultiert:\par
 Im ersten Schritt werden zwei Informationen zum Typ der Übertragung, also Anweisung oder Datei, und zu ihrer Gesamtgröße in den Header des ersten Pakets der Übertragung geschrieben.
 Abhängig davon, was der Übertragungstyp ist, wird nun entweder die Informationen für eine Dateiübertragung oder eine Anweisungsübertragung dahinter geschrieben.
-Dabei sind alle Werte als Zahlen nicht als Zeichenketten vorhanden, um die Größe zu optimieren.\par 
+Dabei sind alle Werte, sofern es möglich ist, als Zahlen und nicht als Zeichenketten vorhanden, um die Größe zu minimieren.\par 
 Betrachtet man zunächst den Header für die Anweisungen, so braucht man einen Anweisungscode, der am Zielort eindeutig zu einer Anweisung zugeordnet werden kann; Teil zwei sind Standardargumente, die binär auf 32 Bit Speicherbreite gespeichert werden.
 Dabei soll zum Beispiel, wenn das erste Bit auf eins gesetzt wurde, die Anweisung "Rufe eine Liste der Daten ab, auf die Das Programm Zugriff hat" nur die Ordnerstruktur herüberschicken, ist das zweite Bit auf eins gesetzt soll es zusätzliche Informationen zur Größe der bzw. Zugriffsrechte auf die Dateien mitsenden; dafür wären anderenfalls eigene Anweisungen nötig, was der Übersichtlichkeit bei der Implementierung abträglich wäre.\par 
 Der dritte Wert im Headersegment für die Anweisungen ist eine Zahl, die ein bestimmtes Programm identifiziert.
@@ -40,23 +39,23 @@ Der vierte Wert ist eine Längenangabe in Bytes.
 Er bezeichnet die Länge eines optionalen Argumentes, welches an den Header angehängt werden kann, beispielsweise ein Dateiname oder eine Chat-Nachricht.\par 
 Um die ganze Anweisung klein zu halten darf die Gesamtgröße dieses Headersegments inklusive des optionalen Arguments nicht größer als $2^{16}$ Byte sein.
 Aus Kompatibilitätsgründen mit verschiedenen Compilern und Systemen sind alle Werte Integer mit 32 bzw. 64 Bit Speicherbreite.
-Insgesamt ergibt sich also folgende Spezifikation für die Versendung von Anweisungen(Abb. \ref{Allgem_Header} und \ref{Anweisungs_Header}):\par
+Insgesamt ergibt sich also folgende Spezifikation für die Versendung von Anweisungen(Abb. \ref{Anweisungs_Header}):\par
 
-\begin{figure}[h]
-\begin{lstlisting}
-	0                   1                   2                   3   
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                    Typ der Übertragung                        |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                   Größe der Übertragung                       |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-\end{lstlisting}
-\caption{Allgemeiner Header}
-\label{Allgem_Header}
-\end{figure}
+%\begin{figure}[h]
+%\begin{lstlisting}
+%	0                   1                   2                   3   
+%    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 
+%   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+%   |                    Typ der Übertragung                        |
+%   |                                                               |
+%   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+%   |                   Größe der Übertragung                       |
+%   |                                                               |
+%   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+%\end{lstlisting}
+%\caption{Allgemeiner Header}
+%\label{Allgem_Header}
+%\end{figure}
 
 \newpage
 
@@ -115,14 +114,10 @@ Am Zielcomputer wird die Datei schließlich in einem temporären Standardverzeic
 Ist die Übertragung beendet, wird ein Signal ausgesendet und die Verbindung getrennt.
 
 \subsection{Funktionsumfang der selbstgeschriebenen Klassenbibliothek}
-Die Implementierung des zuvor beschriebenen Protokollstandards stellt auf der obersten Ebene zwei Hauptklassen bereit; eine für Anwendungen und die andere für Dateien.
-Außerdem existieren zwei Klassen um Dateien und Anweisungen zu speichern und verwalten: FileHansz für Dateien und InstructionHansz für Anweisungen.
-Beide arbeiten so, dass zunächst eine Verbindung spezifiziert werden muss mit einer IP beliebiger Version und (optional) einem TCP-Port.
-Nach der Initialisierung durch die IP bzw. die Ports wird eine Verbindung zu einem entsprechenden Gegenstück aufgebaut und bei Erfolg bzw. Misserfolg ein Signal ausgesendet, das von dem Anwendungsprogrammierer behandelt werden kann.
-Steht die Verbindung kann man relativ unkompliziert entweder eine der Speicherklassen oder die Informationen einer Anweisungen bzw. ein Dateiobjekt übergeben, das an das entsprechende Ziel gesendet werden soll, was dann auch ausgeführt wird, ohne weitere Interaktion oder Einstellungen von außen zu erhalten.
-Bei bestimmten Ereignissen(Verbindung aufgebaut, Verbindung getrennt, Dateiübertragung begonnen, Dateiübertragung beendet etc.) werden wieder Signale ausgesendet, die im Falle einer erfolgreich abgeschlossenen Übertragung auch einen Zeiger auf das entsprechende Speicherobjekt hat, welches dann weiter im Programm verwendet werden kann.
-Außerdem wird, im Falle einer Datei, in regelmäßigen Abständen die hereingekommenen bzw. ausgesendeten Daten in Bytes an die anderen Programmteile weitergegeben um einen Fortschritt bestimmen zu können.
-Damit bietet die Bibliothek eine gute Modularität und eine einfache Anbindung an weiter Programme, was das Projekt an sich vereinfacht.
+Die Bibliothek stellt auf oberster Ebene eine Möglichkeit zum Übertragen von Dateien und Anweisungen zu einer bekannten Adresse, welche in angemessener Form codiert sind.
+Das heißt konkret, es werden Methoden bereitgestellt, welche die einzelnen Informationen in das passende Format umwandeln, was zwei Klassen darstellen, die die nötigen Informationen, also z.B. Dateiprüfsummen, Dateinamen, Anweisungen usw., so packen, dass diese dann einfach vom darunterliegenden System verarbeitet werden können.
+Zusätzlich dazu ist natürlich eine entsprechende Fehlerbehandlung bei Verbindungsabbrüchen oder fehlerhaften Übertragungen und die Möglichkeit eine Fortschrittsmeldung bei der Dateiübertragung implementiert.
+Insgesamt muss der Programmierer nur mit zwei Klassen interagieren, um die volle Funktionalität der Bibliothek ausnutzen, was das gesamte Konstrukt sehr gut für weitere Verwendungen in flexiblen Kontexten der Programmierung eignet.
 
 \subsection{Implementierung und Funktionsweise der Klassenbibliothek}
 In der Bibliothek sind neben den beiden oben beschriebenen Manager-Klassen mehrere andere Klassen definiert, welche von den jeweiligen Manager-Klassen aus aufgerufen und benutzt werden.
