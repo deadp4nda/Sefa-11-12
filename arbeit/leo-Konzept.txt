@@ -1,0 +1,47 @@
+Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene
+
+/Entwicklung einer eigenen Scriptsprache zur Anwendungssteuerung
+//Theoretische Grundlagen formaler Sprachen
+	-allgemeines 
+	-vergleich zu "regulären" Sprachen
+	-klassifizierung und nutzen
+
+//Spezifikation unserer Scriptsprache anhand unserer Ansprüche an den Funktionsumfang
+	Notwendigkeit? - Umfeld,Anwendung
+	EBNF?
+	extern (von außen(=^= Nutzer) zugreifbar):
+		-Senden von Dateien
+		-Senden von Anweisungen (spezielle, allgemeine)
+	intern:
+		-Autentifizierung
+		-Status
+
+
+/Implementierung der Anwendungssteuerung in der Scriptsprache Lua
+//Darstellung des grundlegenden Programmaufbaus und Programmablaufs
+	-Eingabeverarbeitung -> Sendefunktionalität -> [Netzwerkprotokoll] -> Eingabeverarbeitung -> Empfangsfunktionalität
+	-> ablaufdiagram, uml diagramm? 
+	-Beschreibung des Funktionsumfangs (Eingabe, Sende, Empfang)
+
+//Ansprüche an die Implementierung und die daraus resultierende Wahl der Programmiersprache
+	-Implementiert: 
+		-Kommunikation zwischen user und netzwerkprotokoll
+			-> Eingabenverarbeitung, organisiert Eingaben, autorisierung, initialisierung, Fehler, Ausgaben
+		-eigendlichen Funktionsumfang 
+			->verschiedene sende modi,  abhängig des Inhalts
+			->Ausführen der übertragenen Anweisungen
+			->Dateimanagment(Speicherung, prüfsummenabgleich, weiterverarbeitung)
+		=> leichte Wartbarkeit (Fehlerbeseitigung, Anpassung der Funktionalität)
+		=> erweiterungsmöglichkeiten, -> zuschnitt auf spezifische anwenung soll möglich sein
+		=> gute einbettungsmöglichkeiten von und in C++ (Netzwerkprotokoll)
+		=> betriebssystemunabhängig, leicht portierar auf neue systeme, ohne großen aufwand(-> programmumgebungen, etc)
+		=> geringer Lernaufwand (begrenzte Zeit)
+
+	-Hintergrund von Lua
+	-Merkmale von Lua
+	-Probleme?
+
+//Erläuterung wesentlicher Elemente der Implementierung
+	-> Parser funktionen -> aufruf der weiterverarbeitungsfunktionen
+	-> exemplarische: sendefunktion als beispiel
+	-> Empfangsfunktion als beispiel
