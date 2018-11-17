@@ -17,12 +17,13 @@ Befehle:
   
  
 Syntax:
-  send ip (file|command) (file_name="string"|command_name="string") [file_type="string"|args="string[]"] [port="int"] [program="string"].
+  //send ip (file|command) (file_name="string"|command_name="string") [file_type="string"|args="string[]"] [port="int"] [program="string"].
+  send_file ip file_name file_type [port]
+  send_comm ip command_name [arguments] [port]
   get ip file_name="string" [file_type="string"] [port="int"].
   open ip file [program_name="string"]
   shutdown ip [mode="string" (reboot, logout,...)] [delay="int"]
-  
---authenticate 
+  authenticate ip 
   
   
 spezifikation:
