@@ -6,7 +6,59 @@ Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene
 	-vergleich zu "regulären" Sprachen
 	-klassifizierung und nutzen
 
+
+	https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.040/Formale_Methoden_der_Informatik/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen_Vorlesung.pdf
+
+	Formulierung von Anweisungen in einer für den Computer verständlicher weise
+	-> grammatik und semantik und syntax wie bei gesprochenen sprachen
+
+	Grammatik -> beschreibung der Sprachen (umgang mit unendlichkeit)
+	G = (N, T, P, s)
+	N - Nichtterminale
+	T - Terminale
+	P - Produktionsregeln
+	s - Startsymbol
+
+	Chomsky
+	typ 0 - allgemein - keine einschränkungen
+
+	Darstellung nach backu naur ()
+
+
+	http://www.informatik.uni-leipzig.de/~der/Vorlesungen/DIV/sprachen.pdf
+
+	verarbeitung von Daten und Informationen -> kommunikation mit nutzer
+
+
 //Spezifikation unserer Scriptsprache anhand unserer Ansprüche an den Funktionsumfang
+	
+	G = (N,T,P,s)
+	
+	N = {S, COMM, IP, Z, H, L, FILEARG, COMMARG, NAME, FLIETYPE, ARG}
+	
+	T = {send_file, send_comm, get, open, shutdown, 0...9, a...z, :, ., " " }
+	
+	P = {
+	S -> COMM IP
+	COMM -> (send_file|send_comm|get|open|shutdown) 
+	IP -> (ZZZ.ZZZ.ZZZ.ZZZ|HHHH:HHHH:HHHH:HHHH)
+	Z -> (0|1|...|9)
+	L -> (a|b|...|z)
+	H -> (Z|(a|b|...|f))
+	send_file -> send_file IP FILEARG
+	send_comm -> send_comm IP COMMARG
+	get -> get IP FILEARG
+	open -> open IP FILEARG NAME
+	shutdowm -> shutdown IP NAME
+	FILEARG -> NAME FILE_TYPE
+	COMMARG -> NAME ARG
+	NAME -> L {L}
+	FILE_TYPE L {L|Z}
+	ARG -> NAME {" " NAME}
+	}
+	
+	s = S
+
 	Notwendigkeit? - Umfeld,Anwendung
 	EBNF?
 	extern (von außen(=^= Nutzer) zugreifbar):
