@@ -8,7 +8,25 @@
 
 \subsection{Entwicklung einer eigenen Scriptsprache zur Anwendungssteuerung}
 \subsubsection{Theoretische Grundlagen formaler Sprachen}
-Wir als Menschen haben die gesprochenen Sprachen entwickelt, um uns untereinander zu verständigen und Informationen auszutauschen. Um Misverständnisse zu vermeiden, folgt unsere Kommunikation strikten Grammatikalischen und Semantischen Regeln. Es werden strukturelle Merkmale wie zum Beispiel die Reihenfolge einzelner Sprachteile festgelegt. Außerdem gibt es einen begrenzten Wortschatz, indem Jedes Wort eine bestimmte Bedeutung hat.  
+Wir als Menschen haben die gesprochenen Sprachen entwickelt, um uns untereinander zu verständigen und Informationen auszutauschen. Um Misverständnisse zu vermeiden, ist unsere Kommunikation durch strikte grammatikalische und semantische Regeln definiert. Es werden strukturelle Merkmale wie zum Beispiel die Reihenfolge einzelner Sprachteile festgelegt, außerdem gibt es einen begrenzten Wortschatz, indem Jedes Wort eine bestimmte Bedeutung hat.
+Um auch Computern Informationen zu übermitteln, um eine maschinelle Verarbeitung dieser zu ermöglichen, benutzt man formale Sprachen. Diese gleichen von den grundlegenden strukturellen Ansprüchen der natürlichen Sprachen, verfügen also auch über eine Syntax und eine Semantik, definieren sich allerdings dadurch, dass diese für einen Rechner eindeutig verständlich sein müssen, und über keinen spracheliche Mittel verfügen, welche Interpretationsfreiraum lassen. Ziel ist es klare Anweisungen in einer für den Computer verständlichen Weise zu übermitteln.\\
+Da Sprachen in der Regel durch das Aneinandereihen von einzelnen Sprachelementen über eine Unendlichkeit verfügen, nutzt man künstliche Grammatiken der Form $G = (N, T, P, s)$, um diese zu beschreiben. Eine Grammatik $G$ dieser Art verfügt über eine Menge von Nichtterminalen $N$, oder auch Variablen genannt, welche im Verlauf der Wortbildung durch die Menge der Produktionsregeln $P$ der Form $U \rightarrow V$ durch eine Kombination aus Terminalen der Menge $T$ ersetzt werden. Das Startsymbol $s$ ist zwingend die erste Nichtterminale, welche durch eine Produktion der Form $s \rightarrow V$ ersetzt wird. Ein Wort gehört einer Grammatik $G$ an, wenn es nurnoch aus Terminalen Symbolen der Menge $T_G$ besteht und ausgehend von dem Startsymbol $S_G$ mit den Produktionen der Menge $P_G$ gebildet werden kann.\footnote{$	https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.040/Formale_Methoden_der_Informatik$\\$/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen_Vorlesung.pdf$
+; 19.11.2018}\\
+Je nachdem, nach welcher Art die Produktionsregeln aufgebaut sind, lässt sich eine formale Sprache nach dem Informatiker Noam Chomsky in vier Typen einteilen. Grundsätzlich gehört jede Sprache dem Typ 0 der allgemeinen Sprachen an. Eine Sprache gehört immer einem Typ $X$ an, wenn alle Bedingungen  der Typen $\leq X$ für alle Produktionsregeln der Form $U \rightarrow V$ erfüllt sind. Die Bedingung für eine kontextsensitive Sprache des Typs 1 besagt, dass durch eine Produktionsregel das Wort nicht verkürt werden kann, als $|U| \leq |V|$. Für eine kontextfreie Sprache des Typs 2 gilt, dass durch eine Produktionsregel nur jeweils ein Nichtterminal ersetzt werden kann, also $|U| = 1$. Eine Sprache ist eine reguläre Sprache des Typs 3, wenn ein Nichtterminal durch eine Produktionsregel entweder durch ein Terminal oder durch ein Terminal und ein Nichtterminal ersetzt wird, jedoch nicht durch mehre Nichtterminale, also $U \leq a|aB$. \footnote{I. Wegener;	Theoretische Informatik; Kap.5}\\
+Um die Darstelung von Sprachen zu vereinheitlichen, wurde die Erweiterte-Backus-Nauer-Form, kurz EBNF entwickelt. Die oben gegebenen Zeichen sind Teil des EBNF Iso Standards und durch sie lässt sich jede beliebige Formale Sprache beschreiben.\\
+\begin{table}[]
+\begin{tabular}{|ll|ll|}
+\hline
+Verwendung                    & Zeichen   & Verwendung                    & Zeichen \\ \hline
+Definition                    & =         & Aufzählung                    & ,       \\
+Endezeichen                   & ;         & Alternative                   & |       \\
+Option                        & {[}...{]} & Optionale Wiederholung        & \{...\} \\
+Gruppierung                   & (....)    & Anführungszeichen 1. Variante & "..."   \\
+Anführungszeichen 2. Variante & '...'     & Kommntar                      & (*...*) \\
+Spezielle Sequenz             & ?...?     & Ausnahme                      & -       \\ \hline
+\end{tabular}
+\end{table}
+ 
 \subsubsection{Spezifikation unserer Scriptsprache anhand unserer Ansprüche an den Funktionsumfang}
 
 \subsection{Implementierung der Anwendungssteuerung in der Scriptsprache Lua}

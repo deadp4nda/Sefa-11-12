@@ -19,6 +19,8 @@ Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene
 	P - Produktionsregeln
 	s - Startsymbol
 
+
+	Theoretische Informatik von I. Wegener Kap.5
 	Chomsky
 	typ 0 - allgemein - keine einschränkungen
 
