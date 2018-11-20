@@ -21,7 +21,7 @@ Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene
 
 
 	Theoretische Informatik von I. Wegener Kap.5
-	Chomsky
+ 	Chomsky
 	typ 0 - allgemein - keine einschränkungen
 
 	Darstellung nach backu naur ()
@@ -33,6 +33,14 @@ Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene
 
 
 //Spezifikation unserer Scriptsprache anhand unserer Ansprüche an den Funktionsumfang
+
+	send_file ip file_name file_type [port]
+  	send_comm ip command_name [arguments] [port]
+  	get ip file_name="string" [file_type="string"] [port="int"].
+  	open ip file [program_name="string"]
+  	shutdown ip [mode="string" (reboot, logout,...)] [delay="int"]
+	authenticate ip 
+
 	
 	G = (N,T,P,s)
 	

@@ -12,7 +12,7 @@ Wir als Menschen haben die gesprochenen Sprachen entwickelt, um uns untereinande
 Um auch Computern Informationen zu übermitteln, um eine maschinelle Verarbeitung dieser zu ermöglichen, benutzt man formale Sprachen. Diese gleichen von den grundlegenden strukturellen Ansprüchen der natürlichen Sprachen, verfügen also auch über eine Syntax und eine Semantik, definieren sich allerdings dadurch, dass diese für einen Rechner eindeutig verständlich sein müssen, und über keinen spracheliche Mittel verfügen, welche Interpretationsfreiraum lassen. Ziel ist es klare Anweisungen in einer für den Computer verständlichen Weise zu übermitteln.\\
 Da Sprachen in der Regel durch das Aneinandereihen von einzelnen Sprachelementen über eine Unendlichkeit verfügen, nutzt man künstliche Grammatiken der Form $G = (N, T, P, s)$, um diese zu beschreiben. Eine Grammatik $G$ dieser Art verfügt über eine Menge von Nichtterminalen $N$, oder auch Variablen genannt, welche im Verlauf der Wortbildung durch die Menge der Produktionsregeln $P$ der Form $U \rightarrow V$ durch eine Kombination aus Terminalen der Menge $T$ ersetzt werden. Das Startsymbol $s$ ist zwingend die erste Nichtterminale, welche durch eine Produktion der Form $s \rightarrow V$ ersetzt wird. Ein Wort gehört einer Grammatik $G$ an, wenn es nurnoch aus Terminalen Symbolen der Menge $T_G$ besteht und ausgehend von dem Startsymbol $S_G$ mit den Produktionen der Menge $P_G$ gebildet werden kann.\footnote{$	https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.040/Formale_Methoden_der_Informatik$\\$/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen_Vorlesung.pdf$
 ; 19.11.2018}\\
-Je nachdem, nach welcher Art die Produktionsregeln aufgebaut sind, lässt sich eine formale Sprache nach dem Informatiker Noam Chomsky in vier Typen einteilen. Grundsätzlich gehört jede Sprache dem Typ 0 der allgemeinen Sprachen an. Eine Sprache gehört immer einem Typ $X$ an, wenn alle Bedingungen  der Typen $\leq X$ für alle Produktionsregeln der Form $U \rightarrow V$ erfüllt sind. Die Bedingung für eine kontextsensitive Sprache des Typs 1 besagt, dass durch eine Produktionsregel das Wort nicht verkürt werden kann, als $|U| \leq |V|$. Für eine kontextfreie Sprache des Typs 2 gilt, dass durch eine Produktionsregel nur jeweils ein Nichtterminal ersetzt werden kann, also $|U| = 1$. Eine Sprache ist eine reguläre Sprache des Typs 3, wenn ein Nichtterminal durch eine Produktionsregel entweder durch ein Terminal oder durch ein Terminal und ein Nichtterminal ersetzt wird, jedoch nicht durch mehre Nichtterminale, also $U \leq a|aB$. \footnote{I. Wegener;	Theoretische Informatik; Kap.5}\\
+Je nachdem, nach welcher Art die Produktionsregeln aufgebaut sind, lässt sich eine formale Sprache nach dem Informatiker Noam Chomsky in vier Typen einteilen. Grundsätzlich gehört jede Sprache dem Typ 0 der allgemeinen Sprachen an. Eine Sprache gehört immer einem Typ $X$ an, wenn alle Bedingungen  der Typen $\leq X$ für alle Produktionsregeln der Form $U \rightarrow V$ erfüllt sind. Die Bedingung für eine kontextsensitive Sprache des Typs 1 besagt, dass durch eine Produktionsregel das Wort nicht verkürt werden kann, als $|U| \leq |V|$. Für eine kontextfreie Sprache des Typs 2 gilt, dass durch eine Produktionsregel nur jeweils ein Nichtterminal ersetzt werden kann, also $|U| = 1$. Eine Sprache ist eine reguläre Sprache des Typs 3, wenn ein Nichtterminal durch eine Produktionsregel entweder durch ein Terminal oder durch ein Terminal und ein Nichtterminal ersetzt wird, jedoch nicht durch mehre, also $U \leq a|aB$. \footnote{I. Wegener;	Theoretische Informatik; Kap.5}\\
 Um die Darstelung von Sprachen zu vereinheitlichen, wurde die Erweiterte-Backus-Nauer-Form, kurz EBNF entwickelt. Die oben gegebenen Zeichen sind Teil des EBNF Iso Standards und durch sie lässt sich jede beliebige Formale Sprache beschreiben.\\
 \begin{table}[]
 \begin{tabular}{|ll|ll|}
@@ -28,7 +28,25 @@ Spezielle Sequenz             & ?...?     & Ausnahme                      & -   
 \end{table}
  
 \subsubsection{Spezifikation unserer Scriptsprache anhand unserer Ansprüche an den Funktionsumfang}
+Für unser Programm haben wir uns grundlegend vorgenommen, Funktionen für das Versenden von Dateien, sowie Befehlen an einen zweiten PC bereitzustellen. Es erfordert also in gewissem Maßen eine Kommunikation zwischen dem Nutzer und dem Programm, um die Wünsche des Bedieners genauer zu spezifizieren und der Software zu übermitteln. Um dies zu bewerkstelligen entschieden wir uns, eine eigene formale Sprache zu entwickeln, mit dem Ziel Befehle an das Programm und den entsprechenden Argumenten zu übermitteln, welche über ein Konsolenfenster eigegeben wird.
+Unsere Sprache sollte Folgende Anweisungen beinhalten:\\
+\begin{table}[h!]
+\centering
+\begin{tabular}{|ll|}
+\hline
+Befehl & Argumente \\ \hline
+send\_file & ip\_address file\_name file\_type \\
+send\_comm & ip\_address comm\_name {[}arguments{]} \\
+get\_file & ip\_address file\_name file\_type \\
+shutdown & ip\_address \\
+open & ip\_address file\_name file\_type \\ \hline
+\end{tabular}
+\end{table}\\
+Die Befehle $send\_file$ und $send\_comm$ sind hierbei die allgemeinen Funktionen zum Senden einer Datei oder eines Befehls an die betriebssystemeigene Kommandozeile jeglicher Art. Das Kommando $get\_file$ ist identisch mit $send\_file$ mit dem Unterschied, dass eine Datei von dem angefragten PC auf den anfragenden übertragen werden soll.
+$shutdown$ und $open$ sind spezielle versendete Anweisungen, zum Herunterfahren des Zielpcs und Öffnen einer Datei, bei denen wir es aufgrund ihrer frequentierten Nutzung für sinnvoll hielten, sie eigenständig in unsere formale Sprache zu integrieren. Zwangsweise muss mit jeder getätigten Anweisung an das Programm eine IP-Adresse des Empfängercomputers der Form IPv4 oder IPv6 als Argument übergeben werden. Zusätzlich für Befehle welche mit Dateien arbeiten sollen, müssen sowohl der Dateiname als auch das Dateiformat als Zeichenkette angefügt werden. Die Übermittlungsfunktion von Anweisungen benötigt neben dem Anweisungsnamen als Zeichenkette auch optional Argumente, mit welchem die Anweisung in der Kommandozeile ausgeführt werden soll.\\
+Um unsere formale Sprache zu implemntieren, entwickelten wir zuerst eine Darstellung der Eweiterten-Backus-Nauer-Form, diese ist im Anhang einzusehen. Einse solche Darstellung hat den Vorteil einer unkompliezierten Übertragung der Produktionsregeln in die Überprüfung der Eingaben der Implementierung.
 
+\newpage
 \subsection{Implementierung der Anwendungssteuerung in der Scriptsprache Lua}
 
 \subsubsection{Darstellung des grundlegenden Programmaufbaus und Programmablaufs}
@@ -47,6 +65,6 @@ Als Kompromiss zwischen allen beschriebenen Ansprüchen entschieden wir uns für
 
 
 \subsubsection{Erläuterung wesentlicher Elemente der Implementierung}
-
+\newpage
 
 \end{document}
