@@ -3,6 +3,11 @@
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+
+\newcommand{\glsref}[1]{\textit{\textbf{#1}}}
 
 \lstset{
 	basicstyle=\small,
@@ -11,13 +16,16 @@
 }
 
 \begin{document}
-\title{Entwicklung und Implementierung eines Netzwerkprotokolls zur bidirektionalen Kommunikation und Steuerung unter Zuhilfenahme einer selbstentwickelten Sprache zur Eingabe von Befehlen}
+\title{Entwicklung und Implementierung eines Netzwerkprotokolls zur bidirektionalen Kommunikation und Steuerung unter Zuhilfenahme einer selbstentwickelten Sprache zur Programmsteuerung}
 \author{Jan Sommerfeld Leonard Petereit Benedikt Schäfer}
 \maketitle
 \tableofcontents
 \newpage
 
-
-
 \input{Kap2}
+
+\newpage
+
+\input{anhang}
+
 \end{document}
