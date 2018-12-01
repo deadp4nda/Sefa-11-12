@@ -3,6 +3,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 
+\usepackage{listings}
+
 \begin{document}
 \section{Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene}
 
@@ -46,7 +48,6 @@ Die Befehle $send\_file$ und $send\_comm$ sind hierbei die allgemeinen Funktione
 $shutdown$ und $open$ sind spezielle versendete Anweisungen, zum Herunterfahren des Zielpcs und Öffnen einer Datei, bei denen wir es aufgrund ihrer frequentierten Nutzung für sinnvoll hielten, sie eigenständig in unsere formale Sprache zu integrieren. Zwangsweise muss mit jeder getätigten Anweisung an das Programm eine IP-Adresse des Empfängercomputers der Form IPv4 oder IPv6 als Argument übergeben werden. Zusätzlich für Befehle welche mit Dateien arbeiten sollen, müssen sowohl der Dateiname als auch das Dateiformat als Zeichenkette angefügt werden. Die Übermittlungsfunktion von Anweisungen benötigt neben dem Anweisungsnamen als Zeichenkette auch optional Argumente, mit welchem die Anweisung in der Kommandozeile ausgeführt werden soll.\\
 Um unsere formale Sprache zu implemntieren, entwickelten wir zuerst eine Darstellung der Eweiterten-Backus-Nauer-Form, diese ist im Anhang einzusehen. Einse solche Darstellung hat den Vorteil einer unkompliezierten Übertragung der Produktionsregeln in die Überprüfung der Eingaben der Implementierung.
 
-\newpage
 \subsection{Implementierung der Anwendungssteuerung in der Scriptsprache Lua}
 
 \subsubsection{Darstellung des grundlegenden Programmaufbaus und Programmablaufs}
@@ -65,6 +66,47 @@ Als Kompromiss zwischen allen beschriebenen Ansprüchen entschieden wir uns für
 
 
 \subsubsection{Erläuterung wesentlicher Elemente der Implementierung}
+Eine zentrale Rolle in der Umsetzung unserer Eingabeverarbeitung spielt die Interpreter Funktion. Ihre Aufgabe besteht daraus, die von dem Nutzer in Form einer Zeichenkette gelieferten Eingabe, in eine für das Programm verständliche Anweisung zu übertragen. Sie ruft außerdem die Funktionen auf, welche die gewünschte Funktionalität implementieren, und übergibt ihnen die eingegebenen Parameter zur weiterführenden Überprüfung.\\
+\begin{lstlisting}[caption = {Interpreter Funktion}]
+function interpret_input(ui_input)
+    local content = split_input(ui_input)
+    local commands = {
+        ["send_file"]=0,
+        ["send_comm"]=0,
+        ["get"]=0,
+        ["open"]=0,
+        ["shutdown"]=0}
+    if commands[content[1]]~=NIL then
+        local result = _G[content[1]](content)
+        print(result)
+    else
+        local name = debug.getinfo(1, "n").name..": "
+        local subject = string.format("%q",content[1])
+        print("ERROR: "..name..subject.." - unbekannter Befehl!")
+    end
+end
+\end{lstlisting}\hfill\\
+Die Variable $content$ ist eine Liste der eingegebenen Wörter, sie wird durch die Funktion $split\_input$ erstellt, welche die rohe eingegebene Zeichenkette an den Leerzeichen teilt, und demnach wortweise abspeichert. In der Liste $commands$ wird der Befehlssatz gespeichert, hierbei wird dem Namen von jedem verfügbaren Befehl ein Wert zugeordnet, es spielt keine Rolle welcher Wert es ist, wichtig ist nur, dass die Variablen initialisiert sind und nicht keinen zugeordneten Wert haben. In der folgenden $If-Else$-Bedingung wird überprüft, ob der eingegebene Befehl teil des Befehlssatzen ist, sprich ob in der Liste $commands$ ein Wert für den gewünschten Befehl vorliegt. Ist dies nicht der Fall, gibt die Funktion einen Fehler der Form $"ERROR: interpret\_content: "EINGABE" - unbekannter Befehl!"$ aus, und es wird keine Übertragung eingeleitet. Wenn die eingegebene Anweisung teil des Befehlssatz ist, so wird die entsprechende Funktion mit den übergebenen Parametern aufgerufen, und das Ergebnis in der Variable $result$ gespeichert. Der Aufruf geschieht durch die Lua-Interne Funktion $.G[STRING](ARGUMENTS)$, welche eine Zeichenkette als Input fordert, und eine Funktion dieses Namens mit den gewünschten Argumenten $ARGUMENTS$ aufruft.\\ Die gewählte Form der Implementierung, dass der Befehlssatz in einer Liste, bestehend aus den Namene der zugehörigen Funktionen, gespeichert ist, ermöglicht eine unkomplizierte Erweiterung der grundlegenden Befehle durch neue Funktionalität, welche möglicherweise spezifischere Ansprüche an das Protokoll fordert, wie zum Beispiel eine Implementierung von Streaming einen ständigen Erhalt der Netzwerkverbindung zwischen den zwei Rechnern benötigen würde. \\
+Die eigendlichen Funktionen sind alle nach einem sehr ähnlichen Schema aufgebaut. Es gibt zwei verschachtelte $If-Else$-Bedingungen die erfüllt werden müssen, um die eigentliche Übertragung Auszulösen. In der ersten wird überprüft, ob die Anzahl der eingegebenen Parameter mit der für den Befehl benötigten übereinstimmt. Ist dies der Fall, so wird eine erste Übertragung mit dem zweck der Autorisierung gestartet. Es wird eine zu bestätigende Anfrage an den Emfänger-PC geschickt, welche standardmäßig nach 10 Sekunden ausläuft. Wenn eine Bestätigung in besagtem Zeitraum stattfinet, so wird die eigentliche Übertragung initialisiert. Schlägt eine der Bedingungen fehl, so wird der Vorgang abgebrochen und eine Fehlermeldung entsprechen der oben dargestellten Form ausgegeben.
+\begin{lstlisting}[caption = {Beispielhafte Sende Funktion}]
+function send_NAME(args)
+local name = debug.getinfo(1, "n").name
+    if get_length(args)==INTEGER then
+        local ARG1 = args[2]
+        ...
+        local ARGN = args[N+1]
+        if authenticate(ip) then
+            local blank = "c_sendNAME(ARG1, ..., ARGN))"
+        else
+        	local type = " - Uebertragung wurde abgelehnt"
+            print("ERROR: "..name..type)
+        end
+    else
+    	local type = " - Argumentenzahl unpassend"
+        print("ERROR: "..name..type)
+    end
+end
+\end{lstlisting}
 \newpage
 
 \end{document}
