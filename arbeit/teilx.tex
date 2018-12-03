@@ -1,0 +1,26 @@
+\section{Die Benutzeroberfläche}
+\subsection{Anforderungen an den Funktionsumfang und das Design}
+Die Benutzeroberfläche soll dem Benutzer ein komfortables Bedienfeld bieten, mit dem er die volle Funktionalität des Programms ausschöpfen kann.
+Dabei wird von einem Nutzer ausgegangen, der so erfahren im Umgang mit Software ist, dass er mit Konsolenbefehlen umgehen kann, sowie genug Ahnung im Umgang mit ferngesteuerten Computern besitzt, dass er mit Befehlen aus der Ferne agieren kann.
+Die Interaktion des Nutzers soll im Aufbau einer Verbindung mit entsprechenden Werten sowie im Ausführen beliebiger in der Software oder Erweiterungen davon implementierten Befehlen bestehen.
+Dazu stellen wir eine gemischte Benutzeroberfläche aus Knöpfen und Eingabefeldern für den Verbindungsaufbau und einem Terminal-ähnlichen Eingabefeld sobald die Verbindung aktionsfähig ist, um möglichst große Freiheit in der Bedienung zu gewährleisten sowie einfache und nicht aufdringliche Rückmeldungen an den Benutzer zu geben.\\
+%Bild?
+Das resultiert in einem Aufbau von mehreren Fenstern, welche jeweils zu unterschiedlichen Zeitpunkten sichtbar sind, und die in (???????) zu sehen sind.
+\section{Zusammenführung der Programmteile}
+\subsection{Begründung der Sprachenwahl Anhand der Anforderungen}
+\subsection{Anforderungen an die Verknüpfung}
+Die Verknüpfung der Einzelteile muss
+\begin{itemize}
+\item den gesamten Funktionsumfang der jeweiligen Schnittstellen ausnutzen
+\item die benutzten Daten ineinander umwandeln
+\item eine schnelle Interaktion sowohl mit dem Nutzer als auch der Module untereinander bereitstellen
+\end{itemize}
+Diese Bedingungen stellen hohe Herausforderungen sowohl an die Performanz der Verbindung sondern auch an die Integrierbarkeit in bereits vorhandene Programmkontexte.
+Da sie im Grunde die interagierende Basis des Programmes ist, ist sie ebenfalls in C++ und Qt geschrieben, und um die Module übersichtlich zu halten direkt an die Benutzeroberfläche angeschlossen, sodass nur zwei weitere Schnittstellen bedient werden müssen.
+Die Eingaben des Nutzers werden immer als Strings aufgenommen, nun aufgeschlüsselt werden müssen, je nachdem, was der Benutzer eingegeben hat.
+Dazu bietet sich Lua mehr als C++ an, weshalb der String an die Skripte weitergeleitet und dort verarbeitet wird.
+Sind Aktionen erforderlich, die nicht direkt vom Skript ausgeführt werden können, sondern innerhalb des Programms einen Aufruf erfordern, werden die entsprechend bereitgestellten Funktionen von einem Skript aus aufgerufen, die Aktion ausgeführt und eventuelle Rückmeldungen an die Konsole gesendet, nachdem sie entweder aus dem Lua-Teil oder der Netzwerkbibliothek aufgenommen und in lesbaren Text umgewandelt wurden.
+Die Verbindungsstelle beinhaltet natürlich auch die Anbindung an die Bibliothek durch zwei Hauptklassen.
+Diese werden im Programmkontext genau wie die Eingabefenster erstellt und verwaltet und modifiziert, bis sie nicht mehr gebraucht werden.
+Die von den Skripten aufgerufenen Funktionen um zum Beispiel eine Datei zu versenden, sind verpackte Aufrufe von Methoden der entsprechenden Klasse durch den Verbindungsteil mit den von Lua übernommenen und umgewandelten Argumenten, also Dateiname und -typ.
+In gleicher Weise werden die Klassen auch mit solchen Argumenten initialisiert oder gelöscht, all diese Aktionen spielen aber weder für den Nutzer noch für die Skripte eine Rolle, ebensowenig wie die Skriptaufrufe oder die Eingabestrings für die Bibliotheksfunktionen wichtig sind - dadurch wird eine sinnvolle Abstraktionsebene geschaffen, die das schreiben der einzelnen Teile vereinfacht.
