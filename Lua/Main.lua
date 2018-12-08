@@ -17,7 +17,6 @@
 
 function interpret_input(ui_input)
     local content = split_input(ui_input)
-    print("debug: interpret - split complete\n")
     local commands = {
         ["send_file"]=0,
         ["send_comm"]=0,
@@ -26,14 +25,11 @@ function interpret_input(ui_input)
         ["shutdown"]=0}
     if commands[content[1]]~=NIL then
         local result = _G[content[1]](content)
-        print("debug: interpret - result complete\n")
-        print(result)
     else
-        local name = debug.getinfo(1, "n").name
-        print("ERROR: "..name..string.format("%q",content[1]).." unbekannter Befehl!")
+        local name = debug.getinfo(1, "n").name..": "
+        local subject = string.format("%q",content[1])
+        print("ERROR: "..name..subject.." - unbekannter Befehl!")
     end
-
-
 end
 
 
@@ -58,6 +54,10 @@ end
 --- COMMANDS ---
 ---
 
+function t_write(str)
+    local blank = "c_call_terminalw(str)"
+end
+
 function get_length(table)
     local i = -1
     for _ in pairs(table) do
@@ -69,18 +69,14 @@ end
 -- Eingabe:
 -- Ausgabe:
 function send_file(args)
-    if get_length(args)==3 then
-        local ip = args[2]
-        local file_name = args[3]
-        local file_type = args[4]
-        if authenticate(ip) then
-            local blank = "c_call_sendfile(filename, filetype, ip))"
-            return "debug: "..debug.getinfo(1, "n").name.." successful"
-        else
-            print("ERROR: "..debug.getinfo(1, "n").name.." Übertragung wurde abgelehnt")
-        end
+    local name = "send_file"
+    if get_length(args)==2 then
+        local file_name = args[2]
+        local file_type = args[3]
+        local blank = "c_call_sendfile(filename, filetype))"
+        return "debug: "..name.." successful"
     else
-        print("ERROR: "..debug.getinfo(1, "n").name.." Argumentenzahl unpassend")
+        print("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -89,19 +85,19 @@ end
 -- Eingabe:
 -- Ausgabe:
 function send_comm(args)
+    local name = "send_comm"
     local argument_number = get_length(args)
-    if argument_number==3 or argument_number==2 then
-        local ip = args[2]
-        local command_name = args[3]
-        local command_arguments = args[4]
-        if authenticate(ip) then
-            local blank = "c_call_sendcomm(ip, commname, [commargs]))"
-            return "debug: "..debug.getinfo(1, "n").name.." successful"
-        else
-            print("ERROR: "..debug.getinfo(1, "n").name.." Übertragung wurde abgelehnt")
-        end
+    if argument_number>=2 and argument_number<=4 then
+        local command_name = args[2]
+        local result = args[3]
+        local programm = args[4]
+        local command_arguments = args[5]
+
+
+        local blank = "c_call_sendcomm(commname, [programm], [arguments]))"
+        return "debug: "..name.." successful"
     else
-        print("ERROR: "..debug.getinfo(1, "n").name.." Argumentenzahl unpassend")
+        print("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -109,20 +105,17 @@ end
 -- || --
 -- Eingabe:
 -- Ausgabe:
-function get(args)
+function get_file(args)
+    local name = "get_file"
     local argument_number = get_length(args)
-    if argument_number==3 then
-        local ip = args[2]
-        local file_name = args[3]
-        local file_type = args[4]
-        if authenticate(ip) then
-            local blank = "c_call_getfile(ip, filename, filetype))"
-            return "debug: "..debug.getinfo(1, "n").name.." successful"
-        else
-            print("ERROR: "..debug.getinfo(1, "n").name.." Übertragung wurde abgelehnt")
-        end
+    if argument_number==2 then
+        local file_path = args[2]
+        local file_type = args[3]
+        local blank = "c_call_getfile(filepath, filetype))"
+        return "debug: "..name.." successful"
+
     else
-        print("ERROR: "..debug.getinfo(1, "n").name.." Argumentenzahl unpassend")
+        print("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -131,21 +124,19 @@ end
 -- Eingabe:
 -- Ausgabe:
 function open(args)
+    local name = "open"
     local argument_number = get_length(args)
-    if argument_number==3 or argument_number==4 then
-        local ip = args[2]
-        local file_name = args[3]
-        local file_type = args[4]
-        local programm = args[5]
-        if authenticate(ip) then
+    if argument_number==2 or argument_number==3 then
+        local file_path = args[2]
+        local file_type = args[3]
+        local programm = args[4]
             -- programm loockup table
-            local blank = "c_call_openfile(ip, filename, filetype, [programm_id]))"
-            return "debug: "..debug.getinfo(1, "n").name.." successful"
-        else
-            print("ERROR: "..debug.getinfo(1, "n").name.." Übertragung wurde abgelehnt")
-        end
+        send_file({"send_file", file_path, file_type})
+        send_comm({"send_comm", "exec", "0" ,programm, {file_path, file_type}})
+        return "debug: "..name.." successful"
+
     else
-        print("ERROR: "..debug.getinfo(1, "n").name.." Argumentenzahl unpassend")
+        print("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -153,26 +144,78 @@ end
 -- || --
 -- Eingabe:
 -- Ausgabe:
-function shutdown(args)
-    print("debug: call: shutdown")
-    return "debug: shutdown()"
+
+function reconnect(args)
+    local name = "reconnect"
+    local argument_number = get_length(args)
+    if argument_number==2 or argument_number==3 then
+        local ip = args[2]
+        local pol = args[3]
+        local port = args[4]
+        disconnect({"disconnect", pol})
+        local blank = "c_call_connect(ip, [port])"
+    else
+        print("ERROR: "..name.." Argumentenzahl unpassend")
+    end
 end
 
 
 -- || --
 -- Eingabe:
 -- Ausgabe:
-function authenticate(ip)
-    print("debug: call: authenticate")
-    local blank=true
-    --blank = c_call_auth(ip)
-    return blank
+
+function disconnect(args)
+    local name = "connect"
+    local argument_number = get_length(args)
+    if argument_number==0 or argument_number==1 then
+        local pol = args[2]
+        local blank = "c_call_disconnect(ip, [pol])"
+    else
+        print("ERROR: "..name.." Argumentenzahl unpassend")
+    end
+end
+
+-- || --
+-- Eingabe:
+-- Ausgabe:
+
+function shutdown(args)
+    send_comm({"send_comm", "shutdown",0,})
+end
+
+
+-- || --
+-- Eingabe:
+-- Ausgabe:
+function authenticate()
+    local result = send_comm({"authenticate"})
 end
 
 
 ---___RECEIVE___---
-function interpret_output(args)
-    return "empty"
+function interpret_comm(args)
+    local name = "interpret_comm"
+    if get_length(args)>=2 and get_length(args)<=4 then
+        local command = args[1]
+        local result = args[2]
+        local programm = args[3]
+        local arguments = args[4]
+        os.execute(programm.." "..command.." "..arguments..">output.txt")
+        os.exit()
+        if result=="1" then
+            send_file({"send_file", "output.txt",""})
+        end
+    else
+        print("ERROR: "..name.." Argumentenzahl unpassend")
+    end
+end
+
+function filetrans_start()
+
+end
+
+function filetrans_end()
+
 end
 
 
@@ -180,5 +223,5 @@ end
 ---
 --- DEBUG ---
 ---
-s = "send_file 127:a:0:1:b filename mp4"
-interpret_input(s)
+s = "send_filex 127:a:0:1:b filename mp4"
+interpret_comm({"search",NIL,"apt-cache","lua"})
