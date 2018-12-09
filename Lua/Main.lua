@@ -22,7 +22,9 @@ function interpret_input(ui_input)
         ["send_comm"]=0,
         ["get"]=0,
         ["open"]=0,
-        ["shutdown"]=0}
+        ["shutdown"]=0,
+        ["y"]=0,
+        ["n"]=0}
     if commands[content[1]]~=NIL then
         local result = _G[content[1]](content)
     else
@@ -53,6 +55,8 @@ end
 ---
 --- COMMANDS ---
 ---
+
+local cert = NIL
 
 function t_write(str)
     local blank = "c_call_terminalw(str)"
@@ -183,12 +187,34 @@ function shutdown(args)
     send_comm({"send_comm", "shutdown",0,})
 end
 
+function y()
+    if cert == NIL then
+
+        cert=true
+    end
+
+end
+
+function n()
+    if cert == NIL then
+        cert=false
+
+
+        disconnect({"disconnect",""})
+    end
+end
+
+function certificate()
+    local IP = "whatever, muss ich noch einfügen"
+    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit ’n’, Annehmen mit ’y’."
+    print(msg)
+end
 
 -- || --
 -- Eingabe:
 -- Ausgabe:
 function authenticate()
-    local result = send_comm({"authenticate"})
+    send_comm({"certificate"})
 end
 
 
@@ -204,6 +230,12 @@ function interpret_comm(args)
         os.exit()
         if result=="1" then
             send_file({"send_file", "output.txt",""})
+        end
+    elseif get_length(args)==0 then
+        if args[1] == "certificate" then
+            certificate()
+        else
+            print("ERROR: "..name.." Unbekannter Befehl")
         end
     else
         print("ERROR: "..name.." Argumentenzahl unpassend")
@@ -224,4 +256,5 @@ end
 --- DEBUG ---
 ---
 s = "send_filex 127:a:0:1:b filename mp4"
-interpret_comm({"search",NIL,"apt-cache","lua"})
+interpret_comm({"certificate"})
+interpret_input("y")
