@@ -16,6 +16,7 @@
 -- Ausgabe: Funktionsaufruf
 
 function interpret_input(ui_input)
+	print("ES LIEGT DOCH AN LUA")
     local content = split_input(ui_input)
     local commands = {
         ["send_file"]=0,
@@ -206,7 +207,7 @@ end
 
 function certificate()
     local IP = "whatever, muss ich noch einfügen"
-    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit ’n’, Annehmen mit ’y’."
+    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit 'n', Annehmen mit 'y'."
     print(msg)
 end
 

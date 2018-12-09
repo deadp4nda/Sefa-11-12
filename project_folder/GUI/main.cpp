@@ -54,11 +54,11 @@ int main(int argc, char *argv[]){
     QObject::connect(fMg,&MngFileManager::fileSuccessfulReceived,cbFileInComplete);
     QObject::connect(iMg,&MngThManager::connectionInitiated,cbConnVerification);
     wnd = new TerminalW(iMg,fMg,L);
-    //lua_dofile(L,"main.lua");
     int ret =app.exec();
     delete wnd;
     delete iMg;
     delete fMg;
+    lua_close(L);
     return ret;
 }
 
