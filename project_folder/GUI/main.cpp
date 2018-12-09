@@ -47,9 +47,9 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"disconnect");
 
     QApplication app(argc,argv);
-    fMg = new MngFileManager(LPORTO);
-    QObject::connect(iMg,&MngThManager::Message,cbInstructionIn);
     iMg = new MngThManager(LPORTO+1);
+    QObject::connect(iMg,&MngThManager::Message,cbInstructionIn);
+    fMg = new MngFileManager(LPORTO);
     QObject::connect(fMg,&MngFileManager::fileReceivingStarted,cbFileInStart);
     QObject::connect(fMg,&MngFileManager::fileSuccessfulReceived,cbFileInComplete);
     QObject::connect(iMg,&MngThManager::connectionInitiated,cbConnVerification);
@@ -103,7 +103,7 @@ int lDisconnect(lua_State *){
     return 0;
 }
 void cbInstructionIn(SafeInstruction inst) {
-    lua_getglobal(L, "...");
+    lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
     lua_pushinteger(L, inst->getAddressedProgram());
     lua_pushstring(L, inst->getPayload()->data());
@@ -113,7 +113,7 @@ void cbInstructionIn(SafeInstruction inst) {
     }
 }
 void cbFileInStart(SafeFileHansz file){
-    lua_getglobal(L,"...");
+    lua_getglobal(L,"filetrans_start");
     lua_pushstring(L,file->getChecksumString().toStdString().c_str());
     lua_pushinteger(L,file->getFileType());
     if(lua_pcall(L,2,0,0) != 0){
@@ -121,14 +121,21 @@ void cbFileInStart(SafeFileHansz file){
     }
 }
 void cbFileInComplete(){
-    lua_getglobal(L,"...");
+    lua_getglobal(L,"filetrans_end");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbFileInComplete while calling lua\n";
     }
 }
 void cbConnVerification(){
-    lua_getglobal(L,"...");
+    lua_getglobal(L,"authenticate");
     if(lua_pcall(L,0,0,0) != 0){
+        std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
+    }
+}
+void cbError(const QString &error){
+    lua_getglobal(L, "error");
+    lua_pushstring(L, error.toStdString().c_str());
+    if(lua_pcall(L,1,0,0) != 0){
         std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
     }
 }

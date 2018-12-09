@@ -4,6 +4,7 @@
 
 #include <c++/iostream>
 #include "terminalw.h"
+#include <lua.hpp>
 
 TerminalW::TerminalW(Mango::MngThManager*img,Mango::MngFileManager*fmg,lua_State*L):
     iMgr(img),fMgr(fmg),L(L) {
@@ -27,6 +28,7 @@ void TerminalW::initialize(QHostAddress adr, quint16 prt) {
     iMgr->createConnection(adr,prt);
     startup->hide();
     show();
+    luaL_dofile(L,"../Lua/Main.lua");
 }
 
 void TerminalW::setupGUI() {
@@ -48,9 +50,11 @@ void TerminalW::issueMessage(QString msg) {
 }
 
 void TerminalW::Message(QString msg){
-    lua_getglobal(L,"cbTermIn");
+    lua_getglobal(L,"interpret_input");
     lua_pushstring(L,msg.toStdString().c_str());
-    if(lua_pcall(L,1,0,0) != 0){
+    int erret = lua_pcall(L,1,0,0);
+    std::cerr << erret << std::endl;
+    if(erret != 0){
         std::cerr << "[ERROR] in TerminalW::Message calling" << std::endl;
     }
 }
