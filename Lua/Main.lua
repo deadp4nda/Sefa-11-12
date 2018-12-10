@@ -16,7 +16,6 @@
 -- Ausgabe: Funktionsaufruf
 
 function interpret_input(ui_input)
-	print("ES LIEGT DOCH AN LUA")
     local content = split_input(ui_input)
     local commands = {
         ["send_file"]=0,
@@ -31,7 +30,7 @@ function interpret_input(ui_input)
     else
         local name = debug.getinfo(1, "n").name..": "
         local subject = string.format("%q",content[1])
-        print("ERROR: "..name..subject.." - unbekannter Befehl!")
+        print("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
     end
 end
 
