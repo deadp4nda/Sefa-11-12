@@ -1,6 +1,6 @@
 ---Arbeitsstand:
 --
----TODO: preplace debug.getinfo
+
 ---TODO: programm lookup table
 --
 
@@ -28,7 +28,7 @@ function interpret_input(ui_input)
     if commands[content[1]]~=NIL then
         local result = _G[content[1]](content)
     else
-        local name = debug.getinfo(1, "n").name..": "
+        local name = "interpret_input "
         local subject = string.format("%q",content[1])
         print("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
     end
