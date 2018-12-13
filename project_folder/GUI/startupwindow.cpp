@@ -24,7 +24,6 @@ StartupWindow::~StartupWindow() {
     delete start;
     delete layout;
     delete central;
-    delete layout;
 }
 
 void StartupWindow::pressed() {
