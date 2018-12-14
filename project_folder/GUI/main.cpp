@@ -18,6 +18,8 @@ static int lIssueFile(lua_State *L);
 static int lOutputString(lua_State *L);
 static int lConnect(lua_State *L);
 static int lDisconnect(lua_State *L);
+static int lQuit(lua_State *);
+
 void cbInstructionIn(SafeInstruction);
 void cbFileInStart(SafeFileHansz);
 void cbFileInComplete();
@@ -82,17 +84,12 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"connect_to");
     lua_pushcfunction(L,lDisconnect);
     lua_setglobal(L,"disconnect");
+    lua_pushcfunction(L,lQuit);
+    lua_setglobal(L,"thunfischhintern");
 
     QApplication app(argc,argv);
     iMg = new MngThManager(LPORTO+1);
-    //QObject::connect(iMg,&MngThManager::Message,cbInstructionIn);
     fMg = new MngFileManager(LPORTO);
-
-    //QObject::connect(fMg,&MngFileManager::fileTransmissionEnded,cbFileInComplete);
-    //QObject::connect(fMg,&MngFileManager::fileSuccessfulReceived,cbFileInComplete);
-
-    //QObject::connect(iMg,&MngThManager::connectionInitiated,cbConnVerification);
-
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
@@ -103,7 +100,6 @@ int main(int argc, char *argv[]){
     lua_close(L);
     return ret;
 }
-
 
 void connectEverything(MngFileManager*f,MngThManager*i){
     QObject::connect(i,&MngThManager::Message,cbInstructionIn);
@@ -128,17 +124,17 @@ void connectEverything(MngFileManager*f,MngThManager*i){
 
 extern "C"{
 int lIssueInstruction(lua_State *L){ //
-    quint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
-    quint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
+    qint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
+    qint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
     const char* payload= lua_tostring(L,3);             //data
-    quint32 args  = (quint32)luaL_checkinteger(L,4);             //args
+    qint32 args  = (quint32)luaL_checkinteger(L,4);             //args
 
     iMg->enqueueInstruction(instr,toPrg,QByteArray(payload),args);
     return 0;
 }
 int lIssueFile(lua_State *L){
     const char *fName = lua_tostring(L,1);
-    quint64 type = luaL_checkinteger(L,2);
+    qint64 type = luaL_checkinteger(L,2);
     QFile file(fName);
     file.open(QFile::ReadOnly);
     fMg->enqueueFile(&file,type);
@@ -151,7 +147,7 @@ int lOutputString(lua_State *L){
 }
 int lConnect(lua_State *L){
     QHostAddress adr(QString(lua_tostring(L,1)));
-    quint32 p = luaL_checkinteger(L,2);
+    qint32 p = luaL_checkinteger(L,2);
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP");
     }else{
@@ -167,6 +163,11 @@ int lDisconnect(lua_State *){
     return 0;
 }
 
+int lQuit(lua_State *){
+    wnd->close();
+    return 0;
+}
+
 void cbInstructionIn(SafeInstruction inst) {
     lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
@@ -176,30 +177,32 @@ void cbInstructionIn(SafeInstruction inst) {
     if(lua_pcall(L,4,0,0) != 0){
         std::cerr << "[ERROR] in cbInstructionIn while calling lua\n";
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
 void cbFileInStart(SafeFileHansz file){
     lua_getglobal(L,"filetrans_start");
+    lua_pushstring(L,file->getName().toStdString().c_str());
     lua_pushstring(L,file->getChecksumString().toStdString().c_str());
     lua_pushinteger(L,file->getFileType());
-    if(lua_pcall(L,2,0,0) != 0){
+    lua_pushinteger(L,file->getFileSize());
+    if(lua_pcall(L,4,0,0) != 0){
         std::cerr << "[ERROR] in cbFileInStart while calling lua\n";
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
 void cbFileInComplete(){
     lua_getglobal(L,"filetrans_end");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbFileInComplete while calling lua\n";
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
 void cbConnVerification(){
     lua_getglobal(L,"authenticate");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
 void cbError(const QString &error){
     lua_getglobal(L, "error");
@@ -207,14 +210,14 @@ void cbError(const QString &error){
     if(lua_pcall(L,1,0,0) != 0){
         std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
 void cbGPFeedback(const QString &msg){
-    lua_getglobal(L,"blakjflökj");
+    lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
     if(lua_pcall(L,1,0,0) != 0){
         std::cerr << "[ERROR] in cbGPFeedback while calling lua\n";
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
 }

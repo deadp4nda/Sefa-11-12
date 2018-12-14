@@ -9,6 +9,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
+#include "TerminalInput.h"
 
 class Terminal :public QWidget {
     Q_OBJECT
@@ -20,7 +21,7 @@ public slots:
 signals:
     void Message( QString );
 private:
-    QLineEdit *input = nullptr;
+    TerminalInput *input = nullptr;
     QTextBrowser *term  = nullptr;
     QVBoxLayout *layout = nullptr;
 };

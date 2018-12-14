@@ -6,15 +6,12 @@
 #include "terminal.h"
 
 Terminal::Terminal(QWidget *parent) :QWidget(parent){
-    input = new QLineEdit(this);
+    input = new TerminalInput(this);
     term = new QTextBrowser(this);
     term->setReadOnly(true);
     term->setTextBackgroundColor(Qt::black);
     term->setTextColor(Qt::white);
     term->setAcceptRichText(true);
-    QPalette pal;
-    pal.setColor(QPalette::Background, Qt::black);
-    term->setPalette(pal);
     term->setStyleSheet("background-color:black;");
     layout = new QVBoxLayout(this);
     layout->addWidget(term,100);

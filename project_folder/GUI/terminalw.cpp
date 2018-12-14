@@ -51,6 +51,7 @@ void TerminalW::initialize(QHostAddress adr, quint16 prt) {
     theotherport = prt;
     fMgr->setConnectionProperties(theotherone,theotherport);
     iMgr->createConnection(adr,prt);
+    fMgr->activate();
     startup->hide();
     show();
     std::cerr << QFile::exists("../../../Lua/Main.lua");
@@ -84,5 +85,5 @@ void TerminalW::Message(QString msg){
     if(erret != 0){
         std::cerr << "[ERROR] in TerminalW::Message calling: "<< erret << std::endl;
     }
-    lua_pop(L,1);
+    lua_settop(L,0);
 }
