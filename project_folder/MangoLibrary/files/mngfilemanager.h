@@ -21,7 +21,8 @@ class FileHansz;
 class MngFileManager: public QObject
 {
     Q_OBJECT
-    enum MongolibError{
+public:
+    enum MangolibError{
         StillFilesToSend,
         NoConnectionToClose,
         StillConnected,
@@ -57,7 +58,7 @@ signals:
     void remoteConnectionReceived();
     void remoteConnectionClosed();
 
-    void error(MongolibError);
+    void error(MangolibError);
     void justSent(qint64);
     void justReceived(qint64);
     void noFilesToSend();

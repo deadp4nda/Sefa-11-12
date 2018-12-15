@@ -18,17 +18,56 @@ static int lIssueFile(lua_State *L);
 static int lOutputString(lua_State *L);
 static int lConnect(lua_State *L);
 static int lDisconnect(lua_State *L);
+static int lQuit(lua_State *);
+
 void cbInstructionIn(SafeInstruction);
 void cbFileInStart(SafeFileHansz);
 void cbFileInComplete();
 void cbConnVerification();
 void cbError(const QString& error);
+void cbGPFeedback(const QString &msg);
+
+void iConnInit(){cbGPFeedback("INSTRUCTION CONNECTION_INITIATED");}
+void iConnClsd(){cbGPFeedback("INSTRUCTION CONNECTION_CLOSED");}
+void fFileCanc(){cbGPFeedback("FILE FILE_CANCELLED");}
+void fConnClsd(){cbGPFeedback("FILE CONNECTION_CLOSED");}
+void fConnInit(){cbGPFeedback("FILE CONNECTION_INITIATED");}
+void fRemConnRecv(){cbGPFeedback("FILE REMOTE_CONNECTION_RECEIVED");}
+void fRemConnClsd(){cbGPFeedback("FILE REMOTE_CONNECTION_CLOSED");}
+void fError(MngFileManager::MangolibError mango){
+    QString ermsg = "MngFileManager: ";
+    switch(mango){
+        case MngFileManager::StillFilesToSend:
+            cbError(ermsg+"Still files to send");
+            break;
+        case MngFileManager::NoConnectionToClose:
+            cbError(ermsg+"There is no connection to close");
+            break;
+        case MngFileManager::StillConnected:
+            cbError(ermsg+"Still sending a file at closing attempt");
+            break;
+        case MngFileManager::ConnectionFailed:
+            cbError(ermsg+"Failed to establish connection");
+            break;
+        case MngFileManager::FileInvalid:
+            cbError(ermsg+"File is invalid");
+            break;
+        default:
+            cbError(ermsg+"Unknown error");
+}}
+void fJRecv(qint64 recv){cbGPFeedback("FILE BYTES_RECEIVED "+QString::number(recv));}
+void fJSent(qint64 sent){cbGPFeedback("FILE BYTES_SENT " + QString::number(sent));}
+void fNoFls(){cbGPFeedback("FILE NO_FILES_IN_QUEUE");}
+void fFileTransStart(){cbGPFeedback("FILE TRANSMISSION_STARTED");}
+void fFileTransEnded(){cbGPFeedback("FILE TRANSMISSION_ENDED");}
 }
 
 TerminalW *wnd = nullptr;
 MngThManager *iMg = nullptr;
 MngFileManager *fMg = nullptr;
 lua_State *L = nullptr;
+
+void connectEverything(MngFileManager*f,MngThManager*i);
 
 int main(int argc, char *argv[]){
 
@@ -45,36 +84,57 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"connect_to");
     lua_pushcfunction(L,lDisconnect);
     lua_setglobal(L,"disconnect");
+    lua_pushcfunction(L,lQuit);
+    lua_setglobal(L,"thunfischhintern");
 
     QApplication app(argc,argv);
-    fMg = new MngFileManager(LPORTO);
-    QObject::connect(iMg,&MngThManager::Message,cbInstructionIn);
     iMg = new MngThManager(LPORTO+1);
-    QObject::connect(fMg,&MngFileManager::fileReceivingStarted,cbFileInStart);
-    QObject::connect(fMg,&MngFileManager::fileSuccessfulReceived,cbFileInComplete);
-    QObject::connect(iMg,&MngThManager::connectionInitiated,cbConnVerification);
+    fMg = new MngFileManager(LPORTO);
+    connectEverything(fMg,iMg);
+
     wnd = new TerminalW(iMg,fMg,L);
-    //lua_dofile(L,"main.lua");
     int ret =app.exec();
     delete wnd;
     delete iMg;
     delete fMg;
+    lua_close(L);
     return ret;
+}
+
+void connectEverything(MngFileManager*f,MngThManager*i){
+    QObject::connect(i,&MngThManager::Message,cbInstructionIn);
+    QObject::connect(i,&MngThManager::connectionInitiated,iConnInit);
+    QObject::connect(i,&MngThManager::connectionClosed,iConnClsd);
+    QObject::connect(i,&MngThManager::connectionInitiated,cbConnVerification);
+
+    QObject::connect(f,&MngFileManager::fileReceivingStarted,       cbFileInStart);
+    QObject::connect(f,&MngFileManager::fileTransmissionStarted,    fFileTransStart);
+    QObject::connect(f,&MngFileManager::fileSuccessfulReceived,     cbFileInComplete);
+    QObject::connect(f,&MngFileManager::fileTransmissionEnded,      fFileTransEnded);
+    QObject::connect(f,&MngFileManager::fileCancelled,              fFileCanc);
+    QObject::connect(f,&MngFileManager::connectionClosed,           fConnClsd);
+    QObject::connect(f,&MngFileManager::connectionInitiated,        fConnInit);
+    QObject::connect(f,&MngFileManager::remoteConnectionReceived,   fRemConnRecv);
+    QObject::connect(f,&MngFileManager::remoteConnectionClosed,     fRemConnClsd);
+    QObject::connect(f,&MngFileManager::error,                      fError);
+    QObject::connect(f,&MngFileManager::noFilesToSend,              fNoFls);
+    QObject::connect(f,&MngFileManager::justSent,                   fJSent);
+    QObject::connect(f,&MngFileManager::justReceived,               fJRecv);
 }
 
 extern "C"{
 int lIssueInstruction(lua_State *L){ //
-    quint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
-    quint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
+    qint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
+    qint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
     const char* payload= lua_tostring(L,3);             //data
-    quint32 args  = (quint32)luaL_checkinteger(L,4);             //args
+    qint32 args  = (quint32)luaL_checkinteger(L,4);             //args
 
     iMg->enqueueInstruction(instr,toPrg,QByteArray(payload),args);
     return 0;
 }
 int lIssueFile(lua_State *L){
     const char *fName = lua_tostring(L,1);
-    quint64 type = luaL_checkinteger(L,2);
+    qint64 type = luaL_checkinteger(L,2);
     QFile file(fName);
     file.open(QFile::ReadOnly);
     fMg->enqueueFile(&file,type);
@@ -87,7 +147,7 @@ int lOutputString(lua_State *L){
 }
 int lConnect(lua_State *L){
     QHostAddress adr(QString(lua_tostring(L,1)));
-    quint32 p = luaL_checkinteger(L,2);
+    qint32 p = luaL_checkinteger(L,2);
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP");
     }else{
@@ -102,8 +162,14 @@ int lDisconnect(lua_State *){
     fMg->closeIncomingConnection();
     return 0;
 }
+
+int lQuit(lua_State *){
+    wnd->close();
+    return 0;
+}
+
 void cbInstructionIn(SafeInstruction inst) {
-    lua_getglobal(L, "...");
+    lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
     lua_pushinteger(L, inst->getAddressedProgram());
     lua_pushstring(L, inst->getPayload()->data());
@@ -111,25 +177,47 @@ void cbInstructionIn(SafeInstruction inst) {
     if(lua_pcall(L,4,0,0) != 0){
         std::cerr << "[ERROR] in cbInstructionIn while calling lua\n";
     }
+    lua_settop(L,0);
 }
 void cbFileInStart(SafeFileHansz file){
-    lua_getglobal(L,"...");
+    lua_getglobal(L,"filetrans_start");
+    lua_pushstring(L,file->getName().toStdString().c_str());
     lua_pushstring(L,file->getChecksumString().toStdString().c_str());
     lua_pushinteger(L,file->getFileType());
-    if(lua_pcall(L,2,0,0) != 0){
+    lua_pushinteger(L,file->getFileSize());
+    if(lua_pcall(L,4,0,0) != 0){
         std::cerr << "[ERROR] in cbFileInStart while calling lua\n";
     }
+    lua_settop(L,0);
 }
 void cbFileInComplete(){
-    lua_getglobal(L,"...");
+    lua_getglobal(L,"filetrans_end");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbFileInComplete while calling lua\n";
     }
+    lua_settop(L,0);
 }
 void cbConnVerification(){
-    lua_getglobal(L,"...");
+    lua_getglobal(L,"authenticate");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
     }
+    lua_settop(L,0);
+}
+void cbError(const QString &error){
+    lua_getglobal(L, "error");
+    lua_pushstring(L, error.toStdString().c_str());
+    if(lua_pcall(L,1,0,0) != 0){
+        std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
+    }
+    lua_settop(L,0);
+}
+void cbGPFeedback(const QString &msg){
+    lua_getglobal(L,"feedback");
+    lua_pushstring(L, msg.toStdString().c_str());
+    if(lua_pcall(L,1,0,0) != 0){
+        std::cerr << "[ERROR] in cbGPFeedback while calling lua\n";
+    }
+    lua_settop(L,0);
 }
 }
