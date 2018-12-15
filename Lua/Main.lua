@@ -36,11 +36,6 @@ function interpret_input(ui_input)
         end
 
     else
-<<<<<<< HEAD
-
-=======
-        local name = "interpret_input "
->>>>>>> 4eca2356195af80114e7de45ed5d3ccab87bc060
         local subject = string.format("%q",content[1])
         print("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
     end
@@ -307,11 +302,5 @@ end
 --- DEBUG ---
 ---
 s = "send_filex 127:a:0:1:b filename mp4"
-<<<<<<< HEAD
---interpret_comm({"certificate"})
---interpret_input("y")
-filetrans_start("bla","blu","blub", "uarg")
-=======
-interpret_comm({"certificate"})
-interpret_input("y")
->>>>>>> 4eca2356195af80114e7de45ed5d3ccab87bc060
+
+
