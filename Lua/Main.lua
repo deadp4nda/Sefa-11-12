@@ -15,7 +15,10 @@
 -- Eingabe: String - UI-Eingabe
 -- Ausgabe: Funktionsaufruf
 
+local cert = NIL
+
 function interpret_input(ui_input)
+    local name = "interpret_input: "
     local content = split_input(ui_input)
     local commands = {
         ["send_file"]=0,
@@ -26,9 +29,14 @@ function interpret_input(ui_input)
         ["y"]=0,
         ["n"]=0}
     if commands[content[1]]~=NIL then
-        local result = _G[content[1]](content)
+        if content[1]=="y" or content[1]=="n" or cert==true then
+            local result = _G[content[1]](content)
+        else
+            print("ERROR: "..name.."Zertifikat ungültig!")
+        end
+
     else
-        local name = debug.getinfo(1, "n").name..": "
+
         local subject = string.format("%q",content[1])
         print("ERROR: "..name..subject.." - unbekannter Befehl!")
     end
@@ -56,7 +64,7 @@ end
 --- COMMANDS ---
 ---
 
-local cert = NIL
+
 
 function t_write(str)
     local blank = "c_call_terminalw(str)"
@@ -242,19 +250,59 @@ function interpret_comm(args)
     end
 end
 
-function filetrans_start()
+function filetrans_start(f_name, f_hash, f_type, f_size)
+    local x = io.open("file_save.txt","a")
+    x:write(f_hash..","..f_name..","..f_type..","..f_size.."\n")
+    x:close()
 
 end
 
 function filetrans_end()
+    print("Send_file: Completed! bal bla filemüll")
+end
+
+function table_contains(tab, key)
+    return set[key]~=NIL
+end
+
+function feedback(input_str, arg)
+    local output = {
+        ["CONNECTION_INITIATED"]="",
+        ["CONNECTION_CLOSED"]="",
+        ["FILE_CANCELLED"]="",
+        ["REMOTE_CONNECTION_RECEIVED"]="",
+        ["REMOTE_CONNECTION_CLOSED"]="",
+        ["BYTES_RECEIVED"]="",
+        ["BYTES_SENT"]="",
+        ["NO_FILES_IN_QUEUE"]="",
+        ["TRANSMISSION_STARTED"]="",
+        ["TRANSMISSION_ENDED"]="",
+        ["CONNECTION_INITIATED"]=""
+    }
+    local request = {
+        ["GET_FILES"]="",
+        ["GET_REMOTE_FILES"]=""
+    }
+    if table_contains(output,input_str) then
+        print(output[input_str])
+    else
+        _G[request[input_str]]()
+    end
+end
+
+function GET_FILES()
+    --file_save.txt
 
 end
 
+function GET_REMOTE_FILES()
 
+end
 
 ---
 --- DEBUG ---
 ---
 s = "send_filex 127:a:0:1:b filename mp4"
-interpret_comm({"certificate"})
-interpret_input("y")
+--interpret_comm({"certificate"})
+--interpret_input("y")
+filetrans_start("bla","blu","blub", "uarg")
