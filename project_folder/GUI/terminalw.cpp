@@ -41,25 +41,11 @@ TerminalW::~TerminalW(){
     fMgr->closeOutgoingConnection();
     iMgr->closeConnection();
     delete terminal;
-    delete startup;
     delete layout;
     delete central;
 }
 
-void TerminalW::initialize(QHostAddress adr, quint16 prt) {
-    theotherone = adr;
-    theotherport = prt;
-    fMgr->setConnectionProperties(theotherone,theotherport);
-    iMgr->createConnection(adr,prt);
-    fMgr->activate();
-    startup->hide();
-    show();
-    std::cerr << QFile::exists("../../../Lua/Main.lua");
-    luaL_dofile(L,"../../../Lua/Main.lua");
-}
-
 void TerminalW::setupGUI() {
-    startup = new StartupWindow(this);
     terminal = new Terminal(this);
     layout = new QVBoxLayout;
     central = new QWidget(this);
@@ -67,9 +53,7 @@ void TerminalW::setupGUI() {
     layout->addWidget(terminal);
     central->setLayout(layout);
     connect(terminal,&Terminal::Message,this,&TerminalW::Message);
-    connect(startup,&StartupWindow::fuckingBegin,this,&TerminalW::initialize);
-    hide();
-    startup->show();
+    show();
 }
 
 void TerminalW::issueMessage(QString msg) {

@@ -34,6 +34,7 @@ void Terminal::output(QString sometext) {
 }
 
 void Terminal::returnPressed() {
+    if(input->text()== "")return;
     output(input->text() + "\n>>>");
     emit Message(input->text());
     input->clear();

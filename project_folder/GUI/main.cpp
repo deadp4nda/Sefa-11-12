@@ -87,6 +87,9 @@ int main(int argc, char *argv[]){
     lua_pushcfunction(L,lQuit);
     lua_setglobal(L,"thunfischhintern");
 
+    std::cerr << QFile::exists("../../../Lua/Main.lua");
+    luaL_dofile(L,"../../../Lua/Main.lua");
+
     QApplication app(argc,argv);
     iMg = new MngThManager(LPORTO+1);
     fMg = new MngFileManager(LPORTO);
@@ -198,7 +201,7 @@ void cbFileInComplete(){
     lua_settop(L,0);
 }
 void cbConnVerification(){
-    lua_getglobal(L,"authenticate");
+    lua_getglobal(L,"certificate");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
     }
@@ -215,7 +218,8 @@ void cbError(const QString &error){
 void cbGPFeedback(const QString &msg){
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
-    if(lua_pcall(L,1,0,0) != 0){
+    lua_pushnil(L);
+    if(lua_pcall(L,2,0,0) != 0){
         std::cerr << "[ERROR] in cbGPFeedback while calling lua\n";
     }
     lua_settop(L,0);

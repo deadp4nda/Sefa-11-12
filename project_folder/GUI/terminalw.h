@@ -21,7 +21,6 @@ public:
     TerminalW(Mango::MngThManager*,Mango::MngFileManager*,lua_State*);
     ~TerminalW();
 public slots:
-    void initialize(QHostAddress,quint16);
     void issueMessage(QString);
 private:
     void setupGUI();
@@ -29,7 +28,6 @@ private slots:
     void Message(QString);
 
 private:
-    StartupWindow *startup = nullptr;
     Terminal *terminal = nullptr;
     QWidget *central = nullptr;
 
@@ -41,7 +39,7 @@ private:
     lua_State *L;
 
     QHostAddress theotherone;
-    quint32 theotherport;
+    quint16 theotherport;
 };
 
 
