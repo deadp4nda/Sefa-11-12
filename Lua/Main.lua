@@ -31,7 +31,8 @@ function interpret_input(ui_input)
         ["connect"]=0,
         ["reconnect"]=0,
         ["disconnect"]=0,
-        ["squit"]=0}
+        ["squit"]=0,
+        ["mangomeow"]=0}
     if commands[content[1]]~=NIL then
         if content[1]=="y" or content[1]=="n" or cert==true then
             local result = _G[content[1]](content)
@@ -49,6 +50,10 @@ end
 -- |Parser:- Eingabeverarbeitung| --
 -- Eingabe: String - UI-Eingabe
 -- Ausgabe: Table: Argumente der Eingabe
+
+function mangomeow()
+    t_write("Meow meow - Meow")
+end
 
 function split_input(input)
     local content = {}
