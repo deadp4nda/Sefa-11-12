@@ -1,6 +1,6 @@
 ---Arbeitsstand:
 --
----TODO: preplace debug.getinfo
+
 ---TODO: programm lookup table
 --
 
@@ -27,7 +27,10 @@ function interpret_input(ui_input)
         ["open"]=0,
         ["shutdown"]=0,
         ["y"]=0,
-        ["n"]=0}
+        ["n"]=0,
+        ["connect"]=0,
+        ["reconnect"]=0,
+        ["disconnect"]=0}
     if commands[content[1]]~=NIL then
         if content[1]=="y" or content[1]=="n" or cert==true then
             local result = _G[content[1]](content)
@@ -36,9 +39,8 @@ function interpret_input(ui_input)
         end
 
     else
-
         local subject = string.format("%q",content[1])
-        print("ERROR: "..name..subject.." - unbekannter Befehl!")
+        print("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
     end
 end
 
@@ -157,6 +159,19 @@ end
 -- Eingabe:
 -- Ausgabe:
 
+
+function connect()
+    local name = "connect"
+    local argument_number = get_length(args)
+    if argument_number==1 or argument_number==2 then
+        local ip = args[2]
+        local port = args[3]
+        local blank = "c_call_connect(ip, [port])"
+    else
+        print("ERROR: "..name.." Argumentenzahl unpassend")
+    end
+end
+
 function reconnect(args)
     local name = "reconnect"
     local argument_number = get_length(args)
@@ -214,7 +229,7 @@ end
 
 function certificate()
     local IP = "whatever, muss ich noch einfügen"
-    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit ’n’, Annehmen mit ’y’."
+    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit 'n', Annehmen mit 'y'."
     print(msg)
 end
 
@@ -262,18 +277,19 @@ function filetrans_end()
 end
 
 function table_contains(tab, key)
-    return set[key]~=NIL
+    return tab[key]~=NIL
 end
 
-function feedback(input_str, arg)
+function feedback(input_str)
+    local arg = split_input(input_str)
     local output = {
         ["CONNECTION_INITIATED"]="",
         ["CONNECTION_CLOSED"]="",
         ["FILE_CANCELLED"]="",
         ["REMOTE_CONNECTION_RECEIVED"]="",
         ["REMOTE_CONNECTION_CLOSED"]="",
-        ["BYTES_RECEIVED"]="",
-        ["BYTES_SENT"]="",
+        ["BYTES_RECEIVED"]=" "..arg[2],
+        ["BYTES_SENT"]=" "..arg[2],
         ["NO_FILES_IN_QUEUE"]="",
         ["TRANSMISSION_STARTED"]="",
         ["TRANSMISSION_ENDED"]="",
@@ -283,10 +299,13 @@ function feedback(input_str, arg)
         ["GET_FILES"]="",
         ["GET_REMOTE_FILES"]=""
     }
-    if table_contains(output,input_str) then
-        print(output[input_str])
+    if table_contains(output, arg[1]) then
+        print(output[arg[1]])
+    elseif table_contains(request, arg[1]) then
+        _G[request[arg[1]]]()
+
     else
-        _G[request[input_str]]()
+        print("ERROR: feedback: unknown state")
     end
 end
 
@@ -303,6 +322,5 @@ end
 --- DEBUG ---
 ---
 s = "send_filex 127:a:0:1:b filename mp4"
---interpret_comm({"certificate"})
---interpret_input("y")
-filetrans_start("bla","blu","blub", "uarg")
+
+--feedback("BYTES_RECEIVED MEWO")
