@@ -30,17 +30,19 @@ function interpret_input(ui_input)
         ["n"]=0,
         ["connect"]=0,
         ["reconnect"]=0,
-        ["disconnect"]=0}
+        ["disconnect"]=0,
+        ["squit"]=0,
+        ["mangomeow"]=0}
     if commands[content[1]]~=NIL then
         if content[1]=="y" or content[1]=="n" or cert==true then
             local result = _G[content[1]](content)
         else
-            print("ERROR: "..name.."Zertifikat ungültig!")
+            t_write("ERROR: "..name.."Zertifikat ungültig!")
         end
 
     else
         local subject = string.format("%q",content[1])
-        print("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
+        t_write("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
     end
 end
 
@@ -48,6 +50,10 @@ end
 -- |Parser:- Eingabeverarbeitung| --
 -- Eingabe: String - UI-Eingabe
 -- Ausgabe: Table: Argumente der Eingabe
+
+function mangomeow()
+    t_write("Meow meow - Meow")
+end
 
 function split_input(input)
     local content = {}
@@ -66,10 +72,12 @@ end
 --- COMMANDS ---
 ---
 
-
+function squit(args)
+    c_squit()
+end
 
 function t_write(str)
-    local blank = "c_call_terminalw(str)"
+    c_terminal_output(str)
 end
 
 function get_length(table)
@@ -87,10 +95,10 @@ function send_file(args)
     if get_length(args)==2 then
         local file_name = args[2]
         local file_type = args[3]
-        local blank = "c_call_sendfile(filename, filetype))"
+        c_issue_file(file_name, file_type)
         return "debug: "..name.." successful"
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -107,11 +115,11 @@ function send_comm(args)
         local programm = args[4]
         local command_arguments = args[5]
 
-
-        local blank = "c_call_sendcomm(commname, [programm], [arguments]))"
+        --TODO instr + prog lookup table
+        c_issue_instruction(inst_type, prog_id, programm.." "..command_name.." "..command_arguments, result)
         return "debug: "..name.." successful"
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -125,11 +133,13 @@ function get_file(args)
     if argument_number==2 then
         local file_path = args[2]
         local file_type = args[3]
-        local blank = "c_call_getfile(filepath, filetype))"
+        local todo = "send file"
+        --TODO
+        c_issue_instruction(todo)
         return "debug: "..name.." successful"
 
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -150,7 +160,7 @@ function open(args)
         return "debug: "..name.." successful"
 
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -160,15 +170,15 @@ end
 -- Ausgabe:
 
 
-function connect()
+function connect(args)
     local name = "connect"
     local argument_number = get_length(args)
     if argument_number==1 or argument_number==2 then
         local ip = args[2]
-        local port = args[3]
-        local blank = "c_call_connect(ip, [port])"
+        local port = tonumber(args[3])
+        c_connect_to(ip, port)
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -180,9 +190,9 @@ function reconnect(args)
         local pol = args[3]
         local port = args[4]
         disconnect({"disconnect", pol})
-        local blank = "c_call_connect(ip, [port])"
+        connect({"connect",ip,port})
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -196,9 +206,9 @@ function disconnect(args)
     local argument_number = get_length(args)
     if argument_number==0 or argument_number==1 then
         local pol = args[2]
-        local blank = "c_call_disconnect(ip, [pol])"
+        c_disconnect()
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -230,7 +240,7 @@ end
 function certificate()
     local IP = "whatever, muss ich noch einfügen"
     local msg = "Eingehende verbindung von "..IP..". Ablehnen mit 'n', Annehmen mit 'y'."
-    print(msg)
+    t_write(msg)
 end
 
 -- || --
@@ -258,10 +268,10 @@ function interpret_comm(args)
         if args[1] == "certificate" then
             certificate()
         else
-            print("ERROR: "..name.." Unbekannter Befehl")
+            t_write("ERROR: "..name.." Unbekannter Befehl")
         end
     else
-        print("ERROR: "..name.." Argumentenzahl unpassend")
+        t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
 end
 
@@ -273,7 +283,7 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
 end
 
 function filetrans_end()
-    print("Send_file: Completed! bal bla filemüll")
+    t_write("Send_file: Completed! bal bla filemüll")
 end
 
 function table_contains(tab, key)
@@ -300,12 +310,12 @@ function feedback(input_str)
         ["GET_REMOTE_FILES"]=""
     }
     if table_contains(output, arg[1]) then
-        print(output[arg[1]])
+        t_write(output[arg[1]])
     elseif table_contains(request, arg[1]) then
         _G[request[arg[1]]]()
 
     else
-        print("ERROR: feedback: unknown state")
+        t_write("ERROR: feedback: unknown state")
     end
 end
 
@@ -321,6 +331,6 @@ end
 ---
 --- DEBUG ---
 ---
-s = "send_filex 127:a:0:1:b filename mp4"
-
+--s = "send_filex 127:a:0:1:b filename mp4"
+-- TODO error()
 --feedback("BYTES_RECEIVED MEWO")
