@@ -41,17 +41,25 @@ TerminalW::~TerminalW(){
     fMgr->closeOutgoingConnection();
     iMgr->closeConnection();
     delete terminal;
-    delete layout;
+    delete vlayout;
     delete central;
+    delete hlayout;
+    delete fileT;
 }
 
 void TerminalW::setupGUI() {
     terminal = new Terminal(this);
-    layout = new QVBoxLayout;
+    vlayout = new QVBoxLayout;
     central = new QWidget(this);
+    hlayout = new QHBoxLayout;
+    fileT = new FileTable;
+
     setCentralWidget(central);
-    layout->addWidget(terminal);
-    central->setLayout(layout);
+    vlayout->addWidget(terminal);
+    hlayout->addLayout(vlayout);
+    hlayout->addWidget(fileT);
+
+    central->setLayout(hlayout);
     connect(terminal,&Terminal::Message,this,&TerminalW::Message);
     show();
 }

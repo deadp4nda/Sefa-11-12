@@ -9,8 +9,8 @@
 
 #include <Mangolib>
 
-#include "startupwindow.h"
 #include "terminal.h"
+#include "FileTable.h"
 #include <lua.hpp>
 
 #define LPORTO 0x4242
@@ -30,8 +30,10 @@ private slots:
 private:
     Terminal *terminal = nullptr;
     QWidget *central = nullptr;
+    FileTable *fileT = nullptr;
 
-    QVBoxLayout *layout = nullptr;
+    QVBoxLayout *vlayout = nullptr;
+    QHBoxLayout *hlayout = nullptr;
 
     Mango::MngFileManager   *fMgr = nullptr;
     Mango::MngThManager     *iMgr = nullptr;
