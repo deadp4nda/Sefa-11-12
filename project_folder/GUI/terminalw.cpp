@@ -2,7 +2,7 @@
 // Created by Chrystalkey on 08.12.2018.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include "terminalw.h"
 #include <lua.hpp>
 

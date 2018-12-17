@@ -2,7 +2,7 @@
 // Created by Chrystalkey on 08.12.2018.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include "terminal.h"
 
 Terminal::Terminal(QWidget *parent) :QWidget(parent){

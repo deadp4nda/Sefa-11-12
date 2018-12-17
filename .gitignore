@@ -40,6 +40,11 @@ Makefile
 
 cmake-build-debug/
 cmake-build-release/
+CMakeFiles/
+*_autogen/
+cmake_install.cmake
+CMakeCache.txt
+bin/
 .idea/
 build-*/
 *.log
