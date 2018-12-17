@@ -5,7 +5,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(GUI_SRC main.cpp startupwindow.cpp startupwindow.h terminalw.cpp terminalw.h terminal.cpp terminal.h TerminalInput.cpp TerminalInput.h)
+set(GUI_SRC main.cpp terminalw.cpp terminalw.h terminal.cpp terminal.h TerminalInput.cpp TerminalInput.h FileTable.cpp FileTable.h)
 
 #set(GUI_UI )
 

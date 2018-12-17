@@ -12,6 +12,8 @@
 
 using namespace Mango;
 
+#define LPORTO 0x4242
+
 extern "C"{
 static int lIssueInstruction(lua_State *L);
 static int lIssueFile(lua_State *L);
@@ -27,13 +29,13 @@ void cbConnVerification();
 void cbError(const QString& error);
 void cbGPFeedback(const QString &msg);
 
-void iConnInit(){cbGPFeedback("INSTRUCTION CONNECTION_INITIATED");}
-void iConnClsd(){cbGPFeedback("INSTRUCTION CONNECTION_CLOSED");}
-void fFileCanc(){cbGPFeedback("FILE FILE_CANCELLED");}
-void fConnClsd(){cbGPFeedback("FILE CONNECTION_CLOSED");}
-void fConnInit(){cbGPFeedback("FILE CONNECTION_INITIATED");}
-void fRemConnRecv(){cbGPFeedback("FILE REMOTE_CONNECTION_RECEIVED");}
-void fRemConnClsd(){cbGPFeedback("FILE REMOTE_CONNECTION_CLOSED");}
+void iConnInit(){cbGPFeedback("CONNECTION_INITIATED");}
+void iConnClsd(){cbGPFeedback("CONNECTION_CLOSED");}
+void fFileCanc(){cbGPFeedback("FILE_CANCELLED");}
+void fConnClsd(){cbGPFeedback("CONNECTION_CLOSED");}
+void fConnInit(){cbGPFeedback("CONNECTION_INITIATED");}
+void fRemConnRecv(){cbGPFeedback("REMOTE_CONNECTION_RECEIVED");}
+void fRemConnClsd(){cbGPFeedback("REMOTE_CONNECTION_CLOSED");}
 void fError(MngFileManager::MangolibError mango){
     QString ermsg = "MngFileManager: ";
     switch(mango){
@@ -55,11 +57,11 @@ void fError(MngFileManager::MangolibError mango){
         default:
             cbError(ermsg+"Unknown error");
 }}
-void fJRecv(qint64 recv){cbGPFeedback("FILE BYTES_RECEIVED "+QString::number(recv));}
-void fJSent(qint64 sent){cbGPFeedback("FILE BYTES_SENT " + QString::number(sent));}
-void fNoFls(){cbGPFeedback("FILE NO_FILES_IN_QUEUE");}
-void fFileTransStart(){cbGPFeedback("FILE TRANSMISSION_STARTED");}
-void fFileTransEnded(){cbGPFeedback("FILE TRANSMISSION_ENDED");}
+void fJRecv(qint64 recv){cbGPFeedback("BYTES_RECEIVED "+QString::number(recv));}
+void fJSent(qint64 sent){cbGPFeedback("BYTES_SENT " + QString::number(sent));}
+void fNoFls(){cbGPFeedback("NO_FILES_IN_QUEUE");}
+void fFileTransStart(){cbGPFeedback("TRANSMISSION_STARTED");}
+void fFileTransEnded(){cbGPFeedback("TRANSMISSION_ENDED");}
 }
 
 TerminalW *wnd = nullptr;
@@ -69,26 +71,28 @@ lua_State *L = nullptr;
 
 void connectEverything(MngFileManager*f,MngThManager*i);
 
+
+
 int main(int argc, char *argv[]){
 
     L = luaL_newstate();
     luaL_openlibs(L);
 
     lua_pushcfunction(L,lIssueInstruction);
-    lua_setglobal(L,"issue_instruction");
+    lua_setglobal(L,"c_issue_instruction");
     lua_pushcfunction(L,lIssueFile);
-    lua_setglobal(L,"issue_file");
+    lua_setglobal(L,"c_issue_file");
     lua_pushcfunction(L,lOutputString);
-    lua_setglobal(L,"terminal_output");
+    lua_setglobal(L,"c_terminal_output");
     lua_pushcfunction(L,lConnect);
-    lua_setglobal(L,"connect_to");
+    lua_setglobal(L,"c_connect_to");
     lua_pushcfunction(L,lDisconnect);
-    lua_setglobal(L,"disconnect");
+    lua_setglobal(L,"c_disconnect");
     lua_pushcfunction(L,lQuit);
-    lua_setglobal(L,"thunfischhintern");
+    lua_setglobal(L,"c_squit");
 
-    std::cerr << QFile::exists("../../../Lua/Main.lua");
-    luaL_dofile(L,"../../../Lua/Main.lua");
+    std::cerr << QFile::exists("Main.lua") << std::endl;
+    luaL_dofile(L,"Main.lua");
 
     QApplication app(argc,argv);
     iMg = new MngThManager(LPORTO+1);
@@ -96,7 +100,7 @@ int main(int argc, char *argv[]){
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
-    int ret =app.exec();
+    int ret = app.exec();
     delete wnd;
     delete iMg;
     delete fMg;
@@ -151,6 +155,7 @@ int lOutputString(lua_State *L){
 int lConnect(lua_State *L){
     QHostAddress adr(QString(lua_tostring(L,1)));
     qint32 p = luaL_checkinteger(L,2);
+    p=p?p:LPORTO;
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP");
     }else{
@@ -170,7 +175,6 @@ int lQuit(lua_State *){
     wnd->close();
     return 0;
 }
-
 void cbInstructionIn(SafeInstruction inst) {
     lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
@@ -210,8 +214,9 @@ void cbConnVerification(){
 void cbError(const QString &error){
     lua_getglobal(L, "error");
     lua_pushstring(L, error.toStdString().c_str());
+    std::cerr << error.toStdString() << std::endl;
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
+        std::cerr << "[ERROR] in cbConnError while calling lua\n";
     }
     lua_settop(L,0);
 }
