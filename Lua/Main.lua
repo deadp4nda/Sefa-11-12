@@ -1,6 +1,6 @@
 ---Arbeitsstand:
 --
-
+---TODO: preplace debug.getinfo
 ---TODO: programm lookup table
 --
 
@@ -36,8 +36,9 @@ function interpret_input(ui_input)
         end
 
     else
+
         local subject = string.format("%q",content[1])
-        print("ERROR: ".. name .. subject .. " - unbekannter Befehl!")
+        print("ERROR: "..name..subject.." - unbekannter Befehl!")
     end
 end
 
@@ -213,7 +214,7 @@ end
 
 function certificate()
     local IP = "whatever, muss ich noch einfügen"
-    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit 'n', Annehmen mit 'y'."
+    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit ’n’, Annehmen mit ’y’."
     print(msg)
 end
 
@@ -302,5 +303,6 @@ end
 --- DEBUG ---
 ---
 s = "send_filex 127:a:0:1:b filename mp4"
-
-
+--interpret_comm({"certificate"})
+--interpret_input("y")
+filetrans_start("bla","blu","blub", "uarg")
