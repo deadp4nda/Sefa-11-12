@@ -6,14 +6,14 @@
 \section{Entwurf und Umsetzung der Netzwerk-Schnittstelle}
 \subsection{Grundlegende Theorie zur Kommunikation in einem Netzwerk}
 Unter dem Begriff Netzwerk im Zusammenhang mit dieser Arbeit wird, sofern es nicht ausdrücklich anders definiert ist, die Ansammlung mehrerer, untereinander verbundener Computer verstanden.
-Diese haben die Möglichkeit mit standardisierten Internet-Netzwerkprotokollen miteinander zu kommunizieren.
+Diese haben die Möglichkeit mit standardisierten Internet-Netzwerkprotokollen miteinander zu kommunizieren.\\
 Diese Kommunikation wird beschrieben durch das ISO/OSI Modell (s. \glsref{ISO/OSI Modell}) der Netzwerkkommunikation, auf dem auch die Arbeitsweise unseres Programmes aufbaut.
 Dabei kann man den Prozess, welcher bei einer Netzwerkübertragung abläuft und die verwendeten Informationen in Schichten nach ihrem Abstraktionsgrad einteilen, von Nullen und Einsen in einem Kabel bis hin zu z.B. verschiedensten Verschlüsselungsprotokollen; was in unteren Schichten abgesichert ist, muss in denen darüber nicht implementiert werden, was wiederum zu einfachen und verlässlichen einzelnen Algorithmen in einer Schicht führt, obwohl das gesamte System überaus komplex ist.
 
 \subsection{Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls}
-Um das Programm zu dritt zu entwickeln, muss eine gewisse Modularität gewährleistet werden, außerdem müssen die Sinnabschnitte klar nach ihrer Funktion gegliedert sein und eine leicht benutzbare sowie wiederverwendbare Schnittstellen besitzen, damit nicht das gesamte Programm angepasst werden muss, wenn ein Teil geändert wird und jeder sich auf seinen Teil konzentrieren kann, ohne die anderen vollständig zu kennen.
+Um das Programm zu dritt zu entwickeln, muss eine gewisse Modularität gewährleistet werden, außerdem müssen die Sinnabschnitte klar nach ihrer Funktion gegliedert sein und leicht benutzbare sowie wiederverwendbare Schnittstellen besitzen, damit nicht das gesamte Programm angepasst werden muss, wenn ein Teil geändert wird und jeder sich auf seinen Teil konzentrieren kann, ohne die anderen vollständig zu kennen.
 Diese Anforderungen werden durch die Trennung der Programmiersprachen Lua und C++ einfach geregelt, aber in reinem C++ Kontext muss es dennoch eine Unterteilung zwischen Netzwerkschnittstelle und Benutzeroberfläche geben, weshalb die gesamte Netzwerkkommunikation über eine statische Bibliothek in die ausgeführte Datei eingebunden ist, in dem die Benutzeroberfläche und die Verbindung der Programmteile gemacht werden.
-Die Aufgabe der Bibliothek ist, eine verlässliche Verbindung zwischen zwei Rechnern aufzubauen (Start und Ziel), über die ein fester Satz von Anweisungen mit optionalen Argumenten sowie Dateien bidirektional übertragen werden können.
+Die Aufgabe der Bibliothek ist, Funktionen und Klassen bereitzustellen, die eine verlässliche Verbindung zwischen zwei Rechnern aufbauen (Start und Ziel), über die ein fester Satz von Anweisungen mit optionalen Argumenten sowie Dateien bidirektional übertragen werden können.
 Dafür stellen sich folgende Anforderungen, es muss:
 
 \begin{itemize}
@@ -25,22 +25,17 @@ Dafür stellen sich folgende Anforderungen, es muss:
 \end{itemize}
 
 Diese Bedingungen implizieren bereits, dass eine bestimmte Regelung und einen Ablauf für die Kommunikation zwischen den beiden Computern geben muss: ein Protokoll (s. \glsref{Protokoll}).\par
-Alle oben genannten Anforderungen müssen durch dieses Protokoll erfüllt sein und geregelt werden; daher umfasst es sowohl einen bestimmten Datensatz, der in den Header (s. \glsref{Header}) eines Pakets (s. \glsref{Paket}) geschrieben wird als auch einen festgelegten Ablauf der Kommunikation, der sicherstellt, dass alle Daten korrekt angekommen sind und verarbeitet wurden.\par 
-Um nicht ebenfalls für die sichere Ankunft der Daten sorgen zu müssen, baut das Protokoll auf TCP/IP auf (genauer auf dem Protokoll TLS, welches auch eine verschlüsselte Verbindung aufbaut), also der Transportschicht des ISO/OSI-Modells, auf der bereits genau das implementiert und standardisiert ist - praktisch ist unser Protokoll also auf der Anwendungsschicht des Modells.
-Da das Protokoll sowohl für den Versand von Anweisungen als auch für den von Dateien geeignet sein muss und dabei so wenig Datenverkehr wie möglich verursachen soll (\textit{= leichtgewichtig}), gibt es zwei verschiedene Teilprotokolle, was in folgendem Aufbau der Kommunikationsstruktur resultiert:\par
+Alle oben genannten Anforderungen müssen durch dieses Protokoll erfüllt sein und geregelt werden; daher umfasst es sowohl einen bestimmten Datensatz, der in den Header (s. \glsref{Header}) eines Pakets (s. \glsref{Paket}) geschrieben wird als auch einen festgelegten Ablauf der Kommunikation, der sicherstellt, dass alle Daten korrekt ankommen sind und verarbeitet werden.\par 
+Um nicht ebenfalls für die Ankunft der Daten selbst sorgen zu müssen, baut das Protokoll auf TCP/IP auf (genauer auf dem Protokoll TLS, welches auch sogar schon eine verschlüsselte Verbindung bereitstellt), also der Transportschicht des ISO/OSI-Modells, auf der bereits genau das implementiert und standardisiert ist - praktisch ist unser Protokoll also auf der Anwendungsschicht des Modells.
+Da das Protokoll sowohl für den Versand von Anweisungen als auch für den von Dateien geeignet sein muss und dabei so strukturiert und einfach wie möglich soll, gibt es zwei verschiedene Teilprotokolle, was in folgendem Aufbau der Kommunikationsstruktur resultiert:\par
 Im ersten Schritt werden zwei Informationen, als Zahlen codiert, zum Typ der Übertragung, also Anweisung oder Datei, und zu ihrer Gesamtgröße in den Header des ersten Pakets der Übertragung geschrieben.
 Abhängig davon, was der Übertragungstyp ist, wird nun entweder die Informationen für eine Dateiübertragung oder eine Anweisungsübertragung angehängt.
 Dabei sind alle Werte, sofern es möglich ist, als Zahlen und nicht als Zeichenketten vorhanden, um die Größe der Informationen zu minimieren.\\\par
 Betrachtet man zunächst den Header für die Anweisungen, so braucht man einen Anweisungscode, der am Zielort eindeutig zu einer Anweisung zugeordnet werden kann; Teil zwei sind Standardargumente, die binär auf 32 Bit Speicherbreite gespeichert werden.
-Dabei soll zum Beispiel, wenn das erste Bit auf eins gesetzt wurde, die Anweisung "`Rufe eine Liste der Daten ab, auf die Das Programm Zugriff hat"' nur die Ordnerstruktur herüberschicken, ist das zweite Bit auf eins gesetzt soll es zusätzliche Informationen zur Größe oder den Zugriffsrechten auf die Dateien mitsenden; dafür wären anderenfalls eigene Anweisungen nötig, was der Übersichtlichkeit bei der Implementierung abträglich wäre und deshalb bereits im Protokoll integriert ist.\par 
+Dabei soll zum Beispiel, wenn das erste Bit auf eins gesetzt wurde, die Anweisung "`Rufe eine Liste der Daten ab, auf die das Programm Zugriff hat"' nur die Ordnerstruktur herüberschicken, ist das zweite Bit auf eins gesetzt soll es zusätzliche Informationen zur Größe oder den Zugriffsrechten auf die Dateien mitsenden; dafür wären anderenfalls eigene Anweisungen nötig, was der Übersichtlichkeit bei der Implementierung abträglich wäre und deshalb bereits im Protokoll integriert ist.\par 
 Der dritte Wert im Headersegment für die Anweisungen ist eine Zahl, die ein Programm identifiziert, auf dass die Anweisung angewendet werden soll, was standardmäßig das Eigene ist.
-Der vierte Wert ist eine Längenangabe in Bytes.
-Er bezeichnet die Länge eines optionalen Argumentes, welches an den Header angehängt werden kann, beispielsweise ein Dateiname oder eine Chat-Nachricht.\par 
-Um die ganze Anweisung klein zu halten wird intern festgelegt, dass die Gesamtgröße dieses Headersegments inklusive des optionalen Arguments nicht größer als $2^{16}$ Byte sein darf.
-Aus Kompatibilitätsgründen mit verschiedenen Compilern und Systemen sind alle Werte Integer mit 32 bzw. 64 Bit Speicherbreite, um damit sowohl genügend Platz für alle Informationen zu bieten als auch Probleme mit verschiedenen Rechnerarchitektur-spezifischen Anpassungen der Speicherbreite zu vermeiden.
-Insgesamt ergibt sich also folgende Spezifikation des Headers für die Versendung von Anweisungen (Abb. \ref{Anweisungs_Header}):\par
 
-\begin{figure}[h] 
+\begin{figure}[h]
 \begin{lstlisting}
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -59,6 +54,13 @@ Insgesamt ergibt sich also folgende Spezifikation des Headers für die Versendun
 \caption{Header für Anweisungen}
 \label{Anweisungs_Header}
 \end{figure}
+
+Der vierte Wert ist eine Längenangabe in Bytes.
+Er bezeichnet die Länge eines optionalen Argumentes, welches an den Header angehängt werden kann, beispielsweise ein Dateiname, eine Chat-Nachricht oder ein Bash-Befehl.\par 
+Um die ganze Anweisung klein zu halten wird intern festgelegt, dass die Gesamtgröße dieses Headersegments inklusive des optionalen Arguments nicht größer als $2^{16}$ Byte sein darf - größere Anhänge müssen als Datei verschickt werden.
+Aus Kompatibilitätsgründen mit verschiedenen Compilern und Systemen sind alle Werte Integer mit 32 bzw. 64 Bit Speicherbreite, um damit sowohl genügend Platz für alle Informationen zu bieten als auch Probleme mit verschiedenen Rechnerarchitektur-spezifischen Anpassungen der Speicherbreite zu vermeiden.
+Insgesamt ergibt sich also die in Abbildung \ref{Anweisungs_Header} zu sehende Spezifikation des Headers für die Versendung von Anweisungen.
+Dabei ist die Länge der Argumente in (pro Zeile 32) Bit angegeben, sofern nicht anders spezifiziert.\\\\
 
 \begin{figure}[h]
 \begin{lstlisting}
@@ -79,9 +81,8 @@ Insgesamt ergibt sich also folgende Spezifikation des Headers für die Versendun
 \label{Datei_Header}
 \end{figure}
 
-Dabei ist die Länge der Argumente in (pro Zeile 32) Bit angegeben, sofern nicht anders spezifiziert.\\\\
 Das Versenden von Dateien hat andere Anforderungen, was in einem anderen Aufbau des Header-Segments für eine solche Übertragung, sowie in einem anderen Ablauf resultiert.\par
-Für jede Dateiübertragung wird, im Gegensatz zu den Anweisungen, jeweils eine neue TLS-Verbindung aufgebaut(Schritt 0), die unabhängig von vorhergehenden und nachfolgenden ist, es gibt also für jede Datei einen abgeschotteten "`Kanal"', in dem Fehler leicht behandelbar und konkurrierende Übertragungen unmöglich sind.
+Für jede Dateiübertragung wird, im Gegensatz zu den Anweisungen, jeweils eine neue TLS-Verbindung aufgebaut(Schritt 0), die unabhängig von vorhergehenden und nachfolgenden ist, es gibt also für jede Datei einen abgeschotteten "`Kanal"', in dem Fehler leicht behandelbar und konkurrierende Übertragungen unmöglich sind; außerdem wird die Kennzeichnung einzelner Datenpakete gespart, was wiederum zu insgesamt weniger Datenverkehr führt.
 Danach wird ein Paket mit Informationen zu der Datei zum Zielcomputer geschickt(Schritt 1), welcher, um die Integrität der Übertragung zu verifizieren, dasselbe Paket zurücksendet(Schritt 2).\\
 
 \begin{wrapfigure}{r}{.65\textwidth}
@@ -94,7 +95,7 @@ Dieses Informationspaket ist in Abbildung \ref{Datei_Header} schematisch dargest
 Es besteht aus der Art der Datei (z.B. Video, Audio, Text, ausführbare Dateien etc.), was in der weiteren Einordnung im Zielcomputer nützlich ist, dem ursprünglichen Dateinamen und einer Prüfsumme, mit der die fehlerfreie Ankunft verifiziert werden kann.\\
 Das Headersegment ist daher so aufgebaut, dass zunächst die drei Ganzzahlwerte für Typ, Länge des Dateinamen in Byte und Länge der Prüfsumme in Byte in den Header geschrieben werden. Dann werden Dateinamenslänge und Prüfsumme angehängt und dieses gesamte Paket wird an den Zielcomputer übermittelt.\par
 Ist die Verbindung verifiziert, wird mit der eigentlichen Übertragung der Datei begonnen, die in kleinen Abschnitten und ohne weitere Kennzeichnung in mehreren kleinen Paketen geschieht(Schritt 3 bis x).
-Das funktioniert, da unser Standard auf TCP/IP aufbaut, welcher bereits die richtige Reihenfolge und Vollständigkeit der Pakete weitgehend sicherstellt und nur eine Verbindung pro Dateiübertragung aktiv ist.
+Das funktioniert, da unser Standard zum Einen auf TCP/IP aufbaut, welcher bereits die richtige Reihenfolge und Vollständigkeit der Pakete weitgehend sicherstellt und zum Anderen nur eine Verbindung pro Dateiübertragung aktiv ist.
 Am Zielcomputer wird die Datei schließlich in einem temporären Standardverzeichnis abgespeichert und Paket für Paket zusammengesetzt.
 Ist die Übertragung nach dem Senden einer bestimmten Bytesequenz vom Zielcomputer beendet, wird ein Signal aus der Managerklasse ausgesendet und die Verbindung getrennt.
 Diese Schrittfolge ist schematisch in Abbildung \ref{file_diagram} dargestellt.
