@@ -6,6 +6,7 @@
 #define MANGO_TERMINALW_H
 #include <QMainWindow>
 #include <QtNetwork/QHostAddress>
+#include <QLabel>
 
 #include <Mangolib>
 
@@ -31,8 +32,9 @@ private:
     Terminal *terminal = nullptr;
     QWidget *central = nullptr;
     FileTable *fileT = nullptr;
+    QLabel *label = nullptr;
 
-    QVBoxLayout *vlayout = nullptr;
+    QVBoxLayout *vlayout = nullptr,*v2layout = nullptr;
     QHBoxLayout *hlayout = nullptr;
 
     Mango::MngFileManager   *fMgr = nullptr;

@@ -16,6 +16,7 @@ class FileTable :public QListView {
 public:
     FileTable(const QString &fileName);
     FileTable();
+    ~FileTable();
     void setFile(const QString& fileName);
 public slots:
     void updateModel();

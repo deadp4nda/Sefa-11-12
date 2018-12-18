@@ -5,7 +5,14 @@
 #include "FileTable.h"
 #include <mangolib_global.h>
 #include <QTimer>
+#include <iostream>
 
+FileTable::~FileTable(){
+    timer->stop();
+    delete timer;
+    csvDB.close();
+    delete model;
+}
 
 FileTable::FileTable(const QString &fileName) {
     timer = new QTimer;
@@ -22,7 +29,7 @@ FileTable::FileTable(const QString &fileName) {
 void FileTable::updateModel() {
     parseFile();
     model->setStringList(modellist);
-    updateModel();
+    QListView::update();
 }
 
 //hash;name;type;size
@@ -43,7 +50,9 @@ QString unicodeType(QString schlapp){
 
 void FileTable::parseFile() {
     modellist.clear();
-    QStringList all = QString(csvDB.readAll()).split("\n");
+    QStringList all = QString(csvDB.readAll()).split("\n",QString::SkipEmptyParts);
+    if(all.isEmpty())
+        return;
     for(QString line : all){
         QStringList temp = line.split(",");
         QString rslt = temp[1].length()>20?temp[1].chopped(temp[1].length() - 17)+"...":temp[1]
@@ -60,7 +69,12 @@ FileTable::FileTable() {
 
 void FileTable::setFile(const QString &fileName) {
     csvDB.setFileName(fileName);
-    csvDB.open(QFile::ReadOnly);
+    if(!csvDB.open(QFile::ReadOnly)){
+        std::cerr << "No Directory file found. now creating a new one\n";
+        csvDB.open(QFile::ReadWrite);
+        csvDB.close();
+        csvDB.open(QFile::ReadOnly);
+    }
     timer->start();
-
+    updateModel();
 }

@@ -56,7 +56,8 @@ void fError(MngFileManager::MangolibError mango){
             break;
         default:
             cbError(ermsg+"Unknown error");
-}}
+    }
+}
 void fJRecv(qint64 recv){cbGPFeedback("BYTES_RECEIVED "+QString::number(recv));}
 void fJSent(qint64 sent){cbGPFeedback("BYTES_SENT " + QString::number(sent));}
 void fNoFls(){cbGPFeedback("NO_FILES_IN_QUEUE");}
@@ -70,8 +71,6 @@ MngFileManager *fMg = nullptr;
 lua_State *L = nullptr;
 
 void connectEverything(MngFileManager*f,MngThManager*i);
-
-
 
 int main(int argc, char *argv[]){
 
@@ -216,7 +215,7 @@ void cbError(const QString &error){
     lua_pushstring(L, error.toStdString().c_str());
     std::cerr << error.toStdString() << std::endl;
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbConnError while calling lua\n";
+        std::cerr << "[ERROR] in cbError while calling lua\n";
     }
     lua_settop(L,0);
 }

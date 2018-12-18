@@ -41,23 +41,31 @@ TerminalW::~TerminalW(){
     fMgr->closeOutgoingConnection();
     iMgr->closeConnection();
     delete terminal;
-    delete vlayout;
-    delete central;
-    delete hlayout;
     delete fileT;
+    delete label;
+    delete vlayout;
+    delete v2layout;
+    delete hlayout;
+    delete central;
 }
 
 void TerminalW::setupGUI() {
-    terminal = new Terminal(this);
     vlayout = new QVBoxLayout;
-    central = new QWidget(this);
     hlayout = new QHBoxLayout;
+    v2layout = new QVBoxLayout;
+
+    label = new QLabel("Files on track");
+    terminal = new Terminal(this);
+    central = new QWidget(this);
     fileT = new FileTable;
+    fileT->setFile(QDir::tempPath() + "/pinkkarriertesclownsfischbatallion/directory.csv");
 
     setCentralWidget(central);
+    v2layout->addWidget(label);
+    v2layout->addWidget(fileT);
     vlayout->addWidget(terminal);
     hlayout->addLayout(vlayout);
-    hlayout->addWidget(fileT);
+    hlayout->addLayout(v2layout);
 
     central->setLayout(hlayout);
     connect(terminal,&Terminal::Message,this,&TerminalW::Message);
