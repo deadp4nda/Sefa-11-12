@@ -18,7 +18,7 @@ include_directories(${CMAKE_SOURCE_DIR}/extern/lua/include)
 
 add_executable(GenUnIn ${GUI_SRC} )
 
-set(CMAKE_EXE_LINKER_FLAGS " -static")
+#set(CMAKE_EXE_LINKER_FLAGS " -static")
 target_link_libraries(GenUnIn Qt5::Core Qt5::Gui Qt5::Widgets MangoLibrary)
 target_link_libraries(GenUnIn lualib)
 target_link_libraries(GenUnIn -static-libgcc -static-libstdc++)
