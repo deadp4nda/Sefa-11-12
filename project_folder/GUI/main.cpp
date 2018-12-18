@@ -148,7 +148,7 @@ int lIssueFile(lua_State *L){
 }
 int lOutputString(lua_State *L){
     const char *msg = lua_tostring(L,1);
-    wnd->issueMessage(msg);
+    wnd->issueMessage(QString(msg),TerminalW::LuaOutput);
     return 0;
 }
 int lConnect(lua_State *L){
@@ -156,7 +156,7 @@ int lConnect(lua_State *L){
     qint32 p = luaL_checkinteger(L,2);
     p=p?p:LPORTO;
     if(adr.isNull()){
-        wnd->issueMessage("ERROR: invalid IP");
+        wnd->issueMessage("ERROR: invalid IP",TerminalW::CError);
     }else{
         iMg->createConnection(adr,p);
         fMg->setConnectionProperties(adr,p);

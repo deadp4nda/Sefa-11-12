@@ -55,7 +55,7 @@ void FileTable::parseFile() {
         return;
     for(QString line : all){
         QStringList temp = line.split(",");
-        QString rslt = temp[1].length()>20?temp[1].chopped(temp[1].length() - 17)+"...":temp[1]
+        QString rslt = temp[1].length()>20?temp[1].left(17)+"...":temp[1]
                 + "   "+ unicodeType(temp[2]);
         modellist.append(rslt);
     }

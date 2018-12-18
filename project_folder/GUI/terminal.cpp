@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "terminal.h"
+#include <QScrollBar>
 
 Terminal::Terminal(QWidget *parent) :QWidget(parent){
     input = new TerminalInput(this);
@@ -18,10 +19,10 @@ Terminal::Terminal(QWidget *parent) :QWidget(parent){
     layout->addWidget(input);
     setLayout(layout);
     connect(input,&QLineEdit::returnPressed,this,&Terminal::returnPressed);
-    output(">>>");
+    term->insertPlainText(">>>");
 }
 
-void Terminal::output(QString sometext) {
+void Terminal::output(QString sometext, QColor col) {
     QString cont = "";
     if(term->toPlainText().count("\n") > 500) {
         cont = term->toPlainText();
@@ -30,12 +31,15 @@ void Terminal::output(QString sometext) {
         term->setText(cont);
     }
     std::cout << cont.toStdString();
-    term->insertPlainText(sometext);
+    term->setTextColor(col);
+    term->insertPlainText("\n>>>" + sometext);
+    auto sb = term->verticalScrollBar();
+    sb->setValue(sb->maximum());
 }
 
 void Terminal::returnPressed() {
     if(input->text()== "")return;
-    output(input->text() + "\n>>>");
+    output(input->text(),Qt::white);
     emit Message(input->text());
     input->clear();
 }

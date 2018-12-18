@@ -2,12 +2,8 @@ project(Genie_Unterstuetzende_Intelligenz C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 set(GUI_SRC main.cpp terminalw.cpp terminalw.h terminal.cpp terminal.h TerminalInput.cpp TerminalInput.h FileTable.cpp FileTable.h)
-
-#set(GUI_UI )
 
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Gui CONFIG REQUIRED)
@@ -20,12 +16,9 @@ get_target_property(QtWidgets_location Qt5::Widgets LOCATION)
 include_directories(${CMAKE_SOURCE_DIR}/MangoLibrary)
 include_directories(${CMAKE_SOURCE_DIR}/extern/lua/include)
 
-add_executable(GenUnIn ${GUI_SRC} )#${GUI_UI})
+add_executable(GenUnIn ${GUI_SRC} )
 
-#set(CMAKE_EXE_LINKER_FLAGS " -static")
-target_link_libraries(GenUnIn Qt5::Core)
-target_link_libraries(GenUnIn Qt5::Gui)
-target_link_libraries(GenUnIn Qt5::Widgets)
-target_link_libraries(GenUnIn MangoLibrary)
+set(CMAKE_EXE_LINKER_FLAGS " -static")
+target_link_libraries(GenUnIn Qt5::Core Qt5::Gui Qt5::Widgets MangoLibrary)
 target_link_libraries(GenUnIn lualib)
 target_link_libraries(GenUnIn -static-libgcc -static-libstdc++)

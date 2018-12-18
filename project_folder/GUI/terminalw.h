@@ -19,10 +19,15 @@
 class TerminalW :public QMainWindow{
     Q_OBJECT
 public:
+    enum Source{
+        UserInput,
+        LuaOutput,
+        CError
+    };
     TerminalW(Mango::MngThManager*,Mango::MngFileManager*,lua_State*);
     ~TerminalW();
 public slots:
-    void issueMessage(QString);
+    void issueMessage(QString, Source);
 private:
     void setupGUI();
 private slots:

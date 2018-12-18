@@ -25,7 +25,7 @@ set(LIB_SRC mangolib.h
 			instructions/mangoconnection.h
                         instructions/mangoconnection.cpp
                         Mangolib)
-			
+
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Network CONFIG REQUIRED)
 

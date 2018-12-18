@@ -72,8 +72,20 @@ void TerminalW::setupGUI() {
     show();
 }
 
-void TerminalW::issueMessage(QString msg) {
-    terminal->output(msg);
+void TerminalW::issueMessage(QString msg,Source src) {
+    switch(src){
+        case UserInput:
+            terminal->output(msg,Qt::white);
+            break;
+        case LuaOutput:
+            terminal->output(msg,Qt::green);
+            break;
+        case CError:
+            terminal->output(msg,Qt::red);
+            break;
+        default:
+            terminal->output(msg,Qt::lightGray);
+    }
 }
 
 void TerminalW::Message(QString msg){

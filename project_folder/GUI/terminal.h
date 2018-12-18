@@ -16,7 +16,7 @@ class Terminal :public QWidget {
 public:
     Terminal(QWidget *parent = nullptr);
 public slots:
-    void output( QString );
+    void output( QString , QColor);
     void returnPressed();
 signals:
     void Message( QString );
