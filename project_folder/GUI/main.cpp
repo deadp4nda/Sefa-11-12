@@ -229,6 +229,7 @@ void cbError(const QString &error){
     lua_settop(L,0);
 }
 void cbGPFeedback(const QString &msg){
+    std::cout << msg.toStdString() << std::endl;
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
     lua_pushnil(L);
