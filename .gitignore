@@ -38,6 +38,7 @@ Makefile
 *.stash
 *.user
 
+project_folder/build/
 cmake-build-debug/
 cmake-build-release/
 .idea/
@@ -46,3 +47,4 @@ build-*/
 *.synctex.gz
 *.aux
 *.toc
+*.dvi
