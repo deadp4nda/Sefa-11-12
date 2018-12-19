@@ -20,6 +20,7 @@ local cert = NIL
 function interpret_input(ui_input)
     local name = "interpret_input: "
     local content = split_input(ui_input)
+    local n = content[1]
     local commands = {
         ["send_file"]=0,
         ["send_comm"]=0,
@@ -33,8 +34,8 @@ function interpret_input(ui_input)
         ["disconnect"]=0,
         ["squit"]=0,
         ["mangomeow"]=0}
-    if commands[content[1]]~=NIL then
-        if content[1]=="y" or content[1]=="n" or cert==true then
+    if commands[n]~=NIL then
+        if n=="y" or n=="n" or cert==true or n=="connect" or n=="squit" then
             local result = _G[content[1]](content)
         else
             t_write("ERROR: "..name.."Zertifikat ungültig!")
@@ -123,6 +124,30 @@ function send_comm(args)
     end
 end
 
+function instr_lookup(key)
+    local inst = {
+        ["Exit"]=0,
+        ["Kill"]=0,
+        ["GetFileList"]=0,
+        ["GetPrgmList"]=0,
+        ["RetrieveFile"]=0,
+        ["Execute"]=0,
+        ["Chat"]=0,
+        ["FileToBeSent"]=0,
+        ["InvalidInstr"]=0
+    }
+    --whatever
+end
+
+function prog_lookup(key)
+    local prog={
+        ["This"]=0,
+        ["InvalidProg"]=0,
+        ["Bash"]=0
+    }
+    --whatever II
+end
+
 
 -- || --
 -- Eingabe:
@@ -175,8 +200,11 @@ function connect(args)
     local argument_number = get_length(args)
     if argument_number==1 or argument_number==2 then
         local ip = args[2]
-        local port = tonumber(args[3])
+        local port = tonumber("0x4242")
+        t_write("test")
         c_connect_to(ip, port)
+        t_write("done")
+        y()
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
@@ -238,6 +266,7 @@ function n()
 end
 
 function certificate()
+    --TODO
     local IP = "whatever, muss ich noch einfügen"
     local msg = "Eingehende verbindung von "..IP..". Ablehnen mit 'n', Annehmen mit 'y'."
     t_write(msg)
