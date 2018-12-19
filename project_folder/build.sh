@@ -1,4 +1,3 @@
 mkdir build
-cd build
-cmake -Wdev -G "Unix Makefiles" ../
+cmake -Wdev -G "Unix Makefiles" -B build -S .
 make
