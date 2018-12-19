@@ -112,7 +112,7 @@ void connectEverything(MngFileManager*f,MngThManager*i){
     QObject::connect(i,&MngThManager::Message,cbInstructionIn);
     QObject::connect(i,&MngThManager::connectionInitiated,iConnInit);
     QObject::connect(i,&MngThManager::connectionClosed,iConnClsd);
-    QObject::connect(i,&MngThManager::connectionInitiated,cbConnVerification);
+    //QObject::connect(i,&MngThManager::connectionInitiated,cbConnVerification);
     QObject::connect(i,&MngThManager::connectionReceived,cbConnectionReceived);
 
     QObject::connect(f,&MngFileManager::fileReceivingStarted,       cbFileInStart);
@@ -239,6 +239,7 @@ void cbGPFeedback(const QString &msg){
     lua_settop(L,0);
 }
 void cbConnectionReceived(){
+    std::cout << "cbConnReceived\n";
     lua_getglobal(L,"certificate");
     if(lua_pcall(L,0,0,0) != 0){
         std::cerr << "[ERROR] in cbConnectionReceived while calling lua\n";
