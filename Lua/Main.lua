@@ -15,7 +15,7 @@
 -- Eingabe: String - UI-Eingabe
 -- Ausgabe: Funktionsaufruf
 
-local cert = NIL
+local cert = nil
 
 function interpret_input(ui_input)
     local name = "interpret_input: "
@@ -34,7 +34,7 @@ function interpret_input(ui_input)
         ["disconnect"]=0,
         ["squit"]=0,
         ["mangomeow"]=0}
-    if commands[n]~=NIL then
+    if commands[n]~=nil then
         if n=="y" or n=="n" or cert==true or n=="connect" or n=="squit" then
             local result = _G[content[1]](content)
         else
@@ -200,8 +200,11 @@ function connect(args)
     local argument_number = get_length(args)
     if argument_number==1 or argument_number==2 then
         local ip = args[2]
-        local port = tonumber("0x4242")
-        t_write("test")
+        if args[3]==nil then
+            local port = 0
+        else
+            local port = tonumber(args[3])
+        end
         c_connect_to(ip, port)
         t_write("done")
         y()
@@ -249,7 +252,7 @@ function shutdown(args)
 end
 
 function y()
-    if cert == NIL then
+    if cert == nil then
 
         cert=true
     end
@@ -257,7 +260,7 @@ function y()
 end
 
 function n()
-    if cert == NIL then
+    if cert == nil then
         cert=false
 
 
@@ -316,23 +319,22 @@ function filetrans_end()
 end
 
 function table_contains(tab, key)
-    return tab[key]~=NIL
+    return tab[key]~=nil
 end
 
 function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
-        ["CONNECTION_INITIATED"]="",
-        ["CONNECTION_CLOSED"]="",
-        ["FILE_CANCELLED"]="",
-        ["REMOTE_CONNECTION_RECEIVED"]="",
-        ["REMOTE_CONNECTION_CLOSED"]="",
-        ["BYTES_RECEIVED"]=" "..arg[2],
-        ["BYTES_SENT"]=" "..arg[2],
-        ["NO_FILES_IN_QUEUE"]="",
-        ["TRANSMISSION_STARTED"]="",
-        ["TRANSMISSION_ENDED"]="",
-        ["CONNECTION_INITIATED"]=""
+        ["CONNECTION_INITIATED"]="Verbindung erfolgreich initialisiert",
+        ["CONNECTION_CLOSED"]="Verbindung beendet",
+        ["FILE_CANCELLED"]="Dateiübertregung abgebrochen",
+        ["REMOTE_CONNECTION_RECEIVED"]="Eingehende Verbindung erhalten",
+        ["REMOTE_CONNECTION_CLOSED"]="Eingehende Verbindung beendet",
+        ["BYTES_RECEIVED"]="Empfangene Bytes: "..arg[2],
+        ["BYTES_SENT"]="Gesendete Bytes: "..arg[2],
+        ["NO_FILES_IN_QUEUE"]="Keine Dateien in der Warteschlange",
+        ["TRANSMISSION_STARTED"]="Übertragung gestartet",
+        ["TRANSMISSION_ENDED"]="Übertragung beendet"
     }
     local request = {
         ["GET_FILES"]="",
