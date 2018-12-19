@@ -33,12 +33,6 @@
 					<Add directory="D:/dev/Qt/5.12.0/mingw73_64/include/QtCore"/>
 					<Add directory="D:/dev/Qt/5.12.0/mingw73_64/./mkspecs/win32-g++"/>
 					<Add directory="D:/dev/Qt/5.12.0/mingw73_64/include/QtNetwork"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="D:/dev/Qt/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;F:/GitHub/Sefa-11-12/project_folder/build/MangoLibrary/Makefile&quot;  VERBOSE=1 MangoLibrary"/>
@@ -63,12 +57,6 @@
 					<Add directory="D:/dev/Qt/5.12.0/mingw73_64/include/QtCore"/>
 					<Add directory="D:/dev/Qt/5.12.0/mingw73_64/./mkspecs/win32-g++"/>
 					<Add directory="D:/dev/Qt/5.12.0/mingw73_64/include/QtNetwork"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
-					<Add directory="D:/dev/Qt/Tools/mingw730_64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="D:/dev/Qt/Tools/mingw730_64/bin/mingw32-make.exe -f &quot;F:/GitHub/Sefa-11-12/project_folder/build/MangoLibrary/Makefile&quot;  VERBOSE=1 MangoLibrary/fast"/>

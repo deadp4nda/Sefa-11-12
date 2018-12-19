@@ -32,6 +32,7 @@ signals:
 signals: // connection-based intern signals
     void connectionClosed();
     void connectionInitiated();
+    void connectionReceived();
 private:
     QQueue<SafeInstruction> instructions;
     QTimer *timer = nullptr;

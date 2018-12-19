@@ -4,13 +4,13 @@
 #include "mangolib_global.h"
 
 
-#include <QSslSocket>
+#include <QTcpSocket>
 #include <QDir>
 
 class QTimer;
 
 namespace Mango{
-class MngSendFileSocket : public QSslSocket
+class MngSendFileSocket : public QTcpSocket
 {
     Q_OBJECT
 public:

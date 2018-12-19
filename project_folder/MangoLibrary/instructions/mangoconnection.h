@@ -1,14 +1,14 @@
 ﻿#ifndef MONGOCONNECTION_H
 #define MONGOCONNECTION_H
 
-#include <QSslSocket>
+#include <QTcpSocket>
 #include "mangolib_global.h"
 #include <thread>
 #include <memory>
 #include <QDataStream>
 
 namespace Mango{
-class MangoConnection : public QSslSocket
+class MangoConnection : public QTcpSocket
 {
     Q_OBJECT
 public:

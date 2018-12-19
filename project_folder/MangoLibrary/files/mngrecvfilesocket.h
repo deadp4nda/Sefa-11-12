@@ -3,11 +3,11 @@
 
 #include "mangolib_global.h"
 
-#include <QSslSocket>
+#include <QTcpSocket>
 #include <QDir>
 
 namespace Mango{
-class MngRecvFileSocket : public QSslSocket
+class MngRecvFileSocket : public QTcpSocket
 {
     Q_OBJECT
 public:

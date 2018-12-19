@@ -16,7 +16,7 @@ MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
     timer->setInterval(500);
     server = new MngFileServer(serverPort,stdDir.absolutePath(),this);
     serverActive = server->isListening();
-    if(serverActive)qDebug() << "Server active";
+    if(serverActive) std::cerr << "FileServer active @ " << server->serverPort() << std::endl;
 
     QObject::connect(timer,&QTimer::timeout,
                      this,&MngFileManager::updateManager);

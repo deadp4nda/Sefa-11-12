@@ -21,6 +21,7 @@ MngThManager::MngThManager(quint16 listenPort, QObject *parent):
             this,SLOT(handleServerError(QAbstractSocket::SocketError)));
     if(server->isListening()){
         serverActive = true;
+        std::cerr << "Instruction Server active @ " << server->serverPort() << std::endl;
     }
     timer  = new QTimer(this);
     timer->start(10);
@@ -41,7 +42,7 @@ void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
         closeConnection();
     }
     MangoConnection *tmp = new MangoConnection(addr,port,this);
-    tmp->waitForEncrypted();
+    tmp->waitForConnected();
     if(tmp->state() == MangoConnection::ConnectedState){
         client = tmp;
         address = addr;
@@ -54,7 +55,7 @@ void MngThManager::incomingConnection(MangoConnection *nClnt){
     }
     if(nClnt->state() == MangoConnection::ConnectedState){
         client = nClnt;
-        emit connectionInitiated();
+        emit connectionReceived();
     }
 }
 void MngThManager::closeConnection(){

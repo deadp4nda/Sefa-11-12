@@ -28,6 +28,7 @@ void cbFileInComplete();
 void cbConnVerification();
 void cbError(const QString& error);
 void cbGPFeedback(const QString &msg);
+void cbConnectionReceived();
 
 void iConnInit(){cbGPFeedback("CONNECTION_INITIATED");}
 void iConnClsd(){cbGPFeedback("CONNECTION_CLOSED");}
@@ -112,6 +113,7 @@ void connectEverything(MngFileManager*f,MngThManager*i){
     QObject::connect(i,&MngThManager::connectionInitiated,iConnInit);
     QObject::connect(i,&MngThManager::connectionClosed,iConnClsd);
     QObject::connect(i,&MngThManager::connectionInitiated,cbConnVerification);
+    QObject::connect(i,&MngThManager::connectionReceived,cbConnectionReceived);
 
     QObject::connect(f,&MngFileManager::fileReceivingStarted,       cbFileInStart);
     QObject::connect(f,&MngFileManager::fileTransmissionStarted,    fFileTransStart);
@@ -130,6 +132,7 @@ void connectEverything(MngFileManager*f,MngThManager*i){
 
 extern "C"{
 int lIssueInstruction(lua_State *L){ //
+    std::cerr << "lIssueInstruction\n";
     qint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
     qint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
     const char* payload= lua_tostring(L,3);             //data
@@ -139,6 +142,7 @@ int lIssueInstruction(lua_State *L){ //
     return 0;
 }
 int lIssueFile(lua_State *L){
+    std::cerr << "lIssueFile\n";
     const char *fName = lua_tostring(L,1);
     qint64 type = luaL_checkinteger(L,2);
     QFile file(fName);
@@ -147,14 +151,17 @@ int lIssueFile(lua_State *L){
     return 0;
 }
 int lOutputString(lua_State *L){
+    std::cerr << "lOutputString\n";
     const char *msg = lua_tostring(L,1);
     wnd->issueMessage(QString(msg),TerminalW::LuaOutput);
     return 0;
 }
 int lConnect(lua_State *L){
-    QHostAddress adr(QString(lua_tostring(L,1)));
-    qint32 p = luaL_checkinteger(L,2);
-    p=p?p:LPORTO;
+    std::cerr << "lConnect\n";
+    QString irgendwas = lua_tostring(L,1);
+    QHostAddress adr(irgendwas);
+    qint16 p = (qint16)luaL_checkinteger(L,2);
+    p = (qint16)(p ? p : LPORTO);
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP",TerminalW::CError);
     }else{
@@ -164,6 +171,7 @@ int lConnect(lua_State *L){
     return 0;
 }
 int lDisconnect(lua_State *){
+    std::cerr << "lDisconnect\n";
     iMg->closeConnection();
     fMg->closeOutgoingConnection();
     fMg->closeIncomingConnection();
@@ -171,6 +179,7 @@ int lDisconnect(lua_State *){
 }
 
 int lQuit(lua_State *){
+    std::cerr << "lQuit\n";
     wnd->close();
     return 0;
 }
@@ -225,6 +234,13 @@ void cbGPFeedback(const QString &msg){
     lua_pushnil(L);
     if(lua_pcall(L,2,0,0) != 0){
         std::cerr << "[ERROR] in cbGPFeedback while calling lua\n";
+    }
+    lua_settop(L,0);
+}
+void cbConnectionReceived(){
+    lua_getglobal(L,"certificate");
+    if(lua_pcall(L,0,0,0) != 0){
+        std::cerr << "[ERROR] in cbConnectionReceived while calling lua\n";
     }
     lua_settop(L,0);
 }
