@@ -15,8 +15,7 @@ Um auch Computern Informationen zu übermitteln, und eine maschinelle Verarbeitu
 Da Sprachen in der Regel durch das Aneinanderreihen von einzelnen Sprachelementen über eine Unendlichkeit verfügen, nutzt man künstliche Grammatiken der Form $G = (N, T, P, s)$, um diese zu beschreiben. Eine Grammatik $G$ dieser Art verfügt über eine Menge von nichtterminalen Symbolen $N$, oder auch Variablen genannt, welche im Verlauf der Wortbildung durch die Menge der Produktionsregeln $P$ der Form $U \rightarrow V$ durch eine Kombination aus terminalen Zeichen der Menge $T$ ersetzt werden. Das Startsymbol $s$ ist zwingend die erste Variable, welche durch eine Produktion der Form $s \rightarrow V$ ersetzt wird. Ein Wort gehört einer Grammatik $G$ an, wenn es nur noch aus terminalen Symbolen der Menge $T_G$ besteht und ausgehend von dem Startsymbol $S_G$ mit den Produktionen der Menge $P_G$ gebildet werden kann.\footnote{$	https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.040/Formale_Methoden_der_Informatik$\\$/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen_Vorlesung.pdf$
 ; 19.11.2018}\\
 Je nachdem nach welcher Art die Produktionsregeln einer Grammatik aufgebaut sind, lässt sich eine formale Sprache nach dem Informatiker Noam Chomsky in vier Typen einteilen. Grundsätzlich gehört jede Sprache dem Typ 0 der allgemeinen Sprachen an. Eine Sprache gehört immer einem Typ $X$ an, wenn alle Bedingungen  der Typen $\leq X$ für alle Produktionsregeln der Form $U \rightarrow V$ erfüllt sind. Die Bedingung für eine kontextsensitive Sprache des Typs 1 besagt, dass durch eine Produktionsregel das Wort nicht verkürzt werden kann, also $|U| \leq |V|$. Für eine kontextfreie Sprache des Typs 2 gilt, dass durch eine Produktionsregel nur jeweils eine Variable ersetzt werden kann, also $|U| = 1$. Eine Sprache ist eine reguläre Sprache des Typs 3, wenn ein nichtterminales Symbol mit einer Produktionsregel durch ein terminales Symbol und ein optionales nichtterminales Symbol ersetzt wird, jedoch nicht durch mehre, also $U \leq a|aB$. \footnote{I. Wegener;	Theoretische Informatik; Kap.5}\\
-Um die Darstellung von Sprachen zu vereinheitlichen, wurde die Erweiterte-Backus-Nauer-Form, kurz EBNF entwickelt. Die oben gegebenen Zeichen sind Teil des EBNF ISO-Standards und durch sie lässt sich jede beliebige Formale Sprache beschreiben.\\
-\begin{table}[]
+\begin{table}[h!]
 \begin{tabular}{|ll|ll|}
 \hline
 Verwendung                    & Zeichen   & Verwendung                    & Zeichen \\ \hline
@@ -28,6 +27,8 @@ Anführungszeichen 2. Variante & '...'     & Kommentar                      & (*
 Spezielle Sequenz             & ?...?     & Ausnahme                      & -       \\ \hline
 \end{tabular}
 \end{table}
+Um die Darstellung von Sprachen zu vereinheitlichen, wurde die Erweiterte-Backus-Nauer-Form, kurz EBNF entwickelt. Die oben gegebenen Zeichen sind Teil des EBNF ISO-Standards und durch sie lässt sich jede beliebige Formale Sprache beschreiben.\\
+
  
 \subsubsection{Spezifikation unserer Skriptsprache anhand unserer Ansprüche an den Funktionsumfang}
 Für unser Programm haben wir uns grundlegend vorgenommen, Funktionen für das Versenden von Dateien, sowie Befehlen an einen zweiten PC bereitzustellen. Es erfordert also in gewissem Maßen eine Kommunikation zwischen dem Nutzer und dem Programm, um die Wünsche des Bedieners genauer zu spezifizieren und der Software zu übermitteln. Um dies zu bewerkstelligen entschieden wir uns, eine eigene formale Sprache zu entwickeln, mit dem Ziel Befehle an das Programm mit den entsprechenden Argumenten zu übermitteln, welche über ein Konsolenfenster eingegeben werden.
@@ -37,16 +38,17 @@ Unsere Sprache sollte Folgende Anweisungen beinhalten:\\
 \begin{tabular}{|ll|}
 \hline
 Befehl & Argumente \\ \hline
-send\_file & ip\_address file\_name file\_type \\
-send\_comm & ip\_address comm\_name {[}arguments{]} \\
-get\_file & ip\_address file\_name file\_type \\
-root\_mode & [duration]\\
-shutdown [send\_comm] & ip\_address \\
-open [send\_file] & ip\_address file\_name file\_type \\ \hline
+send\_file & file\_name file\_type \\
+send\_comm & comm\_name {[}arguments{]} \\
+get\_file & file\_name file\_type \\
+connect & ip\_address [port]\\
+disconnect & \\
+reconnect & ip\_address [port]\\
+shutdown [send\_comm] & \\
+open [send\_file] & file\_name file\_type \\ \hline
 \end{tabular}
 \end{table}\\
-Die Befehle $send\_file$ und $send\_comm$ sind hierbei die allgemeinen Funktionen zum Senden einer Datei oder eines Befehls an die betriebssystemeigene Kommandozeile, jeglicher Art. Das Kommando $get\_file$ ist identisch zu $send\_file$ mit dem Unterschied, dass eine Datei von dem angefragten PC auf den anfragenden übertragen werden soll.
-Durch die $root_mode$ Befehl werden alle Übermittlungsanfragen automatisch als akzeptiert gewertet, was das Fernsteuern von Computern ermöglichen soll.
+Die Befehle $send\_file$ und $send\_comm$ sind hierbei die allgemeinen Funktionen zum Senden einer Datei oder eines Befehls an die betriebssystemeigene Kommandozeile, jeglicher Art. Das Kommando $get\_file$ ist identisch zu $send\_file$ mit dem Unterschied, dass eine Datei von dem angefragten PC auf den anfragenden übertragen werden soll. Mit den Anweisungen ($dis-$/$re-$)$connect$ wird der grundlegendee Verbindungsaufbau gesteuert. Durch den $connect$-Befehl wird versucht eine Verbindung zu der als Argument übergebene IP-Addresse zu errichten. $disconnect$ bewirkt die Beendigung einer bestehenden Verbindung, $reconnct$ versucht zusätrzlich eine neue Verbindung zu erstellen. 
 $shutdown$ und $open$ sind spezielle versendete Anweisungen, zum Herunterfahren des Zielcomputers und Öffnen einer Datei, bei denen wir es aufgrund ihrer frequentierten Nutzung für sinnvoll hielten, sie eigenständig in unsere formale Sprache zu integrieren. Sie basieren auf den zwei Grundfunktionen und stehen symbolisch für die Erweiterbarkeit des Funktionsumfangs unserer Software. In dem Fall, dass eine neue Verbindung zu einem anderen Computer aufgebaut wird, muss zwangsweise mit jeder getätigten Anweisung an das Programm eine IP-Adresse des Empfängercomputers der Form IPv4 oder IPv6 als Argument übergeben werden. Zusätzlich für Befehle, welche mit Dateien arbeiten sollen, müssen sowohl der Dateiname als auch das Dateiformat als Zeichenkette angefügt werden. Die Übermittlungsfunktionen für Anweisungen benötigt neben dem Anweisungsnamen als Zeichenkette auch optionale Argumente, mit welchem die Anweisung in der Kommandozeile ausgeführt werden soll.\\
 Um unsere formale Sprache zu implementieren, entwickelten wir zuerst eine Darstellung der Eweiterten-Backus-Nauer-Form, diese ist im Anhang einzusehen. Eine solche Darstellung hat den Vorteil einer unkomplizierten Übertragung der Produktionsregeln in die Implementierung, welche die Nutzereingaben überprüft.
 
@@ -68,47 +70,49 @@ Als Kompromiss zwischen allen beschriebenen Ansprüchen entschieden wir uns für
 
 
 \subsubsection{Erläuterung wesentlicher Elemente der Implementierung}
-Eine zentrale Rolle in der Umsetzung unserer Eingabeverarbeitung spielt die Interpreter Funktion. Ihre Aufgabe besteht darin, die von dem Nutzer in Form einer Zeichenkette gelieferten Eingabe, in eine für das Programm verständliche Anweisung zu übertragen. Sie ruft außerdem die Funktionen auf, welche die gewünschte Funktionalität implementieren, und übergibt ihnen die eingegebenen Parameter zur weiterführenden Überprüfung.\\
-\begin{lstlisting}[caption = {Interpreter Funktion}]
-function interpret_input(ui_input)
-    local content = split_input(ui_input)
-    local commands = {
-        ["send_file"]=0,
-        ["send_comm"]=0,
-        ["get"]=0,
-        ["open"]=0,
-        ["shutdown"]=0}
-    if commands[content[1]]~=NIL then
-        local result = _G[content[1]](content)
-        print(result)
-    else
-        local name = debug.getinfo(1, "n").name..": "
-        local subject = string.format("%q",content[1])
-        print("ERROR: "..name..subject.." - unbekannter Befehl!")
-    end
-end
-\end{lstlisting}\hfill\\
+Eine zentrale Rolle in der Umsetzung unserer Eingabeverarbeitung spielt die Interpreter Funktion. Ihre Aufgabe besteht darin, die von dem Nutzer in Form einer Zeichenkette gelieferten Eingabe, in eine für das Programm verständliche Anweisung zu übertragen. Sie ruft außerdem die Funktionen auf, welche die gewünschte Funktionalität implementieren, und übergibt ihnen die eingegebenen Parameter zur weiterführenden Überprüfung.\\\hfill\\
+\includegraphics[scale=0.75]{templ}\\
+%\begin{lstlisting}[caption = {Interpreter Funktion}]
+%function interpret_input(ui_input)
+%    local content = split_input(ui_input)
+%    local commands = {
+%        ["send_file"]=0,
+%        ["send_comm"]=0,
+%        ["get"]=0,
+%        ["open"]=0,
+%        ["shutdown"]=0}
+%    if commands[content[1]]~=NIL then
+%        local result = _G[content[1]](content)
+%        print(result)
+%    else
+%        local name = debug.getinfo(1, "n").name..": "
+%        local subject = string.format("%q",content[1])
+%        print("ERROR: "..name..subject.." - unbekannter Befehl!")
+%    end
+%end
+%\end{lstlisting}\hfill\\
 Die Variable $content$ ist eine Liste der eingegebenen Wörter, sie wird durch die Funktion $split\_input$ erstellt, welche die rohe eingegebene Zeichenkette an den Leerzeichen teilt, und demnach wortweise abspeichert. In der Liste $commands$ wird der Befehlssatz gespeichert, hierbei wird dem Namen von jedem verfügbaren Befehl ein Wert zugeordnet, es spielt keine Rolle welcher Wert es ist, wichtig ist nur, dass die Variablen initialisiert sind und nicht keinen zugeordneten Wert haben. In der folgenden $If-Else$-Bedingung wird überprüft, ob der eingegebene Befehl ein Teil des Befehlssatzes ist, sprich ob in der Liste $commands$ ein Wert für den gewünschten Befehl vorliegt. Ist dies nicht der Fall, gibt die Funktion einen Fehler der Form \glqq$ERROR: interpret\_content: EINGABE - unbekannter Befehl!$\grqq\ aus, und es wird keine Übertragung eingeleitet. Wenn die eingegebene Anweisung Teil des Befehlssatzes ist, so wird die entsprechende Funktion mit den übergebenen Parametern aufgerufen, und das Ergebnis in der Variable $result$ gespeichert. Der Aufruf geschieht durch die Lua-Interne Funktion $.G[STRING](ARGUMENTS)$, welche eine Zeichenkette als Input fordert, und eine Funktion dieses Namens mit den gewünschten Argumenten $ARGUMENTS$ aufruft.\\ Die gewählte Form der Implementierung, dass der Befehlssatz in einer Liste bestehend aus den Namen der zugehörigen Funktionen, gespeichert ist, ermöglicht eine unkomplizierte Erweiterung der grundlegenden Befehle durch neue Funktionalität, welche möglicherweise spezifischere Ansprüche an das Protokoll fordert. Beispiel hierfür ist die Implementierung von Streaming, die einen ständigen Erhalt der Netzwerkverbindung zwischen den zwei Rechnern benötigen würde. \\
-Die eigentlichen Funktionen sind alle nach einem ähnlichen Schema aufgebaut. Es gibt zwei verschachtelte $If-Else$-Bedingungen die erfüllt werden müssen, um die eigentliche Übertragung auszulösen. In der ersten wird überprüft, ob die Anzahl der eingegebenen Parameter mit der für den Befehl benötigten übereinstimmt. Ist dies der Fall, so wird eine erste Übertragung mit dem Zweck der Autorisierung gestartet. Es wird eine zu bestätigende Anfrage an den Empfänger-PC geschickt, welche standardmäßig nach 10 Sekunden ausläuft. Wenn eine Bestätigung in besagtem Zeitraum stattfindet, so wird die eigentliche Übertragung initialisiert. Schlägt eine der Bedingungen fehl, so wird der Vorgang abgebrochen und eine Fehlermeldung entsprechen der oben dargestellten Form ausgegeben.
-\begin{lstlisting}[caption = {Beispielhafte Sende Funktion}]
-function send_NAME(args)
-local name = debug.getinfo(1, "n").name
-    if get_length(args)==INTEGER then
-        local ARG1 = args[2]
-        ...
-        local ARGN = args[N+1]
-        if authenticate(ip) then
-            local blank = "c_sendNAME(ARG1, ..., ARGN))"
-        else
-        	local type = " - Uebertragung wurde abgelehnt"
-            print("ERROR: "..name..type)
-        end
-    else
-    	local type = " - Argumentenzahl unpassend"
-        print("ERROR: "..name..type)
-    end
-end
-\end{lstlisting}
+Die eigentlichen Funktionen sind alle nach einem ähnlichen Schema aufgebaut. Es gibt zwei verschachtelte $If-Else$-Bedingungen die erfüllt werden müssen, um die eigentliche Übertragung auszulösen. In der ersten wird überprüft, ob die gewünschte Übertragung Autorisiert ist. Dies ist der Fall, wenn auf dem Computer an den die Übertragung gerichtet ist, der Verbindung zugestimmt wurde. Die zweite Bedingung prüft, ob die Anzhal der gegebenen Argumente mit der Anzahl an geforderten Argumenten übereinstimmt. Schlägt eine der Bedingungen fehl, so wird der Vorgang abgebrochen und eine Fehlermeldung entsprechen der oben dargestellten Form ausgegeben. Sind beide Forderungen erfüllt, werden die Argumente, welche als Zeichenkette eingegeben wurden, in die notwendigen Datentypen konvertiert und die zu den Funktionen zugehörigen Anbindungen an das Netzwerkprotokoll initialisiert.  \\\hfill\\
+\includegraphics[scale=0.75]{inp}\\
+%\begin{lstlisting}[caption = {Beispielhafte Sende Funktion}]
+%function send_NAME(args)
+%local name = debug.getinfo(1, "n").name
+%    if get_length(args)==INTEGER then
+%        local ARG1 = args[2]
+%        ...
+%        local ARGN = args[N+1]
+%        if authenticate(ip) then
+%            local blank = "c_sendNAME(ARG1, ..., ARGN))"
+%        else
+%        	local type = " - Uebertragung wurde abgelehnt"
+%            print("ERROR: "..name..type)
+%        end
+%    else
+%    	local type = " - Argumentenzahl unpassend"
+%        print("ERROR: "..name..type)
+%    end
+%end
+%\end{lstlisting}
 %\newpage
 
 %\end{document}
