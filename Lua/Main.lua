@@ -21,6 +21,8 @@ local http = require("socket.http")
 
 local cert = nil
 
+startup()
+
 function interpret_input(ui_input)
     local name = "interpret_input: "
     local content = split_input(ui_input)
