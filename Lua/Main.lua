@@ -4,6 +4,10 @@
 ---TODO: programm lookup table
 --
 
+-- INCLUDES:
+local http = require("socket.http")
+
+
 
 ---___SEND___---
 
@@ -72,6 +76,11 @@ end
 ---
 --- COMMANDS ---
 ---
+
+function startup()
+    local ext_ip = http.request("https://api.ipify.org")
+    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   "..ext_ip.."\n LOCAL: ".."PLATZHALTER")
+end
 
 function squit(args)
     c_squit()
@@ -365,3 +374,4 @@ end
 --s = "send_filex 127:a:0:1:b filename mp4"
 -- TODO error()
 --feedback("BYTES_RECEIVED MEWO")
+--startup()
