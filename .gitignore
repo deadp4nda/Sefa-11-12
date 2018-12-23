@@ -38,15 +38,14 @@ Makefile
 *.stash
 *.user
 
-cmake-build-debug/
-cmake-build-release/
 CMakeFiles/
 *_autogen/
 cmake_install.cmake
 CMakeCache.txt
 bin/
 .idea/
-build-*/
+buil*/
+project_folder/build/
 *.log
 *.synctex.gz
 *.aux

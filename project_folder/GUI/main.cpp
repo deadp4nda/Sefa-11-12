@@ -59,6 +59,7 @@ void fError(MngFileManager::MangolibError mango){
             cbError(ermsg+"Unknown error");
     }
 }
+
 void fJRecv(qint64 recv){cbGPFeedback("BYTES_RECEIVED "+QString::number(recv));}
 void fJSent(qint64 sent){cbGPFeedback("BYTES_SENT " + QString::number(sent));}
 void fNoFls(){cbGPFeedback("NO_FILES_IN_QUEUE");}
@@ -91,8 +92,8 @@ int main(int argc, char *argv[]){
     lua_pushcfunction(L,lQuit);
     lua_setglobal(L,"c_squit");
 
-    std::cerr << QFile::exists("Main.lua") << std::endl;
-    luaL_dofile(L,"Main.lua");
+    std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
+    luaL_dofile(L,"../../../Lua/Main.lua");
 
     QApplication app(argc,argv);
     iMg = new MngThManager(LPORTO+1);
@@ -109,11 +110,11 @@ int main(int argc, char *argv[]){
 }
 
 void connectEverything(MngFileManager*f,MngThManager*i){
-    QObject::connect(i,&MngThManager::Message,cbInstructionIn);
-    QObject::connect(i,&MngThManager::connectionInitiated,iConnInit);
-    QObject::connect(i,&MngThManager::connectionClosed,iConnClsd);
-    //QObject::connect(i,&MngThManager::connectionInitiated,cbConnVerification);
-    QObject::connect(i,&MngThManager::connectionReceived,cbConnectionReceived);
+    QObject::connect(i,&MngThManager::Message,                      cbInstructionIn);
+    QObject::connect(i,&MngThManager::connectionInitiated,          iConnInit);
+    QObject::connect(i,&MngThManager::connectionClosed,             iConnClsd);
+    //QObject::connect(i,&MngThManager::connectionInitiated,          cbConnVerification);
+    QObject::connect(i,&MngThManager::connectionReceived,           cbConnectionReceived);
 
     QObject::connect(f,&MngFileManager::fileReceivingStarted,       cbFileInStart);
     QObject::connect(f,&MngFileManager::fileTransmissionStarted,    fFileTransStart);
@@ -135,7 +136,7 @@ int lIssueInstruction(lua_State *L){ //
     std::cerr << "lIssueInstruction\n";
     qint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
     qint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
-    const char* payload= lua_tostring(L,3);             //data
+    const char* payload= lua_tostring(L,3);                     //data
     qint32 args  = (quint32)luaL_checkinteger(L,4);             //args
 
     iMg->enqueueInstruction(instr,toPrg,QByteArray(payload),args);
