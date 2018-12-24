@@ -3,7 +3,7 @@ project(liblua)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(libSrc 	
-		lapi.c
+	lapi.c
         lcode.c
         lctype.c
         ldebug.c
@@ -39,7 +39,12 @@ set(libSrc
         )
 
 if(UNIX AND NOT APPLE)
-	set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-DLUA_USE_LINUX -DLUA_USE_POSIX -DLUA_USE_DLOPEN")
+	
+	set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-DLUA_USE_LINUX")
+	
 endif()
 		
 add_library(lualib STATIC ${libSrc})
+
+target_link_libraries(lualib dl)
+
