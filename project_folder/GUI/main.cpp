@@ -7,6 +7,8 @@
 
 #include <instructions/instructionhansz.h>
 #include <files/filehansz.h>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QNetworkReply>
 
 #include "terminalw.h"
 
@@ -21,6 +23,7 @@ static int lOutputString(lua_State *L);
 static int lConnect(lua_State *L);
 static int lDisconnect(lua_State *L);
 static int lQuit(lua_State *);
+static int lGetWan(lua_State *);
 
 void cbInstructionIn(SafeInstruction);
 void cbFileInStart(SafeFileHansz);
@@ -71,6 +74,7 @@ TerminalW *wnd = nullptr;
 MngThManager *iMg = nullptr;
 MngFileManager *fMg = nullptr;
 lua_State *L = nullptr;
+QNetworkAccessManager *manager = new QNetworkAccessManager();
 
 void connectEverything(MngFileManager*f,MngThManager*i);
 
@@ -91,6 +95,8 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"c_disconnect");
     lua_pushcfunction(L,lQuit);
     lua_setglobal(L,"c_squit");
+    lua_pushcfunction(L,lGetWan);
+    lua_setglobal(L,"c_getwan");
 
     std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
     luaL_dofile(L,"../../../Lua/Main.lua");
@@ -184,6 +190,28 @@ int lQuit(lua_State *){
     wnd->close();
     return 0;
 }
+
+int lGetWan(lua_State *L){
+    QTimer timer;
+    QEventLoop loop;
+    QObject::connect(&timer,&QTimer::timeout,&loop,&QEventLoop::quit);
+    QObject::connect(manager, &QNetworkAccessManager::finished,&loop,&QEventLoop::quit);
+    QObject::connect(manager, &QNetworkAccessManager::finished,[=](QNetworkReply *reply){
+        if(reply->error()){
+            std::cerr << reply->errorString().toStdString() << std::endl;
+            lua_pushstring(L, reply->errorString().toStdString().c_str());
+        }else {
+            lua_pushstring(L, QString(reply->readAll()).toStdString().c_str());
+        }
+    });
+    QNetworkRequest req;
+    req.setUrl(QUrl("https://api.ipify.org"));
+    manager->get(req);
+    timer.start(20000);
+    loop.exec();
+    return 1;
+}
+
 void cbInstructionIn(SafeInstruction inst) {
     lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
