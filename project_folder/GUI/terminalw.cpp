@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include "terminalw.h"
 #include <lua.hpp>
 

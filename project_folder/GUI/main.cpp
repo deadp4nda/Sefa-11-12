@@ -102,12 +102,14 @@ int main(int argc, char *argv[]){
 
     QApplication app(argc,argv);
 
-    luaL_dofile(L,"../../../Lua/Main.lua");
+
     iMg = new MngThManager(LPORTO+1);
     fMg = new MngFileManager(LPORTO);
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
+    luaL_dofile(L,"../../../Lua/Main.lua");
+    
     int ret = app.exec();
     delete wnd;
     delete iMg;
@@ -206,7 +208,8 @@ int lGetWan(lua_State *L){
         }
     });
     QNetworkRequest req;
-    req.setUrl(QUrl("https://api.ipify.org"));
+    QUrl forrealnow("https://api.ipify.org");
+    req.setUrl(forrealnow);
     manager->get(req);
     timer.start(20000);
     loop.exec();
