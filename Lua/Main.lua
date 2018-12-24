@@ -127,8 +127,8 @@ function send_comm(args)
     if argument_number>=2 and argument_number<=4 then
         local command_name = args[2]
         local result = tonumber(args[3])
-        local programm = to_string(args[4])
-        local command_arguments = to_string(args[5])
+        local programm = to_string(args[5])
+        local command_arguments = to_string(args[4])
 
         --TODO instr + prog lookup table
         c_issue_instruction(0, 0, programm.." "..command_name.." "..command_arguments, result)
@@ -303,27 +303,14 @@ end
 
 
 ---___RECEIVE___---
-function interpret_comm(args)
+function interpret_comm(type_id,prog_id,comm,result)
     local name = "interpret_comm"
-    if get_length(args)>=2 and get_length(args)<=4 then
-        local command = args[1]
-        local result = args[2]
-        local programm = args[3]
-        local arguments = args[4]
-        os.execute(programm.." "..command.." "..arguments..">output.txt")
-        os.exit()
-        if result=="1" then
-            send_file({"send_file", "output.txt",""})
-        end
-    elseif get_length(args)==0 then
-        if args[1] == "certificate" then
-            certificate()
-        else
-            t_write("ERROR: "..name.." Unbekannter Befehl")
-        end
-    else
-        t_write("ERROR: "..name.." Argumentenzahl unpassend")
+    os.execute(comm)
+    --os.exit()
+    if result==1 then
+        send_file({"send_file", "output.txt",""})
     end
+
 end
 
 function filetrans_start(f_name, f_hash, f_type, f_size)
