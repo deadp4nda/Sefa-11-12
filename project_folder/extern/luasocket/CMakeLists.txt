@@ -53,10 +53,10 @@ else()
 endif()
 
 
-add_library(luasocket SHARED ${LSRC})
+add_library(core SHARED ${LSRC})
 
-target_link_libraries(luasocket lualib)
+target_link_libraries(core lualib)
 
 if(WIN32 OR MINGW)
-target_link_libraries(luasocket Ws2_32)
+target_link_libraries(core Ws2_32)
 endif()
