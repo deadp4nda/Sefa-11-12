@@ -114,6 +114,9 @@ function send_file(args)
     end
 end
 
+function to_string(str)
+    if str ==nil then return "" else return str end
+end
 
 -- |send| --
 -- Eingabe:
@@ -123,12 +126,12 @@ function send_comm(args)
     local argument_number = get_length(args)
     if argument_number>=2 and argument_number<=4 then
         local command_name = args[2]
-        local result = args[3]
-        local programm = args[4]
-        local command_arguments = args[5]
+        local result = tonumber(args[3])
+        local programm = to_string(args[4])
+        local command_arguments = to_string(args[5])
 
         --TODO instr + prog lookup table
-        c_issue_instruction(inst_type, prog_id, programm.." "..command_name.." "..command_arguments, result)
+        c_issue_instruction(0, 0, programm.." "..command_name.." "..command_arguments, result)
         return "debug: "..name.." successful"
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
