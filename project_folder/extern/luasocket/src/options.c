@@ -9,6 +9,9 @@
 #include "auxiliar.h"
 #include "options.h"
 #include "inet.h"
+
+#ifdef _WIN32 || _WIN64
+
 #include <stdint.h>
 
 
@@ -172,6 +175,7 @@ int inet_pton6(const char *src, char *dst)
     return 1;
 }
 
+#endif
 
 /*=========================================================================*\
 * Internal functions prototypes
