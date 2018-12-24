@@ -38,4 +38,8 @@ set(libSrc
         linit.c
         )
 
+if(UNIX AND NOT APPLE)
+	set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -DLUA_USE_POSIX -DLUA_USE_DLOPEN)
+endif()
+		
 add_library(lualib STATIC ${libSrc})
