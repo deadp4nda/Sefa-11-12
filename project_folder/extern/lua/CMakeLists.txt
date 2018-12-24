@@ -40,7 +40,7 @@ set(libSrc
 
 if(UNIX AND NOT APPLE)
 	
-	set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-DLUA_USE_LINUX")
+	set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-DLUA_USE_LINUX -fPIC")
 	
 endif()
 		
