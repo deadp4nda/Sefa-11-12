@@ -44,13 +44,19 @@ if(LINUX)
 						src/unixdgram.h
 						src/unixstream.c
 						src/unixstream.h)
-elseif(WIN32)
+	set(CMAKE_C_FLAGS "-Wall -Wshadow -Wextra -Wimplicit -O2 -ggdb3 -fpic -fvisibility=hidden")
+elseif(WIN32 OR MINGW)
 	set(LSRC ${LSRC}	src/wsocket.c
 							src/wsocket.h)
+	set(CMAKE_C_FLAGS "-Wall -O2 -fno-common -fvisibility=hidden")
 else()
-
-set(CMAKE_CXX_FLAGS "-Wall -Wshadow -Wextra -Wimplicit -O2 -ggdb3")
 endif()
 
 
-add_library(luasocket STATIC ${LSRC})
+add_library(luasocket SHARED ${LSRC})
+
+target_link_libraries(luasocket lualib)
+
+if(WIN32 OR MINGW)
+target_link_libraries(luasocket Ws2_32)
+endif()

@@ -46,5 +46,6 @@ endif()
 		
 add_library(lualib STATIC ${libSrc})
 
-target_link_libraries(lualib dl)
-
+if(UNIX AND NOT APPLE)
+	target_link_libraries(lualib dl)
+endif()
