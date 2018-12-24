@@ -217,12 +217,13 @@ function connect(args)
             local port = tonumber(args[3])
         end
         local state = c_connect_to(ip, port)
-	if state == true then
-	    t_write("done")
-	    y()
-	else
-	    t_write("failed")
-	end
+        print(state)
+	    if state == 1 then
+	        t_write("done")
+	        y()
+	    else
+	        t_write("failed")
+	    end
         
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
@@ -232,11 +233,10 @@ end
 function reconnect(args)
     local name = "reconnect"
     local argument_number = get_length(args)
-    if argument_number==2 or argument_number==3 then
+    if argument_number==1 or argument_number==2 then
         local ip = args[2]
-        local pol = args[3]
         local port = args[4]
-        disconnect({"disconnect", pol})
+        disconnect({"disconnect", nil})
         connect({"connect",ip,port})
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
