@@ -44,7 +44,7 @@ if(LINUX)
 						src/unixdgram.h
 						src/unixstream.c
 						src/unixstream.h)
-	set(CMAKE_C_FLAGS "-Wall -Wshadow -Wextra -Wimplicit -O2 -ggdb3 -fpic -fvisibility=hidden")
+	set(CMAKE_C_FLAGS "-Wall -Wshadow -Wextra -Wimplicit -O2 -ggdb3 -fvisibility=hidden")
 elseif(WIN32 OR MINGW)
 	set(LSRC ${LSRC}	src/wsocket.c
 							src/wsocket.h)
