@@ -103,13 +103,13 @@ int main(int argc, char *argv[]){
     QApplication app(argc,argv);
 
 
-    iMg = new MngThManager(LPORTO+1);
-    fMg = new MngFileManager(LPORTO);
+    iMg = new MngThManager(LPORTO);
+    fMg = new MngFileManager(LPORTO+1);
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
     luaL_dofile(L,"../../../Lua/Main.lua");
-    
+
     int ret = app.exec();
     delete wnd;
     delete iMg;
@@ -170,13 +170,14 @@ int lConnect(lua_State *L){
     std::cerr << "lConnect\n";
     QString irgendwas = lua_tostring(L,1);
     QHostAddress adr(irgendwas);
-    qint16 p = (qint16)luaL_checkinteger(L,2);
+    //qint16 p = (qint16)luaL_checkinteger(L,2);
+    qint16 p = 0;
     p = (qint16)(p ? p : LPORTO);
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP",TerminalW::CError);
     }else{
         iMg->createConnection(adr,p);
-        fMg->setConnectionProperties(adr,p);
+        fMg->setConnectionProperties(adr,p+1);
     }
     return 0;
 }
