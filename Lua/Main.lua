@@ -216,9 +216,14 @@ function connect(args)
         else
             local port = tonumber(args[3])
         end
-        c_connect_to(ip, port)
-        t_write("done")
-        y()
+        local state = c_connect_to(ip, port)
+	if state == true then
+	    t_write("done")
+	    y()
+	else
+	    t_write("failed")
+	end
+        
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
