@@ -269,7 +269,7 @@ end
 
 function y()
     if cert == nil then
-
+        t_write("Verbindung wurde autorisiert!")
         cert=true
     end
 
@@ -278,7 +278,7 @@ end
 function n()
     if cert == nil then
         cert=false
-
+        t_write("Verbinsung wurde verweigert!")
 
         disconnect({"disconnect",""})
     end
