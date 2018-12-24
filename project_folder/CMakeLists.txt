@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(Mango C CXX)
 
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
+
 set(CMAKE_BUILD_TYPE DEBUG)
 set(CMAKE_CXX_STANDARD 11)
 
