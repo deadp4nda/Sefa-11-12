@@ -99,9 +99,10 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"c_getwan");
 
     std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
-    luaL_dofile(L,"../../../Lua/Main.lua");
 
     QApplication app(argc,argv);
+
+    luaL_dofile(L,"../../../Lua/Main.lua");
     iMg = new MngThManager(LPORTO+1);
     fMg = new MngFileManager(LPORTO);
     connectEverything(fMg,iMg);
