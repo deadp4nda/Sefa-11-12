@@ -11,7 +11,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
-set(Qt5_DIR ~/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5)
+if(UNIX)
+	set(Qt5Widgets_DIR "/home/dp/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5Widgets/")
+	set(Qt5Gui_DIR "/home/dp/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5Gui/")
+	set(Qt5Core_DIR "/home/dp/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5Core/")
+	set(Qt5Network_DIR "/home/dp/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5Network/")
+endif()
 
 
 add_subdirectory(extern/lua)

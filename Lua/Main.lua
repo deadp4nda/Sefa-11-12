@@ -5,7 +5,7 @@
 --
 
 -- INCLUDES:
-local http = require("http")
+--local http = require("http")
 
 
 
@@ -21,7 +21,7 @@ local http = require("http")
 
 local cert = nil
 
-startup()
+
 
 function interpret_input(ui_input)
     local name = "interpret_input: "
@@ -80,7 +80,7 @@ end
 ---
 
 function startup()
-    local ext_ip = http.request("https://api.ipify.org")
+    local ext_ip = c_getwan()
     t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   "..ext_ip.."\n LOCAL: ".."PLATZHALTER")
 end
 
@@ -377,3 +377,4 @@ end
 -- TODO error()
 --feedback("BYTES_RECEIVED MEWO")
 --startup()
+startup()
