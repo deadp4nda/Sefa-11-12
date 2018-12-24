@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(luasocket)
+project(luasocket C)
 
 set(LSRC	src/auxiliar.c
 			src/auxiliar.h

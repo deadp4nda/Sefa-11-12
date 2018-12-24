@@ -1,4 +1,4 @@
-project(liblua)
+project(liblua )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
