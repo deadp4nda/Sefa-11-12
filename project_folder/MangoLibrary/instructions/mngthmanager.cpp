@@ -37,7 +37,7 @@ MngThManager::~MngThManager(){
     }
     delete timer;
 }
-void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
+int MngThManager::createConnection(const QHostAddress &addr, quint16 port){
     if(client) {
         closeConnection();
     }
@@ -47,6 +47,9 @@ void MngThManager::createConnection(const QHostAddress &addr, quint16 port){
         client = tmp;
         address = addr;
         emit connectionInitiated();
+        return 0;
+    }else{
+        return 1;
     }
 }
 void MngThManager::incomingConnection(MangoConnection *nClnt){

@@ -20,7 +20,7 @@ class MngThManager: public QObject{
 public:
     MngThManager(quint16 listenPort = 0,QObject *parent = nullptr);
     ~MngThManager();
-    void createConnection(const QHostAddress &addr, quint16 port = 0);
+    int createConnection(const QHostAddress &addr, quint16 port = 0);
     void closeConnection();
 
     void enqueueInstruction(SafeInstruction instr);

@@ -175,11 +175,12 @@ int lConnect(lua_State *L){
     p = (qint16)(p ? p : LPORTO);
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP",TerminalW::CError);
+        lua_pushinteger(L,0);
     }else{
-        iMg->createConnection(adr,p);
+        lua_pushinteger(L,iMg->createConnection(adr,p));
         fMg->setConnectionProperties(adr,p+1);
     }
-    return 0;
+    return 1;
 }
 int lDisconnect(lua_State *){
     std::cerr << "lDisconnect\n";
