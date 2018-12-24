@@ -44,7 +44,7 @@ if(UNIX AND NOT APPLE)
 						src/unixdgram.h
 						src/unixstream.c
 						src/unixstream.h)
-	set(CMAKE_C_FLAGS "-Wall -Wshadow -O2 -ggdb3 -fvisibility=hidden")
+	set(CMAKE_C_FLAGS "-Wall -Wshadow -O2 -ggdb3 -fvisibility=hidden -fPIC")
 elseif(WIN32 OR MINGW)
 	set(LSRC ${LSRC}	src/wsocket.c
 							src/wsocket.h)
