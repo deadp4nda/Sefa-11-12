@@ -145,7 +145,7 @@ int lIssueInstruction(lua_State *L){ //
     std::cerr << "lIssueInstruction\n";
     qint32 instr = (quint32)luaL_checkinteger(L,1);             //instruction
     qint32 toPrg = (quint32)luaL_checkinteger(L,2);             //programm
-    const char* payload= lua_tostring(L,3);                     //data
+    const char* payload = lua_tostring(L,3);                     //data
     qint32 args  = (quint32)luaL_checkinteger(L,4);             //args
 
     iMg->enqueueInstruction(instr,toPrg,QByteArray(payload),args);
@@ -219,6 +219,7 @@ int lGetWan(lua_State *L){
 }
 
 void cbInstructionIn(SafeInstruction inst) {
+    inst->print();
     lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
     lua_pushinteger(L, inst->getAddressedProgram());

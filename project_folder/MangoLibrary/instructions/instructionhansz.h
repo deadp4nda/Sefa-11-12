@@ -30,6 +30,13 @@ public:
     quint32 getAddressedProgram()const{return addressedProgram;}
     quint32 getPassedArguments()const{return arguments;}
     quint32 getContentLength()const{return contentLength;}
+    void print() {
+        std::cerr << "...Instruction..\nCode: "
+        << instruction << "\nProgramm: "
+        << addressedProgram << "\narguments: "
+        << arguments << "\ncontent: "
+        << QString(*getPayload()).toStdString() <<std::endl;
+    }
 };
 }
 
