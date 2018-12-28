@@ -62,6 +62,9 @@ void MngThManager::incomingConnection(MangoConnection *nClnt){
     }
 }
 void MngThManager::closeConnection(){
+    connectionClosing = true;
+}
+void MngThManager::closeConnectionPrivate() {
     if(!client)return;
     sendInstruction(SafeInstruction(new InstructionHansz(Instructions::Exit)));
     client->abort();
@@ -69,6 +72,7 @@ void MngThManager::closeConnection(){
     delete client;
     client = nullptr;
     emit connectionClosed();
+    connectionClosing = false;
 }
 void MngThManager::sendInstruction(SafeInstruction hansz){
     if(!CLIENT_VALID(client)){
@@ -91,6 +95,8 @@ void MngThManager::incomingData(const SafeByteArray buffer){
 void MngThManager::updateManager(){
     if(!instructions.isEmpty()){
         this->sendInstruction(instructions.dequeue());
+    }else if(connectionClosing){
+        closeConnectionPrivate();
     }
 }
 void MngThManager::handleClientError(QAbstractSocket::SocketError){

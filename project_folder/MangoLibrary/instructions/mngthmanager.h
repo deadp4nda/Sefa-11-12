@@ -46,6 +46,8 @@ private:
     bool connectionVerified = false;
 
     void sendInstruction(SafeInstruction hansz);
+    void closeConnectionPrivate();
+    bool connectionClosing = false;
 private slots:
     void updateManager();
     void incomingData(const SafeByteArray);
