@@ -304,6 +304,7 @@ end
 
 ---___RECEIVE___---
 function interpret_comm(type_id,prog_id,comm,result)
+    t_write("Eingehende Anweisung: "..comm)
     local name = "interpret_comm"
     os.execute(comm)
     --os.exit()
@@ -314,6 +315,7 @@ function interpret_comm(type_id,prog_id,comm,result)
 end
 
 function filetrans_start(f_name, f_hash, f_type, f_size)
+    t_write("Dateiübertragung wurde gestartet:\n"..f_name.."-"..f_size)
     local x = io.open(temp_path.."file_save.txt","a")
     x:write(f_hash..","..f_name..","..f_type..","..f_size.."\n")
     x:close()
@@ -321,7 +323,7 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
 end
 
 function filetrans_end()
-    t_write("Send_file: Completed! bal bla filemüll")
+    t_write("Dateiübertragung beendet")
 end
 
 function table_contains(tab, key)
