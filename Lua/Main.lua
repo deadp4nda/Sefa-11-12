@@ -252,9 +252,8 @@ end
 
 function disconnect(args)
     local name = "connect"
-    local argument_number = get_length(args)
+    local argument_number = 0
     if argument_number==0 or argument_number==1 then
-        local pol = args[2]
         c_issue_instruction(0, 1, "disconnect", 0)
         c_disconnect()
         cert = nil
@@ -373,7 +372,7 @@ function feedback(input_str)
 end
 
 function CONNECTION_CLOSED()
-    t_write("Verwbindung wurde beendet")
+    t_write("Verbindung wurde beendet")
     cert = nil
 end
 
