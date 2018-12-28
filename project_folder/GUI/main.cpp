@@ -289,19 +289,17 @@ void cbConnVerification(){
 void cbError(const QString &error){
     lua_getglobal(L, "error");
     lua_pushstring(L, error.toStdString().c_str());
-    std::cerr << error.toStdString() << std::endl;
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbError while calling lua\n";
+        std::cerr << "[ERROR] in cbError while calling lua with  Message: " << error.toStdString() << "\n";
     }
     lua_settop(L,0);
 }
 void cbGPFeedback(const QString &msg){
-    std::cout << msg.toStdString() << std::endl;
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
     stackDump(L);
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbGPFeedback while calling lua\n";
+        std::cerr << "[ERROR] in cbGPFeedback while calling lua with Message: " << msg.toStdString() << "\n";
     }
     lua_settop(L,0);
 }
