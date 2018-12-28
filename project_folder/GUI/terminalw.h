@@ -28,16 +28,20 @@ public:
     ~TerminalW();
 public slots:
     void issueMessage(QString, Source);
+    void internMsg(QString);
+
 private:
     void setupGUI();
+
 private slots:
     void Message(QString);
 
 private:
+    QLabel *label = nullptr;
     Terminal *terminal = nullptr;
     QWidget *central = nullptr;
     FileTable *fileT = nullptr;
-    QLabel *label = nullptr;
+    QLabel *files_inq = nullptr;
 
     QVBoxLayout *vlayout = nullptr,*v2layout = nullptr;
     QHBoxLayout *hlayout = nullptr;

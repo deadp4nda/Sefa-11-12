@@ -189,11 +189,13 @@ int lIssueFile(lua_State *L){
     fMg->enqueueFile(&file,type);
     std::cerr << "fmgr: " << fMg->getConnCredentials().toStdString() << "\n";
     std::cerr << "lIssueFile_2\n";
+    wnd->internMsg("sdlfkj");
     return 0;
 }
 int lOutputString(lua_State *L){
-    std::cerr << "lOutputString\n";
+    std::cerr << "lOutputString";
     const char *msg = lua_tostring(L,1);
+    std::cerr << " " << msg << "\n";
     wnd->issueMessage(QString(msg),TerminalW::LuaOutput);
     return 0;
 }
@@ -201,9 +203,7 @@ int lConnect(lua_State *L){
     std::cerr << "lConnect\n";
     QString irgendwas = lua_tostring(L,1);
     QHostAddress adr(irgendwas);
-    //qint16 p = (qint16)luaL_checkinteger(L,2);
-    qint16 p = 0;
-    p = (qint16)(p ? p : LPORTO);
+    qint16 p = LPORTO;
     if(adr.isNull()){
         wnd->issueMessage("ERROR: invalid IP",TerminalW::CError);
         lua_pushinteger(L,0);
@@ -230,6 +230,7 @@ int lQuit(lua_State *){
 int lGetWan(lua_State *L){
     QTimer timer;
     QEventLoop loop;
+
     QObject::connect(&timer,&QTimer::timeout,&loop,&QEventLoop::quit);
     QObject::connect(manager, &QNetworkAccessManager::finished,&loop,&QEventLoop::quit);
     QObject::connect(manager, &QNetworkAccessManager::finished,[=](QNetworkReply *reply){
@@ -245,6 +246,7 @@ int lGetWan(lua_State *L){
     req.setUrl(forrealnow);
     manager->get(req);
     timer.start(20000);
+
     loop.exec();
     return 1;
 }
@@ -298,6 +300,7 @@ void cbGPFeedback(const QString &msg){
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
     stackDump(L);
+    wnd->internMsg("Keine Dateien in der Warteschlange");
     if(lua_pcall(L,1,0,0) != 0){
         std::cerr << "[ERROR] in cbGPFeedback while calling lua with Message: " << msg.toStdString() << "\n";
     }

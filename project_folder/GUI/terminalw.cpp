@@ -44,6 +44,7 @@ TerminalW::~TerminalW(){
     delete terminal;
     delete fileT;
     delete label;
+    delete files_inq;
     delete vlayout;
     delete v2layout;
     delete hlayout;
@@ -55,6 +56,7 @@ void TerminalW::setupGUI() {
     hlayout = new QHBoxLayout;
     v2layout = new QVBoxLayout;
 
+    files_inq = new QLabel("Keine Dateien in der Warteschlange");
     label = new QLabel("Files on track");
     terminal = new Terminal(this);
     central = new QWidget(this);
@@ -64,6 +66,7 @@ void TerminalW::setupGUI() {
     setCentralWidget(central);
     v2layout->addWidget(label);
     v2layout->addWidget(fileT);
+    vlayout->addWidget(files_inq);
     vlayout->addWidget(terminal);
     hlayout->addLayout(vlayout);
     hlayout->addLayout(v2layout);
@@ -99,4 +102,12 @@ void TerminalW::Message(QString msg){
         std::cerr << "[ERROR] in TerminalW::Message calling: "<< erret << std::endl;
     }
     lua_settop(L,0);
+}
+
+void TerminalW::internMsg(QString msg) {
+    if(msg == "Keine Dateien in der Warteschlange"){
+        files_inq->setText("Keine Dateien in der Warteschlange");
+    }else{
+        files_inq->setText("Es sind Dateien in der Warteschlange");
+    }
 }
