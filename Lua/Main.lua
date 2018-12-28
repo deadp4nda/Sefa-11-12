@@ -255,6 +255,7 @@ function disconnect(args)
     local argument_number = get_length(args)
     if argument_number==0 or argument_number==1 then
         local pol = args[2]
+        c_issue_instruction(0, 1, "disconnect", 0)
         c_disconnect()
         cert = nil
     else
@@ -351,6 +352,7 @@ function feedback(input_str)
         ["AUTH_FAIL"]="Verbindung wurde verweigert!"
     }
     local request = {
+        ["disconnect"]="",
         ["TEMP"]="",
         ["GET_FILES"]="",
         ["CONNECTION_CLOSED"]="Verbindung beendet",
