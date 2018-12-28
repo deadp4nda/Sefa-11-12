@@ -297,10 +297,10 @@ void cbError(const QString &error){
     lua_settop(L,0);
 }
 void cbGPFeedback(const QString &msg){
+    if(msg == "NO_FILES_IN_QUEUE"){ wnd->internMsg("Keine Dateien in der Warteschlange"); return;}
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
     stackDump(L);
-    wnd->internMsg("Keine Dateien in der Warteschlange");
     if(lua_pcall(L,1,0,0) != 0){
         std::cerr << "[ERROR] in cbGPFeedback while calling lua with Message: " << msg.toStdString() << "\n";
     }
