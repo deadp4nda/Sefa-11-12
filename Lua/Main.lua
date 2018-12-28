@@ -339,32 +339,37 @@ function feedback(input_str)
         ["FILE_CANCELLED"]="Dateiübertregung abgebrochen",
         ["REMOTE_CONNECTION_RECEIVED"]="Eingehende Verbindung erhalten",
         ["REMOTE_CONNECTION_CLOSED"]="Eingehende Verbindung beendet",
-        ["BYTES_RECEIVED"]="Empfangene Bytes: "..arg[2],
-        ["BYTES_SENT"]="Gesendete Bytes: "..arg[2],
+        ["BYTES_RECEIVED"]="Empfangene Bytes: "..tostring(arg[2]),
+        ["BYTES_SENT"]="Gesendete Bytes: "..tostring(arg[2]),
         ["NO_FILES_IN_QUEUE"]="Keine Dateien in der Warteschlange",
         ["TRANSMISSION_STARTED"]="Übertragung gestartet",
         ["TRANSMISSION_ENDED"]="Übertragung beendet"
     }
+    print("out")
     local request = {
         ["TEMP"]="",
         ["GET_FILES"]="",
         ["GET_REMOTE_FILES"]=""
     }
+    print("req")
     if table_contains(output, arg[1]) then
+        print("if")
         t_write(output[arg[1]])
     elseif table_contains(request, arg[1]) then
-        _G[request[arg[1]]](input_str)
+        print("elif")
+        _G[arg[1]](arg[2])
 
     else
         t_write("ERROR: feedback: unknown state")
     end
+    print("fdone")
 end
 
 local temp_path = ""
 
 function TEMP(comm)
-    temp_path = split_input(comm)[2]
-    print(temp_path)
+    temp_path = comm
+    print("debug:"..temp_path)
 end
 
 function GET_FILES()
