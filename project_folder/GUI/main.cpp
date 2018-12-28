@@ -105,6 +105,7 @@ int main(int argc, char *argv[]){
 
     iMg = new MngThManager(LPORTO);
     fMg = new MngFileManager(LPORTO+1);
+    fMg->activate();
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
