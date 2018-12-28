@@ -41,6 +41,7 @@ void Terminal::keyPressEvent(QKeyEvent *event) {
         case Qt::Key_Return:
             updateBuffer();
             emit Message(buffer);
+            output("",Qt::green);
             break;
         case Qt::Key_Backspace:
         case Qt::Key_Back:

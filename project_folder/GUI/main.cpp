@@ -161,6 +161,8 @@ int lIssueFile(lua_State *L){
     QFile file(fName);
     file.open(QFile::ReadOnly);
     fMg->enqueueFile(&file,type);
+    std::cerr << "fmgr: " << fMg->getConnCredentials().toStdString() << "\n";
+    std::cerr << "lIssueFile_2\n";
     return 0;
 }
 int lOutputString(lua_State *L){
