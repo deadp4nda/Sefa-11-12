@@ -104,11 +104,12 @@ end
 -- Ausgabe:
 function send_file(args)
     local name = "send_file"
-    if get_length(args)==2 then
+    if get_length(args)==1 then
         local file_name = args[2]
-        local file_type = args[3]
+        local file_type = 0
         c_issue_file(file_name, file_type)
-        return "debug: "..name.." successful"
+        print( "debug: "..name.." successful")
+        t_write("done")
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
