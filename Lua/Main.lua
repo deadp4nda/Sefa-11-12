@@ -345,24 +345,23 @@ function feedback(input_str)
         ["TRANSMISSION_STARTED"]="Übertragung gestartet",
         ["TRANSMISSION_ENDED"]="Übertragung beendet"
     }
-    print("out")
     local request = {
         ["TEMP"]="",
         ["GET_FILES"]="",
         ["GET_REMOTE_FILES"]=""
     }
-    print("req")
+
     if table_contains(output, arg[1]) then
-        print("if")
+
         t_write(output[arg[1]])
     elseif table_contains(request, arg[1]) then
-        print("elif")
+
         _G[arg[1]](arg[2])
 
     else
         t_write("ERROR: feedback: unknown state")
     end
-    print("fdone")
+
 end
 
 local temp_path = ""
