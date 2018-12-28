@@ -222,11 +222,9 @@ function connect(args)
         end
         local state = c_connect_to(ip, port)
         print(state)
-	    if state == 1 then
-	        t_write("done")
+	    if state == 0 then
+            t_write("failed")
 
-	    else
-	        t_write("failed")
 	    end
         
     else
@@ -257,6 +255,7 @@ function disconnect(args)
     local argument_number = get_length(args)
     if argument_number==0 or argument_number==1 then
         local pol = args[2]
+        c_issue_instruction(0, 1, "CON_END", 0)
         c_disconnect()
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
@@ -349,7 +348,8 @@ function feedback(input_str)
         ["TRANSMISSION_STARTED"]="Übertragung gestartet",
         ["TRANSMISSION_ENDED"]="Übertragung beendet",
         ["AUTH_SUCC"]= "Verbindung wurde autorisiert!",
-        ["AUTH_FAIL"]="Verbindung wurde verweigert!"
+        ["AUTH_FAIL"]="Verbindung wurde verweigert!",
+        ["CON_END"]="Verbindung wurde beendet!"
     }
     local request = {
         ["TEMP"]="",
