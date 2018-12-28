@@ -5,41 +5,55 @@
 #include <iostream>
 #include "terminal.h"
 #include <QScrollBar>
+#include <QKeyEvent>
 
-Terminal::Terminal(QWidget *parent) :QWidget(parent){
-    input = new TerminalInput(this);
-    term = new QTextBrowser(this);
-    term->setReadOnly(true);
-    term->setTextBackgroundColor(Qt::black);
-    term->setTextColor(Qt::white);
-    term->setAcceptRichText(true);
-    term->setStyleSheet("background-color:black;");
-    layout = new QVBoxLayout(this);
-    layout->addWidget(term,100);
-    layout->addWidget(input);
-    setLayout(layout);
-    connect(input,&QLineEdit::returnPressed,this,&Terminal::returnPressed);
-    term->insertPlainText(">>>");
+#define repeat(x) for(int i=0;i<x;i++)
+
+Terminal::Terminal(QWidget *parent) :QTextEdit(parent){
+    document()->setMaximumBlockCount(420);
+    QPalette p = palette();
+    p.setColor(QPalette::Base, Qt::black);
+    p.setColor(QPalette::Text, Qt::white);
+    setPalette(p);
 }
 
 void Terminal::output(QString sometext, QColor col) {
-    QString cont = "";
-    if(term->toPlainText().count("\n") > 500) {
-        cont = term->toPlainText();
-        cont = cont.right(cont.indexOf("\n"));
-        term->clear();
-        term->setText(cont);
+    if(toPlainText().right(5) == "\n>>> "){
+        repeat(5) textCursor().deletePreviousChar();
     }
-    std::cout << cont.toStdString();
-    term->setTextColor(col);
-    term->insertPlainText("\n>>>" + sometext);
-    auto sb = term->verticalScrollBar();
+    setTextColor(col);
+    insertPlainText("\n> " + sometext);
+    setTextColor(Qt::white);
+    insertPlainText("\n>>> ");
+    auto sb = verticalScrollBar();
     sb->setValue(sb->maximum());
+    updateBuffer();
 }
 
-void Terminal::returnPressed() {
-    if(input->text()== "")return;
-    output(input->text(),Qt::white);
-    emit Message(input->text());
-    input->clear();
+void Terminal::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+        case Qt::Key_Up:
+        case Qt::Key_Down:
+            break;
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+            updateBuffer();
+            emit Message(buffer);
+            break;
+        case Qt::Key_Backspace:
+        case Qt::Key_Back:
+            if(buffer.size() > 0) {
+                QTextEdit::keyPressEvent(event);
+                updateBuffer();
+                break;
+            }
+            else
+                break;
+        default:
+            setTextColor(Qt::white);
+            QTextEdit::keyPressEvent(event);
+            buffer = toPlainText().mid(toPlainText().lastIndexOf("\n>>> ")).remove("\n>>> ");
+    }
 }

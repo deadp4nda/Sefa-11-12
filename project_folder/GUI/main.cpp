@@ -108,7 +108,10 @@ int main(int argc, char *argv[]){
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
+
     luaL_dofile(L,"../../../Lua/Main.lua");
+
+    cbGPFeedback("TEMP "+QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/");
 
     int ret = app.exec();
     delete wnd;

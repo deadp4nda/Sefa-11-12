@@ -20,7 +20,7 @@ endif()
 
 
 add_subdirectory(extern/lua)
-add_subdirectory(extern/luasocket)
+#add_subdirectory(extern/luasocket)
 add_subdirectory(MangoLibrary)
 add_subdirectory(GUI)
 

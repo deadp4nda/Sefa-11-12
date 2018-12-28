@@ -9,21 +9,25 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
-#include "TerminalInput.h"
 
-class Terminal :public QWidget {
+class Terminal : public QTextEdit {
     Q_OBJECT
 public:
     Terminal(QWidget *parent = nullptr);
+
+protected:
+    void keyPressEvent(QKeyEvent *) override;
+    void mousePressEvent(QMouseEvent *) override{setFocus();}
+    void mouseDoubleClickEvent(QMouseEvent* )override{}
+    void contextMenuEvent(QContextMenuEvent *) override{}
+
 public slots:
     void output( QString , QColor);
-    void returnPressed();
 signals:
     void Message( QString );
 private:
-    TerminalInput *input = nullptr;
-    QTextBrowser *term  = nullptr;
-    QVBoxLayout *layout = nullptr;
+    QString buffer = "";
+    void updateBuffer(){buffer = toPlainText().mid(toPlainText().lastIndexOf("\n>>> ")).remove("\n>>> ");}
 };
 
 #endif //MANGO_TERMINAL_H
