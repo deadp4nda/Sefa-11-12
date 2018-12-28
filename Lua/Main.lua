@@ -281,7 +281,7 @@ end
 function n()
     if cert == nil then
         cert=false
-        t_write("Verbinsung wurde verweigert!")
+        t_write("Verbindung wurde verweigert!")
 
         disconnect({"disconnect",""})
     end
@@ -314,7 +314,7 @@ function interpret_comm(type_id,prog_id,comm,result)
 end
 
 function filetrans_start(f_name, f_hash, f_type, f_size)
-    local x = io.open("file_save.txt","a")
+    local x = io.open(temp_path.."file_save.txt","a")
     x:write(f_hash..","..f_name..","..f_type..","..f_size.."\n")
     x:close()
 
@@ -343,17 +343,25 @@ function feedback(input_str)
         ["TRANSMISSION_ENDED"]="Übertragung beendet"
     }
     local request = {
+        ["TEMP"]="",
         ["GET_FILES"]="",
         ["GET_REMOTE_FILES"]=""
     }
     if table_contains(output, arg[1]) then
         t_write(output[arg[1]])
     elseif table_contains(request, arg[1]) then
-        _G[request[arg[1]]]()
+        _G[request[arg[1]]](input_str)
 
     else
         t_write("ERROR: feedback: unknown state")
     end
+end
+
+local temp_path = ""
+
+function TEMP(comm)
+    temp_path = split_input(comm)[2]
+    print(temp_path)
 end
 
 function GET_FILES()
