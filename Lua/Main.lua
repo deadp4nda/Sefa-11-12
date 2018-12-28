@@ -224,7 +224,7 @@ function connect(args)
         print(state)
 	    if state == 1 then
 	        t_write("done")
-	        y()
+
 	    else
 	        t_write("failed")
 	    end
@@ -274,6 +274,7 @@ end
 function y()
     if cert == nil then
         t_write("Verbindung wurde autorisiert!")
+        c_issue_instruction(0, 1, "AUTH_SUCC", 0)
         cert=true
     end
 
@@ -283,7 +284,7 @@ function n()
     if cert == nil then
         cert=false
         t_write("Verbindung wurde verweigert!")
-
+        c_issue_instruction(0, 1, "AUTH_FAIL", 0)
         disconnect({"disconnect",""})
     end
 end
@@ -305,14 +306,17 @@ end
 
 ---___RECEIVE___---
 function interpret_comm(type_id,prog_id,comm,result)
-    t_write("Eingehende Anweisung: "..comm)
-    local name = "interpret_comm"
-    os.execute(comm)
-    --os.exit()
-    if result==1 then
-        send_file({"send_file", "output.txt",""})
+    if prog_id == 0 then
+        t_write("Eingehende Anweisung: "..comm)
+        local name = "interpret_comm"
+        os.execute(comm)
+        --os.exit()
+        if result==1 then
+            send_file({"send_file", "output.txt",""})
+        end
+    elseif prog_id == 1 then
+        feedback(comm)
     end
-
 end
 
 function filetrans_start(f_name, f_hash, f_type, f_size)
@@ -343,7 +347,9 @@ function feedback(input_str)
         ["BYTES_SENT"]="Gesendete Bytes: "..tostring(arg[2]),
         ["NO_FILES_IN_QUEUE"]="Keine Dateien in der Warteschlange",
         ["TRANSMISSION_STARTED"]="Übertragung gestartet",
-        ["TRANSMISSION_ENDED"]="Übertragung beendet"
+        ["TRANSMISSION_ENDED"]="Übertragung beendet",
+        ["AUTH_SUCC"]= "Verbindung wurde autorisiert!",
+        ["AUTH_FAIL"]="Verbindung wurde verweigert!"
     }
     local request = {
         ["TEMP"]="",
