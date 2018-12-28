@@ -221,7 +221,7 @@ function connect(args)
             local port = tonumber(args[3])
         end
         local state = c_connect_to(ip, port)
-        print(state)
+        cert = true
 	    if state == 0 then
             t_write("failed")
 
@@ -255,8 +255,8 @@ function disconnect(args)
     local argument_number = get_length(args)
     if argument_number==0 or argument_number==1 then
         local pol = args[2]
-        c_issue_instruction(0, 1, "CON_END", 0)
         c_disconnect()
+        cert = nil
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
@@ -338,7 +338,7 @@ function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
         ["CONNECTION_INITIATED"]="Verbindung erfolgreich initialisiert",
-        ["CONNECTION_CLOSED"]="Verbindung beendet",
+
         ["FILE_CANCELLED"]="Dateiübertregung abgebrochen",
         ["REMOTE_CONNECTION_RECEIVED"]="Eingehende Verbindung erhalten",
         ["REMOTE_CONNECTION_CLOSED"]="Eingehende Verbindung beendet",
@@ -348,12 +348,12 @@ function feedback(input_str)
         ["TRANSMISSION_STARTED"]="Übertragung gestartet",
         ["TRANSMISSION_ENDED"]="Übertragung beendet",
         ["AUTH_SUCC"]= "Verbindung wurde autorisiert!",
-        ["AUTH_FAIL"]="Verbindung wurde verweigert!",
-        ["CON_END"]="Verbindung wurde beendet!"
+        ["AUTH_FAIL"]="Verbindung wurde verweigert!"
     }
     local request = {
         ["TEMP"]="",
         ["GET_FILES"]="",
+        ["CONNECTION_CLOSED"]="Verbindung beendet",
         ["GET_REMOTE_FILES"]=""
     }
 
@@ -370,7 +370,14 @@ function feedback(input_str)
 
 end
 
+function CONNECTION_CLOSED()
+    t_write("Verwbindung wurde beendet")
+    cert = nil
+end
+
 local temp_path = ""
+
+
 
 function TEMP(comm)
     temp_path = comm
