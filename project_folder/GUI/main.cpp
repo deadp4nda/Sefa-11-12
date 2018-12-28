@@ -68,6 +68,30 @@ void fJSent(qint64 sent){cbGPFeedback("BYTES_SENT " + QString::number(sent));}
 void fNoFls(){cbGPFeedback("NO_FILES_IN_QUEUE");}
 void fFileTransStart(){cbGPFeedback("TRANSMISSION_STARTED");}
 void fFileTransEnded(){cbGPFeedback("TRANSMISSION_ENDED");}
+static void stackDump (lua_State *L) {
+    printf("Stackdump:\n");
+    int i;
+    int top = lua_gettop(L);
+    for (i = 1; i <= top; i++) {  /* repeat for each level */
+        int t = lua_type(L, i);
+        switch (t) {
+            case LUA_TSTRING:  /* strings */
+                printf("`%s'", lua_tostring(L, i));
+                break;
+            case LUA_TBOOLEAN:  /* booleans */
+                printf(lua_toboolean(L, i) ? "true" : "false");
+                break;
+            case LUA_TNUMBER:  /* numbers */
+                printf("%g", lua_tonumber(L, i));
+                break;
+            default:  /* other values */
+                printf("%s", lua_typename(L, t));
+                break;
+        }
+        printf("  ");  /* put a separator */
+    }
+    printf("\n");  /* end the listing */
+}
 }
 
 TerminalW *wnd = nullptr;
@@ -106,6 +130,7 @@ int main(int argc, char *argv[]){
     iMg = new MngThManager(LPORTO);
     fMg = new MngFileManager(LPORTO+1);
     fMg->activate();
+
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
@@ -274,8 +299,8 @@ void cbGPFeedback(const QString &msg){
     std::cout << msg.toStdString() << std::endl;
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
-    lua_pushnil(L);
-    if(lua_pcall(L,2,0,0) != 0){
+    stackDump(L);
+    if(lua_pcall(L,1,0,0) != 0){
         std::cerr << "[ERROR] in cbGPFeedback while calling lua\n";
     }
     lua_settop(L,0);
