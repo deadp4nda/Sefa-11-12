@@ -338,7 +338,8 @@ function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
         ["CONNECTION_INITIATED"]="Verbindung erfolgreich initialisiert",
-
+        ["FILE_CONNECTION_INITIATED"]="Übertragung erfolgreich initialisiert",
+        ["FILE_CONNECTION_CLOSED"]="Übertragung beendet!",
         ["FILE_CANCELLED"]="Dateiübertregung abgebrochen",
         ["REMOTE_CONNECTION_RECEIVED"]="Eingehende Verbindung erhalten",
         ["REMOTE_CONNECTION_CLOSED"]="Eingehende Verbindung beendet",
@@ -355,7 +356,7 @@ function feedback(input_str)
         ["TEMP"]="",
         ["GET_FILES"]="",
         ["CONNECTION_CLOSED"]="Verbindung beendet",
-        ["FILE_CONNECTION_CLOSED"]="Verbindung beendet",
+
         ["GET_REMOTE_FILES"]=""
     }
 
@@ -372,9 +373,6 @@ function feedback(input_str)
 
 end
 
-function FILE_CONNECTION_CLOSED()
-    t_write("Übertragung beendet!")
-end
 
 function CONNECTION_CLOSED()
     t_write("Verbindung wurde beendet")
