@@ -105,17 +105,14 @@ void MngFileManager::updateManager(){
         emit noFilesToSend();
     }
     if(!files.isEmpty() && foreignHost != QHostAddress::Null && !sendingSocket){
-        if(!files.head()->getFile()->exists()){ //next file is invalid
-            emit error(FileInvalid);
-            files.dequeue();
-            return;
-        }
         if(createConnection(foreignHost,foreignPort) == 0){
             qDebug() << "\nsending next file: " << files.head()->getName() << "\nRemaining: " << files.size() << " Files";
             for(SafeFileHansz &h:files)
                 qDebug() << h->getFile()->fileName();
             sendingSocket->send(files.dequeue());
         }
+    }else{
+
     }
 }
 void MngFileManager::incomingConnection(MngRecvFileSocket *remoteConnection){

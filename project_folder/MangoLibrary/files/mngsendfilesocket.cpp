@@ -10,8 +10,6 @@ MngSendFileSocket::MngSendFileSocket(const QHostAddress &address, quint16 port,
     timer->setInterval(10);
     connect(this, &MngSendFileSocket::readyRead,
             this, &MngSendFileSocket::handleFinishReadyRead);
-    connect(this, &MngSendFileSocket::transmitFile,
-            this, &MngSendFileSocket::sendFile);
     connect(timer, &QTimer::timeout,
             this, &MngSendFileSocket::sendNextPortion);
     connect(this, &MngSendFileSocket::startNextShot,
@@ -20,8 +18,6 @@ MngSendFileSocket::MngSendFileSocket(const QHostAddress &address, quint16 port,
 MngSendFileSocket::~MngSendFileSocket(){
     disconnect(this, &MngSendFileSocket::readyRead,
             this, &MngSendFileSocket::handleFinishReadyRead);
-    disconnect(this, &MngSendFileSocket::transmitFile,
-            this, &MngSendFileSocket::sendFile);
     disconnect(timer, &QTimer::timeout,
             this, &MngSendFileSocket::sendNextPortion);
     disconnect(this, &MngSendFileSocket::startNextShot,
@@ -60,21 +56,8 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
 //    qDebug() << "writing: " << written << " Bytes";
     flush();
     waitForBytesWritten(INT_MAX);
-}
-void MngSendFileSocket::sendFile(){
-    QByteArray test;
-    file = current->getFile();
-//    Q_ASSERT(file->exists());
-    if(!file->isOpen()){
-        file->open(QIODevice::ReadOnly);
-    }
     file->seek(0);
-    while(!file->atEnd()){
-        test = file->read(FILE_READ_MAXLENGTH);
-        qint64 written = write(test);
-        justWritten(written);
-    //    qDebug() << "writing: " << written << " Bytes";
-    }
+    emit startNextShot();
 }
 void MngSendFileSocket::sendNextPortion(){
     timer->stop();

@@ -26,7 +26,6 @@ signals:
     void transmissionComplete();
     void transmissionCancelled();
 
-    void transmitFile();
     void justWritten(qint64);
 
     void startNextShot();
@@ -41,7 +40,6 @@ private:
     QDir saveDir;
     bool transmissionSuccess = false;
 private slots:
-    void sendFile();
     void sendNextPortion();
     void prepareNextShot();
 };
