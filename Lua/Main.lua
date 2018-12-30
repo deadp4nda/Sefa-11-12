@@ -41,7 +41,7 @@ function interpret_input(ui_input)
         ["squit"]=0,
         ["mangomeow"]=0}
     if commands[n]~=nil then
-        if n=="y" or n=="n" or cert==true or n=="connect" or n=="squit" then
+        if n=="y" or n=="n" or cert==true or n=="disconnect" or n=="connect" or n=="squit" then
             local result = _G[content[1]](content)
         else
             t_write("ERROR: "..name.."Zertifikat ungültig!")
