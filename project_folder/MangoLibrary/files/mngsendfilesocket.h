@@ -40,8 +40,7 @@ private:
     QDir saveDir;
     bool transmissionSuccess = false;
 private slots:
-    void sendNextPortion();
-    void prepareNextShot();
+    void sendPayload();
 };
 }
 #endif // MNGSENDFILESOCKET_H

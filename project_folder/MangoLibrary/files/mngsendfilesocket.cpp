@@ -10,18 +10,12 @@ MngSendFileSocket::MngSendFileSocket(const QHostAddress &address, quint16 port,
     timer->setInterval(10);
     connect(this, &MngSendFileSocket::readyRead,
             this, &MngSendFileSocket::handleFinishReadyRead);
-    connect(timer, &QTimer::timeout,
-            this, &MngSendFileSocket::sendNextPortion);
     connect(this, &MngSendFileSocket::startNextShot,
-            this, &MngSendFileSocket::prepareNextShot);
+            this, &MngSendFileSocket::sendPayload);
 }
 MngSendFileSocket::~MngSendFileSocket(){
     disconnect(this, &MngSendFileSocket::readyRead,
             this, &MngSendFileSocket::handleFinishReadyRead);
-    disconnect(timer, &QTimer::timeout,
-            this, &MngSendFileSocket::sendNextPortion);
-    disconnect(this, &MngSendFileSocket::startNextShot,
-            this, &MngSendFileSocket::prepareNextShot);
     if(!transmissionSuccess){
         emit transmissionCancelled();
     }
@@ -41,9 +35,6 @@ void MngSendFileSocket::handleFinishReadyRead(){
         if(!file->isOpen())
             file->open(QIODevice::ReadOnly);
         startNextShot();
-    }else if(bArr == endingOrder()){
-        transmissionSuccess = true;
-        emit transmissionComplete();
     }
 }
 void MngSendFileSocket::send(SafeFileHansz hansz){
@@ -56,21 +47,13 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
 //    qDebug() << "writing: " << written << " Bytes";
     flush();
     waitForBytesWritten(INT_MAX);
-    current->getFile()->seek(0);
-    emit startNextShot();
 }
-void MngSendFileSocket::sendNextPortion(){
-    timer->stop();
-    if(file->atEnd()){
-        return;
+void MngSendFileSocket::sendPayload() {
+    file->seek(0);
+    while(!file->atEnd()){
+        qint64 written = write(file->read(FILE_READ_MAXLENGTH));
+        emit justWritten(written);
     }
-    QByteArray test = file->read(FILE_READ_MAXLENGTH);
-    qint64 written(write(test));
-    justWritten(written);
-    emit startNextShot();
-}
-void MngSendFileSocket::prepareNextShot(){
-    timer->setSingleShot(true);
-    timer->start();
+    emit transmissionComplete();
 }
 }
