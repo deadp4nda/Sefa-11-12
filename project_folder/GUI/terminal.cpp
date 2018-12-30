@@ -19,6 +19,9 @@ Terminal::Terminal(QWidget *parent) :QTextEdit(parent){
 
 void Terminal::output(QString sometext, QColor col) {
     if(sometext == "Keine Dateien in der Warteschlange")return;
+    if(sometext.startsWith("Empfangene Bytes: ") || sometext.startsWith("Gesendete Bytes: ")){
+        return;
+    }
     if(toPlainText().right(5) == "\n>>> "){
         repeat(5) textCursor().deletePreviousChar();
     }
