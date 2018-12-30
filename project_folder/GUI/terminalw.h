@@ -29,7 +29,8 @@ public:
 public slots:
     void issueMessage(QString, Source);
     void internMsg(QString);
-
+protected:
+    void closeEvent(QCloseEvent*);
 private:
     void setupGUI();
 

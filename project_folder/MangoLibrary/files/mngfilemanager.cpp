@@ -59,7 +59,7 @@ void MngFileManager::enqueueFile(QFile *file,quint64 type){
     enqueueFile(SafeFileHansz(new FileHansz(*file,type)));
 }
 void MngFileManager::enqueueFile(SafeFileHansz hansz){
-    files.enqueue(hansz);
+    if(hansz->getFile()->exists()) files.enqueue(hansz);
 }
 void MngFileManager::closeOutgoingConnection(){
     if(!sendingSocket){
@@ -112,6 +112,8 @@ void MngFileManager::updateManager(){
         }
         if(createConnection(foreignHost,foreignPort) == 0){
             qDebug() << "\nsending next file: " << files.head()->getName() << "\nRemaining: " << files.size() << " Files";
+            for(SafeFileHansz &h:files)
+                qDebug() << h->getFile()->fileName();
             sendingSocket->send(files.dequeue());
         }
     }

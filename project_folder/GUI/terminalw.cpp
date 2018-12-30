@@ -111,3 +111,12 @@ void TerminalW::internMsg(QString msg) {
         files_inq->setText("Es sind Dateien in der Warteschlange");
     }
 }
+
+void TerminalW::closeEvent(QCloseEvent *e) {
+    lua_getglobal(L,"disconnect");
+    int erret = lua_pcall(L,0,0,0);
+    if(erret != 0){
+        std::cerr << "[ERROR] in TerminalW::closeEvent calling: "<< erret << std::endl;
+    }
+    lua_settop(L,0);
+}

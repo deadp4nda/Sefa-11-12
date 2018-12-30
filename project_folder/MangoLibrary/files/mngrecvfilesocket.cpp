@@ -31,6 +31,7 @@ void MngRecvFileSocket::handleReadyRead(){
     }
     current->addData(bufferOfReceived, finished);
     if(finished){
+        current->getFile()->close();
         this->write(endingOrder());
         waitForBytesWritten();
         emit receivingFinished();

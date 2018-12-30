@@ -40,6 +40,7 @@ public:
     void setConnectionProperties(QHostAddress foreignHost, quint16 port);
     void forceNewConnection(QHostAddress foreignHost, quint16 port);
     QString getConnCredentials(){return foreignHost.toString()+" "+QString::number(foreignPort);}
+    void clearQueue(){}
 public slots:
     void activate();
     void enqueueFile(SafeFileHansz hansz);
