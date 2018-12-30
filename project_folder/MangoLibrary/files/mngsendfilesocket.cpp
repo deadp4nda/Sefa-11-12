@@ -56,7 +56,7 @@ void MngSendFileSocket::send(SafeFileHansz hansz){
 //    qDebug() << "writing: " << written << " Bytes";
     flush();
     waitForBytesWritten(INT_MAX);
-    file->seek(0);
+    current->getFile()->seek(0);
     emit startNextShot();
 }
 void MngSendFileSocket::sendNextPortion(){
