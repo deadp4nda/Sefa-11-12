@@ -355,6 +355,7 @@ function feedback(input_str)
         ["TEMP"]="",
         ["GET_FILES"]="",
         ["CONNECTION_CLOSED"]="Verbindung beendet",
+        ["FILE_CONNECTION_CLOSED"]="Verbindung beendet",
         ["GET_REMOTE_FILES"]=""
     }
 
@@ -369,6 +370,10 @@ function feedback(input_str)
         t_write("ERROR: feedback: unknown state")
     end
 
+end
+
+function FILE_CONNECTION_CLOSED()
+    t_write("Übertragung beendet!")
 end
 
 function CONNECTION_CLOSED()
