@@ -109,7 +109,6 @@ function send_file(args)
         local file_type = 0
         c_issue_file(file_name, file_type)
         print( "debug: "..name.." successful")
-        t_write("done")
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
     end
@@ -343,8 +342,8 @@ function feedback(input_str)
         ["FILE_CANCELLED"]="Dateiübertregung abgebrochen",
         ["REMOTE_CONNECTION_RECEIVED"]="Eingehende Verbindung erhalten",
         ["REMOTE_CONNECTION_CLOSED"]="Eingehende Verbindung beendet",
-        ["BYTES_RECEIVED"]="Empfangene Bytes: "..tostring(arg[2]),
-        ["BYTES_SENT"]="Gesendete Bytes: "..tostring(arg[2]),
+        ["BYTES_RECEIVED"]="Empfangene Bytes: "..tostring(arg[2]).."\r",
+        ["BYTES_SENT"]="Gesendete Bytes: "..tostring(arg[2]).."\r",
         ["NO_FILES_IN_QUEUE"]="Keine Dateien in der Warteschlange",
         ["TRANSMISSION_STARTED"]="Übertragung gestartet",
         ["TRANSMISSION_ENDED"]="Übertragung beendet",
