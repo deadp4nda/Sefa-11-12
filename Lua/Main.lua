@@ -1,11 +1,7 @@
 ---Arbeitsstand:
---
 
----TODO: programm lookup table
---
-
--- INCLUDES:
---local http = require("http")
+-- TODO : add file-paths (open/get_file)
+-- add commands
 
 
 
@@ -30,7 +26,7 @@ function interpret_input(ui_input)
     local commands = {
         ["send_file"]=0,
         ["send_comm"]=0,
-        ["get"]=0,
+        ["get_file"]=0,
         ["open"]=0,
         ["shutdown"]=0,
         ["y"]=0,
@@ -85,6 +81,7 @@ function startup()
 end
 
 function squit(args)
+    disconnect({"disconnect", nil})
     c_squit()
 end
 
@@ -115,7 +112,7 @@ function send_file(args)
 end
 
 function to_string(str)
-    if str ==nil then return "" else return str end
+    if str ==nil then return "" else return tostring(str) end
 end
 
 -- |send| --
@@ -124,14 +121,12 @@ end
 function send_comm(args)
     local name = "send_comm"
     local argument_number = get_length(args)
-    if argument_number>=2 and argument_number<=4 then
-        local command_name = args[2]
-        local result = tonumber(args[3])
-        local programm = to_string(args[5])
-        local command_arguments = to_string(args[4])
+    if argument_number==2 then
+        local result = tonumber(args[1])
+        local command_name = to_string(args[2])
 
-        --TODO instr + prog lookup table
-        c_issue_instruction(0, 0, programm.." "..command_name.." "..command_arguments, result)
+
+        c_issue_instruction(0, 0, command_name, result)
         return "debug: "..name.." successful"
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
@@ -169,13 +164,9 @@ end
 function get_file(args)
     local name = "get_file"
     local argument_number = get_length(args)
-    if argument_number==2 then
-        local file_path = args[2]
-        local file_type = args[3]
-        local todo = "send file"
-        --TODO
-        c_issue_instruction(todo)
-        return "debug: "..name.." successful"
+    if argument_number==1 then
+        local file = args[2]
+        c_issue_instruction(0,1,"SEND_FILE "..file,0)
 
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
@@ -189,14 +180,12 @@ end
 function open(args)
     local name = "open"
     local argument_number = get_length(args)
-    if argument_number==2 or argument_number==3 then
+    if argument_number==2 or argument_number==1 then
         local file_path = args[2]
-        local file_type = args[3]
-        local programm = args[4]
+        local programm = args[3]
             -- programm loockup table
-        send_file({"send_file", file_path, file_type})
-        send_comm({"send_comm", "exec", "0" ,programm, {file_path, file_type}})
-        return "debug: "..name.." successful"
+        send_file({"send_file", file_path})
+        c_issue_instruction(0,1,"OPEN "..file_name)
 
     else
         t_write("ERROR: "..name.." Argumentenzahl unpassend")
@@ -313,7 +302,7 @@ function interpret_comm(type_id,prog_id,comm,result)
             send_file({"send_file", "output.txt",""})
         end
     elseif prog_id == 1 then
-        feedback(comm)
+        feedback(split_input(comm))
     end
 end
 
@@ -355,7 +344,8 @@ function feedback(input_str)
         ["TEMP"]="",
         ["GET_FILES"]="",
         ["CONNECTION_CLOSED"]="Verbindung beendet",
-
+        ["OPEN"]="",
+        ["SEND_FILE"]="",
         ["GET_REMOTE_FILES"]=""
     }
 
@@ -372,6 +362,16 @@ function feedback(input_str)
 
 end
 
+function SEND_FILE(file)
+    c_issue_file(file, 0)
+end
+
+function OPEN(file)
+    local x = os.execute(file)
+    if x == 1 then
+        os.execute("xdg-open "..file)
+    end
+end
 
 function CONNECTION_CLOSED()
     t_write("Verbindung wurde beendet")
