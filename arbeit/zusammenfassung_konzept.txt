@@ -1,0 +1,16 @@
+Gruppenklima:
+  - Ausfall eines Gruppenmitglieds kurz vor regulärer Abgabe
+  - Kommunikation mit besagtem Gruppenmitglied war nicht erreichen, Fehlen seines Abgesprochenen Anteils
+  - Hochproduktive Arbeitsbeziehung zwischen Verbleibenden Gruppenmitgliedern
+  - Dynamische Zusammenarbeit, Gestützt durch Projektentwicklungsplattform GitHub
+ 
+Zielstellung:
+  - Implementierung eines Programm zur Übermittlung von Datein und Anweisung über ein Computernetzwerk
+  - Design eines Netzwerkprotokolls auf der Basis von TCP, ...
+  - Entwurf und Umsetzung einer Eingabesyntax, erweiterbarer Funktionsumfang, ...
+  - Unabhängig vom Betriebssystem (win/linux), anwendbar auf jegliche art von Dateitypen, ... 
+  
+Weiterführung:
+  - automatiersungsmöglichkeiten
+  - Erweiterung der Bedienelemente durch optionale Features wie Drag'n'Drop, mächtigere konsole,
+  - Portierung auf Mobiele geräte
