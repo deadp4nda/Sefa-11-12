@@ -265,6 +265,7 @@ void cbInstructionIn(SafeInstruction inst) {
 }
 void cbFileInStart(SafeFileHansz file){
     lua_getglobal(L,"filetrans_start");
+    file->print();
     lua_pushstring(L,file->getName().toStdString().c_str());
     lua_pushstring(L,file->getChecksumString().toStdString().c_str());
     lua_pushinteger(L,file->getFileType());
@@ -298,6 +299,7 @@ void cbError(const QString &error){
 }
 void cbGPFeedback(const QString &msg){
     if(msg == "NO_FILES_IN_QUEUE"){ wnd->internMsg("Keine Dateien in der Warteschlange"); return;}
+    if(msg.startsWith("BYTES_RECEIVED")) {return;}
     lua_getglobal(L,"feedback");
     lua_pushstring(L, msg.toStdString().c_str());
     stackDump(L);

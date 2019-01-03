@@ -57,12 +57,6 @@ int FileHansz::addData(const QByteArray &buffer, bool isLastPackage){
         file.waitForBytesWritten(INT_MAX);
         return 2;
     }
-    if(isLastPackage){
-        file.close();
-        if(hash != fileChecksum(file.fileName())){
-            emit fileTransmissionCorrupted();
-        }
-    }
 }
 FileHansz::~FileHansz(){
     if(file.isOpen())file.close();
@@ -75,6 +69,7 @@ void FileHansz::refactorHeaders(){
     fileSize = header->fileLen;
     stringSize = header->strLen;
     hashString = QString::fromLocal8Bit(rawData+sizeof(File_Header), FILE_CHECKSUM_LENGTH);
+    hash = QByteArray::fromHex(hashString.toUtf8());
     //qDebug() << "arrived HashString: " << hashString;
     name = QString(QByteArray((char*)header+sizeof(File_Header)+FILE_CHECKSUM_LENGTH,header->strLen));
     file.setFileName(stdDir.absoluteFilePath(hashString));

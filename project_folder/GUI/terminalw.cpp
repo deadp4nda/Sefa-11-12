@@ -57,19 +57,19 @@ void TerminalW::setupGUI() {
     v2layout = new QVBoxLayout;
 
     files_inq = new QLabel("Keine Dateien in der Warteschlange");
-    label = new QLabel("Files on track");
+    //label = new QLabel("Files on track");
     terminal = new Terminal(this);
     central = new QWidget(this);
-    fileT = new FileTable;
-    fileT->setFile(QDir::tempPath() + "/pinkkarriertesclownsfischbatallion/directory.csv");
+    //fileT = new FileTable;
+    //fileT->setFile(QDir::tempPath() + "/pinkkarriertesclownsfischbatallion/file_save.txt");
 
     setCentralWidget(central);
-    v2layout->addWidget(label);
-    v2layout->addWidget(fileT);
+    //v2layout->addWidget(label);
+    //v2layout->addWidget(fileT);
     vlayout->addWidget(files_inq);
     vlayout->addWidget(terminal);
     hlayout->addLayout(vlayout);
-    hlayout->addLayout(v2layout);
+    //hlayout->addLayout(v2layout);
 
     central->setLayout(hlayout);
     connect(terminal,&Terminal::Message,this,&TerminalW::Message);

@@ -25,6 +25,7 @@ public:
     bool isBroken()const{return broken;}
     void endingOne(){firstEndingSent=true;}
     bool getFirstEndingSent()const{return firstEndingSent;}
+    void print(){std::cout << "---FILE---" << "\nName: " << getName().toStdString() << "\nHash: " << getChecksumString().toStdString() << std::endl;}
 public: //Getters
     const QByteArray getHeaders()const{return headers;}
     const QString getName()const{return name;}
