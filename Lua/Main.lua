@@ -16,7 +16,7 @@
 -- Ausgabe: Funktionsaufruf
 
 local cert = nil
-
+local temp_path = ""
 
 
 function interpret_input(ui_input)
@@ -379,7 +379,7 @@ function CONNECTION_CLOSED()
     cert = nil
 end
 
-local temp_path = ""
+
 
 
 
