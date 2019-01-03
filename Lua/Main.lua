@@ -302,14 +302,14 @@ function interpret_comm(type_id,prog_id,comm,result)
             send_file({"send_file", "output.txt",""})
         end
     elseif prog_id == 1 then
-        feedback(split_input(comm))
+        feedback(comm)
     end
 end
 
 function filetrans_start(f_name, f_hash, f_type, f_size)
     t_write("Dateiübertragung wurde gestartet:\n"..f_name.."-"..f_size)
+    print(temp_path.."filesave.txt")
     local x = io.open(temp_path.."file_save.txt","a")
-    print(f_name, f_hash, f_type, f_size)
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
 
