@@ -30,6 +30,7 @@ function interpret_input(ui_input)
         ["open"]=0,
         ["shutdown"]=0,
         ["y"]=0,
+        ["chat"]=0,
         ["n"]=0,
         ["connect"]=0,
         ["reconnect"]=0,
@@ -94,6 +95,14 @@ function get_length(table)
     for _ in pairs(table) do
         i = i+1 end
     return i
+end
+
+function chat(args)
+    local msg = ""
+    for i=2, get_length(args)+1 do
+        msg = msg..args[i].." "
+    end
+    c_issue_instruction(0,1,"CHAT "..msg,0)
 end
 
 -- |send| --
@@ -325,6 +334,7 @@ end
 function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
+        ["CHAT"]=to_string(arg[2]),
         ["CONNECTION_INITIATED"]="Verbindung erfolgreich initialisiert",
         ["FILE_CONNECTION_INITIATED"]="Übertragung erfolgreich initialisiert",
         ["FILE_CONNECTION_CLOSED"]="Übertragung beendet!",
