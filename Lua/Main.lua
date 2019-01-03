@@ -309,7 +309,8 @@ end
 function filetrans_start(f_name, f_hash, f_type, f_size)
     t_write("Dateiübertragung wurde gestartet:\n"..f_name.."-"..f_size)
     local x = io.open(temp_path.."file_save.txt","a")
-    x:write(f_hash..","..f_name..","..f_type..","..f_size.."\n")
+    print(f_name, f_hash, f_type, f_size)
+    x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
 
 end
