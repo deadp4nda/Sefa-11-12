@@ -78,7 +78,7 @@ end
 
 function startup()
     local ext_ip = c_getwan()
-    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   "..ext_ip.."\n LOCAL: ".."PLATZHALTER")
+    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   " .. ext_ip .. "\n LOCAL: " .. "PLATZHALTER")
 end
 
 function squit(args)

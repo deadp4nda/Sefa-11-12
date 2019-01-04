@@ -248,6 +248,7 @@ int lGetWan(lua_State *L){
     timer.start(20000);
 
     loop.exec();
+    timer.stop();
     return 1;
 }
 

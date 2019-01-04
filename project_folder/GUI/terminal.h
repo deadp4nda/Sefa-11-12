@@ -10,24 +10,20 @@
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 
-class Terminal : public QTextEdit {
+#include "terminalinput.h"
+
+class Terminal : public QWidget{
     Q_OBJECT
 public:
     Terminal(QWidget *parent = nullptr);
-
-protected:
-    void keyPressEvent(QKeyEvent *) override;
-    void mousePressEvent(QMouseEvent *) override{setFocus();}
-    void mouseDoubleClickEvent(QMouseEvent* )override{}
-    void contextMenuEvent(QContextMenuEvent *) override{}
-
 public slots:
     void output( QString , QColor);
 signals:
     void Message( QString );
 private:
-    QString buffer = "";
-    void updateBuffer(){buffer = toPlainText().mid(toPlainText().lastIndexOf("\n>>> ")).remove("\n>>> ");}
+    TerminalInput *input = nullptr;
+    QVBoxLayout *layout = nullptr;
+    QTextEdit *doc = nullptr;
 };
 
 #endif //MANGO_TERMINAL_H

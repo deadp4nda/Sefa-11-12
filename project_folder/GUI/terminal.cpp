@@ -9,56 +9,32 @@
 
 #define repeat(x) for(int i=0;i<x;i++)
 
-Terminal::Terminal(QWidget *parent) :QTextEdit(parent){
-    document()->setMaximumBlockCount(420);
+Terminal::Terminal(QWidget *parent) :QWidget(parent){
     QPalette p = palette();
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::white);
     setPalette(p);
+    input = new TerminalInput(this);
+    doc = new QTextEdit(this);
+    doc->document()->setMaximumBlockCount(420);
+    connect(input,&TerminalInput::lineIn,this,&Terminal::output);
+    connect(input,&TerminalInput::lineIn,this,&Terminal::Message);
+    layout = new QVBoxLayout;
+    layout->addWidget(doc);
+    layout->addWidget(input);
+    setLayout(layout);
 }
 
 void Terminal::output(QString sometext, QColor col) {
-    if(sometext == "Keine Dateien in der Warteschlange")return;
-    if(sometext.startsWith("Empfangene Bytes: ") || sometext.startsWith("Gesendete Bytes: ")){
-        return;
-    }
-    if(toPlainText().right(5) == "\n>>> "){
-        repeat(5) textCursor().deletePreviousChar();
-    }
-    setTextColor(col);
-    insertPlainText("\n> " + sometext);
-    setTextColor(Qt::white);
-    insertPlainText("\n>>> ");
-    auto sb = verticalScrollBar();
-    sb->setValue(sb->maximum());
-    updateBuffer();
-}
+    if(sometext == "Keine Dateien in der Warteschlange") return;
+    if(sometext.startsWith("Empfangene Bytes: ") || sometext.startsWith("Gesendete Bytes: "))return;
 
-void Terminal::keyPressEvent(QKeyEvent *event) {
-    switch (event->key()) {
-        case Qt::Key_Left:
-        case Qt::Key_Right:
-        case Qt::Key_Up:
-        case Qt::Key_Down:
-            break;
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-            updateBuffer();
-            emit Message(buffer);
-            output("",Qt::green);
-            break;
-        case Qt::Key_Backspace:
-        case Qt::Key_Back:
-            if(buffer.size() > 0) {
-                QTextEdit::keyPressEvent(event);
-                updateBuffer();
-                break;
-            }
-            else
-                break;
-        default:
-            setTextColor(Qt::white);
-            QTextEdit::keyPressEvent(event);
-            buffer = toPlainText().mid(toPlainText().lastIndexOf("\n>>> ")).remove("\n>>> ");
-    }
+    doc->setTextColor(col);
+    doc->insertPlainText(sometext+"\n");
+
+    auto sb = doc->verticalScrollBar();
+    sb->setValue(sb->maximum());
+    auto cur = doc->textCursor();
+    cur.movePosition(QTextCursor::End);
+    doc->setTextCursor(cur);
 }
