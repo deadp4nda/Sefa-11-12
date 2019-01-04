@@ -30,12 +30,13 @@ void Terminal::output(QString sometext, QColor col) {
     if(sometext == "Keine Dateien in der Warteschlange") return;
     if(sometext.startsWith("Empfangene Bytes: ") || sometext.startsWith("Gesendete Bytes: "))return;
 
+    auto cur = doc->textCursor();
+    cur.movePosition(QTextCursor::End);
+    doc->setTextCursor(cur);
+
     doc->setTextColor(col);
     doc->insertPlainText(sometext+"\n");
 
     auto sb = doc->verticalScrollBar();
     sb->setValue(sb->maximum());
-    auto cur = doc->textCursor();
-    cur.movePosition(QTextCursor::End);
-    doc->setTextCursor(cur);
 }

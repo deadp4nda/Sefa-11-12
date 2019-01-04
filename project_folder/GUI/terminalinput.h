@@ -20,7 +20,7 @@ private slots:
 protected:
     void keyPressEvent(QKeyEvent *) override;
 private:
-    QStack<QString> s;
+    QList<QString> s;
     size_t idx = 0;
 };
 
