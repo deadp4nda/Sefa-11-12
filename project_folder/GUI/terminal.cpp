@@ -17,6 +17,7 @@ Terminal::Terminal(QWidget *parent) :QWidget(parent){
     input = new TerminalInput(this);
     doc = new QTextEdit(this);
     doc->document()->setMaximumBlockCount(420);
+    doc->setReadOnly(true);
     connect(input,&TerminalInput::lineIn,this,&Terminal::output);
     connect(input,&TerminalInput::lineIn,this,&Terminal::Message);
     layout = new QVBoxLayout;
