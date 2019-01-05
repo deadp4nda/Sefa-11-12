@@ -44,7 +44,7 @@ bg=light_gray</panel_attributes>
       <w>108</w>
       <h>27</h>
     </coordinates>
-    <panel_attributes>MongoConnection
+    <panel_attributes>MangoConnection
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
