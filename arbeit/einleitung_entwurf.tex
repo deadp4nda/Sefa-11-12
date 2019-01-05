@@ -7,16 +7,16 @@
 \section*{Einleitung}
 Daten speichern und verwalten ist eine komplexe Aufgabe, die viele kleine Probleme beinhaltet, so muss zum Beispiel genug Speicherplatz bereitgestellt werden und das Verschieben, Kopieren, Umbenennen, Auslesen oder Sichern der Daten muss ebenfalls möglich sein; letzteres soll oft von jedem beliebigen Ort aus geschehen, da man nicht nur zu Hause auf z.B. Urlaubsbilder, Musik und Videos zugreifen will.\\
 Die einfache Lösung würde darin bestehen, den Computer zu Hause fernzusteuern - das ist aber entweder nur umständlich mit Funktionen des Betriebssystems zu realisieren - was bei verschiedenen Betriebssystemen noch problematischer wird - oder mit schlecht erweiterbaren grafischen Systemen, die einen fortgeschrittenen Nutzer oft nicht zufrieden stellen.
-Ein auf einer Ebene dazwischen angesiedeltes System zur Fernsteuerung wäre sinnvoll - also eine betriebssystemunabhängiges Software zur Versendung von Steuerbefehlen an einen über ein Computernetzwerk verbundenen Zielcomputer mit der Möglichkeit Dateien zu übertragen, welches den Nutzer in seinen Möglichkeiten vernachlässigbar wenig beeinträchtigt und trotzdem eine nicht überladene Oberfläche besitzt - das ist unsere Zielstellung.
+Ein auf einer Ebene dazwischen angesiedeltes System zur Fernsteuerung wäre sinnvoll - also eine betriebssystemunabhängige Software zur Versendung von Steuerbefehlen und Datein an einen über ein Computernetzwerk verbundenen Zielcomputer, welche dem Nutzer die Möglichkeit gibt, sie nach den seinen spezifischen Ansprüchen selbständig zu erweitern.
 %kp, mal irgendwann weiterschreiben
 
 Dieses grob formulierte Ziel schlüsselt sich auf in mehrere Unterprobleme. Als Grundlage soll ein Netzwerkprotokoll entwickelt werden, welches unseren gestellten Ansprüchen gerecht erstellt werden muss. 
-Es sollte also optimiert sein für die Übertragung von Anweisungen eines vom Nutzer erweiterbaren Satzes und Dateien jeglichen Typs; dabei muss es sicherstellen, dass die Daten sicher und fehlerfrei, sowie im richtigen Format ankommen und sowohl Dateien als auch Befehle bei der Übertragung umfassen.\\
+Es sollte also optimiert sein für die Übertragung von Anweisungen eines vom Nutzer erweiterbaren Befehlssatzes, und Dateien jeglichen Typs; dabei muss es sicherstellen, dass die Daten sicher und fehlerfrei, sowie im richtigen Format ankommen und sowohl Dateien als auch Befehle bei der Übertragung umfassen.\\
 Die Kommunikation mit dem Nutzer geschieht über ein Terminal; die Eingabebefehle sind Teil einer selbst definierten formalen Sprache - damit werden unkomplizierte Bedienung und eine Möglichkeit zur Erweiterung kombiniert.
 Es soll dem Nutzer möglich sein, den vorhandenen Kanon von Befehlen beliebig zu erweitern und mit eigenen Funktionen zu ergänzen, ohne das gesamte Programm neu kompilieren zu müssen. Deshalb wird die gesamte Eingabeverarbeitung intern von einer plattformunabhängigen Skriptsprache geregelt.
 Dadurch soll der Nutzer in der Lage sein, das Programm mit eigenen Skripten auszubauen und Vorgänge im Programm zu automatisieren, je nach Bedarf.\\
 Zu guter Letzt muss unser Programm modular aufgebaut sein, damit es von allen drei Mitgliedern von den Schnittstellen dazwischen abgesehen unabhängig entwickelt werden kann und niemand alle Details überblicken muss.
-Insgesamt ist unser Ziel also, den Anwender mit einer möglichst wenig einschränkenden Software bei der Fernsteuerung von Computern aus der Ferne zu unterstützen, indem sich um Verbindungsaufbau, sowie Befehls- und Dateiübertragung gekümmert wird.
+Insgesamt ist unser Ziel also, den Anwender mit einer gering einschränkenden Software bei der Steuerung von Computern aus der Ferne zu unterstützen, indem sich um Verbindungsaufbau, sowie Befehls- und Dateiübertragung gekümmert wird.
 %meh. wird irgendwie nicht mehr xD
 % ^+1 später...
 
