@@ -21,7 +21,7 @@ FileHansz::FileHansz(const QFile &file, quint64 filetype):
         name = info.fileName();
         memset(&mongoH,0,sizeof(Mongo_Header));
         memset(&fileH,0,sizeof(File_Header));
-        mongoH.mng_type = MONGO_TYPE_FILE;
+        mongoH.mng_type = MANGO_TYPE_FILE;
         fileH.fileLen = file.size();
         fileH.filetype = filetype;
         fileH.strLen = name.toUtf8().size();

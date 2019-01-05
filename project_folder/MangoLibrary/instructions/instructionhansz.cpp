@@ -6,7 +6,7 @@
 namespace Mango {
 InstructionHansz::InstructionHansz(quint32 instr, quint32 toPrgm, quint32 args, const QByteArray &payload):
     instruction(instr),addressedProgram(toPrgm), arguments(args),contentLength(payload.size()){
-    if(payload.size()>MONGO_INSTRUCTION_MAXIMUM){
+    if(payload.size()>MANGO_INSTRUCTION_MAXIMUM){
         std::cerr << "[ERROR] Payload size exceeds valid maximum\n";
         instr = InvalidInstr;
         return;
@@ -17,7 +17,7 @@ InstructionHansz::InstructionHansz(quint32 instr, quint32 toPrgm, quint32 args, 
     memset(&mongo,0,sizeof(mongo));
     memset(&instructionH,0,sizeof(instructionH));
 
-    mongo.mng_type = MONGO_TYPE_INST;
+    mongo.mng_type = MANGO_TYPE_INST;
     instructionH.args = arguments;
     instructionH.contLen = contentLength;
     instructionH.exCode = instruction;
