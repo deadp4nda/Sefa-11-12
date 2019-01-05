@@ -9,3 +9,51 @@
 \glsref{ISO/OSI Modell} & Ein informatisches Modell zur Darstellung der Kommunikation in einem Netzwerk. Dabei werden verschiedene "`Schichten"' definiert, die jeweils unterschiedliche Aufgaben bei der Kommunikation übernehmen und aufeinander aufbauen. So gibt es die unteren, noch sehr hardwarenahen  Schichten, die sich um die korrekte Übertragung von einzelnen Bits kümmern; Schichten darüber, welche für die Ankunft einzelner \glsref{Paket}e am richtigen Ort zuständig sind bis hin zu Schichten, die Abläufe und Formate enthalten, die für die Darstellung und Übertragung von Websites zuständig sind.\\
 \end{tabularx}
 \end{table}
+
+\subsection*{Codereferenz}
+\label{enums}
+\subsubsection*{Übertragungstyp}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\
+\hline
+0x10 & MANGO\_TYPE\_INST & Anweisung\\
+\hline
+0x20 & MANGO\_TYPE\_FILE & Datei\\
+\hline
+\end{tabular}
+
+\subsubsection*{Vorimplementierte Dateitypen}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\\hline
+1 & Undefined & Undefinierter Typ\\\hline
+2 & Movie & Film\\\hline
+3 & Picture & Bild\\\hline
+4 & Text & Text\\\hline
+5 & Audio & Audio\\\hline
+6 & Broken & für ungültige Übertragungen reserviert\\\hline
+\end{tabular}
+
+\subsubsection*{Vorimplementierte Anweisungstypen}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\\hline
+1&    Exit           & dieses Programm schließen und Verbindungen abbrechen\\\hline
+2&    Kill           & schließe ein bestimmtes Programm\\\hline
+3&    GetFileList    & Abrufen von Ordner/Dateistrukturen\\\hline
+4&    GetPrgmList    & Liste von bekannten Programmen abrufen\\\hline
+5&    RetrieveFile   & bestimmte Datei von Ziel nach Start senden\\\hline
+6&    Execute        & bestimmtes Programm starten, Argumente im Paket\\\hline
+7&    Chat           & Paket enthält Textnachricht\\\hline
+8&    FileToBeSent   & signalisiert beginnende Dateiübertragung\\\hline
+9&    InvalidInstr   & für ungültige Übertragungen reserviert\\\hline
+\end{tabular}
+
+\subsubsection*{Vorimplementierte Programmcodes}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\\hline
+1 & This & Dieses Programm\\\hline
+2 & InvalidPrgm & für ungültige Übertragungen reserviert\\\hline
+\end{tabular}
