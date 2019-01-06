@@ -236,9 +236,9 @@ int lGetWan(lua_State *L){
     QObject::connect(manager, &QNetworkAccessManager::finished,[=](QNetworkReply *reply){
         if(reply->error()){
             std::cerr << reply->errorString().toStdString() << std::endl;
-            lua_pushstring(L, reply->errorString().toStdString().c_str());
+            lua_pushstring(L, reply->errorString().toLocal8Bit().data());
         }else {
-            lua_pushstring(L, QString(reply->readAll()).toStdString().c_str());
+            lua_pushstring(L, QString(reply->readAll()).toLocal8Bit().data());
         }
     });
     QNetworkRequest req;
@@ -267,8 +267,8 @@ void cbInstructionIn(SafeInstruction inst) {
 void cbFileInStart(SafeFileHansz file){
     lua_getglobal(L,"filetrans_start");
     file->print();
-    lua_pushstring(L,file->getName().toStdString().c_str());
-    lua_pushstring(L,file->getChecksumString().toStdString().c_str());
+    lua_pushstring(L,file->getName().toLocal8Bit().data());
+    lua_pushstring(L,file->getChecksumString().toLocal8Bit().data());
     lua_pushinteger(L,file->getFileType());
     lua_pushinteger(L,file->getFileSize());
     if(lua_pcall(L,4,0,0) != 0){
@@ -292,9 +292,9 @@ void cbConnVerification(){
 }
 void cbError(const QString &error){
     lua_getglobal(L, "error");
-    lua_pushstring(L, error.toStdString().c_str());
+    lua_pushstring(L, error.toLocal8Bit().data());
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbError while calling lua with  Message: " << error.toStdString() << "\n";
+        std::cerr << "[ERROR] in cbError while calling lua with  Message: " << error.toLocal8Bit().data() << "\n";
     }
     lua_settop(L,0);
 }
@@ -302,10 +302,10 @@ void cbGPFeedback(const QString &msg){
     if(msg == "NO_FILES_IN_QUEUE"){ wnd->internMsg("Keine Dateien in der Warteschlange"); return;}
     if(msg.startsWith("BYTES_RECEIVED")) {return;}
     lua_getglobal(L,"feedback");
-    lua_pushstring(L, msg.toStdString().c_str());
+    lua_pushstring(L, msg.toLocal8Bit().data());
     stackDump(L);
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbGPFeedback while calling lua with Message: " << msg.toStdString() << "\n";
+        std::cerr << "[ERROR] in cbGPFeedback while calling lua with Message: " << msg.toLocal8Bit().data() << "\n";
     }
     lua_settop(L,0);
 }
