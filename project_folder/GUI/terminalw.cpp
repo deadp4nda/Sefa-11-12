@@ -96,7 +96,7 @@ void TerminalW::Message(QString msg){
     lua_getglobal(L,"interpret_input");
     stackDump(L);
     std::cerr << msg.toLocal8Bit().data() << std::endl;
-    lua_pushstring(L, msg.toLocal8Bit().data());
+    lua_pushstring(L, msg.toLocal8Bit());
     int erret = lua_pcall(L,1,0,0);
     if(erret != 0){
         std::cerr << "[ERROR] in TerminalW::Message calling: "<< erret << std::endl;
