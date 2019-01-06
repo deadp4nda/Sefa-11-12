@@ -78,7 +78,7 @@ end
 
 function startup()
     local ext_ip = c_getwan()
-    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   " .. ext_ip .. "\n LOCAL: " .. "PLATZHALTER")
+    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   "..ext_ip.."\n LOCAL: ".."PLATZHALTER")
 end
 
 function squit(args)
@@ -331,10 +331,18 @@ function table_contains(tab, key)
     return tab[key]~=nil
 end
 
+function set_msg(args)
+    local msg = ""
+    for i=2, get_length(args)+1 do
+        msg = msg..args[i].." "
+    end
+    return msg
+end
+
 function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
-        ["CHAT"]=to_string(arg[2]),
+        ["CHAT"]=set_msg(arg),
         ["CONNECTION_INITIATED"]="Verbindung erfolgreich initialisiert",
         ["FILE_CONNECTION_INITIATED"]="Übertragung erfolgreich initialisiert",
         ["FILE_CONNECTION_CLOSED"]="Übertragung beendet!",
