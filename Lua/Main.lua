@@ -77,8 +77,8 @@ end
 ---
 
 function startup()
-    local ext_ip = c_getwan()
-    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   "..ext_ip.."\n LOCAL: ".."PLATZHALTER")
+    local ext_ip, loc_ip = c_getwan()
+    t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\n WAN:   "..ext_ip.."\n LOCAL: "..loc_ip)
 end
 
 function squit(args)
@@ -103,7 +103,7 @@ function chat(args)
         msg = msg..args[i].." "
     end
     print("send "..msg)
-    local msg = "hällow"
+    --msg = "hällow"
     c_issue_instruction(0,1,"CHAT "..msg,0)
 end
 
