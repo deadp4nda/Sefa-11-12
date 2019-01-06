@@ -6,14 +6,14 @@
 \section{Entwurf und Umsetzung der Netzwerk-Schnittstelle}
 \subsection{Grundlegende Theorie zur Kommunikation in einem Netzwerk}
 Unter dem Begriff Netzwerk im Zusammenhang mit dieser Arbeit wird, sofern es nicht ausdrücklich anders definiert ist, die Ansammlung mehrerer, untereinander verbundener Computer verstanden.
-Diese haben die Möglichkeit mit standardisierten Internet-Netzwerkprotokollen miteinander zu kommunizieren.\\ 
+Diese haben die Möglichkeit mit durch die ISO standardisierten Internet-Netzwerkprotokollen miteinander zu kommunizieren.\\ 
 
 \begin{wrapfigure}{r}{.55\textwidth}
 \includegraphics[scale=1]{isoosi}
 \caption{Schematischer Aufbau des ISO/OSI-Modells\protect\footnotemark}
 \label{ISOOSI}
 \end{wrapfigure}
-\footnotetext{https://www.researchgate.net/profile/Sebastian\_Lempert/publication/202268228/figure/fig1/\\AS:393996175200256@1470947416022/Abbildung-1-Die-7-Schichten-des-ISO-OSI-Referenzmodells-Der-geschichtete-Aufbau-eines.png}
+\footnotetext{https://www.researchgate.net/profile/Sebastian\_Lempert/publication/202268228/figure/fig1/\\AS:393996175200256@1470947416022/Abbildung-1-Die-7-Schichten-des-ISO-OSI-Referenzmodells-Der-geschichtete-Aufbau-eines.png [Zugriff: 20.12.2018 14:20 Uhr]}
 
 Diese Kommunikation wird beschrieben durch das ISO/OSI Modell, auf dem auch die Arbeitsweise unseres Programmes aufbaut.
 Innerhalb dieses Modells kann man den Prozess einer Netzwerkübertragung sowie die dabei verwendeten Informationen bzw. Protokolle in Schichten nach ihrem Abstraktionsgrad einteilen, von Nullen und Einsen in einem Kabel bis hin zu z.B. verschiedensten Verschlüsselungsprotokollen; was in unteren Schichten abgesichert ist, muss in denen darüber nicht implementiert werden, was wiederum zu einfachen und verlässlichen einzelnen Algorithmen in einer Schicht führt, obwohl das gesamte System überaus komplex ist. 
@@ -21,8 +21,8 @@ Das Modell ist in Abbildung \ref{ISOOSI} dargestellt.
 
 \subsection{Notwendigkeit, Anforderungen und Spezifikation eines eigenen Netzwerkprotokolls}
 Um das Programm zu dritt zu entwickeln, muss eine gewisse Modularität gewährleistet werden, außerdem müssen die Sinnabschnitte klar nach ihrer Funktion gegliedert sein und leicht benutzbare sowie wiederverwendbare Schnittstellen besitzen, damit nicht das gesamte Programm angepasst werden muss, wenn ein Teil geändert wird und jeder sich auf seinen Teil konzentrieren kann, ohne die anderen vollständig zu kennen.
-Diese Anforderung wird durch die Trennung der verwendeten Programmiersprachen Lua und C++ einfach geregelt, aber in reinem C++ Kontext muss es dennoch eine Unterteilung zwischen Netzwerkschnittstelle und Benutzeroberfläche geben, weshalb die gesamte Netzwerkkommunikation über eine statische Bibliothek in die ausführbare Datei eingebunden ist, in der die Benutzeroberfläche und die Verbindung der Programmteile implementiert sind.\\\\
-Die Aufgabe der Bibliothek ist es, Funktionen und Klassen bereitzustellen, die eine verlässliche Verbindung zwischen zwei Rechnern aufbauen (Start und Ziel), über die ein erweiterbarer Satz von Anweisungen mit optionalen Argumenten sowie Dateien bidirektional übertragen werden können.
+Diese Anforderung wird durch die Trennung der verwendeten Programmiersprachen Lua und C++ einfach geregelt, aber in reinem C++ Kontext muss es dennoch eine Unterteilung zwischen Netzwerkschnittstelle und Benutzeroberfläche geben, weshalb die gesamte Netzwerkkommunikation über eine statische Bibliothek in die ausführbare Datei eingebunden ist, in der die Benutzeroberfläche und die Verbindung der Programmteile implementiert sind. Beide Programmteile nutzen die Funktionen und Klassen des frei zugänglichen Programmier-Frameworks Qt\footnote{https://www.qt.io/ [21.12.2018 16:30 Uhr]}.\\\\
+Die Aufgabe unserer Netzwerkbibliothek ist es, Funktionen und Klassen bereitzustellen, die eine verlässliche Verbindung zwischen zwei Rechnern aufbauen (Start und Ziel), über die ein erweiterbarer Satz von Anweisungen mit optionalen Argumenten sowie Dateien bidirektional übertragen werden können.
 Startrechner bezeichnet in diesem Fall immer den Rechner, vor dem der Anwender sitzt, Zielrechner denjenigen, der über das Programm gesteuert wird und Anweisungen erhält.\\
 Dafür stellen sich folgende Anforderungen, es muss:\\
 
@@ -40,7 +40,7 @@ Dafür stellen sich folgende Anforderungen, es muss:\\
 Diese Bedingungen implizieren bereits, dass es eine bestimmte Regelung des Ablaufs für die Kommunikation zwischen den beiden Computern geben muss: ein Protokoll, also eine Kommunikationsvorschrift zwischen zwei Computern, die mit bestimmten Datenformaten und Abläufen das Verhalten der Computer während der Kommunikation festlegt.\par
 Um nicht ebenfalls für die Ankunft der Daten selbst sorgen zu müssen, baut das Protokoll auf TCP/IP auf (genauer auf dem Protokoll TLS, welches eine schon verschlüsselte Verbindung bereitstellt), also der Sicherungsschicht des ISO/OSI-Modells, welche dies bereits genau das implementiert und standardisiert. Demnach ist unser Protokoll also zwischen der fünften und sechsten Schicht des Modells(s. Abb. \ref{ISOOSI}) einzuordnen, da es auf TLS aufbaut, aber noch nicht zur Darstellung von Informationen genutzt wird, wie es mit beispielsweise HTML der Fall wäre, sondern deren formatierter Übertragung und Aufbereitung zur Steuerung des Programms regelt.
 Man kann die verschickten Daten in Pakete einteilen, also kleinere Datenabschnitte, die sequentiell, aber unabhängig voneinander verschickt und am Zielort zusammengesetzt werden.
-Um diese Pakete innerhalb des Netzwerks zu navigieren, wird am Startcomputer an den Anfang jedes Pakets(\textit{Header}) ein Datensatz geschrieben, der Informationen zum Zielort, dem Weg oder der Behandlung der Daten des Pakets enthält.\par 
+Um diese Pakete innerhalb des Netzwerks zu navigieren, wird am Startcomputer an den Anfang jedes Pakets (\textit{Header}) ein Datensatz geschrieben, der Informationen zum Zielort, dem Weg oder der Behandlung der Daten des Pakets enthält.\par 
 Auf dieser Technik baut auch unser Protokoll auf - es schreibt an den Anfang jeder Übertragung einen Datensatz mit einem festen Format, welcher die Art des Pakets beschreibt und am Zielort ausgelesen wird und, was dann die weitere Behandlung bestimmt.
 Besonders im Fall von Anwendungen ist der Unterschied zwischen Header und Datenteil des Pakets jedoch fließend, da hier eine feste Struktur sowohl im Bezug auf die Größe als auch die Verarbeitungsgeschwindigkeit von Vorteil ist und die meisten Informationen zur Anweisung schon im Header integriert sind.
 Da das Protokoll sowohl für den Versand von Anweisungen als auch von Dateien geeignet sein muss und dabei so strukturiert und einfach wie möglich soll, gibt es zwei verschiedene Teilprotokolle, was in folgendem Aufbau der Kommunikationsstruktur resultiert:\par
@@ -50,7 +50,7 @@ Dabei sind alle Werte, sofern es möglich ist, als Zahlen und nicht als Zeichenk
 Betrachtet man zunächst den Header für die Anweisungen, so braucht man einen Anweisungscode, der am Zielort eindeutig zu einer Anweisung zugeordnet werden kann; Teil zwei sind Standardargumente, die binär auf 32 Bit Speicherbreite gesetzt werden können.
 Diese Standardargumente sind dazu da, ein Zusammenfassen mehrerer ähnlicher Anweisungen zu gewährleisten und dadurch das Protokoll sinnvoll zu strukturieren statt es mit Anweisungen zu überladen; so gibt es beispielsweise nur eine Anweisung um Ordnerstrukturen anzufordern.  
 Mit ihr ist es möglich, die Dateien, die bereits auf dem Zielcomputer vorhanden sind, abzurufen und anzuzeigen. 
-Je nachdem, welche Informationen zu welchen Dateien geschickt werden sollen, können jetzt Standardargumente als Bitflags gesetzt werden. %TODO bitflags evt erklären? 
+Je nachdem, welche Informationen zu welchen Dateien geschickt werden sollen, können jetzt Standardargumente als Bitflags gesetzt werden -  das heißt, die binäre Zahlendarstellung von Integern wird insofern ausgenutzt, dass einzelne Bits einer Ganzzahl mit bestimmter Speicherbreite auf eins oder null gesetzt werden können. Das kann auch am Zielort wieder ausgelesen werden und so dienen die Bits als "`Signale"', die über die genaue Auslegung einer Anweisung bestimmen und dabei extrem Platzsparend sind.
 So können außer den Dateinamen außerdem noch Dateigrößen, Zugriffsrechte oder andere Metainformationen mitgeschickt werden, wenn die entsprechenden Bits auf eins gesetzt worden sind - andernfalls wären dafür zusätzliche Anweisungen nötig, was das Protokoll unnötig vergrößern würde.\par 
 Der dritte Wert im Headersegment für die Anweisungen ist eine Zahl, die ein Programm identifiziert, auf dass die Anweisung angewendet werden soll, was im Standardfall unsere Software ist.
 
@@ -78,7 +78,7 @@ Der vierte Wert ist eine Längenangabe in Bytes.
 Er bezeichnet die Länge des optionalen Paketinhalts beliebigen Formats, welches an den Header angehängt werden kann, beispielsweise ein Dateiname, ein Prüfungssummenwert oder ein Bash-Befehl.\par
 Um die ganze Anweisung klein zu halten wird intern festgelegt, dass die Gesamtgröße dieses Headersegments inklusive des optionalen Arguments nicht größer als $2^{16}-1$ Byte sein darf - größere Anhänge müssen als Datei verschickt werden.
 Aus Kompatibilitätsgründen mit verschiedenen Compilern und Systemen sind alle Zahlenwerte Integer mit 32 bzw. 64 Bit Speicherbreite angegeben, um damit sowohl genügend Platz für alle Informationen zu bieten als auch Probleme mit verschiedenen Rechnerarchitektur-spezifischen Anpassungen der Speicherbreite zu vermeiden, die während der Entwicklung ein Problem darstellten können.
-Für den Nutzer spielen die tatsächlichen Kodierungen, also welches Programm oder welche Anweisung welchen Code erhält, keine Rolle, sie werden intern festgelegt und bei  Interaktionen mit dem Nutzer ausgeführt oder in ihre Entsprechungen in Zeichenketten- oder Bildform umgewandelt. %TODO bildform? wut?
+Für den Nutzer spielen die tatsächlichen Kodierungen, also welches Programm oder welche Anweisung welchen Code erhält, keine Rolle, sie werden intern festgelegt und bei  Interaktionen mit dem Nutzer ausgeführt oder in ihre Entsprechungen in von Menschen lesbarer Form umgewandelt.
 Die genauen Werte für Anweisung und Programme werden nur in seltenen Fällen im Zusammenhang mit der Nutzerseitigen Erweiterung des Anwendungskanons relevant, und sind im Anhang einsehbar.[s.S. \pageref{enums}]
 Insgesamt ergibt sich also die in Abbildung \ref{Anweisungs_Header} zu sehende Spezifikation des Headers für die Versendung von Anweisungen.
 Dabei ist die Länge der Argumente in (pro Zeile 32) Bit angegeben, sofern nicht anders spezifiziert.\\\\
@@ -104,13 +104,14 @@ Dabei ist die Länge der Argumente in (pro Zeile 32) Bit angegeben, sofern nicht
 
 Das Versenden von Dateien hat andere Anforderungen, was in einem geänderten Aufbau des Header-Segments für eine solche Übertragung, sowie in einem anderen Ablauf resultiert.\par
 Für jede Dateiübertragung wird, im Gegensatz zu den Anweisungen, jeweils eine neue TLS-Verbindung aufgebaut, die unabhängig von den vorhergehenden und nachfolgenden ist, es gibt also für jede Datei einen abgeschotteten "`Kanal"', in dem Fehler leicht behandelbar und konkurrierende Übertragungen unmöglich sind; außerdem bleibt die Kennzeichnung einzelner Datenpakete erspart, was wiederum zu insgesamt weniger Datenverkehr führt.
-Darauf folgend wird ein Paket mit Informationen zu der Datei zum Zielcomputer geschickt, welcher, um die Integrität der Übertragung zu verifizieren, dasselbe Paket zurücksendet.\\
 
 \begin{wrapfigure}{r}{.5\textwidth}
 \includegraphics[scale=.4]{diagramFileProtocol}
 \caption{Schematische Darstellung des Ablaufs bei der Dateiübertragung}
 \label{file_diagram}
 \end{wrapfigure}
+
+Darauf folgend wird ein Paket mit Informationen zu der Datei zum Zielcomputer geschickt, welcher, um die Integrität der Übertragung zu verifizieren, dasselbe Paket zurücksendet.\\
 
 Dieses Informationspaket ist in Abbildung \ref{Datei_Header} schematisch dargestellt.
 Es besteht aus der Art der Datei (z.B. Video, Audio, Text, ausführbare Dateien etc.), was in der weiteren Einordnung im Zielcomputer nützlich ist, dem ursprünglichen Dateinamen und einer Prüfsumme, mit der die fehlerfreie Ankunft verifiziert werden kann. Auch hier spielt der tatsächliche Zahlenwert, der hinter dem Typ steht nur intern eine Rolle, abgesehen von benutzerdefinierten Erweiterungen. Deshalb sind die Codierungstabllen im Anhang nachzulesen. [s. S. \pageref{enums}]\\\\
@@ -119,7 +120,7 @@ Dann werden die Länge des Dateinamens und Prüfsumme angehängt und dieses gesa
 Ist die Verbindung verifiziert, wird mit der eigentlichen Übertragung der Datei begonnen, die in Abschnitten und ohne weitere Kennzeichnung in mehreren kleinen Paketen geschieht.
 Das funktioniert, da unser Standard zum Einen auf TCP/IP aufbaut, welcher bereits die richtige Reihenfolge und Vollständigkeit der Pakete weitgehend sicherstellt und zum Anderen nur eine Verbindung pro Dateiübertragung aktiv ist.
 Am Zielcomputer wird die Datei schließlich in einem temporären Standardverzeichnis abgespeichert und Paket für Paket zusammengesetzt.
-Ist die Übertragung nach dem Senden einer bestimmten Bytesequenz vom Zielcomputer beendet, wird ein Signal aus eier der Managerklassen ausgesendet und die Verbindung getrennt. %TODO evtl verweis auf folgendes kapitel, dadu das system mit den managerklassen noch nicht erklärt hast...
+Ist die Übertragung nach dem Senden einer bestimmten Bytesequenz vom Zielcomputer beendet, wird ein Signal aus einer der Managerklassen ausgesendet und die Verbindung getrennt. Die Aufgaben und Funktionen der Managerklassen werden im nächsten Kapitel genauer erläutert.
 Diese Schrittfolge ist schematisch in Abbildung \ref{file_diagram} dargestellt.
 Nach dem erfolgreichen Übertragen wird noch mit der anfänglich verschickten Prüfsumme der Datei die Integrität der Datei geprüft, um Fehler insgesamt auszuschließen, und die weitere Verarbeitung an die anderen Programmteile abgegeben.\\\\
 Alle Anforderungen an das Protokoll werden erfüllt; der gesicherte und verschlüsselte Transport von Daten ist durch die Verwendung einer TLS-Verbindung und dem Aufbau eigener Kanäle erfüllt, die fehlerfreie Übertragung von Daten wird am Zielort über Gesamtgröße und Prüfsummen verifiziert, der Kommunikationskanal ist symmetrisch aufgebaut, da die Bibliothek sowohl für den Start- als auch für den Zielcomputer die nötige Funktionalität bereitstellt; die Codierung von allen Informationen als Zahlen oder als Bitflags sowie die Nutzung eigener Kanäle für Dateien reduziert den Datenverkehr drastisch, und damit ist auch dieser Punkt erfüllt, außerdem ist die Verwendung von Zahlencodes systematisch erweiterbar auf derselben Speicherbreite, also wurden alle Ziele erreicht.
@@ -131,9 +132,7 @@ Zusätzlich dazu ist eine entsprechende Fehlerbehandlung bei Verbindungsabbrüch
 Insgesamt muss der Programmierer also nur mit zwei Klassen interagieren, um die volle Funktionalität der Bibliothek ausnutzen, weshalb sich das gesamte Konstrukt sehr gut für weitere Verwendungen in flexiblen Kontexten der modularen Programmierung eignet.
 
 \subsection{Implementierung und Funktionsweise der Klassenbibliothek}
-In der Bibliothek sind neben den beiden oben beschriebenen Manager-Klassen (MngThManager für
-%TODO siehe klammer, angeblich beides für Datein c:
-Dateien und MngFileManager für Dateien) mehrere andere Klassen definiert, welche von den jeweiligen Manager-Klassen aus aufgerufen und benutzt werden und dadurch eine darunterliegende Schicht bilden, die durch eine fest definierte Schnittstelle an den Rest des Programms angebunden werden.
+In der Bibliothek sind neben den beiden oben beschriebenen Manager-Klassen (MngThManager für Anweisungen und MngFileManager für Dateien) mehrere andere Klassen definiert, welche von den jeweiligen Manager-Klassen aus aufgerufen und benutzt werden und dadurch eine darunterliegende Schicht bilden, die durch eine fest definierte Schnittstelle an den Rest des Programms angebunden werden.
 Außerdem gibt es eine von allen Klassen benutzte Datei, in denen die Datenstrukturen und Datentypen, die in den Header der Pakete geschrieben werden, als C-Structs definiert sind und einige Funktionen, die häufig gebraucht werden (z.B. String-Vervielfältigung, oder eine Funktion zum errechnen der Dateiprüfsumme) deklariert.\par
 Der Aufbau der Übertragung beider Datentypen, die verschickt werden, ähnelt sich bis zu einem gewissen Punkt - so haben beide eine eigene Klasse, in der intern die Objekte(Anweisungen und Dateizugriffsobjekte) gespeichert sind und verwaltet werden: (\textit{FileHansz} bzw. \textit{InstructionHansz}), sowie andere Klassen zum Verbindungsaufbau und dem Versand: Eine Klasse, die für das Annehmen von hereinkommenden Verbindungen zuständig ist und eine(bei Dateien zwei) Socket-Klassen, die sich um das Senden bzw. Empfangen von Daten kümmern, was in Abb. \ref{inst_d} bzw. \ref{file_d} vereinfacht schematisch dargestellt ist.\\\\
 
@@ -160,11 +159,13 @@ In der Verbindung für eine Datei wird, sobald sie aufgebaut ist, zuerst der Hea
 Jetzt wird die eigentliche Übertragung der Datei gestartet, welche mit dem Auslesen eines Datenblockes fester Größe beginnt.
 Dieser wird in einen Pufferspeicher geschrieben, der, wenn er voll ist von der Socket-Klasse ausgelesen und übertragen wird; diese Anweisungsfolge wird so lange wiederholt, bis das Ende der Datei erreicht ist.
 Der letzte Datenblock enthält oft weniger als die Maximalgröße, was aber in der Praxis kein Problem ist - das letzte Datenpaket auf der Seite des verschickenden Rechners ist nur etwas kleiner als der Rest.
-Auf der empfangenden Seite werden die ankommenden Datenpakete über ihre Repräsentation als FileHansz-Objekt in eine nach der Datei-Prüfsumme benannten Datei im Dateisystem gespeichert - das verhindert die konkurrierende Benennung von ungleichen Dateien und vereinfacht das Überprüfen auf korrekte Übertragung; die ursprünglichen Namen werden zu Beginn der Übertragung per Signal an das Programm außerhalb der Bibliothek geschickt, welches diese dann weitergehend speichert - somit geht auch der Überblick nicht verloren.
+Auf der empfangenden Seite werden die ankommenden Datenpakete über ihre Repräsentation als Filehansz-Objekt in eine nach ihrer Prüfsumme benannten Datei in einem temporären Verzeichnis gespeichert - das verhindert die konkurrierende Benennung von ungleichen Dateien und vereinfacht das Überprüfen auf korrekte Übertragung; die ursprünglichen Namen werden zu Beginn der Übertragung per Signal an das Programm außerhalb der Bibliothek geschickt, welches diese dann weitergehend speichert - somit geht auch der Überblick nicht verloren.
 Sind alle Pakete versandt worden und angekommen, wofür die TCP-basierte Verbindung sorgt, wird vom empfangenden Rechner eine Bytesequenz übertragen, welche die erfolgreiche Übertragung kennzeichnet.\par
 Danach wird die Verbindung abgeschlossen und die beiden Sockets gelöscht.
 Der gesamte Prozess ist in Abb. \ref{file_diagram} als Sequenzdiagramm dargestellt.\\
 Die Verbindung für Anweisungen wird im Gegensatz erst am Programmende oder bei einem disconnect-Befehl getrennt; sie läuft auf Port 16962, die Dateiübertragung auf Port 16963.
-Greift man über das Internet auf einen Computer in einem lokalen Netzwerk zu, so muss zuvor beim Standardgateway für beide Ports Port-Forwarding eingestellt werden.
+Greift man über das Internet auf einen Computer in einem lokalen Netzwerk zu, so muss zuvor beim Standardgateway für beide Ports Port-Forwarding eingestellt werden.\\\\
+Insgesamt arbeiten also die für den Benutzer der Schnittstellen nicht sichtbaren Klassen an der Funktion eines komplexen Protokolls, dass sich durch extrem Speichereffiziente Datenstrukturen und einen mehrstufigen Aufbau auszeichnet.
+Dabei sind sie in ihrer Implementierung auf eine möglichst geringe Fehlerquote und Stabilität ausgelegt, insbesondere durch die Verwendung von einem "`Kanal"' pro Datei oder eine Taktung bei der Übertragung von Anweisungen, was das Abstürzen des Programms, dass durch zu viele gleichzeitig geschickte Anweisungen entstünde, verhindert.
+So entsteht ein stabiles und verlässliches System, welches die weitere Funktion unseres Programmes stützt.
 %\end{document}
-%TODO irgend ein fazit, etwas zusammenfassendes vllt noch 
