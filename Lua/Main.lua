@@ -103,6 +103,7 @@ function chat(args)
         msg = msg..args[i].." "
     end
     print("send "..msg)
+    local msg = "hällow"
     c_issue_instruction(0,1,"CHAT "..msg,0)
 end
 
