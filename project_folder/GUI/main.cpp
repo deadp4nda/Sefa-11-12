@@ -9,6 +9,7 @@
 #include <files/filehansz.h>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QNetworkInterface>
 
 #include "terminalw.h"
 
@@ -235,10 +236,10 @@ int lGetWan(lua_State *L){
     QObject::connect(manager, &QNetworkAccessManager::finished,&loop,&QEventLoop::quit);
     QObject::connect(manager, &QNetworkAccessManager::finished,[=](QNetworkReply *reply){
         if(reply->error()){
-            std::cerr << reply->errorString().toStdString() << std::endl;
-            lua_pushstring(L, reply->errorString().toLocal8Bit().data());
+            wnd->issueMessage(reply->errorString(),TerminalW::CError);
+            lua_pushstring(L, reply->errorString().toLocal8Bit());
         }else {
-            lua_pushstring(L, QString(reply->readAll()).toLocal8Bit().data());
+            lua_pushstring(L, QString(reply->readAll()).toLocal8Bit());
         }
     });
     QNetworkRequest req;
@@ -249,7 +250,13 @@ int lGetWan(lua_State *L){
 
     loop.exec();
     timer.stop();
-    return 1;
+
+    foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
+            lua_pushstring(L,address.toString().toUtf8());
+    }
+
+    return 2;
 }
 
 void cbInstructionIn(SafeInstruction inst) {
@@ -257,44 +264,44 @@ void cbInstructionIn(SafeInstruction inst) {
     lua_getglobal(L, "interpret_comm");
     lua_pushinteger(L, inst->getInstructionCode());
     lua_pushinteger(L, inst->getAddressedProgram());
-    lua_pushstring(L, inst->getPayload()->data());
+    lua_pushstring(L, *(inst->getPayload()));
     lua_pushinteger(L,inst->getPassedArguments());
     if(lua_pcall(L,4,0,0) != 0){
-        std::cerr << "[ERROR] in cbInstructionIn while calling lua\n";
+        wnd->issueMessage("[ERROR] in cbInstructionIn while calling lua\n", TerminalW::CError);
     }
     lua_settop(L,0);
 }
 void cbFileInStart(SafeFileHansz file){
     lua_getglobal(L,"filetrans_start");
     file->print();
-    lua_pushstring(L,file->getName().toLocal8Bit().data());
-    lua_pushstring(L,file->getChecksumString().toLocal8Bit().data());
+    lua_pushstring(L,file->getName().toLocal8Bit());
+    lua_pushstring(L,file->getChecksumString().toLocal8Bit());
     lua_pushinteger(L,file->getFileType());
     lua_pushinteger(L,file->getFileSize());
     if(lua_pcall(L,4,0,0) != 0){
-        std::cerr << "[ERROR] in cbFileInStart while calling lua\n";
+        wnd->issueMessage("[ERROR] in cbFileInStart while calling lua\n", TerminalW::CError);
     }
     lua_settop(L,0);
 }
 void cbFileInComplete(){
     lua_getglobal(L,"filetrans_end");
     if(lua_pcall(L,0,0,0) != 0){
-        std::cerr << "[ERROR] in cbFileInComplete while calling lua\n";
+        wnd->issueMessage("[ERROR] in cbFileInComplete while calling lua\n",TerminalW::CError);
     }
     lua_settop(L,0);
 }
 void cbConnVerification(){
     lua_getglobal(L,"certificate");
     if(lua_pcall(L,0,0,0) != 0){
-        std::cerr << "[ERROR] in cbConnVerification while calling lua\n";
+        wnd->issueMessage("[ERROR] in cbConnVerification while calling lua\n",TerminalW::CError);
     }
     lua_settop(L,0);
 }
 void cbError(const QString &error){
     lua_getglobal(L, "error");
-    lua_pushstring(L, error.toLocal8Bit().data());
+    lua_pushstring(L, error.toLocal8Bit());
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbError while calling lua with  Message: " << error.toLocal8Bit().data() << "\n";
+        wnd->issueMessage("[ERROR] in cbError while calling lua with  Message: " + error,TerminalW::CError);
     }
     lua_settop(L,0);
 }
@@ -302,10 +309,10 @@ void cbGPFeedback(const QString &msg){
     if(msg == "NO_FILES_IN_QUEUE"){ wnd->internMsg("Keine Dateien in der Warteschlange"); return;}
     if(msg.startsWith("BYTES_RECEIVED")) {return;}
     lua_getglobal(L,"feedback");
-    lua_pushstring(L, msg.toLocal8Bit().data());
+    lua_pushstring(L, msg.toLocal8Bit());
     stackDump(L);
     if(lua_pcall(L,1,0,0) != 0){
-        std::cerr << "[ERROR] in cbGPFeedback while calling lua with Message: " << msg.toLocal8Bit().data() << "\n";
+        wnd->issueMessage("[ERROR] in cbGPFeedback while calling lua with Message: " + msg + "\n",TerminalW::CError);
     }
     lua_settop(L,0);
 }
@@ -313,7 +320,7 @@ void cbConnectionReceived(){
     std::cout << "cbConnReceived\n";
     lua_getglobal(L,"certificate");
     if(lua_pcall(L,0,0,0) != 0){
-        std::cerr << "[ERROR] in cbConnectionReceived while calling lua\n";
+        wnd->issueMessage("[ERROR] in cbConnectionReceived while calling lua\n",TerminalW::CError);
     }
     lua_settop(L,0);
 }
