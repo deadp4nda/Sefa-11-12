@@ -102,6 +102,7 @@ function chat(args)
     for i=2, get_length(args)+1 do
         msg = msg..args[i].." "
     end
+    print("send "..msg)
     c_issue_instruction(0,1,"CHAT "..msg,0)
 end
 
@@ -336,6 +337,7 @@ function set_msg(args)
     for i=2, get_length(args)+1 do
         msg = msg..args[i].." "
     end
+    print(msg)
     return msg
 end
 
