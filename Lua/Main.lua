@@ -380,7 +380,7 @@ function feedback(input_str)
         t_write(output[arg[1]])
     elseif table_contains(request, arg[1]) then
 
-        _G[arg[1]](arg[2])
+        _G[arg[1]](sent_msg(arg,2))
 
     else
         t_write("ERROR: feedback: unknown state")
