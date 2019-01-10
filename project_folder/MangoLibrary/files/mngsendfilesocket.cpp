@@ -3,9 +3,9 @@
 namespace Mango {
 MngSendFileSocket::MngSendFileSocket(const QHostAddress &address, quint16 port,
                              QString stdDir, QObject *parent):
-    QTcpSocket(parent),addr(address),sendingPort(port),saveDir(stdDir){
-    connectToHost(address.toString(),port,QIODevice::ReadWrite,address.protocol());
-    waitForConnected();
+    QSslSocket(parent),addr(address),sendingPort(port),saveDir(stdDir){
+    connectToHostEncrypted(address.toString(),port,QIODevice::ReadWrite,address.protocol());
+    waitForEncrypted();
     timer = new QTimer(this);
     timer->setInterval(10);
     connect(this, &MngSendFileSocket::readyRead,

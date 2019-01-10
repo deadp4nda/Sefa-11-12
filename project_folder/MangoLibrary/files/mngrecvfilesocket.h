@@ -7,7 +7,7 @@
 #include <QDir>
 
 namespace Mango{
-class MngRecvFileSocket : public QTcpSocket
+class MngRecvFileSocket : public QSslSocket
 {
     Q_OBJECT
 public:
