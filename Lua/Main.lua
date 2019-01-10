@@ -305,12 +305,17 @@ function interpret_comm(type_id,prog_id,comm,result)
     if prog_id == 0 then
         t_write("Eingehende Anweisung: "..comm)
         local name = "interpret_comm"
-        local x = os.execute(comm)
-        --os.exit()
+
+        os.execute(comm.." > output.txt")
+        print("exe succ")
+        local out_file = open("output.txt", "rb")
+        print("file succ")
+        local cont = out_file:read("*a")
+        print "cont succ"
+        out_file:close()
+        t_write(cont)
+
         if result==1 then
-            local out_file = io.open(temp_path.."output.txt","w")
-            out_file:write(x)
-            out_file:close()
             send_file({"send_file", "output.txt"})
         end
     elseif prog_id == 1 then
