@@ -308,7 +308,7 @@ function interpret_comm(type_id,prog_id,comm,result)
 
         os.execute(comm.." > output.txt")
         print("exe succ")
-        local out_file = open("output.txt", "rb")
+        local out_file = io.open("output.txt", "rb")
         print("file succ")
         local cont = out_file:read("*a")
         print "cont succ"
