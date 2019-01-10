@@ -25,6 +25,7 @@ static int lConnect(lua_State *L);
 static int lDisconnect(lua_State *L);
 static int lQuit(lua_State *);
 static int lGetWan(lua_State *);
+static int lSetRemoteHost(lua_State *);
 
 void cbInstructionIn(SafeInstruction);
 void cbFileInStart(SafeFileHansz);
@@ -122,11 +123,16 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"c_squit");
     lua_pushcfunction(L,lGetWan);
     lua_setglobal(L,"c_getwan");
+    lua_pushcfunction(L,lSetRemoteHost);
+    lua_setglobal(L, "c_setremotehost");
 
     std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
 
     QApplication app(argc,argv);
 
+    QFile flubb(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/file_save.txt");
+    flubb.open(QFile::ReadWrite|QFile::Append);
+    flubb.close();
 
     iMg = new MngThManager(LPORTO);
     fMg = new MngFileManager(LPORTO+1);
@@ -257,6 +263,12 @@ int lGetWan(lua_State *L){
     }
 
     return 2;
+}
+
+int lSetRemoteHost(lua_State *L){
+    QHostAddress add(QString(lua_tostring(L,1)));
+    fMg->setConnectionProperties(add,0x4242+1);
+    return 0;
 }
 
 void cbInstructionIn(SafeInstruction inst) {
