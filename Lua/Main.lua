@@ -135,8 +135,8 @@ function send_comm(args)
     if argument_number>=2 then
         local result = tonumber(args[2])
         print(result)
-        table.remove(args, 1)
-        local command_name = set_msg(args)
+        local command_name = set_msg(args,3)
+        print(command_name)
 
 
         c_issue_instruction(0, 0, command_name, result)
@@ -338,19 +338,18 @@ function table_contains(tab, key)
     return tab[key]~=nil
 end
 
-function set_msg(args)
+function set_msg(args, ind)
     local msg = ""
-    for i=2, get_length(args)+1 do
+    for i=ind, get_length(args)+1 do
         msg = msg..to_string(args[i]).." "
     end
-    print(msg)
     return msg
 end
 
 function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
-        ["CHAT"]=set_msg(arg),
+        ["CHAT"]=set_msg(arg,2),
         ["CONNECTION_INITIATED"]="Verbindung erfolgreich initialisiert",
         ["FILE_CONNECTION_INITIATED"]="Übertragung erfolgreich initialisiert",
         ["FILE_CONNECTION_CLOSED"]="Übertragung beendet!",
