@@ -133,6 +133,7 @@ function send_comm(args)
     local name = "send_comm"
     local argument_number = get_length(args)
 <<<<<<< HEAD
+<<<<<<< HEAD
     if argument_number>=2 then
         local result = tonumber(args[2])
         print(result)
@@ -143,6 +144,11 @@ function send_comm(args)
         local result = tonumber(args[1])
         local command_name = to_string(args[2])
 >>>>>>> e28cfa6eac37f1fc7f5e6386390ce12ec9df311c
+=======
+    if argument_number==2 then
+        local result = tonumber(args[1])
+        local command_name = to_string(args[2])
+>>>>>>> parent of c8efcbb... added comand return feature
 
 
         c_issue_instruction(0, 0, command_name, result)
@@ -344,12 +350,17 @@ end
 function set_msg(args, ind)
     local msg = ""
 <<<<<<< HEAD
+<<<<<<< HEAD
     for i=ind, get_length(args)+1 do
         msg = msg..to_string(args[i]).." "
 =======
     for i=2, get_length(args)+1 do
         msg = msg..args[i].." "
 >>>>>>> e28cfa6eac37f1fc7f5e6386390ce12ec9df311c
+=======
+    for i=2, get_length(args)+1 do
+        msg = msg..args[i].." "
+>>>>>>> parent of c8efcbb... added comand return feature
     end
     return msg
 end
