@@ -5,20 +5,18 @@
 
 namespace Mango{
 MangoConnection::MangoConnection(const QHostAddress &toIp, quint16 port, MngThManager *parent):
-    QSslSocket(parent),foreignHost(toIp),atPort(port),parentManager(parent){
-    connectToHostEncrypted(foreignHost.toString(),port,QIODevice::ReadWrite,foreignHost.protocol());
-    waitForEncrypted();
+    QTcpSocket(parent),foreignHost(toIp),atPort(port),parentManager(parent){
+    connectToHost(foreignHost.toString(),port,QIODevice::ReadWrite,foreignHost.protocol());
+    waitForConnected();
     connect(this,SIGNAL(readyRead()),this,SLOT(handleReadyRead()));
     stream.setDevice(this);
 }
-
 MangoConnection::MangoConnection(qintptr handle, MngThManager *parent):
-    QSslSocket(parent),parentManager(parent){
+    QTcpSocket(parent),parentManager(parent){
     setSocketDescriptor(handle);
     connect(this, SIGNAL(readyRead()),this,SLOT(handleReadyRead()));
     stream.setDevice(this);
 }
-
 void MangoConnection::handleReadyRead(){
     SafeByteArray array(new QByteArray);
     qint64 available = bytesAvailable();
@@ -31,9 +29,7 @@ void MangoConnection::handleReadyRead(){
     parentManager->incomingData(array);
 
 }
-
 bool MangoConnection::send(const SafeByteArray array){
     return stream.writeRawData(array->constData(),array->length()) == array->size();
 }
-
 }
