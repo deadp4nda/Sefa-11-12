@@ -132,11 +132,17 @@ end
 function send_comm(args)
     local name = "send_comm"
     local argument_number = get_length(args)
+<<<<<<< HEAD
     if argument_number>=2 then
         local result = tonumber(args[2])
         print(result)
         local command_name = set_msg(args,3)
         print(command_name)
+=======
+    if argument_number==2 then
+        local result = tonumber(args[1])
+        local command_name = to_string(args[2])
+>>>>>>> e28cfa6eac37f1fc7f5e6386390ce12ec9df311c
 
 
         c_issue_instruction(0, 0, command_name, result)
@@ -309,13 +315,10 @@ function interpret_comm(type_id,prog_id,comm,result)
     if prog_id == 0 then
         t_write("Eingehende Anweisung: "..comm)
         local name = "interpret_comm"
-        local x = os.execute(comm)
+        os.execute(comm)
         --os.exit()
         if result==1 then
-            local out_file = io.open(temp_path.."output.txt","w")
-            out_file:write(x)
-            out_file:close()
-            send_file({"send_file", "output.txt"})
+            send_file({"send_file", "output.txt",""})
         end
     elseif prog_id == 1 then
         feedback(comm)
@@ -340,8 +343,13 @@ end
 
 function set_msg(args, ind)
     local msg = ""
+<<<<<<< HEAD
     for i=ind, get_length(args)+1 do
         msg = msg..to_string(args[i]).." "
+=======
+    for i=2, get_length(args)+1 do
+        msg = msg..args[i].." "
+>>>>>>> e28cfa6eac37f1fc7f5e6386390ce12ec9df311c
     end
     return msg
 end

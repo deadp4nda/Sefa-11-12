@@ -42,6 +42,7 @@ int MngThManager::createConnection(const QHostAddress &addr, quint16 port){
         closeConnection();
     }
     MangoConnection *tmp = new MangoConnection(addr,port,this);
+    tmp->waitForConnected();
     if(tmp->state() == MangoConnection::ConnectedState){
         client = tmp;
         address = addr;

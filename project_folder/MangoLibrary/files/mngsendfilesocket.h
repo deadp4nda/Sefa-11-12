@@ -10,7 +10,7 @@
 class QTimer;
 
 namespace Mango{
-class MngSendFileSocket : public QSslSocket
+class MngSendFileSocket : public QTcpSocket
 {
     Q_OBJECT
 public:

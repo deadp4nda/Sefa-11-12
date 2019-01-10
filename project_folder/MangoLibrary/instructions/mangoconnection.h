@@ -8,7 +8,7 @@
 #include <QDataStream>
 
 namespace Mango{
-class MangoConnection : public QSslSocket
+class MangoConnection : public QTcpSocket
 {
     Q_OBJECT
 public:

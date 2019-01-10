@@ -3,7 +3,7 @@
 namespace Mango {
 MngRecvFileSocket::MngRecvFileSocket(qintptr descr,
                                      QString stdDir,
-                                     QObject *parent):QSslSocket(parent), saveDir(stdDir){
+                                     QObject *parent):QTcpSocket (parent),saveDir(stdDir){
     setSocketDescriptor(descr);
     connect(this, &MngRecvFileSocket::readyRead,
             this, &MngRecvFileSocket::handleReadyRead);
