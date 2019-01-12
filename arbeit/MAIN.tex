@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{tabularx}
+\usepackage{xcolor}
 
 \graphicspath{../.}
 
@@ -26,12 +27,15 @@
 \textbf{Seminarfachbetreuung - Frau Dr. M. Moor}
 \hfill\\\hfill\\\hfill\\
 }
-\maketitle
+\clearpage\maketitle
+\thispagestyle{empty}
 \newpage
 \tableofcontents
+\thispagestyle{empty}
 
 \newpage
 \input{einleitung_entwurf}
+\setcounter{page}{1}
 
 
 \newpage
@@ -48,5 +52,19 @@
 
 \newpage
 \input{anhang}
+\newpage
+\section* {Eidesstattliche Erklärung}
 
+\thispagestyle{empty}
+
+Hiermit erklären wir, dass die vorliegende Arbeit in vollem Umfang selbstständig angefertigt wurde. 
+Es wurden ausschließlich die in der Arbeit ausdrücklich benannten Quellen und Hilfsmittel benutzt. 
+Wörtlich oder sinngemäß übernommenes Gedankengut ist eindeutig als solches kenntlich gemacht worden.
+
+\vspace{1cm}
+\begin{tabular}{c c c}
+\underline{Erfurt \today} & \underline{\textcolor{white}{Leonard Petereitblahblah}} & \underline{\textcolor{white}{Leonard Petereitblahblah}}\\\\
+Ort, Datum & Leonard Petereit & Benedikt Schäfer\\
+\end{tabular}
+ %TODO datum?
 \end{document}
