@@ -18,7 +18,7 @@ Diese gleichen von den grundlegenden strukturellen Ansprüchen den natürlichen 
 Da Sprachen in der Regel durch das Aneinanderreihen von einzelnen Sprachelementen über eine Unendlichkeit verfügen, nutzt man künstliche Grammatiken der Form $G = (N, T, P, s)$, um diese zu beschreiben. 
 Eine Grammatik $G$ dieser Art verfügt über eine Menge von nichtterminalen Symbolen $N$, auch Variablen genannt, welche im Verlauf der Wortbildung durch die Menge der Produktionsregeln $P$ der Form $U \rightarrow V$ durch eine Kombination aus terminalen Zeichen der Menge $T$ ersetzt werden. 
 Das Startsymbol $s$ ist zwingend die erste Variable, welche durch eine Produktion der Form $s \rightarrow V$ ersetzt wird. 
-Ein Wort gehört einer Grammatik $G$ an, wenn es nur noch aus terminalen Symbolen der Menge $T_G$ besteht und ausgehend von dem Startsymbol $S_G$ mit den Produktionen der Menge $P_G$ gebildet werden kann.\footnote{$	https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.040/Formale_Methoden_der_Informatik$\\$/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen_Vorlesung.pdf$
+Ein Wort gehört einer Grammatik $G$ an, wenn es nur noch aus terminalen Symbolen der Menge $T_G$ besteht und ausgehend von dem Startsymbol $S_G$ mit den Produktionen der Menge $P_G$ gebildet werden kann.\footnote{$	https://www.uni-ulm.de/fileadmin/website\_uni\_ulm/iui.inst.040/Formale\_Methoden\_der\_Informatik$\\$/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen\_Vorlesung.pdf$
 ; 19.11.2018}\\\\
 Je nachdem, wie die Produktionsregeln einer Grammatik aufgebaut sind, lässt sich eine formale Sprache nach dem Informatiker Noam Chomsky in vier Typen einteilen. 
 Grundsätzlich gehört jede Sprache dem Typ 0 der allgemeinen Sprachen an. 
@@ -27,6 +27,7 @@ Die Bedingung für eine kontextsensitive Sprache des Typs 1 besagt, dass durch e
 Für eine kontextfreie Sprache des Typs 2 gilt, dass durch eine Produktionsregel nur jeweils eine Variable ersetzt werden kann, also $|U| = 1$. 
 Eine Sprache ist eine reguläre Sprache des Typs 3, wenn ein nichtterminales Symbol mit einer Produktionsregel durch ein terminales Symbol und ein optionales nichtterminales Symbol ersetzt wird, jedoch nicht durch mehre, also $U \leq a|aB$. \footnote{I. Wegener;	Theoretische Informatik; Kap.5}\\
 \begin{table}[h!]
+\centering
 \begin{tabular}{|ll|ll|}
 \hline
 Verwendung                    & Zeichen   & Verwendung                    & Zeichen \\ \hline
@@ -68,9 +69,9 @@ squit & \\ \hline
 \label{befehl}
 \end{table}\\
 Die Befehle $send\_file$ und $send\_comm$ sind hierbei die allgemeinen Funktionen zum Senden einer Datei oder eines Befehls an die betriebssystemeigene Kommandozeile jeglicher Art. Das Kommando $get\_file$ ist identisch zu $send\_file$ mit dem Unterschied, dass eine Datei von dem angefragten PC auf den anfragenden übertragen werden soll. Mit den Anweisungen ($dis-$/$re-$)$connect$ wird der grundlegende Verbindungsaufbau gesteuert. Durch den $connect$-Befehl wird versucht eine Verbindung zu der als Argument übergebenen IP-Adresse zu errichten. $disconnect$ bewirkt die Beendigung einer bestehenden Verbindung, $reconnect$ versucht zusätzlich eine neue Verbindung zu erstellen. 
-$shutdown$ und $open$ sind spezielle versendete Anweisungen zum Herunterfahren des Zielcomputers und Öffnen einer Datei, bei denen wir es aufgrund ihrer frequentierten Nutzung für sinnvoll hielten sie eigenständig in unsere formale Sprache zu integrieren. Sie basieren auf den zwei Grundfunktionen und stehen beispielhaft für die Erweiterbarkeit des Funktionsumfangs unserer Software. 
-Zusätzlich für Befehle, welche mit Dateien arbeiten sollen, müssen sowohl der Dateiname als auch das Dateiformat als Zeichenkette angefügt werden. 
-Die Übermittlungsfunktionen für Anweisungen benötigen neben dem Anweisungsnamen als Zeichenkette auch optionale Argumente, mit welchen die Anweisung in der Kommandozeile ausgeführt werden soll.\\\\
+$shutdown$ und $open$ sind spezielle versendete Anweisungen zum Herunterfahren des Zielcomputers und Öffnen einer Datei, bei denen wir es aufgrund ihrer frequentierten Nutzung für sinnvoll hielten sie eigenständig in unsere formale Sprache zu integrieren. Sie basieren auf den zwei Grundfunktionen und stehen beispielhaft für die Erweiterbarkeit des Funktionsumfangs unserer Software. Durch den $chat$ Befehl lässt sich eine Textnachricht an den Verbundenen Rechner senden.
+Zusätzlich für Befehle, welche mit Dateien arbeiten sollen, muss der Dateiname beziehungsweise der Dateipfad als Zeichenkette angefügt werden. 
+Die Übermittlungsfunktionen für Anweisungen benötigen neben dem Anweisungsnamen als Zeichenkette auch optionale Argumente, mit welchen die Anweisung in der Kommandozeile ausgeführt werden soll. Außerdem wird der Flag $return$ benötogt, welcher bestimmt, ob das Ergebnis des Übertragenen Befehls zurück an den Ausgangscomputer gesenet werden soll. Zum beenden des Programms existiert die Anweisung $squit$, sie implementiert eine Alternative zu den grafischen Möglichkeiten zum beende\\\\
 Um unsere formale Sprache zu implementieren entwickelten wir zuerst als Grundlage eine Darstellung der Eweiterten-Backus-Nauer-Form. Diese ist im Anhang einzusehen. Eine solche Darstellung hat den Vorteil einer unkomplizierten Übertragung der Produktionsregeln in die Implementierung, welche die Nutzereingaben überprüft. Im späteren Verlauf der Entwicklung wurden einzelne Befehle und Argumente angefügt und verändert, um eine Praxistauglichkeit zu bewirken.
 
 \subsection{Implementierung der Anwendungssteuerung in der Skriptsprache Lua}
@@ -81,6 +82,7 @@ Dazu wird zum einen auf dem Startrechner die nach der in Kapitel 1.1 beschrieben
 Nachdem die Daten mithilfe des Netzwerkprotokolls übermittelt wurden, werden sie von der Übertragungsverarbeitung auf dem Empfängercomputer weiter bearbeitet. Je nach spezifiziertem Typ der Übermittlung wird entweder die enthaltene Datei auf Fehler überprüft und anschließend endgültig gespeichert, oder die auszuführende Anweisung wird an die betriebsystemeigene Kommandozeile weitergegeben und ausgeführt.\\
 Um keine ungewollten Übertragungen von potenziell schädlichen Dateien oder Anweisungen zu ermöglichen wird für die Ausführung jeder Übermittlungsanfrage die Bestätigung des Empfängers benötigt, sofern nicht der $root-Modus$ aktiviert ist. Als $root$-Nutzer hat man uneingeschränkte Kontrolle über den Ziel-Computer, was besonders für administrative Tätigkeiten sinnvoll ist.\\\hfill\\ 
 \begin{figure}[h!]
+\centering
 \includegraphics[scale=.45]{anw.jpg}
 \label{anw}
 \caption{Schematische Darstellung der Ablaufenden Prozesse im Programm}
