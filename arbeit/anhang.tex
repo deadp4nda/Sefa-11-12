@@ -18,15 +18,15 @@
 \section*{Anhang}
 \subsection*{Glossar}
 
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{l X} %TODO leerzeilen nach allen Begriffen %TODO Sockets / C-Structs
-\glsref{Bibliothek/statische Bibliothek} & \\ %TODO beschreiben
-\glsref{ISO/OSI Modell}: & Ein informatisches Modell zur Darstellung der Kommunikation in einem Netzwerk. Dabei werden verschiedene "`Schichten"' definiert, die jeweils unterschiedliche Aufgaben bei der Kommunikation übernehmen und aufeinander aufbauen. So gibt es die unteren, noch sehr hardwarenahen  Schichten, die sich um die korrekte Übertragung von einzelnen Bits kümmern; Schichten darüber, welche für die Ankunft einzelner \glsref{Paket}e am richtigen Ort zuständig sind bis hin zu Schichten, die Abläufe und Formate enthalten, die für die Darstellung und Übertragung von Websites zuständig sind.\\
-\glsref{Header}: &  Ein Datensatz, der an den Anfang eines im Netzwerk verschickten Paketes geschrieben wird um dessen sichere Ankunft sicherzustellen oder ein Teil des Quelltextes, in dem bestimmte Datentypen und Strukturen definiert aber nicht deklariert sind\\
-\glsref{Paket, Netzwerkpaket}: & Informationseinheit, die von Computer zu Computer in einem Netzwerk verschickt wird\\
-\glsref{Protokoll, Netzwerkprotokoll}: & Spezifikation eines Teils des Headers eines Pakets; kann außerdem auch einen Ablauf für die Kommunikation zwischen den an der Verbindung beteiligten Rechnern beinhalten\\
+\begin{tabularx}{\textwidth}{l X}
+\glsref{Bibliothek/statische Bibliothek} & Eine Sammlung von Klassen und Funktionen, die in ausführbare Dateien eingebunden werden kann. Die Funktionalität ist durch freigegebene Funktionen oder Klassen nutzbar.\\\\
+\glsref{C-Struct/Struct}: & Eine Möglichkeit mehrere Datentypen zu einer "`Struktur"' zusammenzufassen und als Einheit zu benutzen. Diese Funktion wird häufig benutzt um einen \glsref{Header} zu definieren.\\\\
+\glsref{ISO/OSI Modell}: & Ein informatisches Modell zur Darstellung der Kommunikation in einem Netzwerk. Dabei werden verschiedene "`Schichten"' definiert, die jeweils unterschiedliche Aufgaben bei der Kommunikation übernehmen und aufeinander aufbauen. So gibt es die unteren, noch sehr hardwarenahen  Schichten, die sich um die korrekte Übertragung von einzelnen Bits kümmern; Schichten darüber, welche für die Ankunft einzelner \glsref{Paket}e am richtigen Ort zuständig sind bis hin zu Schichten, die Abläufe und Formate enthalten, die für die Darstellung und Übertragung von Websites zuständig sind.\\\\
+\glsref{Header}: &  Ein Datensatz, der an den Anfang eines im Netzwerk verschickten Paketes geschrieben wird um dessen sichere Ankunft sicherzustellen oder ein Teil des Quelltextes, in dem bestimmte Datentypen und Strukturen definiert aber nicht deklariert sind\\\\
+\glsref{Paket, Netzwerkpaket}: & Informationseinheit, die von Computer zu Computer in einem Netzwerk verschickt wird\\\\
+\glsref{Protokoll, Netzwerkprotokoll}: & Spezifikation bestimmter Datenformate und Abläufe zur Kommunikation in einem Rechnernetzwerk, welche das Verhalten der Rechner während ihrer Kommunikation bestimmt.\\\\
+\glsref{Socket}: & Die Verbindung eines Rechners zum Internet wird über Sockets ermöglicht, also Sockel. Diese halten die Verbindung zum tatsächlichen Netzwerk, bieten Funktionen zum darauf schreiben oder auslesen und sind eine Kernfunktion eines jeden Netzwerkfähigen Betriebssystems. Auf einer höheren Ebene können weitere Funktionen dazukommen, wie zum Beispiel gepufferte Ein-/Ausgabe oder automatisierte Regelung des verwendeten Protokolls.
 \end{tabularx}
-\end{table}
 
 \subsection*{Codereferenz}
 \label{enums}
