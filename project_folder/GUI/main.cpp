@@ -45,10 +45,10 @@ void cbConnectionReceived(QHostAddress);    // eine eingehende Verbindung behand
 void iConnInit(){cbGPFeedback("CONNECTION_INITIATED");}
 void iConnClsd(){cbGPFeedback("CONNECTION_CLOSED");}
 void fFileCanc(){cbGPFeedback("FILE_CANCELLED");}
-void fConnClsd(){cbGPFeedback("FILE_CONNECTION_CLOSED");cbFileInComplete();}
+void fConnClsd(){cbGPFeedback("FILE_CONNECTION_CLOSED");}
 void fConnInit(){cbGPFeedback("FILE_CONNECTION_INITIATED");}
 void fRemConnRecv(){cbGPFeedback("REMOTE_CONNECTION_RECEIVED");}
-void fRemConnClsd(){cbGPFeedback("REMOTE_CONNECTION_CLOSED");}
+void fRemConnClsd(){cbGPFeedback("REMOTE_CONNECTION_CLOSED");cbFileInComplete();}
 void fError(MngFileManager::MangolibError mango){
     QString ermsg = "MngFileManager: ";
     switch(mango){

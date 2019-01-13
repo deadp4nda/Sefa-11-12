@@ -81,7 +81,7 @@ void MngFileManager::closeIncomingConnection(){
     receivingSocket->deleteLater();
     receivingSocket = nullptr;
     server->resumeAccepting();
-    emit connectionClosed();
+    emit remoteConnectionClosed();
 }
 int MngFileManager::createConnection(const QHostAddress &addr, quint16 port){
     if(sendingSocket){
