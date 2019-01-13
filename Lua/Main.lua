@@ -331,7 +331,8 @@ end
 function filetrans_end()
     t_write("Dateiübertragung beendet")
     local test = string.gsub("ren "..recent_file[1]..recent_file[2], "/","\\")
-    local x = os.execute()
+    t_write (test)
+    local x = os.execute(test)
     if x == 1 then
         t_write("test")
         os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
