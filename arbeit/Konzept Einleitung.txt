@@ -1,0 +1,16 @@
+Motivation:
+	- Vereinfachte Verwaltung von Computern, unabhängig von der geographischen Position
+	- Möglichkeiten zur Automatisierung und Anpassungs an die Bedürfnisse des Nutzers
+
+Zielstellung:
+	- Software zum Versenden von Anweisungen, Datein, jeglicher Art digitaler Informationen über ein Netzwerk, inklusive dem Internet
+	- Entwicklung eines eigenen Netzwerkprotokolls, optimiert für Anweisungen und Dateien
+	- Erschaffung einer eigenen Eingabesyntax, mit der Möglichkeit der Automatisierung, Erstellung von skripten
+	- Möglichkeit zur Erweiterung und Anpassung des Funktionsanfangs an die Ansprüche des Benutzers
+	- Betriebssystemunabhängig, breites Anwendungsspektrum
+
+Arbeitsmethoden:
+	- Literaturstudium zu Netzwerkkommunikation und Formalen Sprachen
+	- Design eines Kommunikationsprotokolls
+	- Modellierung einer Formalen Sprache
+	- Implemntierung der Software durch Programmierung auf Basis der gängigen Arbeitsweisen der Softwareentwicklung (-beliebige Methode einfügen-)

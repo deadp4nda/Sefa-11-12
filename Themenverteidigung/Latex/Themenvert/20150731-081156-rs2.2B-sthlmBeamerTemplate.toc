@@ -1,3 +1,0 @@
-\beamer@sectionintoc {2}{Differenzierung des Themas und Zielstellungen}{4}{0}{1}
-\beamer@sectionintoc {3}{Ben\IeC {\"o}tigte Methoden zum Erreichen der Zielstellungen}{5}{0}{2}
-\beamer@sectionintoc {4}{Geplante zeitliche Orientierung}{6}{0}{3}

@@ -1,0 +1,109 @@
+Funktionsumfang und Eingabeverarbeitung auf der Anwendungsebene
+
+/Entwicklung einer eigenen Scriptsprache zur Anwendungssteuerung
+//Theoretische Grundlagen formaler Sprachen
+	-allgemeines 
+	-vergleich zu "regulären" Sprachen
+	-klassifizierung und nutzen
+
+
+	https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.040/Formale_Methoden_der_Informatik/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen_Vorlesung.pdf
+
+	Formulierung von Anweisungen in einer für den Computer verständlicher weise
+	-> grammatik und semantik und syntax wie bei gesprochenen sprachen
+
+	Grammatik -> beschreibung der Sprachen (umgang mit unendlichkeit)
+	G = (N, T, P, s)
+	N - Nichtterminale
+	T - Terminale
+	P - Produktionsregeln
+	s - Startsymbol
+
+
+	Theoretische Informatik von I. Wegener Kap.5
+ 	Chomsky
+	typ 0 - allgemein - keine einschränkungen
+
+	Darstellung nach backu naur ()
+
+
+	http://www.informatik.uni-leipzig.de/~der/Vorlesungen/DIV/sprachen.pdf
+
+	verarbeitung von Daten und Informationen -> kommunikation mit nutzer
+
+
+//Spezifikation unserer Scriptsprache anhand unserer Ansprüche an den Funktionsumfang
+
+	send_file ip file_name file_type [port]
+  	send_comm ip command_name [arguments] [port]
+  	get ip file_name="string" [file_type="string"] [port="int"].
+  	open ip file [program_name="string"]
+  	shutdown ip [mode="string" (reboot, logout,...)] [delay="int"]
+	authenticate ip 
+
+	
+	G = (N,T,P,s)
+	
+	N = {S, COMM, IP, Z, H, L, FILEARG, COMMARG, NAME, FLIETYPE, ARG}
+	
+	T = {send_file, send_comm, get, open, shutdown, 0...9, a...z, :, ., " " }
+	
+	P = {
+	S -> COMM IP
+	COMM -> (send_file|send_comm|get|open|shutdown) 
+	IP -> (ZZZ.ZZZ.ZZZ.ZZZ|HHHH:HHHH:HHHH:HHHH)
+	Z -> (0|1|...|9)
+	L -> (a|b|...|z)
+	H -> (Z|(a|b|...|f))
+	send_file -> send_file IP FILEARG
+	send_comm -> send_comm IP COMMARG
+	get -> get IP FILEARG
+	open -> open IP FILEARG NAME
+	shutdowm -> shutdown IP NAME
+	FILEARG -> NAME FILE_TYPE
+	COMMARG -> NAME ARG
+	NAME -> L {L}
+	FILE_TYPE L {L|Z}
+	ARG -> NAME {" " NAME}
+	}
+	
+	s = S
+
+	Notwendigkeit? - Umfeld,Anwendung
+	EBNF?
+	extern (von außen(=^= Nutzer) zugreifbar):
+		-Senden von Dateien
+		-Senden von Anweisungen (spezielle, allgemeine)
+	intern:
+		-Autentifizierung
+		-Status
+
+
+/Implementierung der Anwendungssteuerung in der Scriptsprache Lua
+//Darstellung des grundlegenden Programmaufbaus und Programmablaufs
+	-Eingabeverarbeitung -> Sendefunktionalität -> [Netzwerkprotokoll] -> Eingabeverarbeitung -> Empfangsfunktionalität
+	-> ablaufdiagram, uml diagramm? 
+	-Beschreibung des Funktionsumfangs (Eingabe, Sende, Empfang)
+
+//Ansprüche an die Implementierung und die daraus resultierende Wahl der Programmiersprache
+	-Implementiert: 
+		-Kommunikation zwischen user und netzwerkprotokoll
+			-> Eingabenverarbeitung, organisiert Eingaben, autorisierung, initialisierung, Fehler, Ausgaben
+		-eigendlichen Funktionsumfang 
+			->verschiedene sende modi,  abhängig des Inhalts
+			->Ausführen der übertragenen Anweisungen
+			->Dateimanagment(Speicherung, prüfsummenabgleich, weiterverarbeitung)
+		=> leichte Wartbarkeit (Fehlerbeseitigung, Anpassung der Funktionalität)
+		=> erweiterungsmöglichkeiten, -> zuschnitt auf spezifische anwenung soll möglich sein
+		=> gute einbettungsmöglichkeiten von und in C++ (Netzwerkprotokoll)
+		=> betriebssystemunabhängig, leicht portierar auf neue systeme, ohne großen aufwand(-> programmumgebungen, etc)
+		=> geringer Lernaufwand (begrenzte Zeit)
+
+	-Hintergrund von Lua
+	-Merkmale von Lua
+	-Probleme?
+
+//Erläuterung wesentlicher Elemente der Implementierung
+	-> Parser funktionen -> aufruf der weiterverarbeitungsfunktionen
+	-> exemplarische: sendefunktion als beispiel
+	-> Empfangsfunktion als beispiel

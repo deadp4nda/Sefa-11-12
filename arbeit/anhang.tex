@@ -1,0 +1,81 @@
+\section*{Literaturverzeichnis}
+\begin{itemize}
+\item [2] Wegener, Ingo: \textit{Theoretische Informatik: Eine algorithmenorientierte Einführung.}\\ 2.Auflage. Springer-Verlag 2013
+\item [6] Maya Posch, Blog: Design Your Own Protocol In Five Minutes\\ Internet: $https://mayaposch.wordpress.com/2011/10/03/design-your-own-protocol-in-five-minutes/$ (Zugriff: 16.11.2018)
+\item [7] ISO-Referenz des TLS-Protokolls (Internet): \\$https://tools.ietf.org/html/rfc5246$ (Zugriff: 16.11.2018)
+\end{itemize}
+
+
+\section*{Quellenverzeichnis}
+\begin{itemize}
+\item [1] Universität Ulm. Formale Methoden der Informatik: Formale Sprachen. \\PDF: $https://www.uni-ulm.de/fileadmin/website\_uni\_ulm/iui.inst.040$\\$/Formale\_Methoden\_der\_Informatik/Vorlesungsskripte/FMdI-06--2010-01-10--FormaleSprachen\_Vorlesung.pdf$ (Zugriff: 19.11.2018)
+
+\item [3] Lua: The Programming Language Lua. \\ Internet: $https://lua.org/about.html$ (Zugriff: 17.11.2018)
+\item [5] Programmierframework Qt\\ Internet: $https://doc.qt.io/ (21.12.2018)$
+\end{itemize}
+\section*{Abbildungsverzeichnis}
+\begin{itemize}
+\item [4] Schichtenaufbau des ISO/OSI-Modells: \\$https://www.researchgate.net/profile/Sebastian\_Lempert/publication/202268228/\\figure/fig1/AS:393996175200256@1470947416022/Abbildung-1-Die-7-Schichten-des-ISO-OSI-Referenzmodells-Der-geschichtete-Aufbau-eines.png$ (Zugriff: 20.12.2018)
+\end{itemize}
+
+\newpage
+\section*{Anhang}
+\subsection*{Glossar}
+
+\begin{tabularx}{\textwidth}{l X}
+\glsref{Bibliothek/statische Bibliothek} & Eine Sammlung von Klassen und Funktionen, die in ausführbare Dateien eingebunden werden kann. Die Funktionalität ist durch freigegebene Funktionen oder Klassen nutzbar.\\\\
+\glsref{C-Struct/Struct}: & Eine Möglichkeit mehrere Datentypen zu einer "`Struktur"' zusammenzufassen und als Einheit zu benutzen. Diese Funktion wird häufig benutzt um einen \glsref{Header} zu definieren.\\\\
+\glsref{ISO/OSI Modell}: & Ein informatisches Modell zur Darstellung der Kommunikation in einem Netzwerk. Dabei werden verschiedene "`Schichten"' definiert, die jeweils unterschiedliche Aufgaben bei der Kommunikation übernehmen und aufeinander aufbauen. So gibt es die unteren, noch sehr hardwarenahen  Schichten, die sich um die korrekte Übertragung von einzelnen Bits kümmern; Schichten darüber, welche für die Ankunft einzelner \glsref{Paket}e am richtigen Ort zuständig sind bis hin zu Schichten, die Abläufe und Formate enthalten, die für die Darstellung und Übertragung von Websites zuständig sind.\\\\
+\glsref{Header}: &  Ein Datensatz, der an den Anfang eines im Netzwerk verschickten Paketes geschrieben wird um dessen sichere Ankunft sicherzustellen oder ein Teil des Quelltextes, in dem bestimmte Datentypen und Strukturen definiert aber nicht deklariert sind\\\\
+\glsref{Paket, Netzwerkpaket}: & Informationseinheit, die von Computer zu Computer in einem Netzwerk verschickt wird\\\\
+\glsref{Protokoll, Netzwerkprotokoll}: & Spezifikation bestimmter Datenformate und Abläufe zur Kommunikation in einem Rechnernetzwerk, welche das Verhalten der Rechner während ihrer Kommunikation bestimmt.\\\\
+\glsref{Socket}: & Die Verbindung eines Rechners zum Internet wird über Sockets ermöglicht, also Sockel. Diese halten die Verbindung zum tatsächlichen Netzwerk, bieten Funktionen zum darauf schreiben oder auslesen und sind eine Kernfunktion eines jeden Netzwerkfähigen Betriebssystems. Auf einer höheren Ebene können weitere Funktionen dazukommen, wie zum Beispiel gepufferte Ein-/Ausgabe oder automatisierte Regelung des verwendeten Protokolls.
+\end{tabularx}
+
+\subsection*{Codereferenz}
+\label{enums}
+\subsubsection*{Übertragungstyp}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\
+\hline
+0x10 & MANGO\_TYPE\_INST & Anweisung\\
+\hline
+0x20 & MANGO\_TYPE\_FILE & Datei\\
+\hline
+\end{tabular}
+
+\subsubsection*{Vorimplementierte Dateitypen}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\\hline
+1 & Undefined & Undefinierter Typ\\\hline
+2 & Movie & Film\\\hline
+3 & Picture & Bild\\\hline
+4 & Text & Text\\\hline
+5 & Audio & Audio\\\hline
+6 & Broken & für ungültige Übertragungen reserviert\\\hline
+\end{tabular}
+
+\subsubsection*{Vorimplementierte Anweisungstypen}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\\hline
+1&    Exit           & dieses Programm schließen und Verbindungen abbrechen\\\hline
+2&    Kill           & schließe ein bestimmtes Programm\\\hline
+3&    GetFileList    & Abrufen von Ordner/Dateistrukturen\\\hline
+4&    GetPrgmList    & Liste von bekannten Programmen abrufen\\\hline
+5&    RetrieveFile   & bestimmte Datei von Ziel nach Start senden\\\hline
+6&    Execute        & bestimmtes Programm starten, Argumente im Paket\\\hline
+7&    Chat           & Paket enthält Textnachricht\\\hline
+8&    FileToBeSent   & signalisiert beginnende Dateiübertragung\\\hline
+9&    InvalidInstr   & für ungültige Übertragungen reserviert\\\hline
+\end{tabular}
+
+\subsubsection*{Vorimplementierte Programmcodes}
+\begin{tabular}{|c|c|l|}
+\hline
+Zahlcode & Interner Name & Funktion\\\hline
+1 & This & dieses Programm\\\hline
+2 & InvalidPrgm & für ungültige Übertragungen reserviert\\\hline
+\end{tabular}

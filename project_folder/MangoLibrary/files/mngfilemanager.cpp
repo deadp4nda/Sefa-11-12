@@ -24,9 +24,6 @@ MngFileManager::MngFileManager(quint16 port, QDir stdDir, QObject *parent):
                      this, &MngFileManager::handleServerError);
     QObject::connect(server,&MngFileServer::newConnection,
                      this, &MngFileManager::incomingConnection);
-
-    //qDebug() << "SIZEOF RECV: " << sizeof(MngRecvFileSocket);
-    //qDebug() << "SIZEOF SEND: " << sizeof(MngSendFileSocket);
 }
 MngFileManager::~MngFileManager(){
     timer->stop();
