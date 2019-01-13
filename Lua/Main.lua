@@ -17,7 +17,8 @@
 
 local cert = nil
 local temp_path = ""
-
+local recent_file = {}
+local se_flag = false
 
 function interpret_input(ui_input)
     local name = "interpret_input: "
@@ -135,6 +136,7 @@ function send_comm(args)
     if argument_number>=2 then
         local result = tonumber(args[2])
         local command_name = set_msg(args,3)
+        se_flag = result
         c_issue_instruction(0, 0, command_name, result)
         return "debug: "..name.." successful"
     else
@@ -323,16 +325,31 @@ function interpret_comm(type_id,prog_id,comm,result)
     end
 end
 
+
+
 function filetrans_start(f_name, f_hash, f_type, f_size)
     t_write("Dateiübertragung wurde gestartet:\n"..f_name.."-"..f_size)
     local x = io.open(temp_path.."file_save.txt","a")
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
+    recent_file = {f_hash, f_name}
 
 end
 
+
 function filetrans_end()
     t_write("Dateiübertragung beendet")
+    local x = os.execute("ren "..recent_file[1].." "..recent_file[2])
+    if x == 1 then
+        os.execute("mv "..recent_file[1].." "..recent_file[2])
+    end
+    if se_flag == 1 then
+        local x = io.open(temp_path..recent_file[2],"rb")
+        local content = x:read("*a")
+        x:close()
+        t_write(content)
+        se_flag = 0
+    end
 end
 
 function table_contains(tab, key)
