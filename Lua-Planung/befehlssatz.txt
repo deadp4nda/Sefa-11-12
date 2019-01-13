@@ -1,0 +1,34 @@
+  trans(input string)
+
+Befehle:
+ 
+  send_file(name, type)
+  receive_file(checksum, name)
+  get_file(name, type)
+  
+  send_com(comm_id, [prog_id], [args])
+  receive_com(comm_id, [prog_id], [args])
+  
+  connect(ip, [port])
+  disconnect()
+  auth()
+  
+  error_handler(error_code)
+  
+ 
+Syntax:
+  send ip (file|command) (file_name="string"|command_name="string") [file_type="string"|args="string[]"] [port="int"] [program="string"].
+  get ip file_name="string" [file_type="string"] [port="int"].
+  authenticate 
+  
+  
+spezifikation:
+  send:
+    -> check permission
+    -> connect|reconnect(dis->con)
+    -> load mongo lib(parameter)
+    
+  
+  receive:
+    -> file: check, rename
+    -> comm: check, execute, return(text file)

@@ -1,14 +1,14 @@
 ﻿#ifndef MONGOCONNECTION_H
 #define MONGOCONNECTION_H
 
-#include <QTcpSocket>
+#include <QSslSocket>
 #include "mongolib_global.h"
 #include <thread>
 #include <memory>
 #include <QDataStream>
 
 namespace Mongo{
-class MongoConnection : public QTcpSocket
+class MongoConnection : public QSslSocket
 {
     Q_OBJECT
 public:
