@@ -97,6 +97,13 @@ function get_length(table)
     return i
 end
 
+--existiert die datei?
+function file_exists(file)
+    local f = io.open(file, "rb")
+    if f then f:close() end
+    return f ~= nil
+end
+
 --konvertierung von allgemeinen typen zu string, zusätzliche unterstützung von nil
 function to_string(str)
     if str ==nil then return "" else return tostring(str) end
@@ -321,7 +328,6 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
     recent_file = {temp_path..f_hash.." ",f_name}
-    t_write(recent_file[1]..recent_file[2])
 
 
 
@@ -330,11 +336,15 @@ end
 --Dateiübertragung beenden: Umbenennung, terminal ausgabe des return werts
 function filetrans_end()
     t_write("Dateiübertragung beendet")
-    local test = string.gsub("ren "..recent_file[1]..recent_file[2], "/","\\")
-    t_write (test)
-    local x = os.execute(test)
+    if file_exists(temp_path..recent_file[2]) then
+        local x = os.execute(string.gsub("del "..temp_path..recent_file[2], "/","\\"))
+        if x == 1 then
+            os.execute("rm "..temp_path..recent_file[2])
+        end
+    end
+
+    local x = os.execute(string.gsub("ren "..recent_file[1]..recent_file[2], "/","\\"))
     if x == 1 then
-        t_write("test")
         os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
     end
     if se_flag == 1 then
