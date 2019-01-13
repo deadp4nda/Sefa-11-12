@@ -152,9 +152,9 @@ int main(int argc, char *argv[]){
     cbGPFeedback("TEMP "+QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/"); // registrierung des Temporärordners bei lua
 
     int ret = app.exec(); // mainloop
-    delete wnd;// aufräumen
     delete iMg;
     delete fMg;
+    delete wnd;// aufräumen
     lua_close(L);
     return ret;
 }

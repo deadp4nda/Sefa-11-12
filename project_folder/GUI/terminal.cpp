@@ -29,7 +29,7 @@ Terminal::Terminal(QWidget *parent) :QWidget(parent){
 void Terminal::output(QString sometext, QColor col) {
     if(sometext == "Keine Dateien in der Warteschlange") return;
     if(sometext.startsWith("Empfangene Bytes: ") || sometext.startsWith("Gesendete Bytes: "))return;
-
+    auto x = sometext.toStdString();
     auto cur = doc->textCursor();
     cur.movePosition(QTextCursor::End);
     doc->setTextCursor(cur);
