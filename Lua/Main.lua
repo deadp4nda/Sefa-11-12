@@ -284,7 +284,7 @@ end
 function certificate()
     --TODO
     local IP = "whatever, muss ich noch einfügen"
-    local msg = "Eingehende verbindung von "..IP..". Ablehnen mit 'n', Annehmen mit 'y'."
+    local msg = "Eingehende Verbindung. Ablehnen mit 'n', Annehmen mit 'y'."
     t_write(msg)
 end
 
@@ -333,8 +333,10 @@ end
 
 function filetrans_end()
     t_write("Dateiübertragung beendet")
+    print(recent_file[1], recent_file[2])
     local x = os.execute("ren "..temp_path..recent_file[1].." "..temp_path..recent_file[2])
     if x == 1 then
+
         os.execute("mv "..temp_path..recent_file[1].." "..temp_path..recent_file[2])
     end
     if se_flag == 1 then
