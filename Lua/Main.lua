@@ -320,7 +320,9 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
     local x = io.open(temp_path.."file_save.txt","a")
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
-    recent_file = temp_path..f_hash.." "..temp_path..f_name
+    recent_file = temp_path..string.sub(f_hash,2).." "..temp_path..string.sub(f_name,2)
+
+
 
 end
 
