@@ -33,7 +33,7 @@ void cbFileInComplete();
 void cbConnVerification();
 void cbError(const QString& error);
 void cbGPFeedback(const QString &msg);
-void cbConnectionReceived();
+void cbConnectionReceived(QHostAddress);
 
 void iConnInit(){cbGPFeedback("CONNECTION_INITIATED");}
 void iConnClsd(){cbGPFeedback("CONNECTION_CLOSED");}
@@ -123,8 +123,6 @@ int main(int argc, char *argv[]){
     lua_setglobal(L,"c_squit");
     lua_pushcfunction(L,lGetWan);
     lua_setglobal(L,"c_getwan");
-    lua_pushcfunction(L,lSetRemoteHost);
-    lua_setglobal(L, "c_setremotehost");
 
     std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
 
@@ -258,17 +256,15 @@ int lGetWan(lua_State *L){
     timer.stop();
 
     foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
-        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
+        if (address.protocol() == QAbstractSocket::IPv4Protocol
+        && address != QHostAddress(QHostAddress::LocalHost)
+        && address.toString().section( ".",-1,-1 ) != "1")
             lua_pushstring(L,address.toString().toUtf8());
     }
 
-    return 2;
-}
+    stackDump(L);
 
-int lSetRemoteHost(lua_State *L){
-    QHostAddress add(QString(lua_tostring(L,1)));
-    fMg->setConnectionProperties(add,0x4242+1);
-    return 0;
+    return 2;
 }
 
 void cbInstructionIn(SafeInstruction inst) {
@@ -328,8 +324,11 @@ void cbGPFeedback(const QString &msg){
     }
     lua_settop(L,0);
 }
-void cbConnectionReceived(){
+void cbConnectionReceived(QHostAddress adr){
     std::cout << "cbConnReceived\n";
+
+    fMg->setConnectionProperties(adr,0x4242+1);
+
     lua_getglobal(L,"certificate");
     if(lua_pcall(L,0,0,0) != 0){
         wnd->issueMessage("[ERROR] in cbConnectionReceived while calling lua\n",TerminalW::CError);

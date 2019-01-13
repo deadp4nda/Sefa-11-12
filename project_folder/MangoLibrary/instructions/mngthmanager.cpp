@@ -58,7 +58,7 @@ void MngThManager::incomingConnection(MangoConnection *nClnt){
     }
     if(nClnt->state() == MangoConnection::ConnectedState){
         client = nClnt;
-        emit connectionReceived();
+        emit connectionReceived(client->peerAddress());
     }
 }
 void MngThManager::closeConnection(){

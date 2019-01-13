@@ -14,13 +14,13 @@
 namespace Mango {
 class MngFileSocket;
 class MngRecvFileSocket;
-class /*MONGOLIBSHARED_EXPORT*/ FileHansz: public QObject{
+class /*MONGOLIBSHARED_EXPORT*/ FileHansz: public QObject{ // Dateiobjektzugriff, erbt funktionen für Signale und Slots
     Q_OBJECT
 public:
-    FileHansz(const QFile& file,quint64 filetype);
-    FileHansz(const QDir &stdDir);
-    FileHansz(const FileHansz&) = delete;
-    ~FileHansz();
+    FileHansz(const QFile& file,quint64 filetype);                  // nehmen Dateizugriffsobjekt, Konstruktor auf der sendenden Seite
+    FileHansz(const QDir &stdDir);                                  // nimmt standardspeicher, Konstruktor auf der empfangenden Seite
+    FileHansz(const FileHansz&) = delete;                           // explizites löschen des Standardkonstruktors
+    ~FileHansz();                                                   // destruktor
     int addData(const QByteArray&, bool isLastPackage = false);
     bool isBroken()const{return broken;}
     void endingOne(){firstEndingSent=true;}
