@@ -9,51 +9,51 @@
 #include "mangoconnection.h"
 #include "mngserver.h"
 
-#define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable())
+#define CLIENT_VALID(cl) (cl&&cl->isWritable()&&cl->isReadable()) // MAkro, das testet, ob Socket gültig ist
 
 class QTimer;
 namespace Mango {
 class MangoConnection;
 
-class MngThManager: public QObject{
+class MngThManager: public QObject{ // anweisungsmanager für anweisungen, die anweisen
     Q_OBJECT
 public:
-    MngThManager(quint16 listenPort = 0,QObject *parent = nullptr);
-    ~MngThManager();
-    int createConnection(const QHostAddress &addr, quint16 port = 0);
-    void closeConnection();
+    MngThManager(quint16 listenPort = 0,QObject *parent = nullptr); // konstruktor, kriegt port, auf dem der Server auf Verbindung hören soll
+    ~MngThManager();                                                // destruktor
+    int createConnection(const QHostAddress &addr, quint16 port = 0);// verbindung herstellen zu xyz auf port zyx
+    void closeConnection();                                             // verbindung beenden
 
-    void enqueueInstruction(SafeInstruction instr);
-    void enqueueInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint32 args = 0);
+    void enqueueInstruction(SafeInstruction instr);                 // anweisung in warteschlange zum versenden stellen
+    void enqueueInstruction(quint32 instr, quint32 toPrgm, const QByteArray &content = QByteArray(), quint32 args = 0); // siehe eine zeile drüber
 private slots:
-    void incomingConnection(MangoConnection *);
+    void incomingConnection(MangoConnection *); // wird aufgerufen, wenn eine neue "MangoConnection" bereitsteht
 signals:
-    void Message(SafeInstruction);
+    void Message(SafeInstruction);              // eine neue Anweisung ist hereingekommen
 signals: // connection-based intern signals
-    void connectionClosed();
-    void connectionInitiated();
-    void connectionReceived(QHostAddress);
+    void connectionClosed();            // verbindung beendet
+    void connectionInitiated();         // verbindung erstellt
+    void connectionReceived(QHostAddress);// verbindung erhalten von xyz. die adresse wird im dateimanager gebraucht.
 private:
-    QQueue<SafeInstruction> instructions;
-    QTimer *timer = nullptr;
-    SafeInstruction lastingTransmission = nullptr;
-    MangoConnection *client = nullptr;
-    MngServer *server = nullptr;
-    QHostAddress address = QHostAddress(QHostAddress::Null);
+    QQueue<SafeInstruction> instructions; // warteschlange mit anweisungen
+    QTimer *timer = nullptr;                // timer für die abfrage der warteschlange
+    SafeInstruction lastingTransmission = nullptr;// im moment verschickte anweisung
+    MangoConnection *client = nullptr;          // aktuelle Verbindung, repräsentiert als socket
+    MngServer *server = nullptr;                // serverklasse für neue verbindungen
+    QHostAddress address = QHostAddress(QHostAddress::Null); // anderer computer
 
-    bool isSending = false;
+    bool isSending = false;         // ein haufen Flags
     bool serverActive = false;
     bool connectionVerified = false;
 
-    void sendInstruction(SafeInstruction hansz);
-    void closeConnectionPrivate();
-    bool connectionClosing = false;
+    void sendInstruction(SafeInstruction hansz); // funktion zum direkten versenden einer datei. wird nur intern aufgerufen
+    void closeConnectionPrivate(); //tatsächliches schließen der Verbindung. das andere setzt nur ein flag dafür.
+    bool connectionClosing = false; // ein flag. ist die Verbindung gerade im Prozess des schließens?
 private slots:
-    void updateManager();
-    void incomingData(const SafeByteArray);
-    void handleServerError(QAbstractSocket::SocketError);
+    void updateManager(); // prüffunktion für die Warteschlange
+    void incomingData(const SafeByteArray); // eingehende Daten, wird vom socket aus aufgerufen, macht matsch zu sinnvollen Daten
+    void handleServerError(QAbstractSocket::SocketError);       // fehlerbehandlung
     void handleClientError(QAbstractSocket::SocketError);
-public: //getter
+public:                                                         //getter
     quint16 getPeerPort() const{return (CLIENT_VALID(client))?client->peerPort():0;}
     QHostAddress getPeerAddr() const{return (CLIENT_VALID(client))?client->peerAddress():QHostAddress(QHostAddress::Null);}
     quint16 getLocalPort()const{return (CLIENT_VALID(client))?client->localPort():0;}

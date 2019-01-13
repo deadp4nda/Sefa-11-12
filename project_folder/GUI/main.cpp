@@ -1,3 +1,9 @@
+
+/* bemerkung: alle c++ klassen sind so aufgebaut, dass in einem Headerfile (*.h) die Methoden und Membervariablen deklariert sind ,und in einem zugehörigen
+ * *.cpp - file implementiert. daher sind nur die *.h - dateien kommentiert, um die Funktion der Funktionen zu beschreiben.
+ * es gibt nichts, was ich noch dazu sagen könnte. es ist implementiert was dran steht. wirklich.
+*/
+
 #include <QDebug>
 #include <QApplication>
 #include <Mangolib>
@@ -13,28 +19,29 @@
 
 #include "terminalw.h"
 
-using namespace Mango;
+using namespace Mango; // alle funktionen+klassen in globalen namespace eintragen
 
-#define LPORTO 0x4242
+#define LPORTO 0x4242 // der anweisungsport, und der dateiport -1
 
-extern "C"{
-static int lIssueInstruction(lua_State *L);
-static int lIssueFile(lua_State *L);
-static int lOutputString(lua_State *L);
-static int lConnect(lua_State *L);
-static int lDisconnect(lua_State *L);
-static int lQuit(lua_State *);
-static int lGetWan(lua_State *);
-static int lSetRemoteHost(lua_State *);
+extern "C"{// l*** -> Lua-Funktion
+static int lIssueInstruction(lua_State *L); // die eine Anweisung verschickt
+static int lIssueFile(lua_State *L);        // die eine Datei verschickt
+static int lOutputString(lua_State *L);     // die eine Nachricht aufs Terminal schreibt
+static int lConnect(lua_State *L);          // die eine verbindung herstellt
+static int lDisconnect(lua_State *L);       // die eine verbindung trennt
+static int lQuit(lua_State *);              // die das Programm beendet
+static int lGetWan(lua_State *);            // die Wan-ip und lokale ip anfordert
 
-void cbInstructionIn(SafeInstruction);
-void cbFileInStart(SafeFileHansz);
-void cbFileInComplete();
+// cb -> C-Funktion, die eine Callback-Lua-Funktion aufruft, die...
+void cbInstructionIn(SafeInstruction);      // eine hereinkommende Anweisung behandelt
+void cbFileInStart(SafeFileHansz);          // eine hereinkommende Dateiübertragung behandelt
+void cbFileInComplete();                    // registriert, dass die Übertragung vollständig ist
 void cbConnVerification();
-void cbError(const QString& error);
-void cbGPFeedback(const QString &msg);
-void cbConnectionReceived(QHostAddress);
+void cbError(const QString& error);         // einen Error behandelt
+void cbGPFeedback(const QString &msg);      // generelle Meldungen behandelt
+void cbConnectionReceived(QHostAddress);    // eine eingehende Verbindung behandelt
 
+// i... / f... einzelne Meldungen, die in einer feedbackfunktion zusammengefasst werden. hässlicher workaround
 void iConnInit(){cbGPFeedback("CONNECTION_INITIATED");}
 void iConnClsd(){cbGPFeedback("CONNECTION_CLOSED");}
 void fFileCanc(){cbGPFeedback("FILE_CANCELLED");}
@@ -69,8 +76,8 @@ void fJRecv(qint64 recv){cbGPFeedback("BYTES_RECEIVED "+QString::number(recv));}
 void fJSent(qint64 sent){cbGPFeedback("BYTES_SENT " + QString::number(sent));}
 void fNoFls(){cbGPFeedback("NO_FILES_IN_QUEUE");}
 void fFileTransStart(){cbGPFeedback("TRANSMISSION_STARTED");}
-void fFileTransEnded(){cbGPFeedback("TRANSMISSION_ENDED");}
-static void stackDump (lua_State *L) {
+void fFileTransEnded(){cbGPFeedback("TRANSMISSION_ENDED"); cbFileInComplete();}
+static void stackDump (lua_State *L) { // hilfsfunktion, lua-stack-dump
     printf("Stackdump:\n");
     int i;
     int top = lua_gettop(L);
@@ -96,17 +103,17 @@ static void stackDump (lua_State *L) {
 }
 }
 
-TerminalW *wnd = nullptr;
-MngThManager *iMg = nullptr;
-MngFileManager *fMg = nullptr;
-lua_State *L = nullptr;
-QNetworkAccessManager *manager = new QNetworkAccessManager();
+TerminalW *wnd = nullptr;           // das Fenster
+MngThManager *iMg = nullptr;        // der Anwendungsmanager
+MngFileManager *fMg = nullptr;      // der Dateimanager
+lua_State *L = nullptr;             // der Lua-state für das Programm
+QNetworkAccessManager *manager = new QNetworkAccessManager();// ein qnetworkaccessmanager für die WAN-IP
 
-void connectEverything(MngFileManager*f,MngThManager*i);
+void connectEverything(MngFileManager*f,MngThManager*i); // verbindung aller signale/slots etc
 
 int main(int argc, char *argv[]){
 
-    L = luaL_newstate();
+    L = luaL_newstate(); // Lua initialisierung+ registrierung von Funktionen
     luaL_openlibs(L);
 
     lua_pushcfunction(L,lIssueInstruction);
@@ -122,17 +129,17 @@ int main(int argc, char *argv[]){
     lua_pushcfunction(L,lQuit);
     lua_setglobal(L,"c_squit");
     lua_pushcfunction(L,lGetWan);
-    lua_setglobal(L,"c_getwan");
+    lua_setglobal(L,"c_getwan");// siehe oben ende
 
     std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
 
-    QApplication app(argc,argv);
+    QApplication app(argc,argv); // die anwendung wird beim Betriebssystem registriert
 
     QFile flubb(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/file_save.txt");
     flubb.open(QFile::ReadWrite|QFile::Append);
     flubb.close();
 
-    iMg = new MngThManager(LPORTO);
+    iMg = new MngThManager(LPORTO);         // die Netzwerkmanager werden initialisiert
     fMg = new MngFileManager(LPORTO+1);
     fMg->activate();
 
@@ -140,12 +147,12 @@ int main(int argc, char *argv[]){
 
     wnd = new TerminalW(iMg,fMg,L);
 
-    luaL_dofile(L,"../../../Lua/Main.lua");
+    luaL_dofile(L,"../../../Lua/Main.lua"); // die main-lua datei wird registriert. ohne die geht gar nix
 
-    cbGPFeedback("TEMP "+QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/");
+    cbGPFeedback("TEMP "+QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/"); // registrierung des Temporärordners bei lua
 
-    int ret = app.exec();
-    delete wnd;
+    int ret = app.exec(); // mainloop
+    delete wnd;// aufräumen
     delete iMg;
     delete fMg;
     lua_close(L);

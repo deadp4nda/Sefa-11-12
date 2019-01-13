@@ -42,7 +42,6 @@ TerminalW::~TerminalW(){
     fMgr->closeOutgoingConnection();
     iMgr->closeConnection();
     delete terminal;
-    delete fileT;
     delete label;
     delete files_inq;
     delete vlayout;

@@ -3,7 +3,7 @@ project(Genie_Unterstuetzende_Intelligenz C CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
-set(GUI_SRC main.cpp terminalw.cpp terminalw.h terminal.cpp terminal.h FileTable.cpp FileTable.h terminalinput.cpp terminalinput.h)
+set(GUI_SRC main.cpp terminalw.cpp terminalw.h terminal.cpp terminal.h terminalinput.cpp terminalinput.h)
 
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Gui CONFIG REQUIRED)

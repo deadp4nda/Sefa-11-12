@@ -19,15 +19,16 @@ class /*MONGOLIBSHARED_EXPORT*/ FileHansz: public QObject{ // Dateiobjektzugriff
 public:
     FileHansz(const QFile& file,quint64 filetype);                  // nehmen Dateizugriffsobjekt, Konstruktor auf der sendenden Seite
     FileHansz(const QDir &stdDir);                                  // nimmt standardspeicher, Konstruktor auf der empfangenden Seite
-    FileHansz(const FileHansz&) = delete;                           // explizites löschen des Standardkonstruktors
+    FileHansz(const FileHansz&) = delete;                           // explizites löschen des kopierkonstruktors
     ~FileHansz();                                                   // destruktor
-    int addData(const QByteArray&, bool isLastPackage = false);
-    bool isBroken()const{return broken;}
-    void endingOne(){firstEndingSent=true;}
-    bool getFirstEndingSent()const{return firstEndingSent;}
+    int addData(const QByteArray&, bool isLastPackage = false);     // fügt ein Datenpaket an eine Übertragung an
+    bool isBroken()const{return broken;}                            // unwichtig, implementierungsdetail
+    void endingOne(){firstEndingSent=true;}                         // unwichtig, implementierungsdetail
+    bool getFirstEndingSent()const{return firstEndingSent;}         // unwichtig, implementierungsdetail
     void print(){std::cout << "---FILE---" << "\nName: " << getName().toStdString() << "\nHash: " << getChecksumString().toStdString() << std::endl;}
+    // ^eine Ausgabefunktion
 public: //Getters
-    const QByteArray getHeaders()const{return headers;}
+    const QByteArray getHeaders()const{return headers;} // get header
     const QString getName()const{return name;}
     const QByteArray getChecksum()const{return hash;}
     const QString getChecksumString()const{return hash.toHex();}
@@ -36,7 +37,7 @@ public: //Getters
     quint64 getFileSize()const{return fileSize;}
     quint64 getStringSize()const{return stringSize;}
 private:
-    QTimer timer;
+    QTimer timer;                       // memberdaten, die daten speichern. das können sie gut. sehr gut sogar.
     QFile file;
     QDir stdDir;
     QByteArray headers = QByteArray();
@@ -52,7 +53,7 @@ private:
     bool broken = false;
     bool mode = false; //true == sending, false == receiving
 private:
-    void refactorHeaders();
+    void refactorHeaders();                                 // wandelt rohdatenmatsch mit headerinformationen zu headerinformationen ohen rohdatenmatsch
 signals:
     void fileTransmissionComplete();
     void fileTransmissionCorrupted();

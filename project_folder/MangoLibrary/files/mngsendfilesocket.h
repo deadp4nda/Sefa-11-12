@@ -10,37 +10,37 @@
 class QTimer;
 
 namespace Mango{
-class MngSendFileSocket : public QTcpSocket
+class MngSendFileSocket : public QTcpSocket // socket zum senden von Dateien
 {
     Q_OBJECT
 public:
-    MngSendFileSocket(const QHostAddress &address,
+    MngSendFileSocket(const QHostAddress &address,          //kriegt zieladresse, port und standardverzeichnis
                       quint16 port,
                       QString stdDir,
                       QObject *parent = nullptr);
-    ~MngSendFileSocket();
-    void send(SafeFileHansz);
+    ~MngSendFileSocket();                               // destruktor
+    void send(SafeFileHansz);                           // funktion, die Dateien versendet. also in das groooße internetz schickt.
     SafeFileHansz getCurrent();
 signals:
-    void transmissionStarted(SafeFileHansz);
-    void transmissionComplete();
-    void transmissionCancelled();
+    void transmissionStarted(SafeFileHansz); // übertragung gestartet von der Datei, die durch den SafeFileHansz bezeichnet wird.
+    void transmissionComplete();             // -||- beendet
+    void transmissionCancelled();            // -||- abgebrochen
 
-    void justWritten(qint64);
+    void justWritten(qint64);                   // für den FORTSCHRITT!!!
 
-    void startNextShot();
+    void startNextShot();                       // implementierungsdetail, also unwichtig
 public slots:
-    void handleFinishReadyRead();
+    void handleFinishReadyRead();               // funktion, die aufgerufen wird, wenn die Abschlussbytesequenz gesendet wird oder der header zurück
 private:
-    QTimer *timer = nullptr;
-    SafeFileHansz current = nullptr;
-    QFile *file = nullptr;
-    QHostAddress addr = QHostAddress::Null;
-    quint16 sendingPort = 0;
-    QDir saveDir;
-    bool transmissionSuccess = false;
+    QTimer *timer = nullptr;                    // implementierungsdetail
+    SafeFileHansz current = nullptr;            // datei im praktischen Smartpointermantel
+    QFile *file = nullptr;                      // dateiobjekt-pointer
+    QHostAddress addr = QHostAddress::Null;     // adresse des gegenübers
+    quint16 sendingPort = 0;                    // port
+    QDir saveDir;                               // standardverzeichnis
+    bool transmissionSuccess = false;           // na, wars erfolgreich?
 private slots:
-    void sendPayload();
+    void sendPayload();                         // die Datei in kleinen stückchen ohne header verschicken. der war schon.
 };
 }
 #endif // MNGSENDFILESOCKET_H
