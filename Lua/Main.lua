@@ -320,7 +320,7 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
     local x = io.open(temp_path.."file_save.txt","a")
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
-    recent_file = temp_path..f_hash.." "..temp_path..f_name
+    recent_file = {temp_path..f_hash.." ",f_name}
     t_write(recent_file)
 
 
@@ -330,13 +330,13 @@ end
 --Dateiübertragung beenden: Umbenennung, terminal ausgabe des return werts
 function filetrans_end()
     t_write("Dateiübertragung beendet")
-    local x = os.execute("ren "..recent_file)
+    local x = os.execute("ren "..recent_file[1]..recent_file[2])
     if x == 1 then
 
-        os.execute("mv "..temp_path..recent_file)
+        os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
     end
     if se_flag == 1 then
-        local x = io.open(temp_path..split_input(recent_file)[2],"rb")
+        local x = io.open(temp_path..recent_file[2],"rb")
         local content = x:read("*a")
         x:close()
         t_write(content)
