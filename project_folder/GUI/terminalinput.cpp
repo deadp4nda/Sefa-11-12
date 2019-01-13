@@ -10,7 +10,9 @@
 TerminalInput::TerminalInput(QWidget *parent):QLineEdit(parent) {
     if(QFile::exists(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/blechschaden.msdga")){
         QFile f(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/blechschaden.msdga");
+        f.open(QFile::ReadOnly);
         s = QString(f.readAll()).split("\n",QString::SkipEmptyParts);
+        s.append("");
         f.close();
     }
     QObject::connect(this,&QLineEdit::returnPressed,this,&TerminalInput::onReturn);
@@ -22,6 +24,7 @@ TerminalInput::TerminalInput(QWidget *parent):QLineEdit(parent) {
 
 TerminalInput::~TerminalInput() {
     QFile f(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/blechschaden.msdga");
+    f.open(QFile::Append);
     for(QString &ss:s){
         if(ss != "") f.write((ss+"\n").toUtf8());
     }
