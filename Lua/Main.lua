@@ -1,4 +1,4 @@
--- flags
+-- globale flags
 
 local cert = nil
 local temp_path = ""
@@ -7,13 +7,11 @@ local se_flag = false
 
 
 
----___SEND___---
+---___SENDE - FUNKTIONEN___---
 
 
 
--- |send - Parser| --
--- Eingabe: String - UI-Eingabe
--- Ausgabe: Funktionsaufruf
+-- Parser: Input der Eingaben > Auslösen der Funktionalität
 function interpret_input(ui_input)
     local name = "interpret_input: "
     local content = split_input(ui_input)
@@ -46,14 +44,17 @@ function interpret_input(ui_input)
 end
 
 
--- |Parser:- Eingabeverarbeitung| --
--- Eingabe: String - UI-Eingabe
--- Ausgabe: Table: Argumente der Eingabe
-
+--DEBUG
 function mangomeow()
     t_write("Meow meow - Meow")
 end
 
+--Enthalten eines Elements in Table
+function table_contains(tab, key)
+    return tab[key]~=nil
+end
+
+--Eingabeverarbeitung: String > Liste, wörter geteilt an Leerzeichen
 function split_input(input)
     local content = {}
     local i = 0
@@ -67,24 +68,28 @@ function split_input(input)
     return content
 end
 
----
---- COMMANDS ---
----
+--Zusammenfügen von Strings in einem Table zu einem String (Umkehren von split_input)
+function set_msg(args, ind)
+    local msg = ""
+    for i=ind, get_length(args)+1 do
+        msg = msg..to_string(args[i]).." "
+    end
+    return msg
+end
 
+--- Interne Funktionen
+--Start-funktion
 function startup()
     local ext_ip, loc_ip = c_getwan()
     t_write("Willkommen zu MangoThunfisch! Ihre IPs lauten:\nWAN:      "..ext_ip.."\nLOCAL:  "..loc_ip)
 end
 
-function squit(args)
-    disconnect({"disconnect", nil})
-    c_squit()
-end
-
+--Terminal Ausgabe
 function t_write(str)
     c_terminal_output(str)
 end
 
+--Länge eines Tables
 function get_length(table)
     local i = -1
     for _ in pairs(table) do
@@ -92,6 +97,46 @@ function get_length(table)
     return i
 end
 
+--konvertierung von allgemeinen typen zu string, zusätzliche unterstützung von nil
+function to_string(str)
+    if str ==nil then return "" else return tostring(str) end
+end
+
+
+--Authentifizierung
+function authenticate()
+    send_comm({"certificate"})
+end
+
+
+--- Externe Befehle
+-- Annehmen eiener Verbindung
+function y()
+    if cert == nil then
+        t_write("Verbindung wurde autorisiert!")
+        c_issue_instruction(0, 1, "AUTH_SUCC", 0)
+        cert=true
+    end
+
+end
+
+--Ablehnen einer Verbindung
+function n()
+    if cert == nil then
+        cert=false
+        t_write("Verbindung wurde verweigert!")
+        c_issue_instruction(0, 1, "AUTH_FAIL", 0)
+        disconnect({"disconnect",""})
+    end
+end
+
+--Beenden des Programmes
+function squit(args)
+    disconnect({"disconnect", nil})
+    c_squit()
+end
+
+--Versenden von chat Nachrichten
 function chat(args)
     local msg = ""
     for i=2, get_length(args)+1 do
@@ -102,9 +147,7 @@ function chat(args)
     c_issue_instruction(0,1,"CHAT "..msg,0)
 end
 
--- |send| --
--- Eingabe:
--- Ausgabe:
+--Versenden von Dateien
 function send_file(args)
     local name = "send_file"
     if get_length(args)==1 then
@@ -117,13 +160,8 @@ function send_file(args)
     end
 end
 
-function to_string(str)
-    if str ==nil then return "" else return tostring(str) end
-end
 
--- |send| --
--- Eingabe:
--- Ausgabe:
+--Versenden von Befehlen
 function send_comm(args)
     local name = "send_comm"
     local argument_number = get_length(args)
@@ -138,7 +176,7 @@ function send_comm(args)
     end
 end
 
-function instr_lookup(key)
+--[[function instr_lookup(key)
     local inst = {
         ["Exit"]=0,
         ["Kill"]=0,
@@ -160,12 +198,10 @@ function prog_lookup(key)
         ["Bash"]=0
     }
     --whatever II
-end
+end]]
 
 
--- || --
--- Eingabe:
--- Ausgabe:
+--Datein Downloaden
 function get_file(args)
     local name = "get_file"
     local argument_number = get_length(args)
@@ -179,9 +215,7 @@ function get_file(args)
 end
 
 
--- || --
--- Eingabe:
--- Ausgabe:
+--Datein Versenden und öffnen
 function open(args)
     local name = "open"
     local argument_number = get_length(args)
@@ -197,12 +231,7 @@ function open(args)
     end
 end
 
-
--- || --
--- Eingabe:
--- Ausgabe:
-
-
+-- Aufbauen eiener Verbindung
 function connect(args)
     local name = "connect"
     local argument_number = get_length(args)
@@ -225,6 +254,7 @@ function connect(args)
     end
 end
 
+--Verbindung trennen und neue Aufbauen
 function reconnect(args)
     local name = "reconnect"
     local argument_number = get_length(args)
@@ -238,11 +268,7 @@ function reconnect(args)
     end
 end
 
-
--- || --
--- Eingabe:
--- Ausgabe:
-
+--Verbindung trennen
 function disconnect(args)
     local name = "connect"
     local argument_number = 0
@@ -255,48 +281,16 @@ function disconnect(args)
     end
 end
 
--- || --
--- Eingabe:
--- Ausgabe:
-
+--Herunterfahren
 function shutdown(args)
     send_comm({"send_comm", "shutdown",0,})
 end
 
-function y()
-    if cert == nil then
-        t_write("Verbindung wurde autorisiert!")
-        c_issue_instruction(0, 1, "AUTH_SUCC", 0)
-        cert=true
-    end
-
-end
-
-function n()
-    if cert == nil then
-        cert=false
-        t_write("Verbindung wurde verweigert!")
-        c_issue_instruction(0, 1, "AUTH_FAIL", 0)
-        disconnect({"disconnect",""})
-    end
-end
-
-function certificate()
-    --TODO
-    local IP = "whatever, muss ich noch einfügen"
-    local msg = "Eingehende Verbindung. Ablehnen mit 'n', Annehmen mit 'y'."
-    t_write(msg)
-end
-
--- || --
--- Eingabe:
--- Ausgabe:
-function authenticate()
-    send_comm({"certificate"})
-end
 
 
----___RECEIVE___---
+---___Empfangs-Funktionen___---
+
+--Eingehenden Befehl interpretieren: Ausführung in os-terminal oder intern
 function interpret_comm(type_id,prog_id,comm,result)
     if prog_id == 0 then
         t_write("Eingehende Anweisung: "..comm)
@@ -320,17 +314,17 @@ function interpret_comm(type_id,prog_id,comm,result)
 end
 
 
-
+--Dateiübertragung starten, speichern im downloadverzeichnis
 function filetrans_start(f_name, f_hash, f_type, f_size)
     t_write("Dateiübertragung wurde gestartet:\n"..f_name.."-"..f_size)
     local x = io.open(temp_path.."file_save.txt","a")
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
-    recent_file = {temp_path..f_hash.." "..temp_path..f_name}
+    recent_file = temp_path..f_hash.." "..temp_path..f_name
 
 end
 
-
+--Dateiübertragung beenden: Umbenennung, terminal ausgabe des return werts
 function filetrans_end()
     t_write("Dateiübertragung beendet")
     t_write(recent_file)
@@ -348,18 +342,8 @@ function filetrans_end()
     end
 end
 
-function table_contains(tab, key)
-    return tab[key]~=nil
-end
-
-function set_msg(args, ind)
-    local msg = ""
-    for i=ind, get_length(args)+1 do
-        msg = msg..to_string(args[i]).." "
-    end
-    return msg
-end
-
+--Interpreter von Internen Flags und funktionsaufrufen
+--sorgt für Ausgaben und löst interne prozesse aus
 function feedback(input_str)
     local arg = split_input(input_str)
     local output = {
@@ -381,11 +365,11 @@ function feedback(input_str)
     local request = {
         ["disconnect"]="",
         ["TEMP"]="",
-        ["GET_FILES"]="",
+
         ["CONNECTION_CLOSED"]="Verbindung beendet",
         ["OPEN"]="",
-        ["SEND_FILE"]="",
-        ["GET_REMOTE_FILES"]=""
+        ["SEND_FILE"]=""
+
     }
 
     if table_contains(output, arg[1]) then
@@ -401,10 +385,12 @@ function feedback(input_str)
 
 end
 
+--Versenden einer Datei
 function SEND_FILE(file)
     c_issue_file(file, 0)
 end
 
+--öffnen einer Datei
 function OPEN(file)
     local x = os.execute(file)
     if x == 1 then
@@ -412,28 +398,27 @@ function OPEN(file)
     end
 end
 
+--Beendete Verbindung
 function CONNECTION_CLOSED()
     t_write("Verbindung wurde beendet")
     cert = nil
 end
 
 
+--Zertifizierung einer Verbindung
+function certificate()
+    --TODO
+    local IP = "whatever, muss ich noch einfügen"
+    local msg = "Eingehende Verbindung. Ablehnen mit 'n', Annehmen mit 'y'."
+    t_write(msg)
+end
 
-
-
+--setzen der temporären path varibale
 function TEMP(comm)
     temp_path = comm
     print("debug:"..temp_path)
 end
 
-function GET_FILES()
-    --file_save.txt
-
-end
-
-function GET_REMOTE_FILES()
-
-end
 
 ---
 --- DEBUG ---
