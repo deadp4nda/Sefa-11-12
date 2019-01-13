@@ -147,7 +147,7 @@ int main(int argc, char *argv[]){
 
     wnd = new TerminalW(iMg,fMg,L);
 
-    luaL_dofile(L,"../../../Lua/Main.lua"); // die main-lua datei wird registriert. ohne die geht gar nix
+    luaL_dofile(L,"Main.lua"); // die main-lua datei wird registriert. ohne die geht gar nix
 
     cbGPFeedback("TEMP "+QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/"); // registrierung des Temporärordners bei lua
 
