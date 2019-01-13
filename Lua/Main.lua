@@ -1,25 +1,19 @@
----Arbeitsstand:
-
--- TODO : add file-paths (open/get_file)
--- add commands
-
-
-
----___SEND___---
-
----
---- PARSER ---
----
-
--- |send - Parser| --
--- Eingabe: String - UI-Eingabe
--- Ausgabe: Funktionsaufruf
+-- flags
 
 local cert = nil
 local temp_path = ""
 local recent_file = {}
 local se_flag = false
 
+
+
+---___SEND___---
+
+
+
+-- |send - Parser| --
+-- Eingabe: String - UI-Eingabe
+-- Ausgabe: Funktionsaufruf
 function interpret_input(ui_input)
     local name = "interpret_input: "
     local content = split_input(ui_input)
@@ -339,9 +333,9 @@ end
 
 function filetrans_end()
     t_write("Dateiübertragung beendet")
-    local x = os.execute("ren "..recent_file[1].." "..recent_file[2])
+    local x = os.execute("ren "..temp_path..recent_file[1].." "..temp_path..recent_file[2])
     if x == 1 then
-        os.execute("mv "..recent_file[1].." "..recent_file[2])
+        os.execute("mv "..temp_path..recent_file[1].." "..temp_path..recent_file[2])
     end
     if se_flag == 1 then
         local x = io.open(temp_path..recent_file[2],"rb")
