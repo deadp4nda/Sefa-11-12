@@ -330,7 +330,7 @@ end
 --Dateiübertragung beenden: Umbenennung, terminal ausgabe des return werts
 function filetrans_end()
     t_write("Dateiübertragung beendet")
-    local x = os.execute("ren "..recent_file[1]..recent_file[2])
+    local x = os.execute("ren "..recent_file[1]..recent_file[2]:gsub("/","\\"))
     if x == 1 then
         t_write("test")
         os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
