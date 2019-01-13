@@ -5,13 +5,27 @@
 #include "terminalinput.h"
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QtCore/QDir>
 
 TerminalInput::TerminalInput(QWidget *parent):QLineEdit(parent) {
+    if(QFile::exists(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/blechschaden.msdga")){
+        QFile f(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/blechschaden.msdga");
+        s = QString(f.readAll()).split("\n",QString::SkipEmptyParts);
+        f.close();
+    }
     QObject::connect(this,&QLineEdit::returnPressed,this,&TerminalInput::onReturn);
     QPalette pal = palette();
     pal.setColor(QPalette::Base, Qt::black);
     pal.setColor(QPalette::Text, Qt::white);
     setPalette(pal);
+}
+
+TerminalInput::~TerminalInput() {
+    QFile f(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/blechschaden.msdga");
+    for(QString &ss:s){
+        if(ss != "") f.write((ss+"\n").toUtf8());
+    }
+    f.close();
 }
 
 void TerminalInput::onReturn() {

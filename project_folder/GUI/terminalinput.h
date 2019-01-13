@@ -12,6 +12,7 @@ class TerminalInput :public QLineEdit{ // eingabezeile für das terminal ist ein
     Q_OBJECT
 public:
     TerminalInput(QWidget *parent = nullptr);
+    ~TerminalInput();
 signals:
     void lineIn(QString,QColor); // eine Nachricht vom Nutzer wird mit enter bestätigt, farbe = weiß
 private slots:
