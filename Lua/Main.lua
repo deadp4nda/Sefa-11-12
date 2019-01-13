@@ -321,6 +321,7 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
     recent_file = temp_path..f_hash.." "..temp_path..f_name
+    t_write(recent_file)
 
 
 
