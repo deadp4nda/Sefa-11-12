@@ -72,7 +72,7 @@ Die Befehle $send\_file$ und $send\_comm$ sind hierbei die allgemeinen Funktione
 $shutdown$ und $open$ sind spezielle versendete Anweisungen zum Herunterfahren des Zielcomputers und Öffnen einer Datei, bei denen wir es aufgrund ihrer frequentierten Nutzung für sinnvoll hielten sie eigenständig in unsere formale Sprache zu integrieren. Sie basieren auf den zwei Grundfunktionen und stehen beispielhaft für die Erweiterbarkeit des Funktionsumfangs unserer Software. Durch den $chat$ Befehl lässt sich eine Textnachricht an den Verbundenen Rechner senden.
 Zusätzlich für Befehle, welche mit Dateien arbeiten sollen, muss der Dateiname beziehungsweise der Dateipfad als Zeichenkette angefügt werden. 
 Die Übermittlungsfunktionen für Anweisungen benötigen neben dem Anweisungsnamen als Zeichenkette auch optionale Argumente, mit welchen die Anweisung in der Kommandozeile ausgeführt werden soll. Außerdem wird der Flag $return$ benötogt, welcher bestimmt, ob das Ergebnis des Übertragenen Befehls zurück an den Ausgangscomputer gesenet werden soll. Zum beenden des Programms existiert die Anweisung $squit$, sie implementiert eine Alternative zu den grafischen Möglichkeiten zum beende\\\\
-Um unsere formale Sprache zu implementieren entwickelten wir zuerst als Grundlage eine Darstellung der Eweiterten-Backus-Nauer-Form. Diese ist im Anhang einzusehen. Eine solche Darstellung hat den Vorteil einer unkomplizierten Übertragung der Produktionsregeln in die Implementierung, welche die Nutzereingaben überprüft. Im späteren Verlauf der Entwicklung wurden einzelne Befehle und Argumente angefügt und verändert, um eine Praxistauglichkeit zu bewirken.
+Um unsere formale Sprache zu implementieren entwickelten wir zuerst als Grundlage eine Darstellung der Eweiterten-Backus-Nauer-Form. Eine solche Darstellung hat den Vorteil einer unkomplizierten Übertragung der Produktionsregeln in die Implementierung, welche die Nutzereingaben überprüft. Im späteren Verlauf der Entwicklung wurden einzelne Befehle und Argumente angefügt und verändert, um eine Praxistauglichkeit zu bewirken.
 
 \subsection{Implementierung der Anwendungssteuerung in der Skriptsprache Lua}
 
@@ -135,6 +135,13 @@ In der folgenden $If-Else$-Struktur wird überprüft, ob der eingegebene Befehl 
 Ist dies nicht der Fall, gibt die Funktion einen Fehler der Form \glqq$ERROR: interpret\_content: EINGABE - unbekannter Befehl!$\grqq\ aus, und es wird keine Übertragung eingeleitet. 
 Wenn die eingegebene Anweisung Teil des Befehlssatzes ist, so wird die entsprechende Funktion mit den übergebenen Parametern aufgerufen, und das Ergebnis in der Variable $result$ gespeichert. 
 Der Aufruf geschieht durch die Lua-Interne Funktion $.G[STRING](ARGUMENTS)$, welche eine Zeichenkette als Input fordert, und eine Funktion dieses Namens mit den gewünschten Argumenten $ARGUMENTS$ aufruft.\\\\
+
+\begin{figure}[h!]
+\label{fkts}
+\caption{Strukturelle Darstellung der grundlegenden Funktionsstruktur}
+\end{figure}
+\includegraphics[scale=0.75]{inp}\\
+
 Die gewählte Form der Implementierung, dass der Befehlssatz in einer Liste, bestehend aus den Namen der zugehörigen Funktionen, gespeichert ist, ermöglicht eine unkomplizierte Erweiterung der grundlegenden Befehle durch neue Funktionalität, welche möglicherweise spezifischere Ansprüche an das Protokoll fordert. 
 Beispiel hierfür ist die Implementierung von Streaming, die einen ständigen Erhalt der Netzwerkverbindung zwischen den zwei Rechnern benötigen würde. \\
 Die eigentlichen Funktionen sind alle nach einem ähnlichen Schema aufgebaut. 
@@ -145,11 +152,7 @@ Die zweite Bedingung prüft, ob die Anzahl der gegebenen Argumente mit der Anzah
 Schlägt eine der Bedingungen fehl, so wird der Vorgang abgebrochen und eine Fehlermeldung entsprechend der oben dargestellten Form ausgegeben. 
 Sind beide Forderungen erfüllt, werden die Argumente, welche als Zeichenkette eingegeben wurden, in die notwendigen Datentypen konvertiert und die zu den Funktionen zugehörigen Anbindungen an das Netzwerkprotokoll initialisiert.  \\\hfill\\
 
-\begin{figure}[h!]
-\label{fkts}
-\caption{Strukturelle Darstellung der grundlegenden Funktionsstruktur}
-\end{figure}
-\includegraphics[scale=0.75]{inp}\\
+
 %\begin{lstlisting}[caption = {Beispielhafte Sende Funktion}]
 %function send_NAME(args)
 %local name = debug.getinfo(1, "n").name
