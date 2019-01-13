@@ -321,7 +321,7 @@ function filetrans_start(f_name, f_hash, f_type, f_size)
     x:write(f_hash..","..f_name..","..to_string(f_type)..","..to_string(f_size).."\n")
     x:close()
     recent_file = {temp_path..f_hash.." ",f_name}
-    t_write(recent_file)
+    t_write(recent_file[1],recent_file[2])
 
 
 
@@ -332,7 +332,7 @@ function filetrans_end()
     t_write("Dateiübertragung beendet")
     local x = os.execute("ren "..recent_file[1]..recent_file[2])
     if x == 1 then
-
+        t_write("test")
         os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
     end
     if se_flag == 1 then
