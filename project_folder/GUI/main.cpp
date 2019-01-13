@@ -131,8 +131,6 @@ int main(int argc, char *argv[]){
     lua_pushcfunction(L,lGetWan);
     lua_setglobal(L,"c_getwan");// siehe oben ende
 
-    std::cerr << QFile::exists("../../../Lua/Main.lua") << std::endl;
-
     QApplication app(argc,argv); // die anwendung wird beim Betriebssystem registriert
 
     QFile flubb(QDir::tempPath()+"/pinkkarriertesclownsfischbatallion/file_save.txt");
@@ -146,6 +144,7 @@ int main(int argc, char *argv[]){
     connectEverything(fMg,iMg);
 
     wnd = new TerminalW(iMg,fMg,L);
+    wnd->setWindowTitle("MangoThunfisch");
 
     luaL_dofile(L,"Main.lua"); // die main-lua datei wird registriert. ohne die geht gar nix
 
