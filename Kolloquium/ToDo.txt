@@ -1,4 +1,4 @@
-1. Thesenpapier 
+1. Thesenpapier & Berichtsheft (!Abgabe)
   (Für die Verteidigung fertigen die Schüler ein Thesenpapier an 
   (ca. 1 Seite/ mit Angabe von Verfasser, Thema, Betreuer, Ort und Datum im Kopf)). 
   Die Thesen sind zu nummerieren. Im Rahmen jeder These wird ein wesentlicher Gedankengang mit 1 –3 Sätzen formuliert 
@@ -9,4 +9,12 @@
     -zur Diskussion anregen.
   Der Aufbau des Thesenpapiers folgt der Gliederung des Vortrages.)
   
-2. 
+
+2.a Themenkapitel Bernd (Theorie - Impl)
+2.b Themenkapitel Leo (Theorie - Impl)
+
+3. Einleitung und Schluss
+
+4. Danksagung / kritische reflexion
+
+5. Demo
