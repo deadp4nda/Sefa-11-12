@@ -8,7 +8,7 @@
 3. Arbeitsvorstellung - jeder seine Kapitel? 																	// ja klingt gut. wir müssen nur ungefähr gleich lange Teile basteln und uns zwischendurch vllt ein paar mal abwechseln
 	(Entwicklung, Spezifikation des Protokolls; Formale Sprachen; Implementierung; etc							// das braucht viele rhetorische Höhepunkte. wer will schon sowas zuhören xD
 	(wichtig: immer Vorstellung der Theorie/des Gemachten und dessen "Notwendigkeit"/Anwendung in der Arbeit))
-4. Demo 																				
+4. Demo 																(Vorstellung des programms, benutzung, gui, etc)				
 	(2 Beamer: Connect, Chat("Hallo welt!"), send_file(das bunte bild?), send_com(shutdown? :D))
 	( SCHRIFTGRÖẞE!) //ja klar shutdown :D. macht super Eindruck. und vllt auch zugriff auf die Datei. 
 																												// vielleicht machen wir auch noch ein Erweiterungsskript das irgendwas automatisiert, das macht auch eindruck glaub ich.
