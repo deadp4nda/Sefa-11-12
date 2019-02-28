@@ -1,0 +1,19 @@
+1. Einstieg
+	(vllt Entstehung des Internets? - n tolles zitat dazu oder so)												// oder nen Comic. oder so ne visionäre Geschichte erzählen aus den Anfangstagen des Internetz
+																												// wenn wir den comic in der Verteidigung erklärt hätten, hätte Doc moor den toll gefunden xD
+																												// jedenfalls viel visuell oder halt anschaulich machen, kaum Text in der Präsi
+2. Ziel und Motivation
+	("Großgefasste Motivation")																					//vllt. Bezug auf Interneteinführung? Punkteliste, was wollten wir erreichen, die aber nur so mündlich als Rhetorische Höhepunkte mit Pausen nennen
+	
+3. Arbeitsvorstellung - jeder seine Kapitel? 																	// ja klingt gut. wir müssen nur ungefähr gleich lange Teile basteln und uns zwischendurch vllt ein paar mal abwechseln
+	(Entwicklung, Spezifikation des Protokolls; Formale Sprachen; Implementierung; etc							// das braucht viele rhetorische Höhepunkte. wer will schon sowas zuhören xD
+	(wichtig: immer Vorstellung der Theorie/des Gemachten und dessen "Notwendigkeit"/Anwendung in der Arbeit))
+4. Demo 																				
+	(2 Beamer: Connect, Chat("Hallo welt!"), send_file(das bunte bild?), send_com(shutdown? :D))				// ja klar shutdown :D. macht super Eindruck. und vllt auch zugriff auf die Datei. 
+																												// vielleicht machen wir auch noch ein Erweiterungsskript das irgendwas automatisiert, das macht auch eindruck glaub ich.
+5. kritische Reflexion
+	(erreichtes, Erweiterung/Fortführung, Arbeitsweise und Arbeitsteilung)										// zusammenfassend vergleichen mit punkteliste am anfang, in Redefluss einbinden
+6. Danksagung
+	(Doc moor, suepke, jan)
+7. Schluss
+	(Bezug auf Einstieg)																						// ja, aber kp wie
