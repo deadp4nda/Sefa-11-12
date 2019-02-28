@@ -1,0 +1,11 @@
+- Datei und befehlsübertragung war motivation für die entwicklung des intet
+- moptivation, datei/anweisungsübertragung automatiomatisieren
+- aufbau auf vorhanden standarts, optimierung für speziellen anwendungsfall
+- Protokolldesigne / ein eigenes protokoll ist nötog, bla bla
+- eigene eingabesyntax / formale sprache 
+- betriebssystemunabhängigkeit und portablität
+- universalität, breites anwensungsspektrum
+- hybridprogramm aus compiliertem und scriptanteil ist sinnvoll
+
+- gui/console: kompromiss aus benutzerfreundlichkeit und funktionalität, orientierung an bash -> etablierte form
+- erweiterungmöglichkeit - mobile geräte
