@@ -9,7 +9,8 @@
 	(Entwicklung, Spezifikation des Protokolls; Formale Sprachen; Implementierung; etc							// das braucht viele rhetorische Höhepunkte. wer will schon sowas zuhören xD
 	(wichtig: immer Vorstellung der Theorie/des Gemachten und dessen "Notwendigkeit"/Anwendung in der Arbeit))
 4. Demo 																				
-	(2 Beamer: Connect, Chat("Hallo welt!"), send_file(das bunte bild?), send_com(shutdown? :D))				// ja klar shutdown :D. macht super Eindruck. und vllt auch zugriff auf die Datei. 
+	(2 Beamer: Connect, Chat("Hallo welt!"), send_file(das bunte bild?), send_com(shutdown? :D))
+	( SCHRIFTGRÖẞE!) //ja klar shutdown :D. macht super Eindruck. und vllt auch zugriff auf die Datei. 
 																												// vielleicht machen wir auch noch ein Erweiterungsskript das irgendwas automatisiert, das macht auch eindruck glaub ich.
 5. kritische Reflexion
 	(erreichtes, Erweiterung/Fortführung, Arbeitsweise und Arbeitsteilung)										// zusammenfassend vergleichen mit punkteliste am anfang, in Redefluss einbinden
