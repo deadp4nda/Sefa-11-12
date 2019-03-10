@@ -1,49 +1,33 @@
-- wir wollen:
-  - Programm
-  - Computer fernsteuern
-  - Dateien übertragen
-
-- wir brauchen dazu:
-  - skills - unobtainable
-  - Übertragungen im Netzwerk -> Protokolle
-  - => eigenes Protokoll, an Anforderungen anpassen
-    - lightweight
-    - dateien/anweisungen
-    - mglst. allgemeine Typen von Anweisungen
-  - Kommunikation mit Nutzer
-    - nutzer kann schon was
-    - => Konsole/Batchzeug
-    - => Eingabesyntax an anforderungen anpassen
-      - blah?
-  - => 3 Teile: 1 Protokoll, 1 Eingabeverarbeitung, 1 Interface
-  - Betriebssystemunabh.
-    - Qt
-    - Lua
-    -andere Gründe für Lua/C++
-      - Performance+einfache Wartbarkeit
-
-
-
 Zielstellung:
-	- Entwicklung einer Software zur Übertragung von Datein und Anweisungen über ein Netzwerk
-		- Netzwerkkommunikation auf Basis eines eigenen Protokolls (basiert auf etablierten Normen)
-		- Verarbeitung der Nutzereingaben durch eine selbst entwickelte formale Sprache
-		- Implementierung 
-			- betriebssystem unabhängig
-			- portable
-			- Verbindung von c++(compiliert) und Lua(scriptsprache)
+	- Entwicklung einer Software zur Übertragung von Dateien und Anweisungen über ein Rechnernetzwerk
+	- Fernsteuerung und Verwaltung eines angeschlossenen Computers nur mit Netzwerkzugriff
+		- Netzwerkkommunikation auf Basis eines eigenen Protokolls, basierend auf existierenden Standards
+		- Nutzereingaben in Form einer von form. Sprache beschriebenen Syntax
+		- Implementierungsdetails:
+			- betriebssystemunabhängig
+			- portabel
+			- Verbindung von c++(compiliert) und Lua(scriptsprache) zur generellen Optimierung (Performance/Erweiterbarkeit)
 					
 
 Vorgehen:
-	- Organisation der Arbeit mithilfe Projektmanagementsoftware Github
-		-> simultanes Arbeiten an digitalen Dateien möglich
+	- Organisation der Arbeit mithilfe Projektmanagementsoftware GitHub
+		- simultanes Arbeiten an digitalen Dateien möglich
+		- Versionskontrolle für die Programmteile
+		
 	- Literaturstudium:
 		- Kommunikation in Netzwerken; Protokolle
 		- formale sprachen
 		- Aneignung neuer Programmiersprache Lua
+		- Schnittstellendesign
+		
 	- Konzeptionierung der Software:
 		- Planung der Netzwerkschnittstelle/ Protokolls
 		- Erarbeitung eines Befehlssatzes und einer formalen Sprache
-		- Ausarbeitung des Informationsflusses im Programm
-	- Implementierung: Dreiteilung: Netzwerk c++ - Eingabeverarbeitung lua - User Interface c++
+		- Entwurf der Schnittstelle zw. Lua und C++
+		//- Ausarbeitung des Informationsflusses im Programm
+		
+	- Implementierung, modulare Programmierung, Dreiteilung: 
+		- Netzwerk c++
+		- Eingabeverarbeitung lua
+		- User Interface c++
 	- Zusammenfügen, Debuggen und Testen der 3 Softwareteile
