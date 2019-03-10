@@ -21,3 +21,29 @@
     - Lua
     -andere Gründe für Lua/C++
       - Performance+einfache Wartbarkeit
+
+
+
+Zielstellung:
+	- Entwicklung einer Software zur Übertragung von Datein und Anweisungen über ein Netzwerk
+		- Netzwerkkommunikation auf Basis eines eigenen Protokolls (basiert auf etablierten Normen)
+		- Verarbeitung der Nutzereingaben durch eine selbst entwickelte formale Sprache
+		- Implementierung 
+			- betriebssystem unabhängig
+			- portable
+			- Verbindung von c++(compiliert) und Lua(scriptsprache)
+					
+
+Vorgehen:
+	- Organisation der Arbeit mithilfe Projektmanagementsoftware Github
+		-> simultanes Arbeiten an digitalen Dateien möglich
+	- Literaturstudium:
+		- Kommunikation in Netzwerken; Protokolle
+		- formale sprachen
+		- Aneignung neuer Programmiersprache Lua
+	- Konzeptionierung der Software:
+		- Planung der Netzwerkschnittstelle/ Protokolls
+		- Erarbeitung eines Befehlssatzes und einer formalen Sprache
+		- Ausarbeitung des Informationsflusses im Programm
+	- Implementierung: Dreiteilung: Netzwerk c++ - Eingabeverarbeitung lua - User Interface c++
+	- Zusammenfügen, Debuggen und Testen der 3 Softwareteile
