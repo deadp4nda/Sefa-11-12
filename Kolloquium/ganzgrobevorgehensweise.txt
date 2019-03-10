@@ -1,0 +1,23 @@
+- wir wollen:
+  - Programm
+  - Computer fernsteuern
+  - Dateien übertragen
+
+- wir brauchen dazu:
+  - skills - unobtainable
+  - Übertragungen im Netzwerk -> Protokolle
+  - => eigenes Protokoll, an Anforderungen anpassen
+    - lightweight
+    - dateien/anweisungen
+    - mglst. allgemeine Typen von Anweisungen
+  - Kommunikation mit Nutzer
+    - nutzer kann schon was
+    - => Konsole/Batchzeug
+    - => Eingabesyntax an anforderungen anpassen
+      - blah?
+  - => 3 Teile: 1 Protokoll, 1 Eingabeverarbeitung, 1 Interface
+  - Betriebssystemunabh.
+    - Qt
+    - Lua
+    -andere Gründe für Lua/C++
+      - Performance+einfache Wartbarkeit
