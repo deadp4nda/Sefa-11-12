@@ -1,6 +1,7 @@
 - Datei und Befehlsübertragung war motivation für die entwicklung des intet
   - Das Internet wurde auf Basis der Idee entwickelt, dass beliebige Daten und Befehle einfach übertragbar sein sollten.
   - Das Internet wurde entwickelt zur geographisch-unabhängigen Verteilung von Rechenleistung und Informationen.
+  - Das Internet wurde zur ortsunabhängigen Verteilung von Rechenleistung und Informationen entwickelt.
   
 - Motivation, datei/anweisungsübertragung automatiomatisieren
   - Es ist, aufbauend auf einer einfachen Übertragung mit eingeschränktem Befehlssatz, sinnvoll dem Nutzer die Möglichkeit zu geben, die Bedienung des Programmes nach eigenen Bedürfnissen ohne großen Aufwand mit eigenen Skripten zu automatisieren.
@@ -8,32 +9,39 @@
   
 - aufbau auf vorhanden standarts, optimierung für speziellen anwendungsfall
   - Um die Kompatibilität der Datenverbindungen zu sichern und genügend Datensicherheit mit möglichst großem Funktionsumfang zu kombinieren ist es sinnvoll, auf dem Teil des Protokollstapels aufzubauen, auf dem das TLS-Protokoll liegt.
-  - Der Aufbau auf etablierten Standarts erlaubt einen höheren Grad der Sezialisierung.
+  - Der Aufbau auf etablierten Standarts erlaubt einen höheren Grad der Spezialisierung.
+  -
   
-- Protokolldesigne / ein eigenes protokoll ist nötog, bla bla
+- Protokolldesign / ein eigenes protokoll ist nötog, bla bla
   - Auf hinreichend elementarer Ebene existiert kein Protokoll, dass sowohl die Übertragung von Befehlen als auch von Dateien ermöglicht ohne unnötigen Datenaufwand. Daher ist es nötig, ein eigenes Protokoll zu erstellen, welches diese Übertragungsleistungen vereint und so wenig zusätzlichen Datenverkehr wie möglich verursacht.
-  - Das Designe eines eigenen Kommunikationsprotokolls ermöglicht die Umsetzung spezifischer Ziele.
+  - Das Design eines eigenen Kommunikationsprotokolls ermöglicht die Umsetzung spezifischer Ziele.
+  - Das Design eines eigenen Kommunikationsprotokolls ermöglicht die Umsetzung spezifischer Ziele. Es gibt noch kein vorhandenes Protokoll, das unsere Anforderungen hinreichend erfüllt.
   
 - eigene eingabesyntax / formale sprache 
   - Der Nutzer soll durch die Eingabe auf das gesamte gewollte Potential des Programms und Protokolls zugreifen können, und außerdem in der Lage sein, das Eingabesystem nahtlos zu erweitern. Beide Anforderungen werden durch eine durch formale Sprachen der Stufe (?) beschreibbare Syntax erfüllt.
-  - Eine eigene Eingabesyntaxt anhand einer Formalen Sprache definiert den benötigten Informationsaustausch.
+  - Eine eigene Eingabesyntax anhand einer Formalen Sprache definiert den benötigten Informationsaustausch.
+  - Eine eigens entwickelte Eingabesyntax, beschrieben durch eine formale Sprache, definiert den benötigten Informationsaustausch mit dem Nutzer.
   
 - betriebssystemunabhängigkeit und portablität
-  - Das Programm soll auf so viele Szenarien wie möglich anwendbar sein, bei denen Dateiübertragung und die Ausführung von Befehlen auf durch das Internet verbundenen Rechnern eine Rolle spielt. Daher darf es nicht durch die alleinige Ausführbarkeit auf einem Betriebssystem beschränkt sein.
+  - Das Programm soll auf so viele Szenarien wie möglich anwendbar sein, bei denen Dateiübertragung und die Ausführung von Befehlen auf durch das Internet verbundenen Rechnern eine Rolle spielt. Es darf insbesondere nicht durch die alleinige Ausführbarkeit auf einem Betriebssystem beschränkt sein.
   - 
-  
+
 - universalität, breites anwensungsspektrum
   - Das Potential des Programms ist, bezogen auf Fernsteuerung und Datenübertragung nahezu unbegrenzt durch die Erweiterbare Eingabemöglichkeit, das simpel strukturierte und stabile Protokoll und die einfache Möglichkeit zur erweiterung durch den Nutzer selbst.
   - Die Bewahrung von Universalität ermöglicht ein weites Anwendungsspektrum.
+  - Die Bewahrung eines Prinzips von keiner Funktionseinschränkung auf jeder Programmeben ermöglicht ein breites Anwendungsspektrum.
   
 - hybridprogramm aus compiliertem und scriptanteil ist sinnvoll
   - Die Struktur des Programmes entspricht seinen Anforderungen insofern, als dass die häufig benutzten und Performanceintensiven Funktionen zur Datenversendung bzw. deren Empfang ebenso wie deren Speicherung und Darstellung in kompiliertem Code geschrieben wurde und die stetig erweiterbare Syntaxverarbeitung bzw. das Arbeiten mit Daten auf einer höheren logischen Ebene, die ebenfalls durch den Nutzer automatisierbar ist, in einer interpretierten Sprache.
   - Die Verbindung von compilierten und scriptbasierten Programmiersprachen wirkt optimierend auf die Programmentwicklung.
+  -
 
 - gui/console: kompromiss aus benutzerfreundlichkeit und funktionalität, orientierung an bash -> etablierte form
   - Die Eingabe durch den Nutzer oder dessen Scripte muss so intuitiv wie möglich geschehen. Daher ist die Wahl einer Konsolenumgebung, welche an die Bourne-Shell angelehnt ist sinnvoll, da die meisten Nutzer unserer Zielgruppe bereits daran gewöhnt sind.
   - Ein Konsolenprogramm schafft ein etablierten Kompromiss zwischen Benutzerfreundlichkeit und Funktionalität.
+  - Ein Konsolenprogramm schafft einen an etablierten Konzepten anlehnenden Kompromiss zwischen Benutzerfreundlichkeit und Funktionsumfang.
   
 - erweiterungmöglichkeit - mobile geräte
   - Eine Erweiterungsmöglichkeit im Sinne der Betriebssystemunabhängkeit ist die Portierung des Programms auf mobile Geräte, da diese immer mehr genutzt werden und außerdem auch das Arbeiten mit Computern über das Internet auch ohne unhandliches Gerät mit Windows oder einer Standard-Linuxdistribution darauf ermöglicht wird.
   - Die Ausweitung auf mobile Endgeräte stellt eine sinvolle Erweiterungsmöglichkeit da.
+  - 
