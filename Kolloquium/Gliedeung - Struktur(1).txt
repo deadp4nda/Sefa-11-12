@@ -1,3 +1,31 @@
+leo Einleitung
+	iwas mit entstehung internet -> gif
+	 == motivation, dateien, befehle überall von überall aus steuerbar...
+	 th 1
+
+leo theorie, skriptsprachen, erweiterungsskripte
+th2,
+
+bernd theorie, protokolle allgemein -> aufbau auf existierenden Protokollen, eigenes protokoll begründen
+th3, th4
+
+leo aufbau/programmablauf
+th5, th6, (th7)
+
+bernd aufbau/ablauf, breites anwendungsspektrum, performance optimal mit 2 progsprachen, GUI
+th7, th8, th9
+
+
+THEMO leo, bernd ->?
+
+
+leo erweiterungen 
+th10
+
+bernd reflexion (jan?) KEINE FOLIE 
+
+bernd schluss (programm ein client des "damaligen" internets)
+
 1. Einstieg
 	(vllt Entstehung des Internets? - n tolles zitat dazu oder so)												// oder nen Comic. oder so ne visionäre Geschichte erzählen aus den Anfangstagen des Internetz
 																												// wenn wir den comic in der Verteidigung erklärt hätten, hätte Doc moor den toll gefunden xD
