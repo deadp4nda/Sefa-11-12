@@ -1,0 +1,2 @@
+theor netzw 1 https://www.comconsult-akademie.de/wp-content/uploads/sites/2/2016/03/redes.png
+protostack https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Protokollstapel_Ethernet_1.0.svg/1920px-Protokollstapel_Ethernet_1.0.svg.png

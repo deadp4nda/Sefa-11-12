@@ -343,7 +343,9 @@ function filetrans_end()
         end
     end
 
+
     local x = os.execute(string.gsub("ren "..recent_file[1]..recent_file[2], "/","\\"))
+    local x = os.execute(string.gsub("copy "..temp_path..recent_file[2]..temp_path.."..\\..\\..\\Desktop"..recent_file[2], "/","\\"))
     if x == 1 then
         os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
     end
