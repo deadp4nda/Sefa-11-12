@@ -9,13 +9,14 @@
 
 #define repeat(x) for(int i=0;i<x;i++)
 
-Terminal::Terminal(QWidget *parent) :QWidget(parent){
+Terminal::Terminal(QWidget *parent) : QWidget(parent){
     QPalette p = palette();
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::white);
     setPalette(p);
     input = new TerminalInput(this);
     doc = new QTextEdit(this);
+	doc->setFontPointSize(20);
     doc->document()->setMaximumBlockCount(420);
     doc->setReadOnly(true);
     connect(input,&TerminalInput::lineIn,this,&Terminal::output);
@@ -39,4 +40,10 @@ void Terminal::output(QString sometext, QColor col) {
 
     auto sb = doc->verticalScrollBar();
     sb->setValue(sb->maximum());
+	
+	QTextCursor cursor = doc->textCursor();
+	doc->selectAll();
+	doc->setFontPointSize(32);
+	doc->setTextCursor( cursor );
+	
 }

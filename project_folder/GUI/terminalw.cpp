@@ -35,6 +35,7 @@ static void stackDump (lua_State *L) {
 TerminalW::TerminalW(Mango::MngThManager*img,Mango::MngFileManager*fmg,lua_State*L):
     iMgr(img),fMgr(fmg),L(L) {
     setupGUI();
+	terminal->doc->setFontPointSize(20);
 }
 
 TerminalW::~TerminalW(){
@@ -42,7 +43,7 @@ TerminalW::~TerminalW(){
     fMgr->closeOutgoingConnection();
     iMgr->closeConnection();
     delete terminal;
-    delete label;
+    //delete label;
     delete files_inq;
     delete vlayout;
     delete v2layout;
@@ -73,6 +74,7 @@ void TerminalW::setupGUI() {
     central->setLayout(hlayout);
     connect(terminal,&Terminal::Message,this,&TerminalW::Message);
     show();
+	files_inq->hide();
 }
 
 void TerminalW::issueMessage(QString msg,Source src) {

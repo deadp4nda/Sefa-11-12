@@ -24,6 +24,7 @@ private:
     TerminalInput *input = nullptr; // Zeileneingabe
     QVBoxLayout *layout = nullptr;  // layout-tool für die richtige ausrichtung
     QTextEdit *doc = nullptr;       // das anzeigende ding
+	friend class TerminalW;
 };
 
 #endif //MANGO_TERMINAL_H

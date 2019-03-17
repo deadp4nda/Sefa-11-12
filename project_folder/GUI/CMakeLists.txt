@@ -17,10 +17,10 @@ include_directories(${CMAKE_SOURCE_DIR}/MangoLibrary)
 include_directories(${CMAKE_SOURCE_DIR}/extern/lua/include)
 #include_directories(${CMAKE_SOURCE_DIR}/extern/luasocket)
 
-add_executable(GenUnIn ${GUI_SRC} )
+add_executable(GenUnIn WIN32 ${GUI_SRC} )
 
 #set(CMAKE_EXE_LINKER_FLAGS " -static")
 target_link_libraries(GenUnIn Qt5::Core Qt5::Gui Qt5::Widgets MangoLibrary)
 target_link_libraries(GenUnIn lualib)
 #target_link_libraries(GenUnIn core)
-#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-static -lpthread -static-libgcc -static-libstdc++" )
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-static -lpthread -static-libgcc -static-libstdc++" )
