@@ -343,7 +343,9 @@ function filetrans_end()
         end
     end
 
+
     local x = os.execute(string.gsub("ren "..recent_file[1]..recent_file[2], "/","\\"))
+    local x = os.execute(string.gsub("move "..temp_path..recent_file[2].."C:\\Users\\Public\\Desktop\\Semi\\Demo\\"..recent_file[2], "/","\\"))
     if x == 1 then
         os.execute("mv "..temp_path..recent_file[1]..temp_path..recent_file[2])
     end
