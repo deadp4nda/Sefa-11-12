@@ -1,0 +1,11 @@
+1. Theoretische Grundlagen der Software
+  1.1 Entwicklung einer eigenen Scriptsprache zur Anwendungssteuerung
+  1.2 Grundlegende Netzwerktheorie zu Protokollen
+
+2. Realisierung des Eigenanteils
+  2.1 Darstellung grundlegender Elemente des Programmaufbaus und Programmablaufs
+  2.2 Umsetzung und Programmablauf der Netzwerkschnittstelle und der Benutzeroberfläche
+
+3. Demonstration des Arbeitsergebnisses
+
+4. Kritische Reflexion und Weiterführungsmöglichkeiten der Arbeit
