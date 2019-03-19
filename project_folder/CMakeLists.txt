@@ -17,7 +17,7 @@ if(UNIX)
 	set(Qt5Core_DIR "/home/dp/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5Core/")
 	set(Qt5Network_DIR "/home/dp/Programme/Qt/5.12.0/gcc_64/lib/cmake/Qt5Network/")
 else()
-	set(CMAKE_PREFIX_PATH "C:/Qt/5.12.2/mingw73_64/lib/cmake")
+	set(CMAKE_PREFIX_PATH "D:/dev/Qt/5.12.2/mingw73_64/lib/cmake")
 endif()
 
 

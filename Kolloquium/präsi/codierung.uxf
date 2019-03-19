@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>610</x>
+      <y>410</y>
+      <w>180</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Befehle
+--
+-sende_datei
+-
+-sende_anweisung
+-
+-hole_verfügbare_dateien
+-
+...
+bg=white
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>390</x>
+      <y>410</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Codes
+--
+0
+-
+1
+-
+2
+-
+...
+bg=white
+fg=#0ba306</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>430</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>450</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>470</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>490</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
